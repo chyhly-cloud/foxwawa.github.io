@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ja" class="lang-ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="color-scheme" content="light">
+<title>海 — 何梁宇</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Serif+JP:wght@300;400&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light only}
+html{forced-color-adjust:none}
+:root{
+  --ink:#000;--ink2:#111;--ink3:#aaa;
+  --rule:rgba(0,0,0,.12);
+  --nav-h:50px;--bar-h:44px;
+  --mono:"Space Mono",monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  height:100%;overflow:hidden;
+  background:#fff !important;color:#000 !important;
+  font-family:var(--mono);-webkit-text-size-adjust:100%;
+}
+.lang-ja .bhead,.lang-ja .h-ttl,.lang-ja .nx-t,
+.lang-ja .note-p,.lang-ja .bp,.lang-ja .prow,
+.lang-ja .hcb .bhead{font-family:"Noto Serif JP",serif}
+.lang-zh .bhead,.lang-zh .h-ttl,.lang-zh .nx-t,
+.lang-zh .hcb .bhead{font-family:"Noto Sans SC",sans-serif;font-weight:900}
+.lang-zh .note-p,.lang-zh .bp,.lang-zh .prow{font-family:"Noto Sans SC",sans-serif;font-weight:400}
+.lang-en .bhead,.lang-en .h-ttl,.lang-en .nx-t,
+.lang-en .hcb .bhead{font-family:"Inter","Helvetica Neue",sans-serif;font-weight:900}
+
+nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;background:#fff !important;flex-shrink:0}
+.nav-l{display:flex;align-items:center;gap:2rem}
+.nav-back{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);text-decoration:none;transition:color .15s}
+.nav-back:hover{color:#000}
+.nav-ttl{font-size:13px;color:#000;letter-spacing:.3px;font-weight:700}
+.lang-ja .nav-ttl{font-family:"Noto Serif JP",serif}
+.lang-zh .nav-ttl{font-family:"Noto Sans SC",sans-serif}
+.lang-globe{background:none;border:none;cursor:pointer;padding:0;color:#000;display:flex;align-items:center;justify-content:center;opacity:.45;transition:opacity .2s;-webkit-tap-highlight-color:transparent}
+.lang-globe:hover{opacity:1}
+
+#page{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
+#page::-webkit-scrollbar{display:none}
+
+.sec{height:100vh;scroll-snap-align:start;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+.sec>.sec-bar{flex-shrink:0}
+
+.sec-bar{display:flex;align-items:center;padding:0 2.5rem;height:var(--bar-h);gap:1rem;background:#fff !important}
+.s-ttl{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#000;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+.dots{display:flex;gap:7px;align-items:center;flex-shrink:0}
+.dot{width:5px;height:5px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .2s,transform .18s}
+.dot.on{background:#000;transform:scale(1.4)}
+
+.h-track{flex:1;min-height:0;position:relative;display:flex;overflow-x:scroll;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.h-track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;overflow:hidden;background:#fff}
+
+.board{display:grid;height:100%}
+.b-half{grid-template-columns:1fr 1fr}
+.b-half .bcell:first-child{border-right:1px solid var(--rule)}
+.bcell{position:relative;overflow:hidden}
+
+.bimg{background:#f7f7f7;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:0}
+.bimg img{width:100%;height:100%;object-fit:contain;display:block}
+.bimg.photo{padding:0;background:#f7f7f7}
+.bimg.photo img{object-fit:contain}
+.bph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:#f4f4f4;text-align:center}
+
+.btxt{display:flex;flex-direction:column;justify-content:center;overflow-y:auto;padding:3rem;background:#fff}
+.btxt::-webkit-scrollbar{display:none}
+.brow{margin-bottom:2rem;flex-shrink:0}
+.brow:last-child{margin-bottom:0}
+
+.blbl{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#000;text-transform:uppercase;margin-bottom:.9rem;display:block;font-weight:700}
+.bhead{font-size:clamp(20px,2.5vw,34px);font-weight:900;color:#000;line-height:1.1;margin-bottom:1rem;letter-spacing:-.02em}
+.lang-zh .bhead{letter-spacing:0}
+.lang-ja .bhead{letter-spacing:0;font-weight:400}
+
+.bp{font-size:12px;line-height:1.9;color:#444;margin-bottom:.5rem}
+.bp:last-child{margin-bottom:0}
+.bp b{color:#000;font-weight:700}
+
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:.6rem}
+.chip{font-family:var(--mono);font-size:8px;letter-spacing:2px;padding:3px 9px;border:1px solid var(--rule);color:#888;text-transform:uppercase}
+
+/* ─ HERO ─ */
+#s-hero{background:#fff}
+.hero-g{display:grid;grid-template-columns:58% 42%;height:100%}
+.hero-img{overflow:hidden;border-right:1px solid var(--rule)}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.hero-nfo{display:flex;flex-direction:column;overflow-y:auto;background:#fff}
+.hero-nfo::-webkit-scrollbar{display:none}
+
+.htb{padding:3.5rem 3rem 2rem;flex-shrink:0}
+.h-cat{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:1.5rem;font-weight:700}
+.h-ttl{font-size:clamp(48px,6.5vw,88px);font-weight:900;line-height:.9;color:#000;margin-bottom:.6rem;letter-spacing:-.03em}
+.lang-zh .h-ttl{letter-spacing:0;line-height:.95}
+.lang-ja .h-ttl{letter-spacing:-.01em;font-weight:300;font-size:clamp(40px,5.5vw,72px)}
+.h-sub{font-family:var(--mono);font-size:9px;letter-spacing:2.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:2rem;font-weight:700}
+.specs{display:grid;grid-template-columns:auto 1fr;gap:8px 24px;margin-top:.5rem}
+.sp-l{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:#888;text-transform:uppercase;align-self:center;font-weight:700}
+.sp-v{font-size:13px;color:#000;font-weight:700}
+
+.hcb{padding:0 3rem 2rem;flex-shrink:0;margin-top:-.5rem}
+.hcb .blbl{margin-bottom:.8rem}
+.hcb .bhead{font-size:clamp(15px,1.6vw,19px);font-weight:900;line-height:1.25;letter-spacing:-.01em}
+.lang-ja .hcb .bhead{font-weight:400}
+.hcb .bp{font-size:12px;line-height:1.85;color:#555;margin-top:.6rem}
+
+.ins-det{flex-shrink:0;border-top:1px solid var(--rule)}
+.ins-sum{display:flex;align-items:center;gap:.6rem;padding:1.1rem 3rem;cursor:pointer;list-style:none;outline:none;font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;transition:color .15s;font-weight:700}
+.ins-sum::-webkit-details-marker{display:none}
+.ins-sum::before{content:"\25B6";font-size:7px;transition:transform .2s;flex-shrink:0}
+.ins-det[open] .ins-sum::before{transform:rotate(90deg)}
+.ins-sum:hover{color:#000}
+.ins-body{padding:0 3rem 2rem}
+.ins-body .note-p{font-size:12px;line-height:1.9;color:#555;margin-bottom:.8rem;font-style:italic}
+.ins-body .note-p:last-of-type{margin-bottom:0}
+
+.h-hint{padding:1.5rem 3rem;font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-top:auto;flex-shrink:0;padding-top:0;font-weight:700}
+.h-line{width:28px;height:1px;background:var(--ink3)}
+
+/* ─ EXHIBITION GRID ─ */
+.exh-grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule)}
+.exh-c{overflow:hidden;background:#f7f7f7;position:relative}
+.exh-c img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;transition:transform .3s}
+.exh-c img:hover{transform:scale(1.03)}
+.exh-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:9px;letter-spacing:2px;text-transform:uppercase}
+
+/* ─ FILM ─ */
+.film-wrap{flex:1;min-height:0;background:#000}
+.vid-wrap{position:relative;width:100%;height:100%}
+.vid-wrap video{width:100%;height:100%;object-fit:cover;display:block}
+.vid-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;cursor:pointer;background:rgba(0,0,0,.28);transition:opacity .3s}
+.vid-ov.gone{opacity:0;pointer-events:none}
+.play-r{width:70px;height:70px;border:1px solid rgba(255,255,255,.45);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:border-color .2s,transform .2s}
+.vid-ov:hover .play-r{border-color:#fff;transform:scale(1.07)}
+.play-t{border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:18px solid rgba(255,255,255,.9);margin-left:4px}
+.vid-lbl{font-family:var(--mono);font-size:9px;letter-spacing:4px;color:rgba(255,255,255,.35);text-transform:uppercase;font-weight:700}
+
+/* ─ BACK ─ */
+#s-back{background:#fff;display:flex;align-items:center;justify-content:center}
+.back-btn{display:flex;align-items:center;gap:.8rem;text-decoration:none;font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;opacity:.35;transition:opacity .2s;font-weight:700}
+.back-btn:hover{opacity:1}
+.back-btn svg{transition:transform .2s}
+.back-btn:hover svg{transform:translateX(-4px)}
+
+/* ─ LIGHTBOX ─ */
+#lb{display:none;position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.96);align-items:center;justify-content:center;cursor:zoom-out}
+#lb.open{display:flex}
+#lb img{max-width:92vw;max-height:92vh;object-fit:contain;display:block}
+#lb-x{position:absolute;top:20px;right:24px;font-size:20px;color:rgba(255,255,255,.4);cursor:pointer;font-family:var(--mono);transition:color .2s}
+#lb-x:hover{color:#fff}
+
+@media(max-width:768px){
+  .board.b-half{grid-template-columns:1fr;grid-template-rows:45% 55%}
+  .hero-g{grid-template-columns:1fr;grid-template-rows:42% 58%}
+  .hero-img{border-right:none}
+  .b-half .bcell:first-child{border-right:none}
+  .btxt{padding:2rem 1.8rem}
+  .htb,.hcb{padding-left:1.8rem;padding-right:1.8rem}
+  .ins-sum,.ins-body,.h-hint{padding-left:1.8rem;padding-right:1.8rem}
+  .h-ttl{font-size:clamp(38px,10vw,60px)}
+  .nx-t{font-size:clamp(28px,10vw,52px)}
+  .exh-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div id="lb"><span id="lb-x">&#10005;</span><img id="lb-img" src="" alt=""></div>
+
+<div id="page">
+
+<!-- ══ HERO ══════════════════════════════ -->
+<section class="sec" id="s-hero">
+<nav>
+  <div class="nav-l">
+    <a class="nav-back" href="../index.html">&#8592;</a>
+    <span class="nav-ttl" id="nav-ttl">海</span>
+  </div>
+  <button class="lang-globe" id="lang-cycle-btn" title="Switch language" aria-label="Switch language">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.2"/>
+      <ellipse cx="10" cy="10" rx="4" ry="8.5" stroke="currentColor" stroke-width="1.2"/>
+      <line x1="1.5" y1="7.5" x2="18.5" y2="7.5" stroke="currentColor" stroke-width="1.2"/>
+      <line x1="1.5" y1="12.5" x2="18.5" y2="12.5" stroke="currentColor" stroke-width="1.2"/>
+    </svg>
+  </button>
+</nav>
+<div class="hero-g">
+  <div class="hero-img">
+    <img src="hero.jpg" alt="" onerror="this.style.display='none'">
+  </div>
+  <div class="hero-nfo">
+    <div class="htb">
+      <p class="h-cat" id="h-cat">新メディア</p>
+      <h1 class="h-ttl" id="h-ttl">海</h1>
+      <p class="h-sub" id="h-sub">UMI / 海</p>
+      <div class="specs">
+        <span class="sp-l" id="h-yl">年份</span><span class="sp-v">2023.10</span>
+        <span class="sp-l" id="h-ml">媒介</span><span class="sp-v" id="h-med">Cinema 4D / Final Cut Pro</span>
+        <span class="sp-l" id="h-tl">形式</span><span class="sp-v" id="h-type">新メディア</span>
+      </div>
+    </div>
+    <div class="hcb">
+      <span class="blbl" id="c-lbl">概念 / Concept</span>
+      <h2 class="bhead" id="c1-head">自然の景観と人との感情的なつながり、そして美の主観性</h2>
+      <p class="bp" id="c1-p1">子供の頃に憧れていた青い海を思い出しながら、視覚的に完璧な青い海ではなく、家の近くにあった「黄色い海」が心に深く残っていることに気づきました。なぜなら、その場所には私の記憶や感情が詰まっているからです。</p>
+      <p class="bp" id="c1-p2">これによって、美しさとは単なる外見の視覚的なものではなく、自然との間に築かれる感情的なつながりであることを考えさせられました。</p>
+    </div>
+    <details class="ins-det">
+      <summary class="ins-sum" id="ins-sum">インスピレーション</summary>
+      <div class="ins-body">
+        <p class="note-p" id="c2-p1">私のアイデアは、個人の記憶や感情を通じて、自然の景観と独自の美的体験を形作ることです。美の多様性と個別性を表現したいと思いました。</p>
+        <p class="note-p" id="c2-p2">すべての人が感じる美しさが同じではないことを伝えたいです。鑑賞者が自分の記憶や体験を通じて、自然との感情的なつながりを見つけ、従来の美学への単一的な追求を超えてほしいと願っています。</p>
+      </div>
+    </details>
+    <p class="h-hint"><span class="h-line"></span><span id="h-scroll">上下スクロールで移動</span></p>
+  </div>
+</div>
+</section>
+
+<!-- ══ 研究 ══════════════════════════════ -->
+<section class="sec">
+  <div class="sec-bar">
+    <span class="s-ttl" id="ch-research">研究</span>
+    <div class="dots" id="dots-research"></div>
+  </div>
+  <div class="h-track" id="track-research">
+
+    <!-- R1 -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg photo">
+        <img src="research-bg.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="bph" style="display:none">research-bg.jpg</div>
+      </div>
+      <div class="bcell btxt">
+        <div class="brow">
+          <span class="blbl" id="r1-lbl">プロジェクト背景</span>
+          <h3 class="bhead" id="r1-head">海は地球の全体面積の70.8%を占め、この地球最大の支配者である</h3>
+        </div>
+        <div class="brow">
+          <p class="bp" id="r1-p1">私たちは地球を美しい青い星として描写するが、私の子供の頃に見た海はそうではない。私は海辺の小さな町で育った。子供の頃、私はよく一人で海辺に歩いて日の出を見に行った。私は大海が大好きだけれど、我が町の海は黄色だ。</p>
+        </div>
+        <div class="brow">
+          <p class="bp" id="r1-p2">それは教科書やテレビ、各種のプロモーション画像に描かれている青い海や金色の砂浜とは異なる。子供の頃、私はそれを非常にうらやましく思い、父にカーテンを海と砂浜のデザインのものを選んでもらった。カーテンを閉じると、美しい青い海と空の景色が見えた。</p>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- R2 -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell btxt">
+        <div class="brow">
+          <span class="blbl" id="r2-lbl">調査</span>
+          <h3 class="bhead" id="r2-head">世界各地の海を旅して</h3>
+        </div>
+        <div class="brow">
+          <p class="bp" id="r2-p1">北極の冷たく冷酷な青い海、東南アジアの暖かい日差しと透明な海、そして瀬戸内海の朝の霧に覆われた幻想的な海を見てきた。</p>
+          <p class="bp" id="r2-p2">しかし、これらの「美しい」海はすべて、私の家の前の黄色い海の美しさに負けているように思えた。その美しさは視覚からの直接的なインパクトから来るのではなく、私の存在、子供の頃に浜辺で日の出を見た瞬間の記憶、そしてその時に私の耳に流れていた音楽から来るのだと気づいた。</p>
+        </div>
+        <div class="brow">
+          <span class="blbl" id="r2-il">洞察</span>
+          <div class="chips">
+            <span class="chip" id="r2-i1">美しさは記憶と感情の組み合わせ</span>
+            <span class="chip" id="r2-i2">一人一人はこの世界で唯一無二の存在</span>
+            <span class="chip" id="r2-i3">最も美しいものは記憶と心の刻印の重なり</span>
+          </div>
+        </div>
+      </div>
+      <div class="bcell" style="overflow-y:auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--rule);align-content:start">
+        <div style="overflow:hidden;aspect-ratio:1;background:#f7f7f7"><img src="research-travel-1.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#f7f7f7'"></div>
+        <div style="overflow:hidden;aspect-ratio:1;background:#f7f7f7"><img src="research-travel-2.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#f7f7f7'"></div>
+        <div style="overflow:hidden;aspect-ratio:1;background:#f7f7f7"><img src="research-travel-3.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#f7f7f7'"></div>
+        <div style="overflow:hidden;aspect-ratio:1;background:#f7f7f7"><img src="research-travel-4.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#f7f7f7'"></div>
+        <div style="overflow:hidden;aspect-ratio:1;background:#f7f7f7"><img src="research-travel-5.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#f7f7f7'"></div>
+        <div style="overflow:hidden;aspect-ratio:1;background:#f7f7f7"><img src="research-travel-6.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#f7f7f7'"></div>
+        <div style="overflow:hidden;aspect-ratio:1;background:#f7f7f7"><img src="research-travel-7.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#f7f7f7'"></div>
+        <div style="overflow:hidden;aspect-ratio:1;background:#f7f7f7"><img src="research-travel-8.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#f7f7f7'"></div>
+        <div style="overflow:hidden;aspect-ratio:1;background:#f7f7f7"><img src="research-travel-9.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#f7f7f7'"></div>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- ══ ビジュアルコンセプト ════════════ -->
+<section class="sec">
+  <div class="sec-bar">
+    <span class="s-ttl" id="ch-visual">ビジュアルコンセプト</span>
+    <div class="dots" id="dots-visual"></div>
+  </div>
+  <div class="h-track" id="track-visual">
+
+    <!-- V1 -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg">
+        <img src="visual-concept.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="bph" style="display:none">visual-concept.jpg</div>
+      </div>
+      <div class="bcell btxt">
+        <div class="brow">
+          <span class="blbl" id="v1-lbl">ビジュアルコンセプト</span>
+          <h3 class="bhead" id="v1-head">記憶が源 — 変わりゆく海と光</h3>
+        </div>
+        <div class="brow">
+          <p class="bp" id="v1-p1">波の光が煌めく海面と常に変わる天候が作り出すこの唯一無二の海は思い出が源だ。装置自体は空間であり、変わる天気は純色から徐々に変化する色で抽象的に一日の天気の変化を代替する。この部分はスクリーンである。</p>
+        </div>
+        <div class="brow">
+          <p class="bp" id="v1-p2">上下は反射する金属板を使用し、底部の鱗片は一つ一つの立体的な菱形の銅片で構成されている。インスピレーションはコンパスから得られたもので、大海でのコンパスはかつて最も重要な方向を示すツールだ。</p>
+        </div>
+        <div class="brow">
+          <span class="blbl" id="v1-ml">素材・構成</span>
+          <div class="chips">
+            <span class="chip" id="v1-t1">スクリーン</span>
+            <span class="chip" id="v1-t2">金属反射板</span>
+            <span class="chip" id="v1-t3">菱形の銅片</span>
+            <span class="chip" id="v1-t4">コンパス</span>
+          </div>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- V2 -->
+    <div class="slide"><div class="board" style="grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;background:var(--rule)">
+      <div style="overflow:hidden;background:#f7f7f7"><img src="visual-evo-1.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#f7f7f7'"></div>
+      <div style="overflow:hidden;background:#f7f7f7"><img src="visual-evo-2.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#f7f7f7'"></div>
+      <div style="overflow:hidden;background:#f7f7f7"><img src="visual-evo-3.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#f7f7f7'"></div>
+      <div style="overflow:hidden;background:#f7f7f7"><img src="visual-evo-4.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#f7f7f7'"></div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- ══ 展示 ════════════════════════════ -->
+<section class="sec">
+  <div class="sec-bar"><span class="s-ttl" id="ch-exh">展示</span></div>
+  <div class="exh-grid">
+    <div class="exh-c"><img src="exh-1.jpg" alt="" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=exh-ph>exh-1.jpg</div>'"></div>
+    <div class="exh-c"><img src="exh-2.jpg" alt="" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=exh-ph>exh-2.jpg</div>'"></div>
+    <div class="exh-c"><img src="exh-3.jpg" alt="" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=exh-ph>exh-3.jpg</div>'"></div>
+    <div class="exh-c"><img src="exh-4.jpg" alt="" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=exh-ph>exh-4.jpg</div>'"></div>
+    <div class="exh-c"><img src="exh-5.jpg" alt="" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=exh-ph>exh-5.jpg</div>'"></div>
+    <div class="exh-c"><img src="exh-6.jpg" alt="" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=exh-ph>exh-6.jpg</div>'"></div>
+    <div class="exh-c"><img src="exh-7.jpg" alt="" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=exh-ph>exh-7.jpg</div>'"></div>
+    <div class="exh-c"><img src="exh-8.jpg" alt="" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=exh-ph>exh-8.jpg</div>'"></div>
+  </div>
+</section>
+
+<!-- ══ 映像 ════════════════════════════ -->
+<section class="sec">
+  <div class="sec-bar"><span class="s-ttl" id="ch-film">映像</span></div>
+  <div class="film-wrap">
+    <div class="vid-wrap">
+      <iframe src="https://www.youtube.com/embed/-h4JwocVl4w" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="width:100%;height:100%;position:absolute;inset:0"></iframe>
+        <span class="vid-lbl" id="film-lbl">映像 · Documentary Film</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BACK ══════════════════════════════ -->
+<section class="sec" id="s-back">
+  <a class="back-btn" href="../index.html">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <line x1="14" y1="8" x2="2" y2="8" stroke="currentColor" stroke-width="1.5"/>
+      <polyline points="6,3 1,8 6,13" stroke="currentColor" stroke-width="1.5" fill="none"/>
+    </svg>
+    <span id="back-lbl">ホームへ戻る</span>
+  </a>
+</section>
+
+</div>
+
+<script>
+const L = {
+ja:{
+  "nav-ttl":"海",
+  "h-cat":"新メディア","h-ttl":"海","h-sub":"UMI / 海",
+  "h-yl":"制作年","h-ml":"使用ツール","h-tl":"種別",
+  "h-med":"Cinema 4D / Final Cut Pro","h-type":"新メディア","h-scroll":"上下スクロールで移動",
+  "c-lbl":"概念 / Concept",
+  "c1-head":"自然の景観と人との感情的なつながり、そして美の主観性",
+  "c1-p1":"子供の頃に憧れていた青い海を思い出しながら、視覚的に完璧な青い海ではなく、家の近くにあった\u300c黄色い海\u300dが心に深く残っていることに気づきました。なぜなら、その場所には私の記憶や感情が詰まっているからです。",
+  "c1-p2":"これによって、美しさとは単なる外見の視覚的なものではなく、自然との間に築かれる感情的なつながりであることを考えさせられました。",
+  "ins-sum":"インスピレーション",
+  "c2-p1":"私のアイデアは、個人の記憶や感情を通じて、自然の景観と独自の美的体験を形作ることです。美の多様性と個別性を表現したいと思いました。",
+  "c2-p2":"すべての人が感じる美しさが同じではないことを伝えたいです。鑑賞者が自分の記憶や体験を通じて、自然との感情的なつながりを見つけ、従来の美学への単一的な追求を超えてほしいと願っています。",
+  "ch-research":"研究",
+  "r1-lbl":"プロジェクト背景",
+  "r1-head":"海は地球の全体面積の70.8%を占め、この地球最大の支配者である",
+  "r1-p1":"私たちは地球を美しい青い星として描写するが、私の子供の頃に見た海はそうではない。私は海辺の小さな町で育った。子供の頃、私はよく一人で海辺に歩いて日の出を見に行った。私は大海が大好きだけれど、我が町の海は黄色だ。",
+  "r1-p2":"それは教科書やテレビ、各種のプロモーション画像に描かれている青い海や金色の砂浜とは異なる。子供の頃、私はそれを非常にうらやましく思い、父にカーテンを海と砂浜のデザインのものを選んでもらった。カーテンを閉じると、美しい青い海と空の景色が見えた。",
+  "r2-lbl":"調査","r2-head":"世界各地の海を旅して",
+  "r2-p1":"北極の冷たく冷酷な青い海、東南アジアの暖かい日差しと透明な海、そして瀬戸内海の朝の霧に覆われた幻想的な海を見てきた。",
+  "r2-p2":"しかし、これらの\u300c美しい\u300d海はすべて、私の家の前の黄色い海の美しさに負けているように思えた。その美しさは視覚からの直接的なインパクトから来るのではなく、私の存在、子供の頃に浜辺で日の出を見た瞬間の記憶、そしてその時に私の耳に流れていた音楽から来るのだと気づいた。",
+  "r2-il":"洞察","r2-i1":"美しさは記憶と感情の組み合わせ","r2-i2":"一人一人はこの世界で唯一無二の存在","r2-i3":"最も美しいものは記憶と心の刻印の重なり",
+  "ch-visual":"ビジュアルコンセプト",
+  "v1-lbl":"ビジュアルコンセプト","v1-head":"記憶が源 — 変わりゆく海と光",
+  "v1-p1":"波の光が煌めく海面と常に変わる天候が作り出すこの唯一無二の海は思い出が源だ。装置自体は空間であり、変わる天気は純色から徐々に変化する色で抽象的に一日の天気の変化を代替する。この部分はスクリーンである。",
+  "v1-p2":"上下は反射する金属板を使用し、底部の鱗片は一つ一つの立体的な菱形の銅片で構成されている。インスピレーションはコンパスから得られたもので、大海でのコンパスはかつて最も重要な方向を示すツールだ。",
+  "v1-ml":"素材・構成","v1-t1":"スクリーン","v1-t2":"金属反射板","v1-t3":"菱形の銅片","v1-t4":"コンパス",
+  "ch-exh":"展示","ch-film":"映像","film-lbl":"映像 · Documentary Film",
+  "back-lbl":"ホームへ戻る"
+},
+zh:{
+  "nav-ttl":"海",
+  "h-cat":"新媒体","h-ttl":"海","h-sub":"UMI / 海",
+  "h-yl":"年份","h-ml":"使用工具","h-tl":"类别",
+  "h-med":"Cinema 4D / Final Cut Pro","h-type":"新媒体","h-scroll":"上下滚动切换板块",
+  "c-lbl":"概念 / Concept",
+  "c1-head":"自然景观与人之间的情感联结，以及美的主观性",
+  "c1-p1":"回忆起儿时所憧憬的蓝色大海，我却发现深深留在心中的，不是视觉上完美的蓝色海洋，而是家附近那片\u201c黄色的海\u201d。因为那个地方承载着我的记忆与情感。",
+  "c1-p2":"这让我思考——美，并非单纯的视觉外观，而是与自然之间所建立的情感联结。",
+  "ins-sum":"灵感来源",
+  "c2-p1":"我的想法是，通过个人的记忆与情感，塑造与自然景观之间独特的审美体验。我想表达美的多样性与个体性——每个人所感受到的美并不相同。",
+  "c2-p2":"我希望观者能通过自己的记忆与经历，找到与自然之间的情感联结，超越对传统美学的单一追求。",
+  "ch-research":"研究",
+  "r1-lbl":"项目背景","r1-head":"海洋占地球总面积的70.8%，是这颗星球最大的主宰",
+  "r1-p1":"我们将地球描绘为美丽的蓝色星球，然而我儿时看到的海并非如此。我在一座海边小镇长大。童年时，我常常独自走到海边，看日出。我深爱大海，但我家乡的海是黄色的。",
+  "r1-p2":"它与教科书、电视和各种宣传图片中描绘的蓝色大海、金色沙滩截然不同。儿时我非常羡慕那些蓝色的海，让父亲选了海浪沙滩图案的窗帘——拉上窗帘，就能看到那片美丽的蓝色海洋。",
+  "r2-lbl":"调研","r2-head":"游历世界各地的海",
+  "r2-p1":"见过北极那片冷酷的蓝色海洋、东南亚温暖阳光下的透明海水，以及濑户内海清晨薄雾中梦幻的海景。",
+  "r2-p2":"然而，这些\u201c美丽\u201d的海洋，在我心中都不及家门前那片黄色的海。那种美，不来自视觉的直接冲击，而来自我的存在本身、童年在海边看日出的记忆，以及耳边流过的音乐。",
+  "r2-il":"洞察","r2-i1":"美是记忆与情感的叠加","r2-i2":"每个人都是这个世界上独一无二的存在","r2-i3":"最美的事物是风景与内心刻印的叠合",
+  "ch-visual":"视觉概念",
+  "v1-lbl":"视觉概念","v1-head":"记忆为源——变幻的海洋与光",
+  "v1-p1":"波光粼粼的海面与不断变化的天气，共同构成了这片以记忆为源的独一无二的海。作品本身是一个空间，其中变化的天气以纯色到渐变色的方式，抽象地替代一天中天气的流转。这一部分以屏幕呈现。",
+  "v1-p2":"上下两侧使用反光金属板，底部的鳞片由一片片立体的菱形铜片构成。灵感来自指南针——在大海上，指南针曾是最重要的方向工具。",
+  "v1-ml":"材料与构成","v1-t1":"屏幕","v1-t2":"反光金属板","v1-t3":"菱形铜片","v1-t4":"指南针",
+  "ch-exh":"展示","ch-film":"影像","film-lbl":"影像作品 · Documentary Film",
+  "back-lbl":"返回主页"
+},
+en:{
+  "nav-ttl":"Sea",
+  "h-cat":"New Media","h-ttl":"Sea","h-sub":"UMI / \u6d77",
+  "h-yl":"Year","h-ml":"Tools","h-tl":"Type",
+  "h-med":"Cinema 4D / Final Cut Pro","h-type":"New Media","h-scroll":"Scroll to navigate",
+  "c-lbl":"Concept",
+  "c1-head":"The emotional bond between people and natural landscapes, and the subjectivity of beauty",
+  "c1-p1":"Recalling the blue sea I had longed for as a child, I realized that what remained deeply in my heart was not the visually perfect blue ocean, but the \u201cyellow sea\u201d near my home \u2014 because that place held my memories and emotions.",
+  "c1-p2":"This led me to consider that beauty is not merely a visual quality, but an emotional bond built with nature.",
+  "ins-sum":"Inspiration",
+  "c2-p1":"My idea is to shape a unique aesthetic experience with natural landscapes through personal memory and emotion. I wanted to express the diversity and individuality of beauty \u2014 that the beauty felt by each person is not the same.",
+  "c2-p2":"I hope viewers can find their own emotional connection to nature through their memories and experiences, going beyond a singular pursuit of conventional aesthetics.",
+  "ch-research":"Research",
+  "r1-lbl":"Project Background","r1-head":"The sea covers 70.8% of the Earth\u2019s surface \u2014 its greatest ruler",
+  "r1-p1":"We describe the Earth as a beautiful blue planet, yet the sea I saw in childhood was not like that. I grew up in a small coastal town. As a child, I often walked to the shore alone to watch the sunrise. I love the ocean deeply \u2014 but the sea in my hometown is yellow.",
+  "r1-p2":"It was nothing like the blue seas and golden beaches in textbooks or on television. As a child I envied those blue seas, and asked my father to choose curtains with ocean and beach patterns \u2014 closing them, I could see that beautiful blue seascape.",
+  "r2-lbl":"Survey","r2-head":"Traveling the seas of the world",
+  "r2-p1":"I have seen the cold, harsh blue of the Arctic Ocean, the warm clear waters of Southeast Asia, and the misty, dreamlike sea of the Seto Inland Sea in the early morning.",
+  "r2-p2":"Yet all these \u201cbeautiful\u201d seas seemed to me less beautiful than the yellow sea in front of my home. I realized its beauty does not come from direct visual impact, but from my own existence, the memory of watching the sunrise on the shore as a child, and the music that played in my ears.",
+  "r2-il":"Insights","r2-i1":"Beauty is memory and emotion combined","r2-i2":"Every individual is a unique existence in this world","r2-i3":"The most beautiful things are landscape and inner imprint overlaid",
+  "ch-visual":"Visual Concept",
+  "v1-lbl":"Visual Concept","v1-head":"Memory as Source \u2014 The Shifting Sea and Light",
+  "v1-p1":"The shimmering light on the waves and the ever-changing weather create a one-of-a-kind sea rooted in memory. The work itself is a space in which changing weather is abstractly represented through colors that shift from pure hues \u2014 rendered as a screen.",
+  "v1-p2":"The upper and lower surfaces use reflective metal plates, while the scales at the base are composed of individual rhomboid copper pieces. The inspiration comes from the compass \u2014 once the most important tool for finding direction at sea.",
+  "v1-ml":"Materials & Composition","v1-t1":"Screen","v1-t2":"Reflective Metal","v1-t3":"Copper Rhomboids","v1-t4":"Compass",
+  "ch-exh":"Exhibition","ch-film":"Film","film-lbl":"Film \u00b7 Documentary Film",
+  "back-lbl":"Back to Home"
+}
+};
+
+let lang = "ja";
+try { lang = localStorage.getItem("hl-lang") || "ja"; } catch(e) {}
+
+const IDS = [
+  "nav-ttl","h-cat","h-ttl","h-sub","h-yl","h-ml","h-tl","h-med","h-type","h-scroll",
+  "c-lbl","c1-head","c1-p1","c1-p2","ins-sum","c2-p1","c2-p2",
+  "ch-research","r1-lbl","r1-head","r1-p1","r1-p2",
+  "r2-lbl","r2-head","r2-p1","r2-p2","r2-il","r2-i1","r2-i2","r2-i3",
+  "ch-visual","v1-lbl","v1-head","v1-p1","v1-p2","v1-ml","v1-t1","v1-t2","v1-t3","v1-t4",
+  "ch-exh","ch-film","film-lbl","back-lbl"
+];
+
+function applyLang(l) {
+  lang = l;
+  try { localStorage.setItem("hl-lang", l); } catch(e) {}
+  document.documentElement.setAttribute("lang", l === "zh" ? "zh-CN" : l);
+  document.documentElement.className = "lang-" + l;
+  const d = L[l] || L.ja;
+  document.title = (d["h-ttl"] || "\u6d77") + " \u2014 \u4f55\u6881\u5b87";
+  IDS.forEach(id => { const el = document.getElementById(id); if (el && d[id] !== undefined) el.textContent = d[id]; });
+}
+
+const cycleBtn = document.getElementById("lang-cycle-btn");
+const langs = ["ja","zh","en"];
+function cycleLang() { const idx = langs.indexOf(lang); applyLang(langs[(idx+1) % langs.length]); }
+if (cycleBtn) cycleBtn.addEventListener("click", cycleLang);
+
+function initTrack(id) {
+  const track = document.getElementById("track-" + id); if (!track) return;
+  const slides = track.querySelectorAll(".slide"); const n = slides.length;
+  const dotsEl = document.getElementById("dots-" + id);
+  if (dotsEl) {
+    dotsEl.innerHTML = "";
+    for (let i = 0; i < n; i++) {
+      const d = document.createElement("div");
+      d.className = "dot" + (i === 0 ? " on" : "");
+      d.onclick = () => go(i);
+      dotsEl.appendChild(d);
+    }
+  }
+  const curIdx = () => Math.round(track.scrollLeft / track.clientWidth);
+  const go = i => track.scrollTo({ left: i * track.clientWidth, behavior: "smooth" });
+  function upd() { const i = curIdx(); if (dotsEl) dotsEl.querySelectorAll(".dot").forEach((d,j) => d.classList.toggle("on", j===i)); }
+  track.addEventListener("scroll", upd, { passive:true }); upd();
+}
+["research","visual"].forEach(initTrack);
+
+const lb = document.getElementById("lb"), lbi = document.getElementById("lb-img");
+const closeLB = () => { lb.classList.remove("open"); document.body.style.overflow = ""; };
+document.getElementById("lb-x").addEventListener("click", closeLB);
+lb.addEventListener("click", e => { if (e.target === lb || e.target === lbi) closeLB(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeLB(); });
+document.querySelectorAll(".exh-c img").forEach(img => {
+  img.addEventListener("click", () => { lbi.src = img.src; lb.classList.add("open"); document.body.style.overflow = "hidden"; });
+});
+
+
+}
+
+applyLang(lang);
+</script>
+</body>
+</html>

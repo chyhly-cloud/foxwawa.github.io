@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>何梁宇 — HE LIANGYU</title>
+</head>
+<body>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+
+#vp{
+width:100%;height:100vh;overflow:hidden;position:relative;
+background:#f7f7f5;font-family:‘Space Mono’,monospace;
+cursor:grab;transition:background .6s;
+}
+#vp.dark-mode{background:#191919;cursor:grab}
+#vp.panning{cursor:grabbing}
+
+#world{
+position:absolute;top:0;left:0;
+will-change:transform;
+}
+#world::before{
+content:’’;position:absolute;inset:0;
+background-image:radial-gradient(circle,rgba(0,0,0,.07) 1px,transparent 1px);
+background-size:52px 52px;pointer-events:none;
+transition:opacity .6s;
+}
+#vp.dark-mode #world::before{
+background-image:radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px);
+}
+
+.obj{position:absolute;cursor:pointer;user-select:none;will-change:transform;
+transition:transform .58s cubic-bezier(.4,0,.2,1),left .58s cubic-bezier(.4,0,.2,1),top .58s cubic-bezier(.4,0,.2,1),filter .22s}
+.obj.nd{transition:none!important}
+.shadow{position:absolute;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.16) 0%,transparent 70%);pointer-events:none;
+transition:left .58s,top .58s,width .58s,opacity .3s}
+.shadow.nd{transition:none!important}
+
+.pile-lbl{position:absolute;font-size:7.5px;letter-spacing:2.5px;text-transform:uppercase;
+pointer-events:none;transform:translateX(-50%);transition:opacity .4s,color .5s;opacity:0;white-space:nowrap;color:#888}
+#vp.dark-mode .pile-lbl{color:#666}
+.pile-hit{position:absolute;cursor:pointer;z-index:200}
+
+/* ── HUD ── */
+#hud{position:absolute;inset:0;pointer-events:none;z-index:300}
+
+/* top bar */
+#topbar{
+position:absolute;top:0;left:0;right:0;
+display:flex;align-items:center;justify-content:space-between;
+padding:14px 18px;pointer-events:all;
+}
+.logo-btn{
+font-family:‘Bebas Neue’,sans-serif;font-size:18px;letter-spacing:2px;
+color:#1a1a1a;cursor:pointer;transition:color .4s;background:none;border:none;
+pointer-events:all;
+}
+#vp.dark-mode .logo-btn{color:#e8e8e6}
+
+/* lang globe */
+.lang-globe{
+background:none;border:none;cursor:pointer;padding:4px;
+color:#1a1a1a;opacity:.45;
+display:flex;align-items:center;justify-content:center;
+transition:opacity .2s;-webkit-tap-highlight-color:transparent;
+pointer-events:all;
+}
+.lang-globe:hover{opacity:1}
+#vp.dark-mode .lang-globe{color:#e8e8e6}
+
+/* toggle */
+#toggle{
+position:absolute;bottom:22px;left:50%;transform:translateX(-50%);
+display:flex;align-items:center;gap:10px;padding:9px 18px 9px 14px;
+background:#fff;border:.5px solid rgba(0,0,0,.12);
+cursor:pointer;user-select:none;pointer-events:all;
+transition:background .5s,border-color .5s;
+}
+#vp.dark-mode #toggle{background:#2a2a2a;border-color:rgba(255,255,255,.1)}
+#toggle:hover{border-color:rgba(0,0,0,.3)}
+#vp.dark-mode #toggle:hover{border-color:rgba(255,255,255,.25)}
+.sw{width:28px;height:16px;background:#e0e0de;border-radius:8px;position:relative;transition:background .28s;flex-shrink:0}
+.sw.on{background:#e8e8e6}
+.sw-knob{position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#1a1a1a;transition:left .25s cubic-bezier(.4,0,.2,1)}
+.sw.on .sw-knob{left:14px}
+.sw-lbl{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:#999;white-space:nowrap;transition:color .4s}
+#vp.dark-mode .sw-lbl{color:#666}
+
+/* ── BIO OVERLAY ── */
+#bio{
+position:absolute;inset:0;z-index:400;
+background:rgba(247,247,245,0);
+backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);
+pointer-events:none;
+transition:background .38s,backdrop-filter .38s,-webkit-backdrop-filter .38s;
+display:flex;align-items:center;justify-content:center;
+}
+#bio.open{
+background:rgba(247,247,245,.96);
+backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+pointer-events:all;
+}
+#bio-close{
+position:absolute;top:14px;right:14px;width:28px;height:28px;
+border:.5px solid rgba(0,0,0,.13);background:rgba(255,255,255,.85);
+font-size:10px;display:flex;align-items:center;justify-content:center;
+cursor:pointer;opacity:0;pointer-events:none;transition:opacity .28s .1s;
+}
+#bio.open #bio-close{opacity:1;pointer-events:all}
+#bio-inner{
+max-width:540px;width:100%;padding:0 2rem;
+opacity:0;transform:translateY(14px);
+transition:opacity .32s .1s,transform .32s .1s;
+}
+#bio.open #bio-inner{opacity:1;transform:translateY(0)}
+.bio-tag{font-size:7.5px;letter-spacing:3px;text-transform:uppercase;color:#bbb;margin-bottom:1.2rem}
+.bio-name{font-family:‘Bebas Neue’,sans-serif;font-size:58px;line-height:.92;color:#1a1a1a;margin-bottom:1.8rem;letter-spacing:1px}
+.bio-name span{display:block;-webkit-text-stroke:.5px #1a1a1a;-webkit-text-fill-color:transparent}
+.bio-text{font-size:11px;line-height:2.15;color:#555;margin-bottom:1.4rem}
+.bio-skills{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1.6rem}
+.bio-skill{font-size:6.5px;padding:3px 9px;border:.5px solid rgba(0,0,0,.1);color:#999;letter-spacing:2px;text-transform:uppercase}
+.bio-contact{font-size:8.5px;letter-spacing:1.5px;color:#bbb}
+
+/* ── LAUNCHPAD ── */
+#lp{position:absolute;inset:0;z-index:500;background:rgba(25,25,25,0);backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);pointer-events:none;transition:background .36s,backdrop-filter .36s,-webkit-backdrop-filter .36s;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#lp.open{background:rgba(25,25,25,.92);backdrop-filter:blur(26px);-webkit-backdrop-filter:blur(26px);pointer-events:all}
+#lp-close{position:absolute;top:14px;right:14px;width:28px;height:28px;border:.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);font-size:10px;color:#888;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .28s .1s}
+#lp.open #lp-close{opacity:1;pointer-events:all}
+#lp-close:hover{background:rgba(255,255,255,.12);color:#ccc}
+#lp-cat{font-family:‘Bebas Neue’,sans-serif;font-size:22px;letter-spacing:2px;color:#e8e8e6;opacity:0;transform:translateY(8px);transition:opacity .3s .08s,transform .3s .08s}
+#lp.open #lp-cat{opacity:1;transform:translateY(0)}
+#lp-sub{font-size:7px;letter-spacing:2.5px;color:#555;text-transform:uppercase;margin-bottom:2.8rem;opacity:0;transition:opacity .3s .12s}
+#lp.open #lp-sub{opacity:1}
+#lp-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:1.8rem 2.6rem;max-width:600px;padding:0 1rem;opacity:0;transform:translateY(14px);transition:opacity .32s .14s,transform .32s .14s}
+#lp.open #lp-grid{opacity:1;transform:translateY(0)}
+.lp-icon{display:flex;flex-direction:column;align-items:center;gap:.5rem;cursor:pointer}
+.lp-art{filter:drop-shadow(0 8px 20px rgba(0,0,0,.4));transition:transform .22s cubic-bezier(.34,1.56,.64,1),filter .22s}
+.lp-icon:hover .lp-art{transform:scale(1.1);filter:drop-shadow(0 16px 32px rgba(0,0,0,.5))}
+.lp-name{font-size:8px;letter-spacing:.3px;color:#aaa;text-align:center;white-space:nowrap}
+.lp-year{font-size:6.5px;letter-spacing:1.5px;color:#555;text-transform:uppercase}
+
+/* ── DETAIL ── */
+#det{position:absolute;inset:0;z-index:600;background:#f7f7f5;opacity:0;pointer-events:none;transition:opacity .28s;overflow-y:auto}
+#det.open{opacity:1;pointer-events:all}
+#det-back{position:absolute;top:14px;left:14px;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:#aaa;cursor:pointer;padding:6px 10px;border:.5px solid rgba(0,0,0,.1);background:#fff;transition:background .2s;z-index:10}
+#det-back:hover{background:#f0f0ee}
+#det-in{padding:3rem 1.8rem 3rem;max-width:520px;margin:0 auto}
+.d-hero{display:flex;gap:1.5rem;align-items:flex-start;margin-bottom:1.1rem;padding-top:1rem}
+.d-art{display:flex;align-items:center;justify-content:center;flex-shrink:0;filter:drop-shadow(0 6px 18px rgba(0,0,0,.1))}
+.d-title{font-family:‘Bebas Neue’,sans-serif;font-size:34px;line-height:1;color:#1a1a1a;margin-bottom:4px}
+.d-meta{font-size:7.5px;letter-spacing:2px;color:#bbb;text-transform:uppercase;margin-bottom:.6rem}
+.d-badge{display:inline-block;font-size:6.5px;padding:2px 8px;border:.5px solid rgba(0,0,0,.1);color:#aaa;letter-spacing:2px;text-transform:uppercase;margin-bottom:.6rem}
+.d-tags{display:flex;gap:3px;flex-wrap:wrap}
+.d-tag{font-size:6.5px;padding:2px 6px;border:.5px solid rgba(0,0,0,.08);color:#bbb;letter-spacing:1px;text-transform:uppercase}
+.div{height:.5px;background:rgba(0,0,0,.06);margin:.8rem 0}
+.d-media{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:.85rem}
+.d-cell{aspect-ratio:4/3;background:rgba(0,0,0,.03);display:flex;align-items:center;justify-content:center;font-size:6px;letter-spacing:1.5px;color:#ccc;text-transform:uppercase}
+.d-cell.vid{background:#0d0d0d}
+.pr{width:28px;height:28px;border:1px solid rgba(255,255,255,.4);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.pt{width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:9px solid rgba(255,255,255,.7);margin-left:2px}
+.d-desc{font-size:10.5px;line-height:2.1;color:#555;font-style:italic;margin-bottom:.85rem}
+.d-ar{display:flex;align-items:center;gap:10px;padding:9px 12px;border:.5px solid rgba(0,0,0,.14);background:transparent;width:100%;font-family:‘Space Mono’,monospace;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;color:#333;cursor:pointer;margin-bottom:.85rem;transition:background .2s}
+.d-ar:hover{background:rgba(0,0,0,.02)}
+.d-ari{width:18px;height:18px;border:1px solid #555;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;flex-shrink:0}
+.d-acts{display:flex;gap:5px;flex-wrap:wrap}
+.d-btn{padding:6px 12px;border:.5px solid rgba(0,0,0,.13);background:transparent;font-family:‘Space Mono’,monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#555;cursor:pointer;transition:background .2s}
+.d-btn:hover{background:rgba(0,0,0,.03)}
+</style>
+
+<div id="vp">
+  <div id="world"></div>
+  <div id="hud">
+    <div id="topbar">
+      <button class="logo-btn" id="bio-btn">HE LIANGYU</button>
+      <button class="lang-globe" id="lang-cycle-btn" aria-label="Switch language">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.2"/>
+          <ellipse cx="10" cy="10" rx="4" ry="8.5" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="1.5" y1="7.5" x2="18.5" y2="7.5" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="1.5" y1="12.5" x2="18.5" y2="12.5" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+      </button>
+    </div>
+    <div id="toggle"><div class="sw" id="sw"><div class="sw-knob"></div></div><span class="sw-lbl" id="sw-lbl" data-key="sort">整理</span></div>
+  </div>
+
+  <!-- Bio -->
+
+  <div id="bio">
+    <div id="bio-close">✕</div>
+    <div id="bio-inner">
+      <p class="bio-tag" id="b-tag">— 当代装置与新媒体艺术家 / 日本</p>
+      <h1 class="bio-name">HE LIANGYU<span>何梁宇</span></h1>
+      <p class="bio-text" id="b-text"></p>
+      <div class="bio-skills">
+        <span class="bio-skill">装置艺术</span>
+        <span class="bio-skill">新媒体艺术</span>
+        <span class="bio-skill">AR互动</span>
+        <span class="bio-skill">影像</span>
+        <span class="bio-skill">行为表演</span>
+      </div>
+      <p class="bio-contact" id="b-contact">heliangyu.studio</p>
+    </div>
+  </div>
+
+  <!-- Launchpad -->
+
+  <div id="lp">
+    <div id="lp-close">✕</div>
+    <div id="lp-cat"></div><div id="lp-sub"></div>
+    <div id="lp-grid"></div>
+  </div>
+
+  <!-- Detail -->
+
+  <div id="det"><div id="det-back">← 返回</div><div id="det-in"></div></div>
+</div>
+
+<script>
+const CATS=["装置","新媒体艺术","品牌设计"];
+
+/* ── i18n ── */
+const I18N={
+  zh:{
+    sort:'整理', scatter:'打散',
+    works:'件作品',
+    back:'← 返回', backCat:'← 返回分类',
+    bio_tag:'— 当代装置与新媒体艺术家 / 日本',
+    bio_text:'',
+    bio_contact:'heliangyu.studio',
+    skills:['装置艺术','新媒体艺术','AR互动','影像','行为表演'],
+    dl:'下载图册',share:'分享',inquiry:'联系',ar_launch:'启动 AR 互动体验',
+    img:'图像', comingSoon:'即将推出',
+    cats:{'装置':'装置','新媒体艺术':'新媒体艺术','品牌设计':'品牌设计'},
+  },
+  en:{
+    sort:'Sort', scatter:'Scatter',
+    works:'works',
+    back:'← Back', backCat:'← Back to category',
+    bio_tag:'— Contemporary Installation & New Media Artist / Japan',
+    bio_text:'',
+    bio_contact:'heliangyu.studio',
+    skills:['Installation','New Media Art','AR Interaction','Moving Image','Performance'],
+    dl:'Download',share:'Share',inquiry:'Enquire',ar_launch:'Launch AR Experience',
+    img:'Image', comingSoon:'Coming Soon',
+    cats:{'装置':'Installation','新媒体艺术':'New Media Art','品牌设计':'Branding'},
+  },
+  ja:{
+    sort:'整理', scatter:'散らす',
+    works:'作品',
+    back:'← 戻る', backCat:'← カテゴリへ戻る',
+    bio_tag:'— 現代インスタレーション・ニューメディアアーティスト / 日本',
+    bio_text:'',
+    bio_contact:'heliangyu.studio',
+    skills:['インスタレーション','ニューメディアアート','ARインタラクション','映像','パフォーマンス'],
+    dl:'DL',share:'共有',inquiry:'問い合わせ',ar_launch:'AR体験を起動',
+    img:'画像', comingSoon:'近日公開',
+    cats:{'装置':'インスタレーション','新媒体艺术':'ニューメディアアート','品牌设计':'ブランドデザイン'},
+  }
+};
+let lang='zh';
+function t(key){ return I18N[lang][key]||''; }
+
+function applyLang(){
+  const L=I18N[lang];
+  document.getElementById('b-tag').textContent=L.bio_tag;
+  document.getElementById('b-text').textContent=L.bio_text;
+  document.getElementById('b-contact').textContent=L.bio_contact;
+  const sk=document.querySelector('.bio-skills');
+  sk.innerHTML=L.skills.map(s=>`<span class="bio-skill">${s}</span>`).join('');
+  document.getElementById('sw-lbl').textContent=sorted?L.sort:L.scatter;
+  CATS.forEach((c,i)=>{
+    const el=document.getElementById(`lbl-${i}`);
+    if(el) el.textContent=(I18N[lang].cats&&I18N[lang].cats[c])||c;
+  });
+}
+
+const LANGS=['zh','en','ja'];
+document.getElementById('lang-cycle-btn').addEventListener('click',()=>{
+  lang=LANGS[(LANGS.indexOf(lang)+1)%LANGS.length];
+  applyLang();
+});
+
+/* ── WORKS DATA ── */
+const WORKS=[
+  {t:"自分勝手",y:"2024",m:"総合材料インスタレーション",cat:"装置",tags:["機械","金属"],video:true,ar:false,w:220,h:180,url:"jibunkatte/index.html",img:"jibunkatte.png",
+    desc:"身体の再構築の可能性を出発点とし、緻密な計算によって組み立てられたインスタレーションは壮大な定められた運命を象徴する。",
+    svg:`...`},
+
+  {t:"我思う故に我在り",y:"2024",m:"総合材料インスタレーション・パフォーマンス",cat:"装置",tags:["パフォーマンス","映像"],video:true,ar:false,w:200,h:195,url:"i-think-therefore-i-am/index.html",img:"watashi.png",
+    desc:"現実と存在は流動的で多次元的であり、人間の思考の投影と現実の物体は常に重ね合わされ再構築される。",
+    svg:`...`},
+
+  {t:"消失",y:"2023",m:"鋼板・電源指示ランプ・ドライブボード",cat:"装置",tags:["LED","データ"],video:true,ar:false,w:210,h:155,url:"kieru/index.html",img:"kieru.png",
+    desc:"装置は毎年絶滅する植物種の数を呈示する。鋼板上の数万個の緑色インジケーターランプは実際の絶滅ペースに従って順次消灯される。",
+    svg:`...`},
+
+  {t:"海",y:"2023",m:"Cinema 4D · Final Cut Pro · AR",cat:"新媒体艺术",tags:["AR","映像"],video:true,ar:true,w:230,h:165,url:"umi/index.html",img:"umi.png",
+    desc:"この作品を通じて、自然の景観と人との感情的なつながり、そして美の主観性を探求する。",
+    svg:`...`},
+
+  {t:"対話",y:"2023",m:"3DS MAX · Reality Composer · AR",cat:"新媒体艺术",tags:["AR","アニメーション"],video:true,ar:true,w:200,h:170,url:"dialogue/index.html",img:"dialogue.png",
+    desc:"人間の交流方式を異なる物体間に適用することで、観者は観察者であり同時に参加者として作品に介入できる。",
+    svg:`...`},
+
+  {t:"品牌项目 I",y:"—",m:"品牌设计",cat:"品牌设计",tags:["品牌"],video:false,ar:false,w:175,h:145,url:null,
+    desc:"即将推出",
+    svg:`...`},
+];
+
+/* ── dynamic world size ── */
+const vp=document.getElementById('vp');
+const world=document.getElementById('world');
+function getWW(){ return Math.max(vp.offsetWidth, 768) * 1.5; }
+function getWH(){ return Math.max(vp.offsetHeight, 500) * 1.5; }
+function sizeWorld(){ world.style.width=getWW()+'px'; world.style.height=getWH()+'px'; }
+
+const swEl=document.getElementById('sw'),toggleEl=document.getElementById('toggle');
+const bio=document.getElementById('bio'),bioClose=document.getElementById('bio-close'),bioBtnEl=document.getElementById('bio-btn');
+const lp=document.getElementById('lp'),lpClose=document.getElementById('lp-close'),lpCat=document.getElementById('lp-cat'),lpSub=document.getElementById('lp-sub'),lpGrid=document.getElementById('lp-grid');
+const det=document.getElementById('det'),detBack=document.getElementById('det-back'),detIn=document.getElementById('det-in');
+
+let sorted=false,camX=400,camY=300,isPanning=false,panSX=0,panSY=0,panCX=0,panCY=0,objZ=10;
+
+function clamp(){const vw=vp.offsetWidth,vh=vp.offsetHeight;camX=Math.max(0,Math.min(getWW()-vw,camX));camY=Math.max(0,Math.min(getWH()-vh,camY));}
+function applyC(){world.style.transform=`translate(${-camX}px,${-camY}px)`;}
+sizeWorld();clamp();applyC();
+window.addEventListener('resize',()=>{
+  sizeWorld();
+  // update pile labels + hits
+  CATS.forEach((_,i)=>{const pp=pilePos(i);const lbl=document.getElementById('lbl-'+i);if(lbl){lbl.style.left=pp.x+'px';lbl.style.top=(pp.y+160)+'px';}});
+  updateHits();
+  // reposition piles if sorted
+  if(sorted){
+    states.forEach(s=>{const ci=CATS.indexOf(s.w.cat),pp=pilePos(ci);s.x=pp.x-s.w.w/2+s.pileDx;s.y=pp.y-s.w.h/2+s.pileDy;s.el.style.left=s.x+'px';s.el.style.top=s.y+'px';placeSh(s);});
+    let ax=0,ay=0;CATS.forEach((_,i)=>{const pp=pilePos(i);ax+=pp.x;ay+=pp.y;});ax/=CATS.length;ay/=CATS.length;
+    camX=ax-vp.offsetWidth/2;camY=ay-vp.offsetHeight/2;
+  }
+  clamp();applyC();
+});
+
+function pilePos(ci){
+  const WW=getWW(),WH=getWH(),vw=vp.offsetWidth,vh=vp.offsetHeight,ratio=vw/vh,n=CATS.length;
+  if(ratio<0.75){
+    // tall/narrow (phone): vertical stack
+    const margin=WH*.1,gap=(WH-margin*2)/(n-1);
+    return{x:WW*.5,y:margin+ci*gap};
+  }else if(ratio<1.3){
+    // squarish: 2-column grid
+    const cols=2,rows=Math.ceil(n/cols);
+    const col=ci%cols,row=Math.floor(ci/cols);
+    const gx=WW*.3,gy=WH*.25;
+    return{x:WW*.5-gx/2+col*gx,y:WH*.38-gy*(rows-1)/2+row*gy};
+  }else{
+    // wide (desktop): horizontal row
+    const margin=WW*.12,gap=(WW-margin*2)/(n-1);
+    return{x:margin+ci*gap,y:WH*.44};
+  }
+}
+
+function iSVG(w,size=88){if(w.img){const sc=size/Math.max(w.w,w.h);return`<img src="${w.img}" width="${Math.round(w.w*sc)}" height="${Math.round(w.h*sc)}" style="display:block">`;}const body=w.svg.replace(/<svg[^>]*>/,'').replace(/<\/svg>/,'');const sc=size/Math.max(w.w,w.h);return`<svg viewBox="0 0 ${w.w} ${w.h}" width="${Math.round(w.w*sc)}" height="${Math.round(w.h*sc)}" xmlns="http://www.w3.org/2000/svg">${body}</svg>`;}
+
+// pile labels
+CATS.forEach((c,i)=>{
+  const pp=pilePos(i),lbl=document.createElement('div');
+  lbl.className='pile-lbl';lbl.id=`lbl-${i}`;lbl.textContent=c;
+  lbl.style.left=pp.x+'px';lbl.style.top=(pp.y+160)+'px';
+  world.appendChild(lbl);
+});
+
+// pile hits
+const pileHits=CATS.map((_,i)=>{
+  const el=document.createElement('div');el.className='pile-hit';
+  el.style.cssText=`width:180px;height:230px;position:absolute;display:none`;
+  el.addEventListener('click',()=>{if(sorted)openLP(i);});
+  world.appendChild(el);return el;
+});
+function updateHits(){CATS.forEach((_,i)=>{const pp=pilePos(i),h=pileHits[i];h.style.left=(pp.x-90)+'px';h.style.top=(pp.y-115)+'px';h.style.display=sorted?'block':'none';});}
+
+// non-overlapping scatter placement
+function scatterAll(){
+  const WW=getWW(),WH=getWH(),placed=[];
+  return WORKS.map(w=>{
+    const pad=30;
+    for(let tries=0;tries<200;tries++){
+      const x=WW*.06+Math.random()*(WW*.78),y=WH*.06+Math.random()*(WH*.76),rot=(Math.random()-.5)*14;
+      const ok=placed.every(p=>Math.abs(x-p.x)>(w.w+p.w)/2+pad||Math.abs(y-p.y)>(w.h+p.h)/2+pad);
+      if(ok){placed.push({x,y,w:w.w,h:w.h});return{x,y,rot};}
+    }
+    const x=WW*.06+Math.random()*(WW*.78),y=WH*.06+Math.random()*(WH*.76);
+    placed.push({x,y,w:w.w,h:w.h});return{x,y,rot:(Math.random()-.5)*14};
+  });
+}
+const initPos=scatterAll();
+
+// build states
+const states=WORKS.map((w,i)=>{
+  const sp=initPos[i];
+  const shEl=document.createElement('div');shEl.className='shadow nd';shEl.style.cssText=`width:${w.w*.6}px;height:20px;z-index:1;position:absolute`;world.appendChild(shEl);
+  const el=document.createElement('div');el.className='obj nd';el.style.cssText=`left:${sp.x}px;top:${sp.y}px;width:${w.w}px;position:absolute;z-index:${objZ++}`;el.innerHTML=w.img?`<img src="${w.img}" style="width:100%;display:block;pointer-events:none">`:w.svg;el.style.transform=`rotate(${sp.rot}deg)`;el.style.filter='drop-shadow(0 6px 18px rgba(0,0,0,.09))';world.appendChild(el);
+  const s={w,el,shEl,x:sp.x,y:sp.y,rot:sp.rot,hx:sp.x,hy:sp.y,hrot:sp.rot,pileRot:(Math.random()-.5)*18,pileDx:(Math.random()-.5)*50,pileDy:(Math.random()-.5)*38,grabbed:false,dist:0,mode:'scatter',lx:0,ly:0};
+  requestAnimationFrame(()=>{el.classList.remove('nd');shEl.classList.remove('nd');});
+  el.addEventListener('mouseenter',()=>{if(s.mode==='pile')return;el.style.filter='drop-shadow(0 16px 32px rgba(0,0,0,.14))';});
+  el.addEventListener('mouseleave',()=>{el.style.filter='drop-shadow(0 6px 18px rgba(0,0,0,.09))';s.lx=0;s.ly=0;setT(s);});
+  el.addEventListener('mousemove',e=>{if(s.mode==='pile')return;const r=el.getBoundingClientRect();s.lx=-(e.clientY-r.top-r.height/2)/r.height*9;s.ly=(e.clientX-r.left-r.width/2)/r.width*9;setT(s);});
+  el.addEventListener('click',e=>{e.stopPropagation();if(s.mode==='pile'){openLP(CATS.indexOf(s.w.cat));}else{if(s.w.url){window.location.href=s.w.url;}else{openDetail(s.w,false);}}});
+  el.addEventListener('touchend',e=>{if(!isPanning){e.stopPropagation();if(s.mode==='pile'){openLP(CATS.indexOf(s.w.cat));}else{if(s.w.url){window.location.href=s.w.url;}else{openDetail(s.w,false);}}}});
+  placeSh(s);return s;
+});
+
+function setT(s,sc=1){s.el.style.transform=`rotate(${s.rot}deg) scale(${sc}) perspective(600px) rotateX(${s.lx}deg) rotateY(${s.ly}deg)`;}
+function placeSh(s){const lift=s.mode==='pile'?6:14,shsc=.58;s.shEl.style.left=(s.x+s.w.w*(1-shsc)/2)+'px';s.shEl.style.top=(s.y+s.w.h+lift)+'px';s.shEl.style.width=(s.w.w*shsc)+'px';s.shEl.style.opacity=s.mode==='pile'?'.12':'.2';}
+
+vp.addEventListener('mousedown',e=>{if(e.target.closest('#toggle,#topbar'))return;isPanning=true;panSX=e.clientX;panSY=e.clientY;panCX=camX;panCY=camY;vp.classList.add('panning');});
+vp.addEventListener('touchstart',e=>{if(e.target.closest('#toggle,#topbar'))return;if(e.touches.length===1){isPanning=true;panSX=e.touches[0].clientX;panSY=e.touches[0].clientY;panCX=camX;panCY=camY;}},{passive:true});
+
+function onMove(cx,cy){if(!isPanning)return;camX=panCX-(cx-panSX);camY=panCY-(cy-panSY);clamp();applyC();}
+function onUp(){isPanning=false;vp.classList.remove('panning');}
+vp.addEventListener('mousemove',e=>onMove(e.clientX,e.clientY));
+vp.addEventListener('touchmove',e=>{if(isPanning){e.preventDefault();onMove(e.touches[0].clientX,e.touches[0].clientY);}},{passive:false});
+vp.addEventListener('mouseup',onUp);vp.addEventListener('touchend',onUp);
+
+// ── toggle ──
+toggleEl.addEventListener('click',()=>{
+  sorted=!sorted;
+  swEl.classList.toggle('on',sorted);
+  document.getElementById('sw-lbl').textContent=sorted?t('sort'):t('scatter');
+  vp.classList.toggle('dark-mode',sorted);
+  updateHits();
+  if(sorted){
+    const baseZ=objZ+1,pC=CATS.map(()=>0);
+    states.forEach(s=>{const ci=CATS.indexOf(s.w.cat),pp=pilePos(ci);s.x=pp.x-s.w.w/2+s.pileDx;s.y=pp.y-s.w.h/2+s.pileDy;s.rot=s.pileRot;s.lx=0;s.ly=0;s.mode='pile';s.el.style.zIndex=baseZ+ci*20+pC[ci]++;s.el.style.left=s.x+'px';s.el.style.top=s.y+'px';setT(s);placeSh(s);s.el.style.filter='drop-shadow(0 5px 14px rgba(0,0,0,.25))';});
+    objZ=baseZ+CATS.length*20+5;
+    const vpW=vp.offsetWidth,vpH=vp.offsetHeight;
+    let ax=0,ay=0;CATS.forEach((_,i)=>{const pp=pilePos(i);ax+=pp.x;ay+=pp.y;});ax/=CATS.length;ay/=CATS.length;
+    camX=ax-vpW/2;camY=ay-vpH/2;clamp();applyC();
+    CATS.forEach((_,i)=>{const pp=pilePos(i);const lbl=document.getElementById('lbl-'+i);lbl.style.left=pp.x+'px';lbl.style.top=(pp.y+160)+'px';lbl.style.opacity='1';});
+  } else {
+    states.forEach(s=>{s.x=s.hx;s.y=s.hy;s.rot=s.hrot;s.lx=0;s.ly=0;s.mode='scatter';s.el.style.left=s.x+'px';s.el.style.top=s.y+'px';setT(s);placeSh(s);s.el.style.filter='drop-shadow(0 6px 18px rgba(0,0,0,.09))';});
+    CATS.forEach((_,i)=>document.getElementById(`lbl-${i}`).style.opacity='0');
+  }
+});
+
+// ── bio ──
+bioBtnEl.addEventListener('click',()=>bio.classList.add('open'));
+bioClose.addEventListener('click',()=>bio.classList.remove('open'));
+bio.addEventListener('click',e=>{if(e.target===bio)bio.classList.remove('open');});
+
+// ── launchpad ──
+function openLP(ci){const cat=CATS[ci],catName=(I18N[lang].cats&&I18N[lang].cats[cat])||cat,items=WORKS.filter(w=>w.cat===cat);lpCat.textContent=catName;lpSub.textContent=`${items.length} ${t('works')}`;lpGrid.innerHTML=items.map(w=>`<div class="lp-icon" data-t="${w.t}"><div class="lp-art">${iSVG(w)}</div><div class="lp-name">${w.t}</div><div class="lp-year">${w.y}</div></div>`).join('');lpGrid.querySelectorAll('.lp-icon').forEach(el=>{const w=WORKS.find(x=>x.t===el.dataset.t);el.addEventListener('click',()=>{if(w.url){window.location.href=w.url;}else{openDetail(w,true);}});});lp.classList.add('open');}
+lpClose.addEventListener('click',()=>lp.classList.remove('open'));
+lp.addEventListener('click',e=>{if(e.target===lp)lp.classList.remove('open');});
+
+// ── detail ──
+function openDetail(w,fromLp){
+  detBack.textContent=fromLp?t('backCat'):t('back');
+  const sm=iSVG(w);
+  let h=`<div class="d-hero"><div class="d-art">${sm}</div><div><div class="d-title">${w.t}</div><div class="d-meta">${w.y} · ${w.m}</div><div class="d-badge">${w.cat}</div><div class="d-tags">${w.tags.map(t=>`<span class="d-tag">${t}</span>`).join('')}</div></div></div><div class="div"></div>`;
+  h+=`<div class="d-media">${w.video?`<div class="d-cell vid"><div class="pr"><div class="pt"></div></div></div>`:`<div class="d-cell">${t('img')} 01</div>`}<div class="d-cell">${t('img')} 02</div><div class="d-cell">${t('img')} 03</div></div>`;
+  h+=`<div class="div"></div><p class="d-desc">${w.desc}</p><div class="div"></div>`;
+  if(w.ar)h+=`<button class="d-ar"><div class="d-ari">AR</div><span>${t('ar_launch')}</span></button>`;
+  h+=`<div class="d-acts"><button class="d-btn">${t('dl')}</button><button class="d-btn">${t('share')}</button><button class="d-btn">${t('inquiry')}</button></div>`;
+  detIn.innerHTML=h;det.classList.add('open');
+}
+detBack.addEventListener('click',()=>det.classList.remove('open'));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(det.classList.contains('open'))det.classList.remove('open');else if(lp.classList.contains('open'))lp.classList.remove('open');else bio.classList.remove('open');}});
+
+updateHits();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ja" class="lang-ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="color-scheme" content="light">
+<title>我思う故に我在り — 何梁宇</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Serif+JP:wght@300;400&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light only}
+html{forced-color-adjust:none}
+:root{
+  --ink:#000;--ink2:#111;--ink3:#aaa;
+  --rule:rgba(0,0,0,.12);
+  --nav-h:50px;--bar-h:44px;
+  --mono:"Space Mono",monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  height:100%;overflow:hidden;
+  background:#fff !important;color:#000 !important;
+  font-family:var(--mono);-webkit-text-size-adjust:100%;
+}
+.lang-ja .bhead,.lang-ja .h-ttl,.lang-ja .nx-t,
+.lang-ja .note-p,.lang-ja .bp,.lang-ja .prow,
+.lang-ja .hcb .bhead{font-family:"Noto Serif JP",serif}
+.lang-zh .bhead,.lang-zh .h-ttl,.lang-zh .nx-t,
+.lang-zh .hcb .bhead{font-family:"Noto Sans SC",sans-serif;font-weight:900}
+.lang-zh .note-p,.lang-zh .bp,.lang-zh .prow{font-family:"Noto Sans SC",sans-serif;font-weight:400}
+.lang-en .bhead,.lang-en .h-ttl,.lang-en .nx-t,
+.lang-en .hcb .bhead{font-family:"Inter","Helvetica Neue",sans-serif;font-weight:900}
+
+nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;background:#fff !important;flex-shrink:0}
+.nav-l{display:flex;align-items:center;gap:2rem}
+.nav-back{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);text-decoration:none;transition:color .15s}
+.nav-back:hover{color:#000}
+.nav-ttl{font-size:13px;color:#000;letter-spacing:.3px;font-weight:700}
+.lang-ja .nav-ttl{font-family:"Noto Serif JP",serif}
+.lang-zh .nav-ttl{font-family:"Noto Sans SC",sans-serif}
+.lang-globe{background:none;border:none;cursor:pointer;padding:0;color:#000;display:flex;align-items:center;justify-content:center;opacity:.45;transition:opacity .2s;-webkit-tap-highlight-color:transparent}
+.lang-globe:hover{opacity:1}
+
+#page{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
+#page::-webkit-scrollbar{display:none}
+
+.sec{height:100vh;scroll-snap-align:start;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+.sec>.sec-bar{flex-shrink:0}
+
+.sec-bar{display:flex;align-items:center;padding:0 2.5rem;height:var(--bar-h);gap:1rem;background:#fff !important}
+.s-ttl{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#000;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+.dots{display:flex;gap:7px;align-items:center;flex-shrink:0}
+.dot{width:5px;height:5px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .2s,transform .18s}
+.dot.on{background:#000;transform:scale(1.4)}
+
+.h-track{flex:1;min-height:0;position:relative;display:flex;overflow-x:scroll;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.h-track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;overflow:hidden;background:#fff}
+
+.board{display:grid;height:100%}
+.b-half{grid-template-columns:1fr 1fr}
+.b-half .bcell:first-child{border-right:1px solid var(--rule)}
+.bcell{position:relative;overflow:hidden}
+
+.bimg{background:#f4f4f4;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:2rem}
+.bimg img{width:100%;height:100%;object-fit:contain;display:block}
+.bimg.photo{padding:0;background:#e8e8e8}
+.bimg.photo img{object-fit:cover;object-position:center}
+.bph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:#f4f4f4;text-align:center}
+
+.btxt{display:flex;flex-direction:column;justify-content:center;overflow-y:auto;padding:3rem;background:#fff}
+.btxt::-webkit-scrollbar{display:none}
+.brow{margin-bottom:2rem;flex-shrink:0}
+.brow:last-child{margin-bottom:0}
+
+.blbl{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#000;text-transform:uppercase;margin-bottom:.9rem;display:block;font-weight:700}
+.bhead{font-size:clamp(20px,2.5vw,34px);font-weight:900;color:#000;line-height:1.1;margin-bottom:1rem;letter-spacing:-.02em}
+.lang-zh .bhead{letter-spacing:0}
+.lang-ja .bhead{letter-spacing:0;font-weight:400}
+
+.bp{font-size:12px;line-height:1.9;color:#444;margin-bottom:.5rem}
+.bp:last-child{margin-bottom:0}
+.bp b{color:#000;font-weight:700}
+
+.btag{display:inline-block;font-family:var(--mono);font-size:8px;letter-spacing:3px;padding:4px 10px;text-transform:uppercase;margin-bottom:.8rem;font-weight:700;border:1px solid}
+.btag.ok{border-color:#000;color:#000}
+
+.prow{font-size:12px;line-height:1.9;color:#444;padding-left:1.2rem;position:relative;margin-bottom:.25rem}
+.prow::before{position:absolute;left:0;font-weight:700;font-family:var(--mono)}
+.pro::before{content:"+";color:#000}
+
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:.6rem}
+.chip{font-family:var(--mono);font-size:8px;letter-spacing:2px;padding:3px 9px;border:1px solid var(--rule);color:#888;text-transform:uppercase}
+
+#s-hero{background:#fff}
+.hero-g{display:grid;grid-template-columns:58% 42%;height:100%}
+.hero-img{overflow:hidden;border-right:1px solid var(--rule)}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.hero-nfo{display:flex;flex-direction:column;overflow-y:auto;background:#fff}
+.hero-nfo::-webkit-scrollbar{display:none}
+
+.htb{padding:3.5rem 3rem 2rem;flex-shrink:0}
+.h-cat{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:1.5rem;font-weight:700}
+.h-ttl{font-size:clamp(48px,6.5vw,88px);font-weight:900;line-height:.9;color:#000;margin-bottom:.6rem;letter-spacing:-.03em}
+.lang-zh .h-ttl{letter-spacing:0;line-height:.95}
+.lang-ja .h-ttl{letter-spacing:-.01em;font-weight:300;font-size:clamp(40px,5.5vw,72px)}
+.h-sub{font-family:var(--mono);font-size:9px;letter-spacing:2.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:2rem;font-weight:700}
+.specs{display:grid;grid-template-columns:auto 1fr;gap:8px 24px;margin-top:.5rem}
+.sp-l{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:#888;text-transform:uppercase;align-self:center;font-weight:700}
+.sp-v{font-size:13px;color:#000;font-weight:700}
+
+.hcb{padding:0 3rem 2rem;flex-shrink:0;margin-top:-.5rem}
+.hcb .blbl{margin-bottom:.8rem}
+.hcb .bhead{font-size:clamp(15px,1.6vw,19px);font-weight:900;line-height:1.25;letter-spacing:-.01em}
+.lang-ja .hcb .bhead{font-weight:400}
+.hcb .bp{font-size:12px;line-height:1.85;color:#555;margin-top:.6rem}
+
+.ins-det{flex-shrink:0;border-top:1px solid var(--rule)}
+.ins-sum{display:flex;align-items:center;gap:.6rem;padding:1.1rem 3rem;cursor:pointer;list-style:none;outline:none;font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;transition:color .15s;font-weight:700}
+.ins-sum::-webkit-details-marker{display:none}
+.ins-sum::before{content:"▶";font-size:7px;transition:transform .2s;flex-shrink:0}
+.ins-det[open] .ins-sum::before{transform:rotate(90deg)}
+.ins-sum:hover{color:#000}
+.ins-body{padding:0 3rem 2rem}
+.ins-body .note-p{font-size:12px;line-height:1.9;color:#555;margin-bottom:.8rem;font-style:italic}
+.ins-body .note-p:last-of-type{margin-bottom:0}
+.ins-meta{margin-top:1rem;display:flex;gap:1.5rem;flex-wrap:wrap}
+.ins-mi{font-family:var(--mono);font-size:8px;letter-spacing:2.5px;color:var(--ink3);text-transform:uppercase;font-weight:700}
+
+.h-hint{padding:1.5rem 3rem;font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-top:auto;flex-shrink:0;padding-top:0;font-weight:700}
+.h-line{width:28px;height:1px;background:var(--ink3)}
+
+.film-wrap{flex:1;min-height:0;background:#000}
+.vid-wrap{position:relative;width:100%;height:100%}
+.vid-wrap video{width:100%;height:100%;object-fit:cover;display:block}
+.vid-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;cursor:pointer;background:rgba(0,0,0,.28);transition:opacity .3s}
+.vid-ov.gone{opacity:0;pointer-events:none}
+.play-r{width:70px;height:70px;border:1px solid rgba(255,255,255,.45);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:border-color .2s,transform .2s}
+.vid-ov:hover .play-r{border-color:#fff;transform:scale(1.07)}
+.play-t{border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:18px solid rgba(255,255,255,.9);margin-left:4px}
+.vid-lbl{font-family:var(--mono);font-size:9px;letter-spacing:4px;color:rgba(255,255,255,.35);text-transform:uppercase;font-weight:700}
+
+/* ─ BACK ─ */
+#s-back{background:#fff;display:flex;align-items:center;justify-content:center}
+.back-btn{display:flex;align-items:center;gap:.8rem;text-decoration:none;font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;opacity:.35;transition:opacity .2s;font-weight:700}
+.back-btn:hover{opacity:1}
+.back-btn svg{transition:transform .2s}
+.back-btn:hover svg{transform:translateX(-4px)}
+
+#lb{display:none;position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.96);align-items:center;justify-content:center;cursor:zoom-out}
+#lb.open{display:flex}
+#lb img{max-width:92vw;max-height:92vh;object-fit:contain;display:block}
+#lb-x{position:absolute;top:20px;right:24px;font-size:20px;color:rgba(255,255,255,.4);cursor:pointer;font-family:var(--mono);transition:color .2s}
+#lb-x:hover{color:#fff}
+
+@media(max-width:768px){
+  .board.b-half{grid-template-columns:1fr;grid-template-rows:45% 55%}
+  .hero-g{grid-template-columns:1fr;grid-template-rows:42% 58%}
+  .hero-img{border-right:none}
+  .b-half .bcell:first-child{border-right:none}
+  .btxt{padding:2rem 1.8rem}
+  .htb,.hcb{padding-left:1.8rem;padding-right:1.8rem}
+  .ins-sum,.ins-body,.h-hint{padding-left:1.8rem;padding-right:1.8rem}
+  .h-ttl{font-size:clamp(38px,10vw,60px)}
+  .nx-t{font-size:clamp(28px,10vw,52px)}
+}
+</style>
+</head>
+<body>
+<div id="lb"><span id="lb-x">&#10005;</span><img id="lb-img" src="" alt=""></div>
+
+<div id="page">
+
+<!-- ══ HERO ══════════════════════════════ -->
+<section class="sec" id="s-hero">
+<nav>
+  <div class="nav-l">
+    <a class="nav-back" href="../index.html">&#8592;</a>
+    <span class="nav-ttl" id="nav-ttl">我思う故に我在り</span>
+  </div>
+  <button class="lang-globe" id="lang-cycle-btn" title="Switch language" aria-label="Switch language">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.2"/>
+      <ellipse cx="10" cy="10" rx="4" ry="8.5" stroke="currentColor" stroke-width="1.2"/>
+      <line x1="1.5" y1="7.5" x2="18.5" y2="7.5" stroke="currentColor" stroke-width="1.2"/>
+      <line x1="1.5" y1="12.5" x2="18.5" y2="12.5" stroke="currentColor" stroke-width="1.2"/>
+    </svg>
+  </button>
+</nav>
+  <div class="hero-g">
+    <div class="hero-img"><img src="hero.jpg" alt="" onerror="this.style.display='none'"></div>
+    <div class="hero-nfo">
+      <div class="htb">
+        <p class="h-cat" id="h-cat">装置</p>
+        <h1 class="h-ttl" id="h-ttl">我思う故に我在り</h1>
+        <p class="h-sub" id="h-sub">I Think Therefore I Am / 我思故我在</p>
+        <div class="specs">
+          <span class="sp-l" id="h-yl">年份</span><span class="sp-v">2024.11</span>
+          <span class="sp-l" id="h-ml">媒介</span><span class="sp-v" id="h-med">総合材料</span>
+          <span class="sp-l" id="h-tl">形式</span><span class="sp-v" id="h-type">インスタレーション</span>
+        </div>
+      </div>
+      <div class="hcb">
+        <span class="blbl" id="c-lbl">概念 / Concept</span>
+        <h2 class="bhead" id="c1-head">現実と存在の流動性を問うインタラクティブ装置</h2>
+        <p class="bp" id="c1-p1">現実と存在は流動的で多次元的であり、人間の思考の投影と現実の物体は常に重ね合わされ、再構築される。"リアル"とは物理的な実体だけでなく、仮想世界のデジタル存在や個人の記憶に残る映像も含まれます。そして「存在」は、物質から思考まで、過去から未来まで、すべてをカバーする。</p>
+        <p class="bp" id="c1-p2" style="margin-top:.5rem">私は創作者として観察者役割を果たし、私が制作したインスタレーションを観察する。現実のモデルにある家や車を、行動パフォーマンスを通じて装置とインタラクションし再構築します。それによって、現実と存在の間にあるオープンな疑問を観客に投げかけます。</p>
+      </div>
+      <details class="ins-det">
+        <summary class="ins-sum" id="ins-sum">インスピレーション</summary>
+        <div class="ins-body">
+          <p class="note-p" id="c2-p1">古いSF映画を見るたびに、私は人々の未来への期待を嘆かずにはいられない。彼らが想像した未来は私の今であり、しかし、今はまだSFの中の未来になっていない。いくつかのSF映画は、むしろ並行宇宙の未来を構築したかのようです。</p>
+          <p class="note-p" id="c2-p2">それらはすべて、当時の人々が理性と感性をもとに描き出した未来の姿の結果です。それは人々の理性的な論理と自らの感情の結果であり、現在の未来判断に基づく思考と現実を重ね合わせた未来を構築することから生まれる現実なのだ。</p>
+          <div class="ins-meta"><span class="ins-mi">2024.11</span><span class="ins-mi" id="c2-med">総合材料</span></div>
+        </div>
+      </details>
+      <p class="h-hint"><span class="h-line"></span><span id="h-scroll">上下スクロールで移動</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 研究 ══════════════════════════════ -->
+<section class="sec">
+  <div class="sec-bar">
+    <span class="s-ttl" id="ch-research">研究</span>
+    <div class="dots" id="dots-research"></div>
+  </div>
+  <div class="h-track" id="track-research">
+    <!-- R1 -->
+    <div class="slide"><div class="board" style="grid-template-columns:1fr">
+      <div class="bcell btxt" style="padding:3rem 6rem">
+        <div class="brow"><span class="blbl" id="r1-lbl">プロジェクト背景</span><h3 class="bhead" id="r1-head">意識の投影と現実の存在との間の直観的な状態</h3></div>
+        <div class="brow"><p class="bp" id="r1-p1">意識の投影と現実の存在との間の直観的な状態はどのようなものでしょうか？</p></div>
+        <div class="brow"><span class="blbl" id="r1-il">インタビュー洞察</span><p class="bp" id="r1-p2">現実の世界で悪い状況を経験すると、未来への期待は悪化し、ビジョンの重なりは、現実の世界の景観に具体的な影響を与えています。</p></div>
+        <div class="brow"><span class="blbl" id="r1-cl">洞察</span><div class="chips"><span class="chip" id="r1-i1">思考と現実の重なり</span><span class="chip" id="r1-i2">意識の投射が現実を前提にする</span></div></div>
+      </div>
+    </div></div>
+    <!-- R2 -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg"><img src="research-film.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">research-film.jpg</div></div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="r2-lbl">映画調査</span><h3 class="bhead" id="r2-head">SF映画における未来都市への想像力</h3></div>
+        <div class="brow"><p class="bp" id="r2-p1">空間の電子化と時代の技術発展の趨勢を分析し、情報技術の急速な発展、オートメーション化と電化された未来の姿が映画に表現されていることを確認した。</p></div>
+        <div class="brow"><p class="bp" id="r2-p2">SFが現実になると、映画の美しさと現実には一定の差がある。日本の技術停滞と技術不安が映画に表現されている。</p></div>
+        <div class="brow"><span class="blbl" id="r2-il">洞察</span><div class="chips"><span class="chip" id="r2-i1">物理世界と意識世界の間の実在</span><span class="chip" id="r2-i2">思考と現実の重ね合わせ</span></div></div>
+      </div>
+    </div></div>
+    <!-- R3 -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg"><img src="research-concept.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">research-concept.jpg</div></div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="r3-lbl">概念</span><h3 class="bhead" id="r3-head">現実とは、人間の理解と想像力の組み合わせである</h3></div>
+        <div class="brow"><p class="bp" id="r3-p1">存在はリアルの重なり合いです。私たちが考える存在は、集団認知の中で形成された重なり合うリアルです。</p></div>
+        <div class="brow"><p class="bp" id="r3-p2">人の観察と意識の投射は、ある程度現実を前提にすることがある。物理世界と意識の世界の間には実在がある。</p></div>
+        <div class="brow"><span class="blbl" id="r3-il">洞察</span><div class="chips"><span class="chip" id="r3-i1">存在＝リアルの重なり合い</span><span class="chip" id="r3-i2">集団認知による形成</span></div></div>
+      </div>
+    </div></div>
+    <!-- R4 -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell" style="display:grid;grid-template-rows:1fr 1fr;background:#f7f7f7">
+        <div style="overflow:hidden;border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:center"><img src="research-image-1.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.style.display='none'"></div>
+        <div style="overflow:hidden;display:flex;align-items:center;justify-content:center"><img src="research-image-2.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.style.display='none'"></div>
+      </div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="r4-lbl">画像研究</span><h3 class="bhead" id="r4-head">画像の進化 — 記憶と現実の再構築</h3></div>
+        <div class="brow"><p class="bp" id="r4-p1">多くのSF映画に登場するアイテムは日常生活に由来しており、その中でも最も一般的で注目される道具の一つが車です。</p></div>
+        <div class="brow"><p class="bp" id="r4-p2">記憶と現実の間で、私はこのすでに存在しない建物を再構築し、存在しない存在を作り上げる。しかし、もし意識が現実を再構築できるなら、私は一体何なのでしょうか？</p></div>
+        <div class="brow"><span class="blbl" id="r4-il">画像進化方法論</span><div class="chips"><span class="chip" id="r4-m1">ブロック状</span><span class="chip" id="r4-m2">寄せ集め</span><span class="chip" id="r4-m3">分割</span><span class="chip" id="r4-m4">機能</span><span class="chip" id="r4-m5">不完全</span><span class="chip" id="r4-m6">破裂</span><span class="chip" id="r4-m7">層重ね</span><span class="chip" id="r4-m8">コード</span></div></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ══ 実験 ══════════════════════════════ -->
+<section class="sec">
+  <div class="sec-bar">
+    <span class="s-ttl" id="ch-experiment">実験</span>
+    <div class="dots" id="dots-experiment"></div>
+  </div>
+  <div class="h-track" id="track-experiment">
+    <!-- E1 -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg"><img src="experiment-medium.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">experiment-medium.jpg</div></div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="e1-lbl">媒体実験</span><h3 class="bhead" id="e1-head">現実しないものの間の状態 — 光・気・水</h3></div>
+        <div class="brow"><p class="bp"><b id="e1-s1">光</b></p><p class="bp" id="e1-p1">プロジェクターを使用して光と影の実験を行い、無形の中に画像を形成するが、無形の側面により焦点を当てています。</p></div>
+        <div class="brow"><p class="bp"><b id="e1-s2">気</b></p><p class="bp" id="e1-p2">気体に画像を重ね、有形の物体を無形の空気の上に重ねることは、空間における現実と存在の関係に似ています。</p></div>
+        <div class="brow"><p class="bp"><b id="e1-s3">水</b></p><p class="bp" id="e1-p3">水はただの透明な媒体ではなく、日常生活で実際に存在し、触れることができる物体です。</p></div>
+      </div>
+    </div></div>
+    <!-- E2 -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg"><img src="experiment-gas.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">experiment-gas.jpg</div></div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="btag ok" id="e2-tag">&#10003; 採用</span><span class="blbl" id="e2-lbl">媒体決定</span><h3 class="bhead" id="e2-head">気体 — 多重現実の重ね合わせ</h3></div>
+        <div class="brow"><p class="bp" id="e2-p1">気体に画像を重ね、有形の物体を無形の空気の上に重ねることは、空間における現実と存在の関係に似ています。気球にコラージュを行うのは、存在が多重の現実の重ね合わせであり、概念と同様です。</p></div>
+        <div class="brow"><span class="blbl" id="e2-rl">採用理由</span><p class="prow pro" id="e2-r1">虚と実の間の状態を最も的確に表現</p><p class="prow pro" id="e2-r2">多重の現実の重ね合わせという概念と合致</p><p class="prow pro" id="e2-r3">日常的な物体の再構築が可能</p></div>
+      </div>
+    </div></div>
+    <!-- E3 -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell" style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;background:#f7f7f7;padding:2px">
+        <div style="overflow:hidden;background:#f7f7f7"><img src="experiment-perf-1.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="experiment-perf-2.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="experiment-perf-3.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="experiment-perf-4.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block" onerror="this.parentNode.style.background='#eee'"></div>
+      </div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="e3-lbl">パフォーマンス</span><h3 class="bhead" id="e3-head">風船の破壊 — 多重現実の幻想性</h3></div>
+        <div class="brow"><p class="bp" id="e3-p1">風船に穴が開いた。存在と現実の多様性との間の矛盾は複数の現実の本質が幻想であることを反映している。</p></div>
+        <div class="brow"><p class="bp" id="e3-p2">二元論の対立と解消を問い、反省し、認識が現実であるかどうかという問題を純粋に戻そうと、あるいは追放しようとしている。</p></div>
+        <div class="brow"><p class="bp" id="e3-p3">再構築されたアイデンティティを持つ私の肖像が描かれた風船を突き破ることで、このプロセスが完了します。</p></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ══ シミュレーション + 制作 ══════════ -->
+<section class="sec">
+  <div class="sec-bar">
+    <span class="s-ttl" id="ch-sim">シミュレーション + 制作</span>
+    <div class="dots" id="dots-sim"></div>
+  </div>
+  <div class="h-track" id="track-sim">
+    <!-- S1 -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell" style="display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;background:#f7f7f7;padding:2px">
+        <div style="overflow:hidden;background:#f7f7f7"><img src="sim-3d-1.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="sim-3d-2.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="sim-3d-3.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="sim-3d-4.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="sim-3d-5.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="sim-3d-6.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+      </div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="sim-lbl">3Dシミュレーション</span><h3 class="bhead" id="sim-head">空間構成と展示計画の検証</h3></div>
+        <div class="brow"><p class="bp" id="sim-p1">3Dモデリングを用いて、インスタレーション全体の空間構成をシミュレーション。気球で再構築された家と車の配置、観客との距離関係、およびパフォーマンス動線を検証した。</p></div>
+        <div class="brow"><span class="blbl" id="sim-lbl3">素材</span><span class="bp" id="sim-mat">気球 / コラージュ素材 / 画像プリント / 接着剤 / 金属フレーム</span></div>
+      </div>
+    </div></div>
+    <!-- S2 -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#222;padding:2px">
+        <div style="overflow:hidden"><img src="process-1.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#333'"></div>
+        <div style="overflow:hidden"><img src="process-2.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#333'"></div>
+      </div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="sim-lbl2">制作</span><h3 class="bhead" id="sim-head2">コラージュによる気球の構築</h3></div>
+        <div class="brow"><p class="bp" id="sim-p2">日常的な物体（家・車）を気球の形態で再構築。画像のコラージュ技法を用いて、記憶と現実の断片を気球表面に重ね合わせ、存在の多層性を物質化した。</p></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ══ 展示 ══════════════════════════════ -->
+<section class="sec">
+  <div class="sec-bar">
+    <span class="s-ttl" id="ch-exh">展示</span>
+    <div class="dots" id="dots-exh"></div>
+  </div>
+  <div class="h-track" id="track-exh">
+    <!-- CH1 slide 1 -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell" style="display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:2px;background:#f7f7f7;padding:2px">
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-1.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-2.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-3.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-4.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-5.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-6.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-13.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-14.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-16.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+      </div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="exh1-lbl">第一篇章</span><h3 class="bhead" id="exh1-head">観者に賦与された私</h3></div>
+        <div class="brow"><p class="bp" id="exh1-p1">鑑賞者の視線と認知によって、私の存在は新たな意味を付与される。インスタレーションの中で、私は観察される対象であると同時に、観察する主体でもある。</p></div>
+      </div>
+    </div></div>
+    <!-- CH1 slide 2 -->
+    <div class="slide"><div class="board" style="grid-template-columns:1fr">
+      <div class="bcell" style="display:grid;grid-template-columns:1fr 1fr 1fr;grid-auto-rows:1fr;gap:2px;background:#f7f7f7;padding:2px">
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-7.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-8.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-9.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-10.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-11.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-12.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch1-15.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+      </div>
+    </div></div>
+    <!-- CH2 -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell" style="display:grid;grid-template-columns:1fr 1fr 1fr;grid-auto-rows:1fr;gap:2px;background:#f7f7f7;padding:2px">
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch2-1.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch2-2.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch2-3.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch2-4.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch2-5.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch2-6.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch2-7.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+      </div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="exh2-lbl">第二篇章</span><h3 class="bhead" id="exh2-head">私は風船に憑依し、風船が私自身となった</h3></div>
+        <div class="brow"><p class="bp" id="exh2-p1">私は風船に憑依し、風船が私自身となった。物質と意識の境界が曖昧になり、再構築されたアイデンティティが気球の形態を通じて具現化される。</p></div>
+      </div>
+    </div></div>
+    <!-- CH3 -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell" style="display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;background:#f7f7f7;padding:2px">
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch3-1.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch3-2.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch3-3.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch3-4.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch3-5.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch3-6.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+      </div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="exh3-lbl">第三篇章</span><h3 class="bhead" id="exh3-head">存在と現実の多重性の矛盾</h3></div>
+        <div class="brow"><p class="bp" id="exh3-p1">風船を刺し破る行為は、存在と現実の多重性の矛盾を明らかにする。思考の投射による私を刺し破ることで、多重現実の本質が虚構であることを示しています。</p></div>
+      </div>
+    </div></div>
+    <!-- CH4 -->
+    <div class="slide"><div class="board b-half">
+      <div class="bcell" style="display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;background:#f7f7f7;padding:2px">
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch4-1.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch4-2.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch4-3.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch4-4.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch4-5.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+        <div style="overflow:hidden;background:#f7f7f7"><img src="exhibition-ch4-6.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" class="zoomable" onerror="this.parentNode.style.background='#eee'"></div>
+      </div>
+      <div class="bcell btxt">
+        <div class="brow"><span class="blbl" id="exh4-lbl">第四篇章</span><h3 class="bhead" id="exh4-head">すべてを凧にして、風に乗せて飛ばしてしまおう</h3></div>
+        <div class="brow"><p class="bp" id="exh4-p1">私は二元論の対立と解消を疑問視し、純粋な存在への回帰、または認知のリアリティを放棄する問題を反省しようとしています。このすべてを凧にして、風に乗せて飛ばしてしまおう。</p></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ══ 映像 ══════════════════════════════ -->
+<section class="sec">
+  <div class="sec-bar"><span class="s-ttl" id="ch-film">映像</span></div>
+  <div class="film-wrap">
+    <div class="vid-wrap">
+      <iframe src="https://www.youtube.com/embed/EJ9MsBiKmZs" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="width:100%;height:100%;position:absolute;inset:0"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BACK ══════════════════════════════ -->
+<section class="sec" id="s-back">
+  <a class="back-btn" href="../index.html">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <line x1="14" y1="8" x2="2" y2="8" stroke="currentColor" stroke-width="1.5"/>
+      <polyline points="6,3 1,8 6,13" stroke="currentColor" stroke-width="1.5" fill="none"/>
+    </svg>
+    <span id="back-lbl">ホームへ戻る</span>
+  </a>
+</section>
+
+</div>
+
+<script>
+const L={
+ja:{
+  "nav-ttl":"我思う故に我在り",
+  "h-cat":"装置","h-ttl":"我思う故に我在り","h-sub":"I Think Therefore I Am / 我思故我在",
+  "h-yl":"年份","h-ml":"媒介","h-tl":"形式","h-med":"総合材料","h-type":"インスタレーション","h-scroll":"上下スクロールで移動",
+  "c-lbl":"概念 / Concept","c1-head":"現実と存在の流動性を問うインタラクティブ装置",
+  "c1-p1":"現実と存在は流動的で多次元的であり、人間の思考の投影と現実の物体は常に重ね合わされ、再構築される。\"リアル\"とは物理的な実体だけでなく、仮想世界のデジタル存在や個人の記憶に残る映像も含まれます。そして「存在」は、物質から思考まで、過去から未来まで、すべてをカバーする。",
+  "c1-p2":"私は創作者として観察者役割を果たし、私が制作したインスタレーションを観察する。現実のモデルにある家や車を、行動パフォーマンスを通じて装置とインタラクションし再構築します。それによって、現実と存在の間にあるオープンな疑問を観客に投げかけます。",
+  "ins-sum":"インスピレーション",
+  "c2-p1":"古いSF映画を見るたびに、私は人々の未来への期待を嘆かずにはいられない。彼らが想像した未来は私の今であり、しかし、今はまだSFの中の未来になっていない。いくつかのSF映画は、むしろ並行宇宙の未来を構築したかのようです。",
+  "c2-p2":"それらはすべて、当時の人々が理性と感性をもとに描き出した未来の姿の結果です。それは人々の理性的な論理と自らの感情の結果であり、現在の未来判断に基づく思考と現実を重ね合わせた未来を構築することから生まれる現実なのだ。",
+  "c2-med":"総合材料",
+  "ch-research":"研究",
+  "r1-lbl":"プロジェクト背景","r1-head":"意識の投影と現実の存在との間の直観的な状態","r1-p1":"意識の投影と現実の存在との間の直観的な状態はどのようなものでしょうか？","r1-il":"インタビュー洞察","r1-p2":"現実の世界で悪い状況を経験すると、未来への期待は悪化し、ビジョンの重なりは、現実の世界の景観に具体的な影響を与えています。","r1-cl":"洞察","r1-i1":"思考と現実の重なり","r1-i2":"意識の投射が現実を前提にする",
+  "r2-lbl":"映画調査","r2-head":"SF映画における未来都市への想像力","r2-p1":"空間の電子化と時代の技術発展の趨勢を分析し、情報技術の急速な発展、オートメーション化と電化された未来の姿が映画に表現されていることを確認した。","r2-p2":"SFが現実になると、映画の美しさと現実には一定の差がある。日本の技術停滞と技術不安が映画に表現されている。","r2-il":"洞察","r2-i1":"物理世界と意識世界の間の実在","r2-i2":"思考と現実の重ね合わせ",
+  "r3-lbl":"概念","r3-head":"現実とは、人間の理解と想像力の組み合わせである","r3-p1":"存在はリアルの重なり合いです。私たちが考える存在は、集団認知の中で形成された重なり合うリアルです。","r3-p2":"人の観察と意識の投射は、ある程度現実を前提にすることがある。物理世界と意識の世界の間には実在がある。","r3-il":"洞察","r3-i1":"存在＝リアルの重なり合い","r3-i2":"集団認知による形成",
+  "r4-lbl":"画像研究","r4-head":"画像の進化 — 記憶と現実の再構築","r4-p1":"多くのSF映画に登場するアイテムは日常生活に由来しており、その中でも最も一般的で注目される道具の一つが車です。","r4-p2":"記憶と現実の間で、私はこのすでに存在しない建物を再構築し、存在しない存在を作り上げる。しかし、もし意識が現実を再構築できるなら、私は一体何なのでしょうか？","r4-il":"画像進化方法論","r4-m1":"ブロック状","r4-m2":"寄せ集め","r4-m3":"分割","r4-m4":"機能","r4-m5":"不完全","r4-m6":"破裂","r4-m7":"層重ね","r4-m8":"コード",
+  "ch-experiment":"実験",
+  "e1-lbl":"媒体実験","e1-head":"現実しないものの間の状態 — 光・気・水","e1-s1":"光","e1-p1":"プロジェクターを使用して光と影の実験を行い、無形の中に画像を形成するが、無形の側面により焦点を当てています。","e1-s2":"気","e1-p2":"気体に画像を重ね、有形の物体を無形の空気の上に重ねることは、空間における現実と存在の関係に似ています。","e1-s3":"水","e1-p3":"水はただの透明な媒体ではなく、日常生活で実際に存在し、触れることができる物体です。",
+  "e2-tag":"✓ 採用","e2-lbl":"媒体決定","e2-head":"気体 — 多重現実の重ね合わせ","e2-p1":"気体に画像を重ね、有形の物体を無形の空気の上に重ねることは、空間における現実と存在の関係に似ています。気球にコラージュを行うのは、存在が多重の現実の重ね合わせであり、概念と同様です。","e2-rl":"採用理由","e2-r1":"虚と実の間の状態を最も的確に表現","e2-r2":"多重の現実の重ね合わせという概念と合致","e2-r3":"日常的な物体の再構築が可能",
+  "e3-lbl":"パフォーマンス","e3-head":"風船の破壊 — 多重現実の幻想性","e3-p1":"風船に穴が開いた。存在と現実の多様性との間の矛盾は複数の現実の本質が幻想であることを反映している。","e3-p2":"二元論の対立と解消を問い、反省し、認識が現実であるかどうかという問題を純粋に戻そうと、あるいは追放しようとしている。","e3-p3":"再構築されたアイデンティティを持つ私の肖像が描かれた風船を突き破ることで、このプロセスが完了します。",
+  "ch-sim":"シミュレーション + 制作","sim-lbl":"3Dシミュレーション","sim-head":"空間構成と展示計画の検証","sim-p1":"3Dモデリングを用いて、インスタレーション全体の空間構成をシミュレーション。気球で再構築された家と車の配置、観客との距離関係、およびパフォーマンス動線を検証した。","sim-lbl3":"素材","sim-mat":"気球 / コラージュ素材 / 画像プリント / 接着剤 / 金属フレーム","sim-lbl2":"制作","sim-head2":"コラージュによる気球の構築","sim-p2":"日常的な物体（家・車）を気球の形態で再構築。画像のコラージュ技法を用いて、記憶と現実の断片を気球表面に重ね合わせ、存在の多層性を物質化した。",
+  "ch-exh":"展示",
+  "exh1-lbl":"第一篇章","exh1-head":"観者に賦与された私","exh1-p1":"鑑賞者の視線と認知によって、私の存在は新たな意味を付与される。インスタレーションの中で、私は観察される対象であると同時に、観察する主体でもある。",
+  "exh2-lbl":"第二篇章","exh2-head":"私は風船に憑依し、風船が私自身となった","exh2-p1":"私は風船に憑依し、風船が私自身となった。物質と意識の境界が曖昧になり、再構築されたアイデンティティが気球の形態を通じて具現化される。",
+  "exh3-lbl":"第三篇章","exh3-head":"存在と現実の多重性の矛盾","exh3-p1":"風船を刺し破る行為は、存在と現実の多重性の矛盾を明らかにする。思考の投射による私を刺し破ることで、多重現実の本質が虚構であることを示しています。",
+  "exh4-lbl":"第四篇章","exh4-head":"すべてを凧にして、風に乗せて飛ばしてしまおう","exh4-p1":"私は二元論の対立と解消を疑問視し、純粋な存在への回帰、または認知のリアリティを放棄する問題を反省しようとしています。このすべてを凧にして、風に乗せて飛ばしてしまおう。",
+  "ch-film":"映像","film-lbl":"映画 · Documentary Film","back-lbl":"ホームへ戻る"
+},
+zh:{
+  "nav-ttl":"我思故我在",
+  "h-cat":"装置","h-ttl":"我思故我在","h-sub":"我思う故に我在り / I Think Therefore I Am",
+  "h-yl":"年份","h-ml":"媒介","h-tl":"形式","h-med":"综合材料","h-type":"装置","h-scroll":"上下滚动切换板块",
+  "c-lbl":"概念 / Concept","c1-head":"追问现实与存在的流动性的互动装置",
+  "c1-p1":"现实与存在是流动且多维的，人类思考的投影与现实的物体不断被叠加、重构。\u201c现实\u201d不仅是物理实体，还包含虚拟世界的数字存在和个人记忆中残留的影像。而\u201c存在\u201d涵盖从物质到思考、从过去到未来的一切。",
+  "c1-p2":"我作为创作者扮演观察者的角色，观察我所制作的装置。通过行为表演与装置互动，重构现实模型中的房屋和汽车，由此向观众抛出关于现实与存在之间的开放性疑问。",
+  "ins-sum":"灵感",
+  "c2-p1":"每当看到老科幻电影，我都不禁为人们对未来的期待而感叹。他们想象的未来就是我的现在，但现在还远未成为科幻中的未来。一些科幻电影更像是构建了平行宇宙的未来。",
+  "c2-p2":"它们都是当时人们以理性和感性为基础描绘出的未来图景。那是人们理性逻辑与自身情感的结果，是基于当下对未来的判断、将思考与现实叠加而构建出的现实。",
+  "c2-med":"综合材料",
+  "ch-research":"研究",
+  "r1-lbl":"项目背景","r1-head":"意识投射与现实存在之间的直觉状态","r1-p1":"意识的投影与现实的存在之间的直觉状态是什么样的？","r1-il":"访谈洞察","r1-p2":"当在现实世界中经历不好的状况时，对未来的期待会恶化，视野的重叠对现实世界的景观产生了具体的影响。","r1-cl":"洞察","r1-i1":"思考与现实的重叠","r1-i2":"意识投射以现实为前提",
+  "r2-lbl":"电影调研","r2-head":"科幻电影中对未来城市的想象力","r2-p1":"分析空间电子化与时代技术发展趋势，确认信息技术的快速发展、自动化和电气化的未来图景在电影中的表现。","r2-p2":"当科幻变成现实时，电影的美感与现实之间存在一定差距。日本的技术停滞与技术焦虑在电影中得到了表达。","r2-il":"洞察","r2-i1":"物理世界与意识世界之间的实在","r2-i2":"思考与现实的叠加",
+  "r3-lbl":"概念","r3-head":"现实是人类理解与想象力的结合","r3-p1":"存在是现实的重叠。我们所认为的存在，是在集体认知中形成的重叠的现实。","r3-p2":"人的观察与意识的投射，在某种程度上以现实为前提。物理世界与意识世界之间存在着实在。","r3-il":"洞察","r3-i1":"存在＝现实的重叠","r3-i2":"由集体认知形成",
+  "r4-lbl":"图像研究","r4-head":"图像的进化——记忆与现实的重构","r4-p1":"许多科幻电影中出现的物品来源于日常生活，其中最常见且最受关注的工具之一就是汽车。","r4-p2":"在记忆与现实之间，我重构这座已不存在的建筑，创造出不存在的存在。但如果意识能重构现实，那我究竟是什么？","r4-il":"图像进化方法论","r4-m1":"块状","r4-m2":"拼凑","r4-m3":"分割","r4-m4":"功能","r4-m5":"不完整","r4-m6":"破裂","r4-m7":"层叠","r4-m8":"编码",
+  "ch-experiment":"实验",
+  "e1-lbl":"媒介实验","e1-head":"不存在之物之间的状态——光·气·水","e1-s1":"光","e1-p1":"使用投影仪进行光与影的实验，在无形中形成图像，但更侧重于无形的层面。","e1-s2":"气","e1-p2":"将图像叠加在气体上，将有形物体覆盖在无形的空气上，这类似于空间中现实与存在的关系。","e1-s3":"水","e1-p3":"水不仅仅是透明的媒介，它在日常生活中实际存在，是可以触摸的物体。",
+  "e2-tag":"✓ 采用","e2-lbl":"媒介决定","e2-head":"气体——多重现实的叠加","e2-p1":"将图像叠加在气体上，将有形物体覆盖在无形的空气上，这类似于空间中现实与存在的关系。在气球上进行拼贴，因为存在是多重现实的叠加，与概念一致。","e2-rl":"采用理由","e2-r1":"最准确地表达虚与实之间的状态","e2-r2":"与多重现实叠加的概念一致","e2-r3":"能够重构日常物体",
+  "e3-lbl":"行为表演","e3-head":"气球的破坏——多重现实的幻象性","e3-p1":"气球被刺破。存在与现实多样性之间的矛盾反映出多重现实的本质是幻象。","e3-p2":"质疑并反思二元论的对立与消解，试图将认识是否为现实的问题纯粹地归还，或者加以驱逐。","e3-p3":"通过刺破描绘着重构身份的我的肖像的气球，完成这一过程。",
+  "ch-sim":"模拟 + 制作","sim-lbl":"3D模拟","sim-head":"空间构成与展示规划验证","sim-p1":"使用3D建模模拟装置整体的空间构成。验证了用气球重构的房屋和汽车的布局、与观众的距离关系以及表演动线。","sim-lbl3":"材料","sim-mat":"气球 / 拼贴素材 / 图像打印 / 黏合剂 / 金属框架","sim-lbl2":"制作","sim-head2":"通过拼贴构建气球","sim-p2":"以气球形态重构日常物体（房屋、汽车）。运用图像拼贴技法，将记忆与现实的碎片叠加在气球表面，将存在的多层性物质化。",
+  "ch-exh":"展示",
+  "exh1-lbl":"第一篇章","exh1-head":"被观者赋予的我","exh1-p1":"通过鉴赏者的目光与认知，我的存在被赋予新的意义。在装置中，我既是被观察的对象，也是观察的主体。",
+  "exh2-lbl":"第二篇章","exh2-head":"我附身于气球，气球成为了我自身","exh2-p1":"我附身于气球，气球成为了我自身。物质与意识的边界变得模糊，重构的身份通过气球的形态得以具象化。",
+  "exh3-lbl":"第三篇章","exh3-head":"存在与现实多重性的矛盾","exh3-p1":"刺破气球的行为揭示了存在与现实多重性的矛盾。通过刺破由思考投射而成的我，展示多重现实的本质是虚构的。",
+  "exh4-lbl":"第四篇章","exh4-head":"把一切变成风筝，乘风飞去吧","exh4-p1":"我质疑二元论的对立与消解，试图反思纯粹存在的回归，或者放弃认知的现实性的问题。把这一切变成风筝，乘着风飞走吧。",
+  "ch-film":"影像","film-lbl":"影片 · Documentary Film","back-lbl":"返回主页"
+},
+en:{
+  "nav-ttl":"I Think Therefore I Am",
+  "h-cat":"Installation","h-ttl":"I Think Therefore I Am","h-sub":"我思う故に我在り / 我思故我在",
+  "h-yl":"Year","h-ml":"Medium","h-tl":"Type","h-med":"Mixed Media","h-type":"Installation","h-scroll":"Scroll to navigate",
+  "c-lbl":"Concept","c1-head":"An interactive installation questioning the fluidity of reality and existence",
+  "c1-p1":"Reality and existence are fluid and multidimensional — the projections of human thought and real-world objects are constantly superimposed and reconstructed. 'Real' encompasses not only physical entities but also digital presences in virtual worlds and images lingering in personal memory.",
+  "c1-p2":"As the creator, I take on the role of observer. Through behavioural performance, I interact with and reconstruct the houses and cars found in real-world models, posing open-ended questions to the audience about the space between reality and existence.",
+  "ins-sum":"Inspiration",
+  "c2-p1":"Whenever I watch old science fiction films, I cannot help but marvel at people's expectations for the future. The future they imagined is my present, yet today has not yet become the future depicted in those films.",
+  "c2-p2":"They are all the result of people of that era depicting the future based on reason and sensibility — a reality born from constructing a future that superimposes thought and reality based on present-day judgements.",
+  "c2-med":"Mixed Media",
+  "ch-research":"Research",
+  "r1-lbl":"Project Background","r1-head":"The intuitive state between consciousness projection and real existence","r1-p1":"What is the intuitive state between the projection of consciousness and the existence of reality?","r1-il":"Interview Insight","r1-p2":"When experiencing bad situations in the real world, expectations for the future deteriorate, and the overlap of visions has a concrete impact on the landscape of the real world.","r1-cl":"Insight","r1-i1":"Overlap of thought and reality","r1-i2":"Consciousness projection presupposes reality",
+  "r2-lbl":"Film Research","r2-head":"Imagination of future cities in science fiction cinema","r2-p1":"Analysing the trends of spatial digitisation and technological development, confirming that automation and electrification of the future are expressed in cinema.","r2-p2":"When science fiction becomes reality, there is a gap between cinematic beauty and reality. Japan's technological stagnation and anxiety are expressed in its films.","r2-il":"Insight","r2-i1":"Reality between physical and conscious worlds","r2-i2":"Superposition of thought and reality",
+  "r3-lbl":"Concept","r3-head":"Reality is a combination of human understanding and imagination","r3-p1":"Existence is the overlap of realities. What we consider existence is an overlapping reality formed within collective cognition.","r3-p2":"Human observation and the projection of consciousness presuppose reality to a certain extent. Between the physical world and the world of consciousness, there exists reality.","r3-il":"Insight","r3-i1":"Existence = overlap of realities","r3-i2":"Formed by collective cognition",
+  "r4-lbl":"Image Research","r4-head":"Evolution of imagery — reconstructing memory and reality","r4-p1":"Many items appearing in science fiction films originate from everyday life, and among them, the car is one of the most common and notable objects.","r4-p2":"Between memory and reality, I reconstruct this building that no longer exists, creating a non-existent existence. But if consciousness can reconstruct reality, then what am I?","r4-il":"Image Evolution Methodology","r4-m1":"Block","r4-m2":"Assemblage","r4-m3":"Division","r4-m4":"Function","r4-m5":"Incomplete","r4-m6":"Rupture","r4-m7":"Layering","r4-m8":"Code",
+  "ch-experiment":"Experiment",
+  "e1-lbl":"Medium Experiment","e1-head":"States between non-existent things — Light, Air, Water","e1-s1":"Light","e1-p1":"Using a projector to conduct experiments with light and shadow, forming images within the intangible.","e1-s2":"Air","e1-p2":"Superimposing images onto gas and layering tangible objects onto intangible air resembles the relationship between reality and existence in space.","e1-s3":"Water","e1-p3":"Water is not merely a transparent medium — it actually exists in daily life and is an object that can be touched.",
+  "e2-tag":"✓ Selected","e2-lbl":"Medium Decision","e2-head":"Air — Superposition of multiple realities","e2-p1":"Superimposing images onto gas and layering tangible objects onto intangible air resembles the relationship between reality and existence in space. Collaging onto balloons reflects existence as a superposition of multiple realities.","e2-rl":"Reasons for Selection","e2-r1":"Most accurately expresses the state between virtual and real","e2-r2":"Consistent with the concept of superimposed realities","e2-r3":"Enables reconstruction of everyday objects",
+  "e3-lbl":"Performance","e3-head":"Destruction of the balloon — the illusory nature of multiple realities","e3-p1":"A hole is punctured in the balloon. The contradiction between existence and the diversity of reality reflects that the essence of multiple realities is illusion.","e3-p2":"Questioning and reflecting on the opposition and resolution of dualism, attempting to purely return or banish the question of whether cognition is reality.","e3-p3":"By piercing the balloon bearing my portrait with a reconstructed identity, this process is completed.",
+  "ch-sim":"Simulation + Fabrication","sim-lbl":"3D Simulation","sim-head":"Verification of spatial composition and exhibition plan","sim-p1":"Using 3D modelling to simulate the overall spatial composition. The arrangement of reconstructed houses and cars, the distance relationship with the audience, and the performance circulation were verified.","sim-lbl3":"Materials","sim-mat":"Balloons / Collage materials / Image prints / Adhesive / Metal frame","sim-lbl2":"Fabrication","sim-head2":"Constructing balloons through collage","sim-p2":"Reconstructing everyday objects in balloon form. Using image collage techniques, fragments of memory and reality were superimposed on the balloon surface, materialising the multi-layered nature of existence.",
+  "ch-exh":"Exhibition",
+  "exh1-lbl":"Chapter One","exh1-head":"The self bestowed by the viewer","exh1-p1":"Through the viewer's gaze and cognition, my existence is endowed with new meaning. Within the installation, I am both the object of observation and the observing subject.",
+  "exh2-lbl":"Chapter Two","exh2-head":"I possessed the balloon, and the balloon became myself","exh2-p1":"I possessed the balloon, and the balloon became myself. The boundary between matter and consciousness becomes blurred, and the reconstructed identity is embodied through the balloon's form.",
+  "exh3-lbl":"Chapter Three","exh3-head":"The contradiction of multiple realities and existence","exh3-p1":"The act of piercing the balloon reveals the contradiction between existence and the multiplicity of reality. By piercing the 'me' projected by thought, it demonstrates that the essence of multiple realities is fiction.",
+  "exh4-lbl":"Chapter Four","exh4-head":"Turn everything into a kite and let the wind carry it away","exh4-p1":"I question the opposition and resolution of dualism, attempting to reflect on the return to pure existence, or the abandonment of cognitive reality. Turn all of this into a kite and let the wind carry it away.",
+  "ch-film":"Film","film-lbl":"Documentary Film","back-lbl":"Back to Home"
+}
+};
+
+let lang="ja";try{lang=localStorage.getItem("hl-lang")||"ja"}catch(e){}
+
+const IDS=[
+  "nav-ttl","h-cat","h-ttl","h-sub","h-yl","h-ml","h-tl","h-med","h-type","h-scroll",
+  "c-lbl","c1-head","c1-p1","c1-p2","ins-sum","c2-p1","c2-p2","c2-med",
+  "ch-research",
+  "r1-lbl","r1-head","r1-p1","r1-il","r1-p2","r1-cl","r1-i1","r1-i2",
+  "r2-lbl","r2-head","r2-p1","r2-p2","r2-il","r2-i1","r2-i2",
+  "r3-lbl","r3-head","r3-p1","r3-p2","r3-il","r3-i1","r3-i2",
+  "r4-lbl","r4-head","r4-p1","r4-p2","r4-il","r4-m1","r4-m2","r4-m3","r4-m4","r4-m5","r4-m6","r4-m7","r4-m8",
+  "ch-experiment",
+  "e1-lbl","e1-head","e1-s1","e1-p1","e1-s2","e1-p2","e1-s3","e1-p3",
+  "e2-tag","e2-lbl","e2-head","e2-p1","e2-rl","e2-r1","e2-r2","e2-r3",
+  "e3-lbl","e3-head","e3-p1","e3-p2","e3-p3",
+  "ch-sim","sim-lbl","sim-head","sim-p1","sim-lbl3","sim-mat","sim-lbl2","sim-head2","sim-p2",
+  "ch-exh",
+  "exh1-lbl","exh1-head","exh1-p1","exh2-lbl","exh2-head","exh2-p1",
+  "exh3-lbl","exh3-head","exh3-p1","exh4-lbl","exh4-head","exh4-p1",
+  "ch-film","film-lbl","back-lbl"
+];
+
+function applyLang(l){
+  lang=l;try{localStorage.setItem("hl-lang",l)}catch(e){}
+  document.documentElement.setAttribute("lang",l==="zh"?"zh-CN":l);
+  document.documentElement.className="lang-"+l;
+  const d=L[l]||L.ja;
+  document.title=(d["h-ttl"]||"Work")+" \u2014 \u4f55\u6881\u5b87";
+  IDS.forEach(id=>{const el=document.getElementById(id);if(el&&d[id]!==undefined)el.textContent=d[id]});
+}
+
+const cycleBtn=document.getElementById("lang-cycle-btn");
+const langs=["ja","zh","en"];
+function cycleLang(){const idx=langs.indexOf(lang);applyLang(langs[(idx+1)%langs.length])}
+if(cycleBtn)cycleBtn.addEventListener("click",cycleLang);
+
+function initTrack(id){
+  const track=document.getElementById("track-"+id);if(!track)return;
+  const slides=track.querySelectorAll(".slide");const n=slides.length;
+  const dotsEl=document.getElementById("dots-"+id);
+  if(dotsEl){dotsEl.innerHTML="";for(let i=0;i<n;i++){const d=document.createElement("div");d.className="dot"+(i===0?" on":"");d.onclick=()=>go(i);dotsEl.appendChild(d)}}
+  const curIdx=()=>Math.round(track.scrollLeft/track.clientWidth);
+  const go=i=>track.scrollTo({left:i*track.clientWidth,behavior:"smooth"});
+  function upd(){const i=curIdx();if(dotsEl)dotsEl.querySelectorAll(".dot").forEach((d,j)=>d.classList.toggle("on",j===i))}
+  track.addEventListener("scroll",upd,{passive:true});upd();
+}
+["research","experiment","sim","exh"].forEach(initTrack);
+
+const lb=document.getElementById("lb"),lbi=document.getElementById("lb-img");
+const closeLB=()=>{lb.classList.remove("open");document.body.style.overflow=""};
+document.getElementById("lb-x").addEventListener("click",closeLB);
+lb.addEventListener("click",e=>{if(e.target===lb||e.target===lbi)closeLB()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLB()});
+document.querySelectorAll(".zoomable").forEach(img=>{
+  img.addEventListener("click",()=>{lbi.src=img.src;lb.classList.add("open");document.body.style.overflow="hidden"});
+});
+
+const vid=document.getElementById("vid"),vov=document.getElementById("vid-ov");
+
+applyLang(lang);
+</script>
+</body>
+</html>
