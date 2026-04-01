@@ -253,7 +253,7 @@ const I18N={
     sort:'整理', scatter:'散らす',
     works:'作品',
     back:'← 戻る', backCat:'← カテゴリへ戻る',
-    bio_tag:'— 現代インスタレーション・ニューメディアアーティスト / 日本',
+    bio_tag:'— 現代インスタレーション・ニューメディア / 中国',
     bio_text:'',
     bio_contact:'heliangyu.studio',
     skills:['インスタレーション','ニューメディアアート','ARインタラクション','映像','パフォーマンス'],
