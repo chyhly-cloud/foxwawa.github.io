@@ -834,6 +834,7 @@ button{font:inherit;color:inherit}
 /* The source board is shown intact; on phones it remains zoomable and horizontally readable. */
 .grammar-scroll .zoomable{overflow:hidden;border-radius:0 18px 18px 0}
 .grammar-scroll img{filter:none!important;mix-blend-mode:normal!important}
+.morph-group,.morph-group-cards{display:contents}
 
 /* Three upright source columns descend into their real spectrum coordinates. */
 .spectrum-morph{height:205vh!important}
@@ -961,6 +962,37 @@ button{font:inherit;color:inherit}
   .existence-diagram .actuality-circle{font-size:14px!important;writing-mode:horizontal-tb!important}
   .existence-diagram .actuality-cluster strong{font-size:clamp(2.35rem,11vw,3.25rem)!important}
   .grammar-scroll .zoomable{width:1120px!important;min-width:1120px!important;background:transparent!important}
+}
+
+/* On a phone the three experiments become three readable image sequences.
+   The desktop condensation animation is replaced by a quiet, vertical
+   virtual-to-real spectrum so neither images nor labels compete for width. */
+@media(max-width:680px){
+  .medium-refined .spectrum-morph{height:auto!important;margin-top:3rem!important}
+  .medium-refined .spectrum-morph-sticky{position:relative!important;top:auto!important;display:block!important;width:100%!important;height:auto!important;min-height:0!important;margin:0!important;overflow:visible!important}
+  .medium-refined .spectrum-morph-canvas{position:relative!important;left:auto!important;top:auto!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;transform:none!important}
+  .medium-refined .morph-instruction{display:none!important}
+  .medium-refined .morph-group{display:block!important;margin:0 0 3.75rem}
+  .medium-refined .morph-group-cards{display:flex!important;gap:1rem;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;padding:.15rem 0 1rem;scrollbar-color:rgba(255,255,255,.34) transparent}
+  .medium-refined .morph-group-cards::after{content:"";flex:0 0 .01rem}
+  .medium-refined .morph-column-label{position:static!important;left:auto!important;top:auto!important;bottom:auto!important;display:block!important;width:100%;margin:0 0 1rem;transform:none!important;opacity:1!important;text-align:left}
+  .medium-refined .morph-column-label b{font-size:clamp(2rem,9vw,3rem)!important;line-height:1.15}
+  .medium-refined .morph-card{position:relative!important;left:auto!important;top:auto!important;flex:0 0 min(82vw,420px);width:min(82vw,420px)!important;height:auto!important;aspect-ratio:1!important;margin:0!important;transform:none!important;clip-path:none!important;opacity:1!important;z-index:auto!important;scroll-snap-align:center;background:transparent!important;border:0!important;box-shadow:none!important;overflow:hidden!important}
+  .medium-refined .morph-card img{display:block;width:100%;height:100%;object-fit:contain!important;background:transparent!important}
+
+  .medium-refined .material-spectrum{position:relative!important;left:auto!important;right:auto!important;top:auto!important;display:flex!important;flex-direction:column;width:100%!important;margin:0!important;padding:2.25rem 0 2.75rem!important;transform:none!important;opacity:1!important;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .medium-refined .spectrum-end{display:flex!important;flex-direction:row!important;align-items:baseline!important;justify-content:center!important;gap:1rem;width:100%;text-align:center!important}
+  .medium-refined .spectrum-end b{font-size:clamp(2.7rem,13vw,4rem)!important;line-height:1;white-space:nowrap}
+  .medium-refined .spectrum-end span{width:auto!important;font-size:15px!important;line-height:1.5!important;letter-spacing:.04em!important;white-space:nowrap}
+  .medium-refined .spectrum-track{position:relative;width:2px;height:430px;margin:1.5rem auto;background:var(--line)}
+  .medium-refined .spectrum-fill{position:absolute;inset:0;transform:none!important;background:linear-gradient(180deg,rgba(159,176,214,.38),var(--violet) 50%,rgba(208,118,91,.42))}
+  .medium-refined .medium-point{left:50%!important;display:grid!important;grid-template-columns:1fr 30px 1fr;grid-template-rows:auto auto;column-gap:1rem;align-items:center;width:min(360px,calc(100vw - 2.5rem));min-width:0!important;transform:translate(-50%,-50%)!important;text-align:left!important}
+  .medium-refined .point-light{top:17%!important}.medium-refined .point-air{top:50%!important}.medium-refined .point-water{top:83%!important}
+  .medium-refined .medium-point i{position:static!important;grid-column:2;grid-row:1/3;align-self:center;justify-self:center;margin:0}
+  .medium-refined .medium-point b{position:static!important;grid-column:3;grid-row:1;font-size:clamp(1.55rem,7vw,2rem)!important;line-height:1.2;white-space:nowrap}
+  .medium-refined .medium-point span{position:static!important;grid-column:3;grid-row:2;width:auto!important;max-width:17ch;font-size:15px!important;line-height:1.55!important;text-align:left!important;white-space:normal!important}
+  .medium-refined .point-air b{font-size:clamp(1.75rem,8vw,2.25rem)!important}
+  .medium-refined .axis-conclusion{max-width:34ch;margin:2rem auto 0;font-size:16px!important;line-height:1.75;text-align:left}
 }
 
 @media(max-width:420px){
@@ -1218,18 +1250,30 @@ button{font:inherit;color:inherit}
     <div class="spectrum-morph-sticky">
       <div class="spectrum-morph-canvas" data-spectrum-canvas>
         <p class="morph-instruction" data-i18n="morph-instruction">スクロールして、三つの実験を虚と実のあいだに配置する</p>
-        <div class="morph-column-label morph-column-light"><b data-i18n="light-head">光</b></div>
-        <div class="morph-column-label morph-column-air"><b data-i18n="air-head">空気</b></div>
-        <div class="morph-column-label morph-column-water"><b data-i18n="water-head">水</b></div>
-        <figure class="morph-card" data-morph-card data-medium="0"><img src="derived/medium-light-1.webp" alt=""></figure>
-        <figure class="morph-card" data-morph-card data-medium="0"><img src="derived/medium-light-2.webp" alt=""></figure>
-        <figure class="morph-card" data-morph-card data-medium="0"><img src="derived/medium-light-3.webp" alt=""></figure>
-        <figure class="morph-card" data-morph-card data-medium="1"><img src="derived/medium-air-1.webp" alt=""></figure>
-        <figure class="morph-card" data-morph-card data-medium="1"><img src="derived/medium-air-2.webp" alt=""></figure>
-        <figure class="morph-card" data-morph-card data-medium="1"><img src="derived/medium-air-3.webp" alt=""></figure>
-        <figure class="morph-card" data-morph-card data-medium="2"><img src="derived/medium-water-1.webp" alt=""></figure>
-        <figure class="morph-card" data-morph-card data-medium="2"><img src="derived/medium-water-2.webp" alt=""></figure>
-        <figure class="morph-card" data-morph-card data-medium="2"><img src="derived/medium-water-3.webp" alt=""></figure>
+        <div class="morph-group morph-group-light" data-morph-group="0">
+          <div class="morph-column-label morph-column-light"><b data-i18n="light-head">光</b></div>
+          <div class="morph-group-cards">
+            <figure class="morph-card" data-morph-card data-medium="0"><img src="derived/medium-light-1.webp" alt=""></figure>
+            <figure class="morph-card" data-morph-card data-medium="0"><img src="derived/medium-light-2.webp" alt=""></figure>
+            <figure class="morph-card" data-morph-card data-medium="0"><img src="derived/medium-light-3.webp" alt=""></figure>
+          </div>
+        </div>
+        <div class="morph-group morph-group-air" data-morph-group="1">
+          <div class="morph-column-label morph-column-air"><b data-i18n="air-head">空気</b></div>
+          <div class="morph-group-cards">
+            <figure class="morph-card" data-morph-card data-medium="1"><img src="derived/medium-air-1.webp" alt=""></figure>
+            <figure class="morph-card" data-morph-card data-medium="1"><img src="derived/medium-air-2.webp" alt=""></figure>
+            <figure class="morph-card" data-morph-card data-medium="1"><img src="derived/medium-air-3.webp" alt=""></figure>
+          </div>
+        </div>
+        <div class="morph-group morph-group-water" data-morph-group="2">
+          <div class="morph-column-label morph-column-water"><b data-i18n="water-head">水</b></div>
+          <div class="morph-group-cards">
+            <figure class="morph-card" data-morph-card data-medium="2"><img src="derived/medium-water-1.webp" alt=""></figure>
+            <figure class="morph-card" data-morph-card data-medium="2"><img src="derived/medium-water-2.webp" alt=""></figure>
+            <figure class="morph-card" data-morph-card data-medium="2"><img src="derived/medium-water-3.webp" alt=""></figure>
+          </div>
+        </div>
         <div class="material-spectrum" role="group" aria-label="Virtual to real medium spectrum" data-spectrum-line>
           <div class="spectrum-end spectrum-start"><b data-i18n="spectrum-virtual">虚</b><span data-i18n="spectrum-intangible">無形／触れられない</span></div>
           <div class="spectrum-track">
@@ -1452,16 +1496,16 @@ ja:{...COMMON,
   "transform-from":"記録された現実","transform-to":"意識による再構成","transform-title":"現実が、別の像へ変わっていく。","transform-copy":"意識の投影を通過することで、記録された現実は断片化され、重ね合わされ、もうひとつの存在へ再構成される。",
   "flow-1":"参照","flow-2":"要素抽出","flow-3":"破裂・分割","flow-4":"再重合",
   "tag-block":"ブロック状","tag-assemblage":"寄せ集め","tag-division":"分割","tag-function":"機能","tag-incomplete":"不完全","tag-rupture":"破裂","tag-layer":"層重ね","tag-code":"コード",
-  "lab-title":"媒体実験：光・空気・水","lab-intro":"像を「実在する物体」から離し、虚と実のあいだに置くために、性質の異なる三つの媒体を同じ問いのもとで比較しました。",
-  "light-head":"光","light-copy":"プロジェクターで光と影をつくり、触れることのできない像を空間に現します。異なる照明環境で、像が物体から離れる状態を観察しました。",
-  "air-head":"空気","air-copy":"目に見えない空気は、風船によって一時的な形を得ます。その表面へ像を重ねることで、有形と無形が同じ場所に共存します。",
-  "water-head":"水","water-copy":"水は透明でありながら、触れることのできる実在です。撮影後の画像を水に溶かし、水の中で像を分離し、再構成しました。",
+  "lab-title":"媒体実験：光・空気・水","lab-intro":"無形の中に像を形成し、無形の側面により焦点を当てるため、光・空気・水による三つの媒体実験を行いました。",
+  "light-head":"光","light-copy":"プロジェクターを使用して光と影の実験を行い、異なる光と影の環境下でテストを重ねました。光と影を物体から分離します。",
+  "air-head":"空気","air-copy":"気体に画像を重ね、有形の画像を無形の空気の上に置くことは、空間における現実と存在の関係に似ています。気球へのコラージュは、存在が多重の現実の重ね合わせであるという概念と同じです。",
+  "water-head":"水","water-copy":"水はただの透明な媒体ではなく、日常生活で実際に存在し、触れることのできる物体です。撮影後の画像を水に溶解し、水を用いて再構築します。",
   "spectrum-virtual":"虚","spectrum-real":"実","spectrum-intangible":"無形／触れられない","spectrum-tangible":"有形／触れられる",
-  "light-property":"見える・触れられない","air-property":"見えない・形を持つ・触れられる","water-property":"透明・触れられる",
+  "light-property":"光と影を物体から分離","air-property":"有形の画像を無形の空気に重ねる","water-property":"透明・実在・触れられる",
   "morph-instruction":"スクロールして、三つの実験を虚と実のあいだに配置する",
-  "axis-conclusion":"三つの実験を比較した結果、空気は「見えないが、形を持ち、触れられる」という虚と実の中間状態を最も直接的に示した。",
+  "axis-conclusion":"光・空気・水の実験を虚から実へ連続する関係として整理すると、空気は光と水のあいだに位置します。次の段階では、気球を用いて像の重なりを展開します。",
   "method-title":"実験の洞察と媒体決定","method-head":"空気／風船",
-  "finding-light":"見えるが触れられず、物体から分離した像をつくる。","finding-air":"見えないが、膜によって形を得て触れられる。","finding-water":"透明で触れられ、像を分離・再構成する。","finding-selected":"選択した媒体",
+  "finding-light":"プロジェクターを用い、異なる光と影の環境下でテストし、光と影を物体から分離する。","finding-air":"有形の画像を無形の空気の上に重ねる。気球へのコラージュは、多重の現実の重ね合わせを表す。","finding-water":"撮影後の画像を水に溶解し、実際に存在して触れられる水を用いて再構築する。","finding-selected":"選択した媒体",
   "method-p1":"空気は目に見えませんが、風船の膜によって一時的な輪郭を持ちます。その不安定な身体に、家、車、記憶、そして私自身の像をコラージュします。",
   "method-p2":"像は表面に固定されているように見えても、内部の空気が失われれば形ごと崩れます。この関係を、複数のリアルが重なって成立する「存在」のモデルとして用いました。",
   "reason-1":"虚と実のあいだを、触れられる輪郭として示す","reason-2":"異なる時代と記憶の像を、同じ表面に重ねる","reason-3":"日常の物体を、不安定で変化する身体へ置き換える",
@@ -1531,16 +1575,16 @@ zh:{...COMMON,
   "transform-from":"被记录的现实","transform-to":"意识中的重构","transform-title":"现实，逐渐变成另一种图像。","transform-copy":"现实经过意识的投影，被提取、碎裂并重新叠合，最终构成另一种存在。",
   "flow-1":"参照","flow-2":"提取元素","flow-3":"破裂／分割","flow-4":"重新叠合",
   "tag-block":"块状","tag-assemblage":"拼合","tag-division":"分割","tag-function":"功能","tag-incomplete":"不完整","tag-rupture":"破裂","tag-layer":"层叠","tag-code":"编码",
-  "lab-title":"媒介实验：光／空气／水","lab-intro":"为了让影像脱离“实际存在的物体”，并被置于虚与实之间，我围绕同一个问题比较了三种性质不同的媒介。",
-  "light-head":"光","light-copy":"我使用投影仪生成光与影，让无法触摸的影像出现在空间中，并在不同照明环境里观察影像脱离物体的状态。",
-  "air-head":"空气","air-copy":"不可见的空气通过气球暂时获得形状。影像叠加在它的表面后，有形与无形便共存于同一个位置。",
-  "water-head":"水","water-copy":"水透明，却是能够触摸的实在。我将拍摄后的图像溶入水中，使影像在水里分离并重新构成。",
+  "lab-title":"媒介实验：光／空气／水","lab-intro":"我试图在无形之中形成影像，并把重点进一步放在“无形”这一侧，因此使用光、空气与水进行了三组媒介实验。",
+  "light-head":"光","light-copy":"我使用投影仪进行光与影的实验，并在不同的光影环境下反复测试，让光与影从物体上分离。",
+  "air-head":"空气","air-copy":"我将图像叠加在气体上。把有形的图像置于无形的空气之上，类似于现实与存在在空间中的关系；在气球上进行拼贴，也对应着“存在是多重现实的叠加”这一概念。",
+  "water-head":"水","water-copy":"水并不只是透明的媒介，它也是日常生活中真实存在、可以触摸的物体。我把拍摄后的图像溶解于水中，再借助水将它重新构成。",
   "spectrum-virtual":"虚","spectrum-real":"实","spectrum-intangible":"无形／不可触","spectrum-tangible":"有形／可触",
-  "light-property":"可见・不可触","air-property":"不可见・能够成形・可以触摸","water-property":"透明・可以触摸",
+  "light-property":"光影与物体分离","air-property":"有形图像叠于无形空气","water-property":"透明・真实可触",
   "morph-instruction":"继续下滑，将三种实验归入虚与实之间",
-  "axis-conclusion":"比较三种实验后，空气最直接地呈现了“不可见、却能获得形状并被触摸”的虚实中间状态。",
+  "axis-conclusion":"把光、空气与水的实验置于从“虚”到“实”的连续关系中，空气位于光与水之间；下一阶段以气球承载图像的叠合。",
   "method-title":"实验洞察与媒介决定","method-head":"空气／气球",
-  "finding-light":"可见却不可触，让影像从物体上分离。","finding-air":"不可见，却能被薄膜塑形并且可以触摸。","finding-water":"透明且可触，能使影像分离并重新构成。","finding-selected":"最终选择",
+  "finding-light":"用投影仪在不同光影环境下测试，使光与影从物体上分离。","finding-air":"把有形图像叠加在无形空气之上；气球表面的拼贴对应多重现实的叠合。","finding-water":"让拍摄后的图像在水中溶解，再借助真实可触的水重新构成。","finding-selected":"最终选择",
   "method-p1":"空气无法被直接看见，却能借助气球的薄膜获得暂时的轮廓。我把房屋、汽车、记忆以及自己的影像拼贴在这具不稳定的身体上。",
   "method-p2":"影像看似固定在表面，但内部空气一旦消失，形状也会随之坍塌。我以这种关系作为“存在”的模型：它依靠多重真实的叠加而成立。",
   "reason-1":"以可触摸的轮廓呈现虚与实之间的状态","reason-2":"把不同时代与记忆的影像叠加在同一表面","reason-3":"将日常物体转换成不稳定、持续变化的身体",
@@ -1610,16 +1654,16 @@ en:{...COMMON,
   "transform-from":"Documented reality","transform-to":"Reconstructed consciousness","transform-title":"Reality becomes another image.","transform-copy":"Passing through the projection of consciousness, documented reality is extracted, fractured, and overlaid until it is reconstructed as another existence.",
   "flow-1":"Reference","flow-2":"Extract","flow-3":"Fracture","flow-4":"Recombine",
   "tag-block":"Block","tag-assemblage":"Assemblage","tag-division":"Division","tag-function":"Function","tag-incomplete":"Incomplete","tag-rupture":"Rupture","tag-layer":"Layering","tag-code":"Code",
-  "lab-title":"Medium Experiments: Light / Air / Water","lab-intro":"To detach the image from an “actually existing object” and place it between the virtual and the real, I compared three media with different material properties through the same question.",
-  "light-head":"Light","light-copy":"A projector produces light and shadow, allowing an untouchable image to appear in space. Tests under different lighting conditions examine the moment when the image separates from the object.",
-  "air-head":"Air","air-copy":"Invisible air acquires a temporary form through a balloon. When an image is placed on its surface, the tangible and intangible coexist in the same location.",
-  "water-head":"Water","water-copy":"Water is transparent, yet physically present and touchable. I dissolved photographed images in water, separating and reconstructing them within it.",
+  "lab-title":"Medium Experiments: Light / Air / Water","lab-intro":"To form an image within the intangible—and to focus more closely on that intangible condition—I carried out three experiments using light, air, and water.",
+  "light-head":"Light","light-copy":"I used a projector to experiment with light and shadow, repeating the test under different lighting conditions so that light and shadow separate from the object.",
+  "air-head":"Air","air-copy":"I overlaid images onto gas. Placing a tangible image on intangible air resembles the spatial relationship between reality and existence; collage on a balloon likewise expresses existence as an overlap of multiple realities.",
+  "water-head":"Water","water-copy":"Water is not merely a transparent medium; it is a physically present and touchable object in everyday life. I dissolved photographed images in water and used the water to reconstruct them.",
   "spectrum-virtual":"VIRTUAL","spectrum-real":"REAL","spectrum-intangible":"Intangible / Untouchable","spectrum-tangible":"Tangible / Touchable",
-  "light-property":"Visible · Untouchable","air-property":"Invisible · Takes form · Touchable","water-property":"Transparent · Touchable",
+  "light-property":"Light and shadow detach from the object","air-property":"A tangible image rests on intangible air","water-property":"Transparent · present · touchable",
   "morph-instruction":"Keep scrolling to place the three experiments between virtual and real",
-  "axis-conclusion":"Comparing the three experiments showed that air most directly occupies the state between the virtual and the real: invisible, yet able to take form and be touched.",
+  "axis-conclusion":"Arranged as a continuum from the virtual to the real, the light, air, and water experiments place air between light and water. The next stage uses a balloon to carry the overlapping images.",
   "method-title":"Experiment Insight and Medium Decision","method-head":"Air / Balloon",
-  "finding-light":"Visible but untouchable; it separates the image from the object.","finding-air":"Invisible, yet shaped by a membrane and physically touchable.","finding-water":"Transparent and touchable; it separates and reconstructs an image.","finding-selected":"SELECTED",
+  "finding-light":"A projector tests different light-and-shadow conditions, separating light and shadow from the object.","finding-air":"A tangible image is placed on intangible air; collage on the balloon represents overlapping realities.","finding-water":"The photographed image dissolves in water and is reconstructed through this physically present, touchable medium.","finding-selected":"SELECTED",
   "method-p1":"Air cannot be seen directly, but a balloon’s membrane gives it a temporary contour. Onto this unstable body I collage houses, cars, memories, and images of myself.",
   "method-p2":"The images appear fixed to the surface, yet when the air inside is lost, the entire form collapses. I use this relationship as a model of existence sustained by overlapping forms of the real.",
   "reason-1":"Give the space between the virtual and the real a touchable contour","reason-2":"Layer images from different times and memories on one surface","reason-3":"Transform everyday objects into unstable, changing bodies",
@@ -1757,6 +1801,19 @@ const smoothstep=value=>value*value*(3-2*value);
 function renderSpectrumMorph(){
   spectrumFrameRequest=0;
   if(!spectrumMorph||!spectrumCanvas||!spectrumLine||!spectrumFill)return;
+  if(window.matchMedia("(max-width:680px)").matches){
+    morphCards.forEach(card=>{
+      ["display","left","top","width","height","border-radius","clip-path","transform","opacity","z-index"].forEach(property=>card.style.removeProperty(property));
+    });
+    morphColumnLabels.forEach(label=>{
+      label.style.removeProperty("display");
+      label.style.removeProperty("opacity");
+    });
+    spectrumLine.style.removeProperty("opacity");
+    spectrumFill.style.removeProperty("transform");
+    if(morphInstruction)morphInstruction.style.removeProperty("opacity");
+    return;
+  }
   if(reducedMotion.matches){
     morphCards.forEach(card=>card.style.display="none");
     morphColumnLabels.forEach(label=>label.style.display="none");
@@ -1764,6 +1821,9 @@ function renderSpectrumMorph(){
     spectrumFill.style.transform="scaleX(1)";
     return;
   }
+
+  morphCards.forEach(card=>card.style.removeProperty("display"));
+  morphColumnLabels.forEach(label=>label.style.removeProperty("display"));
 
   const navHeight=siteNav.offsetHeight||0;
   const rect=spectrumMorph.getBoundingClientRect();
