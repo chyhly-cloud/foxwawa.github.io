@@ -2,217 +2,216 @@
 <html lang="ja" class="lang-ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
 <title>消失 — 何梁宇</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Serif+JP:wght@300;400&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="description" content="消失 / Disappearance — 何梁宇。鋼板の上で緑色表示灯が一つずつ消えていく、植物種の絶滅を可視化する装置。">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Serif+JP:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:light only}
-html{forced-color-adjust:none}
+:root{color-scheme:dark}
 :root{
-  --ink:#000;--ink2:#111;--ink3:#aaa;
-  --rule:rgba(0,0,0,.12);
-  --nav-h:50px;--bar-h:44px;
+  --bg:#0a0c0b;
+  --bg2:#0f1211;
+  --panel:#12100e;
+  --ink:#eaece8;
+  --ink2:#c7cbc4;
+  --dim:#868c82;
+  --faint:#565b52;
+  --green:#5ef08a;
+  --green-soft:#8ff2ac;
+  --green-deep:#2b7d4c;
+  --rule:rgba(255,255,255,.10);
+  --rule2:rgba(255,255,255,.06);
   --mono:"Space Mono",monospace;
-  --app-height:100vh;
+  --serif:"Noto Serif JP",serif;
+  --maxw:1120px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{
-  height:100%;overflow:hidden;
-  background:#fff !important;color:#000 !important;
-  font-family:var(--mono);-webkit-text-size-adjust:100%;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:var(--mono);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
   text-rendering:optimizeLegibility;
+  overflow-x:hidden;
 }
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--green);color:#04140a}
 
-/* ─ LANG FONTS ─ */
-.lang-ja .bhead,.lang-ja .h-ttl,.lang-ja .nx-t,
-.lang-ja .note-p,.lang-ja .bp,.lang-ja .prow,
-.lang-ja .hcb .bhead{font-family:"Noto Serif JP",serif}
-.lang-zh .bhead,.lang-zh .h-ttl,.lang-zh .nx-t,
-.lang-zh .hcb .bhead{font-family:"Noto Sans SC",sans-serif;font-weight:900}
-.lang-zh .note-p,.lang-zh .bp,.lang-zh .prow{font-family:"Noto Sans SC",sans-serif;font-weight:400}
-.lang-en .bhead,.lang-en .h-ttl,.lang-en .nx-t,
-.lang-en .hcb .bhead{font-family:"Inter","Helvetica Neue",sans-serif;font-weight:900}
+/* ─ lang fonts ─ */
+.lang-ja .serif,.lang-ja h1,.lang-ja h2,.lang-ja h3{font-family:var(--serif);font-weight:400}
+.lang-zh .serif,.lang-zh h1,.lang-zh h2,.lang-zh h3{font-family:"Noto Sans SC",sans-serif;font-weight:900}
+.lang-en .serif,.lang-en h1,.lang-en h2,.lang-en h3{font-family:"Inter",sans-serif;font-weight:800}
+.lang-ja .body-t{font-family:var(--serif);font-weight:400}
+.lang-zh .body-t{font-family:"Noto Sans SC",sans-serif;font-weight:400}
+.lang-en .body-t{font-family:"Inter",sans-serif;font-weight:400}
 
 /* ─ NAV ─ */
-nav{
-  height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;
-  padding:0 2.5rem;background:#fff !important;flex-shrink:0;position:relative;z-index:10;
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:80;height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(1.1rem,4vw,2.6rem);
+  transition:background .4s,border-color .4s,backdrop-filter .4s;
+  border-bottom:1px solid transparent;
 }
-.nav-l{display:flex;align-items:center;gap:2rem}
-.nav-back{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);text-decoration:none;transition:color .15s}
-.nav-back:hover{color:#000}
-.nav-ttl{font-size:13px;color:#000;letter-spacing:.3px;font-weight:700}
-.lang-ja .nav-ttl{font-family:"Noto Serif JP",serif}
+#nav.solid{background:rgba(10,12,11,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom-color:var(--rule)}
+.nav-l{display:flex;align-items:center;gap:1.4rem;min-width:0}
+.nav-back{font-size:15px;color:var(--dim);transition:color .2s,transform .2s;flex-shrink:0}
+.nav-back:hover{color:var(--green);transform:translateX(-3px)}
+.nav-ttl{font-size:12px;letter-spacing:.5px;color:var(--ink);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lang-ja .nav-ttl{font-family:var(--serif)}
 .lang-zh .nav-ttl{font-family:"Noto Sans SC",sans-serif}
-.lang-globe{background:none;border:none;cursor:pointer;padding:0;color:#000;display:flex;align-items:center;justify-content:center;opacity:.45;transition:opacity .2s;-webkit-tap-highlight-color:transparent}
-.lang-globe:hover{opacity:1}
+.lang-globe{background:none;border:none;cursor:pointer;padding:6px;color:var(--ink);opacity:.5;display:flex;transition:opacity .2s,color .2s;-webkit-tap-highlight-color:transparent}
+.lang-globe:hover{opacity:1;color:var(--green)}
 
-/* ─ PAGE ─ */
-#page{height:var(--app-height);overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
-#page::-webkit-scrollbar{display:none}
-
-/* ─ SECTION ─ */
-.sec{height:var(--app-height);scroll-snap-align:start;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column}
-
-/* ─ SEC-BAR ─ */
-.sec-bar{
-  height:var(--bar-h);display:flex;align-items:center;justify-content:space-between;
-  padding:0 2.5rem;border-bottom:1px solid var(--rule);flex-shrink:0;background:#fff !important;
+/* ─ shared bits ─ */
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:clamp(1.1rem,4vw,2.6rem);padding-right:clamp(1.1rem,4vw,2.6rem)}
+.kicker{
+  font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--green);font-weight:700;display:inline-flex;align-items:center;gap:.6rem;
 }
-.s-ttl{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#000;font-weight:700}
-.lang-ja .s-ttl{font-family:"Noto Serif JP",serif;letter-spacing:2px;font-weight:400}
-.lang-zh .s-ttl{font-family:"Noto Sans SC",sans-serif}
+.kicker::before{content:"";width:26px;height:1px;background:var(--green-deep)}
+.sec-kicker{
+  font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--dim);font-weight:700;margin-bottom:2.2rem;display:flex;align-items:center;gap:.7rem;
+}
+.sec-kicker b,.sec-kicker span{color:var(--green);font-weight:700}
+.sec-kicker .sep{color:var(--faint)}
+.body-t{font-size:15px;line-height:2.0;color:var(--ink2)}
+.body-t + .body-t{margin-top:1.1rem}
+section{position:relative}
 
 /* ─ HERO ─ */
-#s-hero{flex-direction:column;height:var(--app-height)}
-#s-hero nav{flex-shrink:0}
-.hero-g{
-  flex:1;display:grid;grid-template-columns:58% 42%;overflow:hidden;
+.hero{position:relative;height:100vh;min-height:560px;width:100%;overflow:hidden;display:flex;align-items:flex-end}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center}
+.hero-shade{position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(180deg,rgba(10,12,11,.55) 0%,rgba(10,12,11,0) 22%,rgba(10,12,11,0) 45%,rgba(10,12,11,.75) 82%,var(--bg) 100%),
+    radial-gradient(120% 90% at 15% 100%,rgba(10,12,11,.72),transparent 60%);
 }
-.hero-img{position:relative;overflow:hidden;border-right:1px solid var(--rule)}
-.hero-img img{width:100%;height:100%;object-fit:cover}
-.ph{
-  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
-  background:#f5f5f5;color:var(--ink3);font-size:11px;letter-spacing:1px;
-}
-.hero-nfo{
-  display:flex;flex-direction:column;padding:2.5rem 2.8rem;overflow-y:auto;gap:1.6rem;scrollbar-width:none;
-}
-.hero-nfo::-webkit-scrollbar{display:none}
-.h-cat{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:1.5rem;font-weight:700}
-.h-ttl{font-size:clamp(2.5rem,4.5vw,5rem);font-weight:900;line-height:.9;letter-spacing:-.03em}
-.lang-ja .h-ttl{font-weight:300;font-size:clamp(2rem,3.5vw,3.5rem);line-height:1}
-.h-sub{font-family:var(--mono);font-size:9px;letter-spacing:2.5px;color:var(--ink3);text-transform:uppercase;margin-top:.4rem;margin-bottom:2rem;font-weight:700}
-.specs{display:grid;grid-template-columns:auto 1fr;gap:8px 24px;margin-top:.5rem}
-.sp-l{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:#888;text-transform:uppercase;align-self:center;font-weight:700}
-.sp-v{font-size:13px;color:#000;font-weight:700}
-.hcb{display:flex;flex-direction:column;gap:.8rem;margin-top:-.5rem}
-.hcb .bhead{font-size:clamp(15px,1.6vw,19px);font-weight:900;line-height:1.25;letter-spacing:-.01em}
-.lang-ja .hcb .bhead{font-weight:400}
-.blbl{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#000;text-transform:uppercase;margin-bottom:.9rem;display:block;font-weight:700}
-.bhead{font-size:clamp(.85rem,1.2vw,1.1rem);line-height:1.45;font-weight:700}
-.lang-ja .bhead{font-weight:400}
-.bp{font-size:12px;line-height:1.9;color:#444}
-.bsep{height:1px;background:var(--rule);margin:.2rem 0}
-.ins-det summary{display:flex;align-items:center;gap:.6rem;cursor:pointer;list-style:none;outline:none;font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;transition:color .15s;font-weight:700;padding:.8rem 0}
-.ins-det summary::-webkit-details-marker{display:none}
-.ins-det summary::before{content:"▶";font-size:7px;transition:transform .2s;flex-shrink:0}
-.ins-det details[open] summary::before{transform:rotate(90deg)}
-.ins-det summary:hover{color:#000}
-.ins-body{display:flex;flex-direction:column;gap:.8rem;padding-top:.4rem}
-.note-p{font-size:12px;line-height:1.9;color:#555;font-style:italic}
-.h-hint{display:flex;align-items:center;gap:12px;margin-top:auto;padding:1rem 0 0;font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;flex-shrink:0;font-weight:700}
-.h-line{display:block;width:28px;height:1px;background:var(--ink3)}
+.hero-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;padding:0 clamp(1.1rem,4vw,2.6rem) clamp(3.4rem,8vh,6rem)}
+.hero-ttl{font-size:clamp(3.2rem,11vw,8.5rem);line-height:.88;letter-spacing:-.02em;color:#fff;text-shadow:0 6px 40px rgba(0,0,0,.5);max-width:100%;overflow-wrap:break-word}
+.lang-en .hero-ttl{letter-spacing:-.03em}
+.lang-ja .hero-ttl{font-weight:500;letter-spacing:.02em}
+.hero-kick{margin-bottom:1.4rem}
+.hero-sub{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--green-soft);margin-top:1.4rem;font-weight:700}
+.hero-scroll{position:absolute;left:50%;bottom:1.5rem;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:.6rem;font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--dim)}
+.hero-scroll .dn{width:1px;height:34px;background:linear-gradient(var(--green),transparent);animation:sweep 2.2s ease-in-out infinite}
+@keyframes sweep{0%,100%{opacity:.25;transform:scaleY(.7)}50%{opacity:1;transform:scaleY(1)}}
 
-/* ─ SLIDES ─ */
-.h-track{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
-.h-track::-webkit-scrollbar{display:none}
-.slide{min-width:100%;height:100%;scroll-snap-align:start;display:grid}
+/* ─ STATEMENT ─ */
+.statement{padding:clamp(4.5rem,12vh,9rem) 0}
+.stmt-lead{font-size:clamp(1.5rem,3.4vw,2.8rem);line-height:1.45;letter-spacing:-.01em;color:var(--ink);max-width:20em;margin:1.6rem 0 0}
+.lang-en .stmt-lead{font-weight:600}
+.spec-row{display:flex;flex-wrap:wrap;gap:2.6rem;margin-top:3rem;padding-top:1.8rem;border-top:1px solid var(--rule)}
+.spec-k{display:block;font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:.5rem;font-weight:700}
+.spec-v{font-size:14px;color:var(--ink2);font-weight:700;max-width:26em}
+.insp{margin-top:2.4rem;border-top:1px solid var(--rule);padding-top:.4rem}
+.insp summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.7rem;padding:1.2rem 0;font-family:var(--mono);font-size:13px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);font-weight:700;transition:color .3s ease}
+.insp summary::-webkit-details-marker{display:none}
+.insp summary::before{content:"+";font-size:15px;color:var(--green);transition:transform .45s cubic-bezier(.22,.74,.25,1);line-height:1}
+.insp.is-open summary::before{transform:rotate(45deg)}
+.insp.is-open summary{color:var(--ink)}
+.insp summary:hover{color:var(--ink)}
+.insp-body{display:grid;grid-template-rows:0fr;overflow:hidden;max-width:44em;transition:grid-template-rows .52s cubic-bezier(.22,.74,.25,1)}
+.insp-copy{min-height:0;overflow:hidden;padding:0;display:flex;flex-direction:column;gap:1.1rem;opacity:0;visibility:hidden;transform:translateY(-10px);transition:opacity .28s ease,transform .46s cubic-bezier(.22,.74,.25,1),padding .46s cubic-bezier(.22,.74,.25,1),visibility 0s linear .52s}
+.insp.is-open .insp-body{grid-template-rows:1fr}
+.insp.is-open .insp-copy{padding:.4rem 0 1.4rem;opacity:1;visibility:visible;transform:translateY(0);transition-delay:.08s,.04s,0s,0s}
+.insp-body p{font-size:16.5px;line-height:1.95;color:var(--ink2);font-style:italic}
 
-/* research slide — left text, right image */
-.slide-lr{grid-template-columns:42% 1fr}
-.slide-txt{padding:2.5rem 2.8rem;display:flex;flex-direction:column;gap:1rem;overflow-y:auto;border-right:1px solid var(--rule)}
-.slide-img{position:relative;overflow:hidden}
-.slide-img img{width:100%;height:100%;object-fit:contain;background:#f7f7f7}
-.slide-img .ph{height:100%}
+/* ─ RESEARCH / DATA ─ */
+.research{padding:clamp(3.5rem,9vh,7rem) 0;border-top:1px solid var(--rule2);background:linear-gradient(180deg,var(--bg),#0b0e0d 50%,var(--bg))}
+.r-lead{max-width:46em}
+.source-note{max-width:58em;margin:1.2rem 0 0;font-size:11px;line-height:1.85;color:var(--dim)}
+.source-note a{color:var(--green-soft);text-decoration:underline;text-decoration-color:rgba(143,242,172,.35);text-underline-offset:3px}
+.source-note a:hover{color:var(--green)}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;margin:3rem 0 0;background:var(--rule);border:1px solid var(--rule)}
+.stat{background:var(--bg);padding:2rem 1.8rem;display:flex;flex-direction:column;gap:.6rem}
+.stat-n{font-family:var(--mono);font-size:clamp(2.2rem,5vw,3.4rem);font-weight:700;color:var(--green);line-height:1;letter-spacing:-.02em}
+.stat-c{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);line-height:1.5}
+.calc{margin:2.4rem 0 0;padding:1.6rem 1.8rem;background:#0e1210;border:1px solid var(--rule);border-left:2px solid var(--green);font-family:var(--mono);font-size:13px;line-height:2.1;color:var(--ink2)}
+.calc strong{color:var(--green);font-size:15px}
+.punch{margin:3.4rem 0 0;padding:clamp(2.2rem,5vw,3.4rem);background:radial-gradient(120% 140% at 100% 0,rgba(94,240,138,.08),transparent 55%),#0c100e;border:1px solid var(--rule);display:flex;flex-wrap:wrap;align-items:center;gap:1.8rem 3rem}
+.punch-n{font-family:var(--mono);font-weight:700;font-size:clamp(5rem,16vw,11rem);line-height:.8;color:var(--green);letter-spacing:-.04em;text-shadow:0 0 60px rgba(94,240,138,.25)}
+.punch-u{font-size:.28em;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-left:.15em;vertical-align:baseline}
+.punch-c{flex:1;min-width:230px;font-size:16px;line-height:1.85;color:var(--ink2);max-width:22em}
+.punch-c strong{color:var(--ink);font-weight:700}
+.r-back{margin:4rem 0 0;max-width:44em}
+.r-back h3{font-size:clamp(1.15rem,2.4vw,1.6rem);line-height:1.4;margin:.8rem 0 1.4rem;color:var(--ink)}
 
-/* reversed — image left, text right */
-.slide-rl{grid-template-columns:1fr 42%}
-.slide-rl .slide-img{order:-1;border-right:1px solid var(--rule)}
-.slide-rl .slide-txt{border-right:none;border-left:none}
+/* ─ DEVICE / dot grid ─ */
+.device{padding:clamp(3.5rem,9vh,7rem) 0;border-top:1px solid var(--rule2)}
+.device h2{font-size:clamp(1.5rem,3.4vw,2.4rem);line-height:1.3;margin:.8rem 0 0;max-width:16em;color:var(--ink)}
+.dotgrid-wrap{margin:2.8rem 0 0;border:1px solid var(--rule);background:#050706;position:relative;overflow:hidden;height:clamp(150px,26vw,260px)}
+#dotgrid{display:block;width:100%;height:100%}
+.dotgrid-cap{position:absolute;left:1rem;bottom:.8rem;font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--faint);z-index:2;pointer-events:none}
+.dev-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;margin:1px 0 0;background:var(--rule);border:1px solid var(--rule);border-top:none}
+.dev-stats>div{background:var(--bg);padding:1.5rem 1.6rem;display:flex;flex-direction:column;gap:.5rem}
+.dev-stats span{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);font-weight:700}
+.dev-stats b{font-family:var(--mono);font-size:clamp(1.1rem,2vw,1.4rem);color:var(--ink);font-weight:700}
+.dev-stats b.grn{color:var(--green)}
+.dev-text{margin:3rem 0 0;column-gap:3rem;max-width:52em}
+.dev-text p{font-size:14px;line-height:1.95;color:var(--ink2)}
+.dev-text p+p{margin-top:1.1rem}
+.fullfig{margin:3.4rem 0 0;background:transparent}
+.plate-img{width:100%;height:auto;display:block;filter:brightness(.97)}
+.plate-wrap{position:relative;border:1px solid rgba(255,255,255,.16);box-shadow:0 28px 72px -20px rgba(0,0,0,.8);overflow:hidden}
+.fullfig figcaption{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--faint);padding:1rem 0 0}
 
-/* concept slide — text centred */
-.slide-c{grid-template-columns:1fr 1fr}
-.slide-c .slide-txt{border-right:1px solid var(--rule)}
-/* concept reversed */
-.slide-cr{grid-template-columns:1fr 1fr}
-.slide-cr .slide-img{order:-1;border-right:1px solid var(--rule)}
-.slide-cr .slide-txt{border-right:none}
+/* ─ SOUND & LIGHT ─ */
+.soundlight{padding:clamp(3.5rem,9vh,7rem) 0;border-top:1px solid var(--rule2);background:#0b0e0d}
+.sl-grid{display:grid;grid-template-columns:1fr;gap:clamp(2rem,4vw,3.5rem);align-items:start}
+@media(min-width:820px){.sl-grid{grid-template-columns:1.05fr .95fr}}
+.sl-txt h2{font-size:clamp(1.4rem,3vw,2.1rem);line-height:1.32;margin:.8rem 0 1.6rem;color:var(--ink)}
+.sl-txt p{font-size:14px;line-height:1.95;color:var(--ink2)}
+.sl-txt p+p{margin-top:1.1rem}
+.sl-img{position:sticky;top:80px;background:transparent}
+.project-conclusion{max-width:44em;margin:clamp(3rem,6vw,4.5rem) 0 0;padding-top:clamp(2rem,4vw,3rem);border-top:1px solid var(--rule)}
+.project-conclusion .sec-kicker{margin-bottom:1.2rem}
+.project-conclusion .conclusion-lead{font-size:clamp(1.05rem,2vw,1.35rem);line-height:1.9;color:var(--ink)}
 
-/* stat block */
-.stat-block{margin-top:.5rem;display:flex;flex-direction:column;gap:.6rem}
-.stat-row{display:grid;grid-template-columns:auto 1fr;gap:.4rem 1rem;align-items:baseline}
-.st-k{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3)}
-.st-v{font-size:13px;line-height:1.5;font-family:var(--mono)}
-.formula{margin:.6rem 0;padding:.8rem 1rem;background:#f7f7f7;border-left:2px solid #000;font-family:var(--mono);font-size:11.5px;line-height:1.9;color:#000}
-
-/* dots */
-.dots{display:flex;gap:7px;align-items:center;flex-shrink:0}
-.dot{width:5px;height:5px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .2s,transform .18s}
-.dot.on{background:#000;transform:scale(1.4)}
-
-/* ─ EXHIBITION ─ */
-.exh-grid{
-  flex:1;display:grid;
-  grid-template-columns:repeat(3,1fr);
-  grid-auto-rows:1fr;
-  gap:1px;background:var(--rule);overflow:hidden;
-}
-.exh-c{position:relative;overflow:hidden;background:#f5f5f5;cursor:zoom-in}
-.exh-c img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
-.exh-c:hover img{transform:scale(1.04)}
-.exh-c .ph{height:100%;font-size:10px}
+/* ─ EXHIBITION masonry ─ */
+.exhibition{padding:clamp(3.5rem,9vh,7rem) 0;border-top:1px solid var(--rule2)}
+.masonry{columns:3;column-gap:12px}
+@media(max-width:900px){.masonry{columns:2}}
+@media(max-width:540px){.masonry{columns:1}}
+.mz{break-inside:avoid;margin-bottom:12px;border:1px solid var(--rule);background:#0e0e0c;overflow:hidden;cursor:zoom-in;position:relative}
+.mz img{width:100%;height:auto;transition:transform .5s cubic-bezier(.2,.6,.2,1),opacity .3s}
+.mz:hover img{transform:scale(1.03)}
+.mz::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(94,240,138,0);transition:box-shadow .3s;pointer-events:none}
+.mz:hover::after{box-shadow:inset 0 0 0 1px rgba(94,240,138,.5)}
 
 /* ─ FILM ─ */
-.film-w{flex:1;position:relative;background:#000;overflow:hidden}
-.film-w video{width:100%;height:100%;object-fit:contain}
-#vid-ov{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  background:rgba(0,0,0,.38);cursor:pointer;transition:opacity .3s;
-}
-#vid-ov.gone{opacity:0;pointer-events:none}
-.play-btn{
-  width:68px;height:68px;border-radius:50%;border:2px solid #fff;
-  display:flex;align-items:center;justify-content:center;
-}
-.play-btn svg{margin-left:4px}
+.film{padding:clamp(3.5rem,9vh,7rem) 0 0;border-top:1px solid var(--rule2);background:#0b0e0d;overflow:hidden}
+.film>.wrap{max-width:none;padding-left:0;padding-right:0}
+.film>.wrap>.sec-kicker{max-width:var(--maxw);margin-left:auto;margin-right:auto;padding-left:clamp(1.1rem,4vw,2.6rem);padding-right:clamp(1.1rem,4vw,2.6rem)}
+.film-frame{margin:0;width:100vw;max-width:none;height:56.25vw;height:min(100svh,56.25vw);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:#000;overflow:hidden;position:relative}
+.film-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
-/* ─ BACK ─ */
-#s-back{background:#fff;display:flex;align-items:center;justify-content:center}
-.back-btn{display:flex;align-items:center;gap:.8rem;text-decoration:none;font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;opacity:.35;transition:opacity .2s;font-weight:700}
-.back-btn:hover{opacity:1}
-.back-btn svg{transition:transform .2s}
-.back-btn:hover svg{transform:translateX(-4px)}
+/* ─ FOOTER ─ */
+.foot{border-top:1px solid var(--rule);padding:clamp(3rem,7vh,5rem) 0;display:flex;flex-wrap:wrap;gap:1.4rem;align-items:center;justify-content:space-between}
+.foot-back{display:inline-flex;align-items:center;gap:.7rem;font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--ink);font-weight:700;transition:gap .2s,color .2s}
+.foot-back:hover{gap:1.1rem;color:var(--green)}
+.foot-meta{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--faint)}
 
 /* ─ LIGHTBOX ─ */
-#lb{display:none;position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.96);align-items:center;justify-content:center;cursor:zoom-out}
+#lb{display:none;position:fixed;inset:0;z-index:200;background:rgba(4,6,5,.96);align-items:center;justify-content:center;cursor:zoom-out;padding:3vh 3vw}
 #lb.open{display:flex}
-#lb-x{position:absolute;top:20px;right:24px;font-size:20px;color:rgba(255,255,255,.4);cursor:pointer;font-family:var(--mono);transition:color .2s}
-#lb-x:hover{color:#fff}
-#lb-img{max-width:92vw;max-height:92vh;object-fit:contain;display:block}
+#lb-x{position:absolute;top:16px;right:22px;font-size:22px;color:var(--dim);cursor:pointer;font-family:var(--mono);transition:color .2s}
+#lb-x:hover{color:var(--green)}
+#lb-img{max-width:94vw;max-height:94vh;object-fit:contain}
 
-@supports (height:100svh){
-  :root{--app-height:100svh}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important}
+  .hero-scroll .dn{animation:none}
+  .insp-body,.insp-copy,.insp summary::before{transition:none}
 }
-@supports (height:100dvh){
-  :root{--app-height:100dvh}
-}
-
-/* ─ MOBILE ─ */
-@media(max-width:767px){
-  .hero-g{grid-template-columns:1fr;grid-template-rows:42% 58%}
-  .hero-img{border-right:none;border-bottom:1px solid var(--rule)}
-  .hero-nfo{padding:1.4rem 1.2rem}
-  nav{padding:0 1.2rem}
-  .sec-bar{padding:0 1.2rem}
-  .slide-lr{grid-template-columns:1fr;grid-template-rows:1fr 40%}
-  .slide-txt{padding:1.4rem 1.2rem;border-right:none;border-bottom:1px solid var(--rule)}
-  .slide-c{grid-template-columns:1fr}
-  .exh-grid{grid-template-columns:repeat(2,1fr)}
-  .bp{font-size:15px;line-height:2.06;color:#222}
-  .note-p{font-size:15px;line-height:2.08;color:#2d2d2d}
-  .bhead{font-size:clamp(18px,5vw,26px)}
-  .hcb .bhead{font-size:clamp(15px,4vw,19px)}
-}
-
-@supports (-webkit-touch-callout:none){
-  @media(max-width:767px){
-    .bp,.note-p{text-shadow:0 0 .01px rgba(0,0,0,.35)}
-    .hero-nfo{transform:translateZ(0)}
-  }
+@media(max-width:600px){
+  .hero{align-items:flex-end}
+  .stmt-lead{font-size:clamp(1.4rem,6vw,1.9rem)}
+  .body-t,.dev-text p,.sl-txt p{font-size:15px}
 }
 </style>
 </head>
@@ -220,13 +219,9 @@ nav{
 
 <div id="lb"><span id="lb-x">&#10005;</span><img id="lb-img" src="" alt=""></div>
 
-<div id="page">
-
-<!-- ══ HERO ══════════════════════════════════════════ -->
-<section class="sec" id="s-hero">
-<nav>
+<nav id="nav">
   <div class="nav-l">
-    <a class="nav-back" href="../index.html">&#8592;</a>
+    <a class="nav-back" href="../index.html" aria-label="Back">&#8592;</a>
     <span class="nav-ttl" id="nav-ttl">消失</span>
   </div>
   <button class="lang-globe" id="lang-btn" aria-label="Switch language">
@@ -238,320 +233,299 @@ nav{
     </svg>
   </button>
 </nav>
-<div class="hero-g">
-  <div class="hero-img">
-    <img src="hero.jpg" alt="消失" onerror="this.parentElement.innerHTML='<div class=ph>hero.jpg</div>'">
+
+<main id="page">
+
+<!-- ══ HERO ══ -->
+<header class="hero">
+  <div class="hero-bg"><img src="hero.jpg" alt="消失" onerror="this.closest('.hero-bg').style.background='#0a0c0b'"></div>
+  <div class="hero-shade"></div>
+  <div class="hero-inner">
+    <p class="kicker hero-kick"><span id="h-cat">装置</span>&nbsp;·&nbsp;2023</p>
+    <h1 class="hero-ttl" id="h-ttl">消失</h1>
+    <p class="hero-sub" id="h-sub">SHŌSHITSU / 消失</p>
   </div>
-  <div class="hero-nfo">
-    <div>
-      <p class="h-cat" id="h-cat">装置</p>
-      <h1 class="h-ttl" id="h-ttl">消失</h1>
-      <p class="h-sub" id="h-sub">SHOUSHITSU / 消失</p>
-      <div class="specs">
-        <span class="sp-l" id="h-yl">年份</span><span class="sp-v">2023.2</span>
-        <span class="sp-l" id="h-ml">媒介</span><span class="sp-v" id="h-med">鋼板、電源指示ランプ、ドライブボード</span>
+  <div class="hero-scroll"><span class="dn"></span><span id="h-scroll">上下スクロールで移動</span></div>
+</header>
+
+<!-- ══ STATEMENT ══ -->
+<section class="statement"><div class="wrap">
+  <p class="kicker"><span id="c-lbl">概念</span></p>
+  <p class="stmt-lead serif" id="c-head">本作は、人間活動によって加速する植物種の絶滅を、消えていく光と音によって可視化し、見過ごされがちな植物保全の現状を問い直すインスタレーションである。</p>
+  <div class="spec-row">
+    <div><span class="spec-k" id="h-ml">材料</span><span class="spec-v" id="h-med">鋼板、緑色表示灯、駆動基板</span></div>
+    <div><span class="spec-k" id="h-yl">制作年</span><span class="spec-v">2023.2</span></div>
+  </div>
+  <details class="insp">
+    <summary id="ins-lbl">着想</summary>
+    <div class="insp-body">
+      <div class="insp-copy">
+        <p id="ins-p1"></p>
+        <p id="ins-p2"></p>
+        <p id="ins-p3"></p>
       </div>
     </div>
-    <div class="hcb">
-      <span class="blbl" id="c-lbl">概念</span>
-      <p class="bhead" id="c-head">この作品は、人間環境の影響下にある環境保護の現状を思い起こさせるものとして、1年間に枯死した植物種の数を紹介している。</p>
+  </details>
+</div></section>
+
+<!-- ══ RESEARCH / DATA ══ -->
+<section class="research"><div class="wrap">
+  <p class="sec-kicker"><span id="ch-research">研究</span><span class="sep">—</span><span id="r1-lbl">推定と換算</span></p>
+  <p class="body-t r-lead" id="r1-p1"></p>
+  <p class="source-note" id="r1-note"></p>
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-n">450,000</div><div class="stat-c" id="stat-species">試算に用いた植物種数</div></div>
+    <div class="stat"><div class="stat-n">10,000&times;</div><div class="stat-c" id="r1-k1">背景絶滅率に対する上限倍率</div></div>
+  </div>
+  <div class="calc" id="r1-formula"></div>
+  <div class="punch">
+    <div class="punch-n">898<span class="punch-u" id="punch-unit">分</span></div>
+    <p class="punch-c" id="r1-p2"></p>
+  </div>
+  <div class="r-back">
+    <p class="sec-kicker"><span id="r2-lbl">試算の位置づけ</span></p>
+    <h3 class="serif" id="r2-head"></h3>
+    <p class="body-t" id="r2-p1"></p>
+    <p class="body-t" id="r2-p2"></p>
+  </div>
+</div></section>
+
+<!-- ══ DEVICE ══ -->
+<section class="device"><div class="wrap">
+  <p class="sec-kicker"><span id="ch-concept">概念</span><span class="sep">—</span><span id="c1-lbl">装置の構造</span></p>
+  <h2 class="serif" id="c1-head"></h2>
+  <div class="dotgrid-wrap">
+    <canvas id="dotgrid"></canvas>
+    <span class="dotgrid-cap" id="dotgrid-cap">108,900種（概念換算） · 最高推定時は898分に1灯</span>
+  </div>
+  <div class="dev-stats">
+    <div><span id="c1-k1">概念上の換算対象種数</span><b class="grn">108,900</b></div>
+    <div><span id="c1-k2">最高推定時の消灯間隔</span><b id="c1-k2v">898分に1灯</b></div>
+    <div><span id="c1-k3">換算条件</span><b id="c1-k3v">450,000種 × 24.2％（制作時の仮定）</b></div>
+  </div>
+  <div class="dev-text">
+    <p id="c1-p1"></p>
+    <p id="c1-p2"></p>
+  </div>
+  <figure class="fullfig">
+    <div class="plate-wrap"><img class="plate-img" src="concept-diagram.jpg" alt="" onerror="this.closest('.fullfig').style.display='none'"></div>
+    <figcaption>Concept diagram — steel plate structure</figcaption>
+  </figure>
+</div></section>
+
+<!-- ══ SOUND & LIGHT ══ -->
+<section class="soundlight"><div class="wrap">
+  <div class="sl-grid">
+    <div class="sl-txt">
+      <p class="sec-kicker"><span id="c2-lbl">音と光</span></p>
+      <h2 class="serif" id="c2-head"></h2>
+      <p id="c2-p1"></p>
+      <p id="c2-p2"></p>
+      <p id="c2-p3"></p>
     </div>
-    <div class="bsep"></div>
-    <div class="ins-det">
-      <details>
-        <summary id="ins-lbl">インスピレーション</summary>
-        <div class="ins-body">
-          <p class="note-p" id="ins-p1">私は環境の多様性を保全するための事業会社に勤めているが、その仕事を通じて、環境保護という問題が、いかに重要であるかを知った。近年、中国では環境保護がますます重視されているが、多くの人々が最も注目しているのは動物の保護である。</p>
-          <p class="note-p" id="ins-p2">動物は同情や共感を引き起こしやすい。植物は話すことができない、動かない。彼らは静かで、私たちには容易には気づかれない。これが彼らが環境議題において頻繁に辺縁化される原因である。</p>
-          <p class="note-p" id="ins-p3">植物の絶滅は重要かつ差し迫った問題であり、環境サークルの人々にとっては切迫した問題だが、一般の人々はまだ草花の多様性を守ることの重要性に気づいていない。そのため、私は植物の保護への関心を高めるための装置を作成したいと考えた。</p>
-        </div>
-      </details>
-    </div>
-    <div class="h-hint">
-      <span class="h-line"></span>
-      <span class="h-scroll-t" id="h-scroll">上下スクロールで移動</span>
-    </div>
+    <figure class="sl-img"><div class="plate-wrap"><img class="plate-img" src="concept-light.jpg" alt="" onerror="this.closest('.sl-img').style.display='none'"></div></figure>
   </div>
-</div>
-</section>
-
-<!-- ══ 研究 ══════════════════════════════════════════ -->
-<section class="sec" id="s-research">
-  <div class="sec-bar">
-    <span class="s-ttl" id="ch-research">研究</span>
-    <div class="dots" id="dots-research"></div>
+  <div class="project-conclusion">
+    <p class="sec-kicker"><span id="concl-lbl">結論</span></p>
+    <p class="body-t conclusion-lead" id="concl-p1">本作を通して、植物種の絶滅がもたらす衝撃を、より多くの人に直接感じてもらいたい。これは遠い場所だけの問題ではなく、私たちの身近な環境で進んでいる現実である。環境保護は、気候変動への対応や動物の保護だけに限られない。植物の多様性を守ることも、同じように重要である。</p>
   </div>
-  <div class="h-track" id="track-research">
+</div></section>
 
-    <!-- R1 — 調査 + 背景（合併） -->
-    <div class="slide" style="display:grid;grid-template-columns:1fr 1fr">
-      <div class="slide-txt" style="border-right:1px solid var(--rule)">
-        <span class="blbl" id="r1-lbl">調査</span>
-        <p class="bp" id="r1-p1">地球には45万種の植物が存在し（Wikipedia）、毎年絶滅している種の数は増加し続けている。現在の絶滅速度は自然な背景絶滅率の10,000倍に達している（WWF）。</p>
-        <div class="stat-block">
-          <div class="stat-row">
-            <span class="st-k" id="r1-k1">背景絶滅率</span>
-            <span class="st-v">0.05 – 0.13 E/MSY</span>
-          </div>
-          <div class="stat-row">
-            <span class="st-k" id="r1-k2">現在の推定絶滅率</span>
-            <span class="st-v">500 – 1,300 E/MSY</span>
-          </div>
-        </div>
-        <div class="formula" id="r1-formula">
-          最低推定：0.05 × 10,000 = 500 E/MSY<br>
-          最高推定：0.13 × 10,000 = 1,300 E/MSY<br><br>
-          1,300 ÷ 1,000,000 × 450,000<br>
-          ≈ <strong>585種 / 年</strong>
-        </div>
-        <p class="bp" id="r1-p2">1年は8,760時間。したがって、585 ÷ 8,760 ≈ <strong>約898分ごとに1種の植物が絶滅する</strong>。</p>
-      </div>
-      <div class="slide-txt">
-        <span class="blbl" id="r2-lbl">背景</span>
-        <h2 class="bhead" id="r2-head">植物が辺縁化される理由</h2>
-        <p class="bp" id="r2-p1">生態系の多様性の保護は、動物だけでなく、私たちの近くの植物も含まれる。しかし、人々にとって、動物は同情や共感を引き起こしやすく、動物の保護に関する注目度は植物の保護よりもはるかに高い。</p>
-        <p class="bp" id="r2-p2">植物は話せない。動かない。静かで、私たちには容易に気づかれない。だからこそ、私はこの装置を通じて、植物の消失を可視化したいと考えた。</p>
-      </div>
-    </div>
-
-  </div><!-- /track-research -->
-</section>
-
-<!-- ══ 概念 ══════════════════════════════════════════ -->
-<section class="sec" id="s-concept">
-  <div class="sec-bar">
-    <span class="s-ttl" id="ch-concept">概念</span>
-    <div class="dots" id="dots-concept"></div>
+<!-- ══ EXHIBITION ══ -->
+<section class="exhibition"><div class="wrap">
+  <p class="sec-kicker"><span id="ch-exhibition">展示</span></p>
+  <div class="masonry" id="exh-grid">
+    <div class="mz exh-c"><img src="exh-1.jpg" alt="" loading="lazy" onerror="this.closest('.mz').style.display='none'"></div>
+    <div class="mz exh-c"><img src="exh-6.jpg" alt="" loading="lazy" onerror="this.closest('.mz').style.display='none'"></div>
+    <div class="mz exh-c"><img src="exh-11.jpg" alt="" loading="lazy" onerror="this.closest('.mz').style.display='none'"></div>
+    <div class="mz exh-c"><img src="exh-3.jpg" alt="" loading="lazy" onerror="this.closest('.mz').style.display='none'"></div>
+    <div class="mz exh-c"><img src="exh-7.jpg" alt="" loading="lazy" onerror="this.closest('.mz').style.display='none'"></div>
+    <div class="mz exh-c"><img src="exh-2.jpg" alt="" loading="lazy" onerror="this.closest('.mz').style.display='none'"></div>
+    <div class="mz exh-c"><img src="exh-8.jpg" alt="" loading="lazy" onerror="this.closest('.mz').style.display='none'"></div>
+    <div class="mz exh-c"><img src="exh-4.jpg" alt="" loading="lazy" onerror="this.closest('.mz').style.display='none'"></div>
+    <div class="mz exh-c"><img src="exh-9.jpg" alt="" loading="lazy" onerror="this.closest('.mz').style.display='none'"></div>
+    <div class="mz exh-c"><img src="exh-5.jpg" alt="" loading="lazy" onerror="this.closest('.mz').style.display='none'"></div>
+    <div class="mz exh-c"><img src="exh-10.jpg" alt="" loading="lazy" onerror="this.closest('.mz').style.display='none'"></div>
   </div>
-  <div class="h-track" id="track-concept">
+</div></section>
 
-    <!-- C1 — 装置の仕組み -->
-    <div class="slide slide-c">
-      <div class="slide-txt">
-        <span class="blbl" id="c1-lbl">装置の構造</span>
-        <h2 class="bhead" id="c1-head">鋼板と、失われゆく緑の光</h2>
-        <p class="bp" id="c1-p1">鋼板の上に電球を配置し、これらの電球は自然の緑色の植物を表す緑色に設計される。現実の絶滅のペースに従って、ランダムに電球を消す。一つの植物種が絶滅するたびに、緑色の電球の光が消える。</p>
-        <p class="bp" id="c1-p2">鋼板のデザインのインスピレーションは工業機器から来ており、人間の工業文明と自然との間の対立を象徴している。産業革命以来、植物の絶滅数は増加の一途をたどっており、産業と環境は植物の絶滅と密接な関係にある。</p>
-        <div class="stat-block" style="margin-top:.6rem">
-          <div class="stat-row">
-            <span class="st-k" id="c1-k1">電球の数</span>
-            <span class="st-v">108,900</span>
-          </div>
-          <div class="stat-row">
-            <span class="st-k" id="c1-k2">消灯ペース</span>
-            <span class="st-v" id="c1-k2v">898分に1つ</span>
-          </div>
-        </div>
-      </div>
-      <div class="slide-img">
-        <img src="concept-diagram.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=ph>concept-diagram.jpg</div>'">
-      </div>
-    </div>
-
-    <!-- C2 — 音と光の演出 -->
-    <div class="slide slide-cr">
-      <div class="slide-txt">
-        <span class="blbl" id="c2-lbl">音と光</span>
-        <h2 class="bhead" id="c2-head">電球はこの「生命の光」を象徴している</h2>
-        <p class="bp" id="c2-p1">これらの緑の灯りが次第に消えていくと、それは植物の消失だけでなく、生態系全体の生命力の衰えを意味する。生態系の中で、すべての植物は独自の役割を担っており、それはまるで装置内の各電球が独特の自然の音を発しているかのようだ。</p>
-        <p class="bp" id="c2-p2">ひとつの灯りが消えると、ひとつの自然の音が失われ、代わりに呼吸音が聞こえる。さらに多くの植物が消滅すると、ますます多く、そして急速に強まる呼吸音がよりはっきりと聞こえてくる。</p>
-        <p class="bp" id="c2-p3">インジケーターランプは、私たちの日常生活において、機械に異常があることを示す最も一般的なサインである。今、その電球が「生命の危機」を示している。</p>
-      </div>
-      <div class="slide-img">
-        <img src="concept-light.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=ph>concept-light.jpg</div>'">
-      </div>
-    </div>
-
-  </div><!-- /track-concept -->
-</section>
-
-<!-- ══ 展示 ══════════════════════════════════════════ -->
-<section class="sec" id="s-exhibition">
-  <div class="sec-bar">
-    <span class="s-ttl" id="ch-exhibition">展示</span>
+<!-- ══ FILM ══ -->
+<section class="film"><div class="wrap">
+  <p class="sec-kicker"><span id="ch-film">映像</span></p>
+  <div class="film-frame">
+    <iframe src="https://www.youtube.com/embed/nHUPoNVGJ1c" title="消失" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>
   </div>
-  <div class="exh-grid" id="exh-grid">
-    <div class="exh-c"><img src="exh-1.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=ph>exh-1.jpg</div>'"></div>
-    <div class="exh-c"><img src="exh-2.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=ph>exh-2.jpg</div>'"></div>
-    <div class="exh-c"><img src="exh-3.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=ph>exh-3.jpg</div>'"></div>
-    <div class="exh-c"><img src="exh-4.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=ph>exh-4.jpg</div>'"></div>
-    <div class="exh-c"><img src="exh-5.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=ph>exh-5.jpg</div>'"></div>
-    <div class="exh-c"><img src="exh-6.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=ph>exh-6.jpg</div>'"></div>
-    <div class="exh-c"><img src="exh-7.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=ph>exh-7.jpg</div>'"></div>
-    <div class="exh-c"><img src="exh-8.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=ph>exh-8.jpg</div>'"></div>
-    <div class="exh-c"><img src="exh-9.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=ph>exh-9.jpg</div>'"></div>
-    <div class="exh-c"><img src="exh-10.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=ph>exh-10.jpg</div>'"></div>
-    <div class="exh-c"><img src="exh-11.jpg" alt="" onerror="this.parentElement.innerHTML='<div class=ph>exh-11.jpg</div>'"></div>
-  </div>
-</section>
+</div></section>
 
-<!-- ══ 映像 ══════════════════════════════════════════ -->
-<section class="sec" id="s-film">
-  <div class="sec-bar">
-    <span class="s-ttl" id="ch-film">映像</span>
-  </div>
-  <div class="film-w">
-    <iframe src="https://www.youtube.com/embed/nHUPoNVGJ1c" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="width:100%;height:100%;position:absolute;inset:0"></iframe>
-  </div>
-</section>
-
-<!-- ══ BACK ══════════════════════════════════════════ -->
-<section class="sec" id="s-back">
-  <a class="back-btn" href="../index.html">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <line x1="14" y1="8" x2="2" y2="8" stroke="currentColor" stroke-width="1.5"/>
-      <polyline points="6,3 1,8 6,13" stroke="currentColor" stroke-width="1.5" fill="none"/>
-    </svg>
-    <span id="back-lbl">ホームへ戻る</span>
+<!-- ══ FOOTER ══ -->
+<footer class="foot"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:1.4rem;align-items:center;justify-content:space-between;width:100%">
+  <a class="foot-back" href="../index.html">
+    <span>&#8592;</span><span id="back-lbl">ホームへ戻る</span>
   </a>
-</section>
+  <span class="foot-meta">消失 / DISAPPEARANCE · HE LIANGYU · 2023</span>
+</div></footer>
 
-</div><!-- /page -->
+</main>
 
 <script>
 /* ═══════════ TRANSLATIONS ═══════════ */
 const T = {
   ja:{
     navTtl:"消失",
-    hCat:"\u88c5\u7f6e",
-    hSub:"SHOUSHITSU / \u6d88\u5931",
-    hYl:"\u5e74\u4efd",hMl:"\u6750\u6599",
-    hMed:"\u9296\u677f\u3001\u96fb\u6e90\u6307\u793a\u30e9\u30f3\u30d7\u3001\u30c9\u30e9\u30a4\u30d6\u30dc\u30fc\u30c9",
-    cLbl:"\u6982\u5ff5",
-    cHead:"\u3053\u306e\u4f5c\u54c1\u306f\u3001\u4eba\u9593\u74b0\u5883\u306e\u5f71\u97ff\u4e0b\u306b\u3042\u308b\u74b0\u5883\u4fdd\u8b77\u306e\u73fe\u72b6\u3092\u601d\u3044\u8d77\u3053\u3055\u305b\u308b\u3082\u306e\u3068\u3057\u3066\u30011\u5e74\u9593\u306b\u67af\u6b7b\u3057\u305f\u690d\u7269\u7a2e\u306e\u6570\u3092\u7d39\u4ecb\u3057\u3066\u3044\u308b\u3002",
-    insLbl:"\u30a4\u30f3\u30b9\u30d4\u30ec\u30fc\u30b7\u30e7\u30f3",
-    insP1:"\u79c1\u306f\u74b0\u5883\u306e\u591a\u69d8\u6027\u3092\u4fdd\u5168\u3059\u308b\u305f\u3081\u306e\u4e8b\u696d\u4f1a\u793e\u306b\u52e4\u3081\u3066\u3044\u308b\u304c\u3001\u305d\u306e\u4ed5\u4e8b\u3092\u901a\u3058\u3066\u3001\u74b0\u5883\u4fdd\u8b77\u3068\u3044\u3046\u554f\u984c\u304c\u3001\u3044\u304b\u306b\u91cd\u8981\u3067\u3042\u308b\u304b\u3092\u77e5\u3063\u305f\u3002\u8fd1\u5e74\u3001\u4e2d\u56fd\u3067\u306f\u74b0\u5883\u4fdd\u8b77\u304c\u307e\u3059\u307e\u3059\u91cd\u8996\u3055\u308c\u3066\u3044\u308b\u304c\u3001\u591a\u304f\u306e\u4eba\u3005\u304c\u6700\u3082\u6ce8\u76ee\u3057\u3066\u3044\u308b\u306e\u306f\u52d5\u7269\u306e\u4fdd\u8b77\u3067\u3042\u308b\u3002",
-    insP2:"\u52d5\u7269\u306f\u540c\u60c5\u3084\u5171\u611f\u3092\u5f15\u304d\u8d77\u3053\u3057\u3084\u3059\u3044\u3002\u690d\u7269\u306f\u8a71\u3059\u3053\u3068\u304c\u3067\u304d\u306a\u3044\u3001\u52d5\u304b\u306a\u3044\u3002\u5f7c\u3089\u306f\u9759\u304b\u3067\u3001\u79c1\u305f\u3061\u306b\u306f\u5bb9\u6613\u306b\u306f\u6c17\u3065\u304b\u308c\u306a\u3044\u3002\u3053\u308c\u304c\u5f7c\u3089\u304c\u74b0\u5883\u8b70\u984c\u306b\u304a\u3044\u3066\u983b\u7e41\u306b\u8fba\u7e01\u5316\u3055\u308c\u308b\u539f\u56e0\u3067\u3042\u308b\u3002",
-    insP3:"\u690d\u7269\u306e\u7d76\u6ec5\u306f\u91cd\u8981\u304b\u3064\u5dee\u3057\u8feb\u3063\u305f\u554f\u984c\u306b\u306a\u3063\u3066\u304a\u308a\u3001\u4e00\u822c\u306e\u4eba\u3005\u306f\u307e\u3060\u8349\u82b1\u306e\u591a\u69d8\u6027\u3092\u5b88\u308b\u3053\u3068\u306e\u91cd\u8981\u6027\u306b\u6c17\u3065\u3044\u3066\u3044\u306a\u3044\u3002\u305d\u306e\u305f\u3081\u3001\u79c1\u306f\u690d\u7269\u306e\u4fdd\u8b77\u3078\u306e\u95a2\u5fc3\u3092\u9ad8\u3081\u308b\u305f\u3081\u306e\u88c5\u7f6e\u3092\u4f5c\u6210\u3057\u305f\u3044\u3068\u8003\u3048\u305f\u3002",
-    hScroll:"\u4e0a\u4e0b\u30b9\u30af\u30ed\u30fc\u30eb\u3067\u79fb\u52d5",
-    chResearch:"\u7814\u7a76",
-    r1Lbl:"\u8abf\u67fb",
-    r1P1:"\u5730\u7403\u306b\u306f45\u4e07\u7a2e\u306e\u690d\u7269\u304c\u5b58\u5728\u3057\uff08Wikipedia\uff09\u3001\u6bce\u5e74\u7d76\u6ec5\u3057\u3066\u3044\u308b\u7a2e\u306e\u6570\u306f\u5897\u52a0\u3057\u7d9a\u3051\u3066\u3044\u308b\u3002\u73fe\u5728\u306e\u7d76\u6ec5\u901f\u5ea6\u306f\u81ea\u7136\u306a\u80cc\u666f\u7d76\u6ec5\u7387\u306e10,000\u500d\u306b\u9054\u3057\u3066\u3044\u308b\uff08WWF\uff09\u3002",
-    r1K1:"\u80cc\u666f\u7d76\u6ec5\u7387",r1K2:"\u73fe\u5728\u306e\u63a8\u5b9a\u7d76\u6ec5\u7387",
-    r1P2:"1\u5e74\u306f8,760\u6642\u9593\u3002\u3057\u305f\u304c\u3063\u3066\u3001585 \u00f7 8,760 \u2248 <strong>\u7d04898\u5206\u3054\u3068\u306b1\u7a2e\u306e\u690d\u7269\u304c\u7d76\u6ec5\u3059\u308b</strong>\u3002",
-    r2Lbl:"\u80cc\u666f",
-    r2Head:"\u690d\u7269\u304c\u8fba\u7e01\u5316\u3055\u308c\u308b\u7406\u7531",
-    r2P1:"\u751f\u614b\u7cfb\u306e\u591a\u69d8\u6027\u306e\u4fdd\u8b77\u306f\u3001\u52d5\u7269\u3060\u3051\u3067\u306a\u304f\u3001\u79c1\u305f\u3061\u306e\u8fd1\u304f\u306e\u690d\u7269\u3082\u542b\u307e\u308c\u308b\u3002\u3057\u304b\u3057\u3001\u4eba\u3005\u306b\u3068\u3063\u3066\u3001\u52d5\u7269\u306f\u540c\u60c5\u3084\u5171\u611f\u3092\u5f15\u304d\u8d77\u3053\u3057\u3084\u3059\u304f\u3001\u52d5\u7269\u306e\u4fdd\u8b77\u306b\u95a2\u3059\u308b\u6ce8\u76ee\u5ea6\u306f\u690d\u7269\u306e\u4fdd\u8b77\u3088\u308a\u3082\u306f\u308b\u304b\u306b\u9ad8\u3044\u3002",
-    r2P2:"\u690d\u7269\u306f\u8a71\u305b\u306a\u3044\u3002\u52d5\u304b\u306a\u3044\u3002\u9759\u304b\u3067\u3001\u79c1\u305f\u3061\u306b\u306f\u5bb9\u6613\u306b\u6c17\u3065\u304b\u308c\u306a\u3044\u3002\u3060\u304b\u3089\u3053\u305d\u3001\u79c1\u306f\u3053\u306e\u88c5\u7f6e\u3092\u901a\u3058\u3066\u3001\u690d\u7269\u306e\u6d88\u5931\u3092\u53ef\u8996\u5316\u3057\u305f\u3044\u3068\u8003\u3048\u305f\u3002",
-    chConcept:"\u6982\u5ff5",
-    c1Lbl:"\u88c5\u7f6e\u306e\u69cb\u9020",
-    c1Head:"\u9296\u677f\u3068\u3001\u5931\u308f\u308c\u3086\u304f\u7dd1\u306e\u5149",
-    c1P1:"\u9296\u677f\u306e\u4e0a\u306b\u96fb\u7403\u3092\u914d\u7f6e\u3057\u3001\u3053\u308c\u3089\u306e\u96fb\u7403\u306f\u81ea\u7136\u306e\u7dd1\u8272\u306e\u690d\u7269\u3092\u8868\u3059\u7dd1\u8272\u306b\u8a2d\u8a08\u3055\u308c\u308b\u3002\u73fe\u5b9f\u306e\u7d76\u6ec5\u306e\u30da\u30fc\u30b9\u306b\u5f93\u3063\u3066\u3001\u30e9\u30f3\u30c0\u30e0\u306b\u96fb\u7403\u3092\u6d88\u3059\u3002\u4e00\u3064\u306e\u690d\u7269\u7a2e\u304c\u7d76\u6ec5\u3059\u308b\u305f\u3073\u306b\u3001\u7dd1\u8272\u306e\u96fb\u7403\u306e\u5149\u304c\u6d88\u3048\u308b\u3002",
-    c1P2:"\u9296\u677f\u306e\u30c7\u30b6\u30a4\u30f3\u306e\u30a4\u30f3\u30b9\u30d4\u30ec\u30fc\u30b7\u30e7\u30f3\u306f\u5de5\u696d\u6a5f\u5668\u304b\u3089\u6765\u3066\u304a\u308a\u3001\u4eba\u9593\u306e\u5de5\u696d\u6587\u660e\u3068\u81ea\u7136\u3068\u306e\u9593\u306e\u5bfe\u7acb\u3092\u8c61\u5fb4\u3057\u3066\u3044\u308b\u3002\u7523\u696d\u9769\u547d\u4ee5\u6765\u3001\u690d\u7269\u306e\u7d76\u6ec5\u6570\u306f\u5897\u52a0\u306e\u4e00\u9014\u3092\u305f\u3069\u3063\u3066\u304a\u308a\u3001\u7523\u696d\u3068\u74b0\u5883\u306f\u690d\u7269\u306e\u7d76\u6ec5\u3068\u5bc6\u63a5\u306a\u95a2\u4fc2\u306b\u3042\u308b\u3002",
-    c1K1:"\u96fb\u7403\u306e\u6570",c1K2:"\u6d88\u706f\u30da\u30fc\u30b9",c1K2v:"898\u5206\u306b1\u3064",
-    c1K3:"\u5bfe\u8c61",c1K3v:"\u7d76\u6ec5\u5371\u60e7\u690d\u7269\u7a2e\uff08\u5168\u4f53\u306e24.2\uff05\uff09",
-    c2Lbl:"\u97f3\u3068\u5149",
-    c2Head:"\u96fb\u7403\u306f\u3053\u306e\u300c\u751f\u547d\u306e\u5149\u300d\u3092\u8c61\u5fb4\u3057\u3066\u3044\u308b",
-    c2P1:"\u3053\u308c\u3089\u306e\u7dd1\u306e\u706f\u308a\u304c\u6b21\u7b2c\u306b\u6d88\u3048\u3066\u3044\u304f\u3068\u3001\u305d\u308c\u306f\u690d\u7269\u306e\u6d88\u5931\u3060\u3051\u3067\u306a\u304f\u3001\u751f\u614b\u7cfb\u5168\u4f53\u306e\u751f\u547d\u529b\u306e\u8870\u3048\u3082\u610f\u5473\u3059\u308b\u3002\u751f\u614b\u7cfb\u306e\u4e2d\u3067\u3001\u3059\u3079\u3066\u306e\u690d\u7269\u306f\u72ec\u81ea\u306e\u5f79\u5272\u3092\u62c5\u3063\u3066\u304a\u308a\u3001\u305d\u308c\u306f\u307e\u308b\u3067\u88c5\u7f6e\u5185\u306e\u5404\u96fb\u7403\u304c\u72ec\u7279\u306e\u81ea\u7136\u306e\u97f3\u3092\u767a\u3057\u3066\u3044\u308b\u304b\u306e\u3088\u3046\u3060\u3002",
-    c2P2:"\u3072\u3068\u3064\u306e\u706f\u308a\u304c\u6d88\u3048\u308b\u3068\u3001\u3072\u3068\u3064\u306e\u81ea\u7136\u306e\u97f3\u304c\u5931\u308f\u308c\u3001\u4ee3\u308f\u308a\u306b\u547c\u5438\u97f3\u304c\u8074\u3053\u3048\u308b\u3002\u3055\u3089\u306b\u591a\u304f\u306e\u690d\u7269\u304c\u6d88\u6ec5\u3059\u308b\u3068\u3001\u307e\u3059\u307e\u3059\u591a\u304f\u3001\u305d\u3057\u3066\u6025\u901f\u306b\u5f37\u307e\u308b\u547c\u5438\u97f3\u304c\u3088\u308a\u306f\u3063\u304d\u308a\u3068\u8074\u3053\u3048\u3066\u304f\u308b\u3002",
-    c2P3:"\u30a4\u30f3\u30b8\u30b1\u30fc\u30bf\u30fc\u30e9\u30f3\u30d7\u306f\u3001\u79c1\u305f\u3061\u306e\u65e5\u5e38\u751f\u6d3b\u306b\u304a\u3044\u3066\u3001\u6a5f\u68b0\u306b\u7570\u5e38\u304c\u3042\u308b\u3053\u3068\u3092\u793a\u3059\u6700\u3082\u4e00\u822c\u7684\u306a\u30b5\u30a4\u30f3\u3067\u3042\u308b\u3002\u4eca\u3001\u305d\u306e\u96fb\u7403\u304c\u300c\u751f\u547d\u306e\u5371\u6a5f\u300d\u3092\u793a\u3057\u3066\u3044\u308b\u3002",
-    chExhibition:"\u5c55\u793a",
-    chFilm:"\u6620\u50cf",
-    nxLbl:"\u6b21\u306e\u4f5c\u54c1",
-    nxT:"\u6b21\u306e\u4f5c\u54c1",
-    backLbl:"\u30db\u30fc\u30e0\u3078\u623b\u308b"
+    hCat:"装置",
+    hSub:"SHŌSHITSU / 消失",
+    hYl:"制作年",hMl:"材料",
+    hMed:"鋼板、緑色表示灯、駆動基板",
+    cLbl:"概念",
+    cHead:"本作は、人間活動によって加速する植物種の絶滅を、消えていく光と音によって可視化し、見過ごされがちな植物保全の現状を問い直すインスタレーションである。",
+    insLbl:"インスピレーション",
+    insP1:"私は、生物多様性保全に取り組む企業で働いた経験を通して、環境保護の重要性を学んだ。近年、中国でも環境問題への関心は高まっているが、社会の注目は動物保護に集まりやすく、植物の保全は見過ごされがちである。",
+    insP2:"動物は動きや表情によって共感を呼びやすい。一方、植物は声を発さず、その場から動かないため、失われつつあることに気づかれにくい。しかし、生物多様性には、身近な草花を含む植物も不可欠である。",
+    insP3:"そこで私は、植物種の消失を光と音の変化として体感できる装置を制作し、植物の保全を自分たちの身近な問題として捉えるきっかけをつくろうと考えた。",
+    hScroll:"上下スクロールで移動",
+    chResearch:"研究",
+    r1Lbl:"推定と換算",
+    r1P1:"本作の試算では、地球上の植物種を約45万種とし、現在の絶滅速度が自然の背景絶滅率の最大約10,000倍に達するという公開資料の推定を参照した。これらは観測された確定値ではなく、作品の時間尺度を設定するための前提である。",
+    r1Note:"注：この計算は2023年の制作時に用いた概念モデルであり、確認済みの年間絶滅数ではない。植物の既知種数と絶滅リスク評価は更新が続いており、未評価種も多く残る。参照：<a href='https://iucn.org/sites/default/files/import/downloads/species_extinction_05_2007.pdf' target='_blank' rel='noopener'>IUCN, Species Extinction – The Facts</a>、<a href='https://nrl.iucnredlist.org/resources/summary-statistics' target='_blank' rel='noopener'>IUCN Red List Summary Statistics</a>、<a href='https://www.kew.org/science/collections-and-resources/data-and-digital/names-and-taxonomy' target='_blank' rel='noopener'>Kew, World Checklist of Vascular Plants</a>。",
+    r1K1:"背景絶滅率に対する上限倍率",
+    r1Formula:"背景絶滅率：0.05–0.13 E/MSY<br>現在の推定：0.05–0.13 × 10,000<br>= 500–1,300 E/MSY<br><br>500–1,300 ÷ 1,000,000 × 450,000<br>≈ <strong>225–585種 / 年</strong><br><br>225種の場合：8,760 ÷ 225 ≈ 38.93時間（2,336分）<br>585種の場合：8,760 ÷ 585 ≈ 14.97時間（898分）",
+    r1P2:"この試算では、植物種の絶滅は年間約225–585種、約2,336分に1種から約898分に1種の範囲となる。画面に大きく示した898分は、最高推定値の585種／年を採用した場合の値であり、平均値ではない。",
+    r2Lbl:"試算の位置づけ",
+    r2Head:"898分は、平均値ではなく最高推定のシナリオ",
+    r2P1:"E/MSYは、100万種あたり1年間に何種が絶滅するかを示す単位である。本作では、背景絶滅率、対象となる植物種数、現在の絶滅速度の倍率という三つの前提から、年間の絶滅種数と時間間隔を換算した。",
+    r2P2:"推定結果は、参照資料の更新や対象範囲によって変わり得る。本作では危機の時間感覚を提示するため、最高推定のシナリオを装置の概念上の時間設定に採用している。これは、現実の絶滅が一定間隔で発生することを意味しない。",
+    chConcept:"概念",
+    c1Lbl:"装置の構造",
+    c1Head:"鋼板にともる、失われゆく緑の光",
+    c1P1:"本作の原案では、植物種の24.2％が絶滅の危機にあると仮定し、450,000 × 24.2％＝108,900種を概念上の換算対象とした。これは実際に設置した表示灯の数ではなく、24.2％も制作時の概念設定であり、現在の全球統計を示すものではない。装置の構想では、一つの緑色表示灯が一つの植物種を象徴し、最高推定のシナリオに基づいて約898分に一つ、ランダムに消えていく。",
+    c1P2:"鋼板の造形は工業機械から着想を得ている。無機質な鋼板と生命を表す緑の光を対置することで、工業化によって拡大した人間活動と、その圧力を受ける自然環境との緊張関係を表現した。",
+    c1K1:"概念上の換算対象種数",c1K2:"最高推定時の消灯間隔",c1K2v:"898分に1灯",
+    c1K3:"換算条件",c1K3v:"450,000種 × 24.2％（制作時の仮定）",
+    dotgridCap:"108,900種（概念換算） · 最高推定時は898分に1灯",
+    c2Lbl:"音と光",
+    c2Head:"一つの光、一つの種、そして失われる一つの音",
+    c2P1:"緑の光が次第に消えていくことは、植物種の消失だけでなく、生態系全体の生命力が損なわれていくことも意味する。それぞれの植物種が生態系の中で固有の役割を担うように、装置の各表示灯には異なる自然の音が結びついている。",
+    c2P2:"一つの光が消えると、一つの自然の音も失われ、代わりに呼吸音が現れる。消失が進むにつれて呼吸音は幾重にも重なり、より大きく、切迫したものになる。植物種の喪失を、見るだけでなく聴くことによっても体感させるためである。",
+    c2P3:"表示灯は、日常生活の中で機械の異常を知らせる一般的なサインである。本作では、その意味を生態系へと置き換え、緑の表示灯によって「生命の危機」を警告している。",
+    conclLbl:"結論",
+    conclP1:"本作を通して、植物種の絶滅がもたらす衝撃を、より多くの人に直接感じてもらいたい。これは遠い場所だけの問題ではなく、私たちの身近な環境で進んでいる現実である。環境保護は、気候変動への対応や動物の保護だけに限られない。植物の多様性を守ることも、同じように重要である。",
+    chExhibition:"展示",
+    chFilm:"映像",
+    backLbl:"ホームへ戻る"
   },
 
   zh:{
-    navTtl:"\u6d88\u5931",
-    hCat:"\u88c5\u7f6e",
-    hSub:"SHOUSHITSU / \u6d88\u5931",
-    hYl:"\u5e74\u4efd",hMl:"\u6750\u6599",
-    hMed:"\u9502\u677f\u3001\u7535\u6e90\u6307\u793a\u706f\u3001\u9a71\u52a8\u677f",
-    cLbl:"\u6982\u5ff5",
-    cHead:"\u8fd9\u4ef6\u4f5c\u54c1\u65e8\u5728\u5524\u8d77\u4eba\u4eec\u5bf9\u4eba\u7c7b\u6d3b\u52a8\u5f71\u54cd\u4e0b\u81ea\u7136\u4fdd\u62a4\u73b0\u72b6\u7684\u5173\u6ce8\uff0c\u547c\u73b0\u6bcf\u5e74\u7070\u706d\u7eeb\u7684\u690d\u7269\u79cd\u6570\u3002",
-    insLbl:"\u7075\u611f",
-    insP1:"\u6211\u5728\u4e00\u5bb6\u81f4\u529b\u4e8e\u4fdd\u62a4\u751f\u7269\u591a\u6837\u6027\u7684\u516c\u53f8\u5de5\u4f5c\uff0c\u5de5\u4f5c\u4f7f\u6211\u6df1\u523b\u610f\u8bc6\u5230\u73af\u4fdd\u95ee\u9898\u7684\u91cd\u8981\u6027\u3002\u8fd1\u5e74\u6765\u4e2d\u56fd\u5bf9\u73af\u4fdd\u8d8a\u6765\u8d8a\u91cd\u89c6\uff0c\u4f46\u5927\u591a\u6570\u4eba\u6700\u5173\u6ce8\u7684\u662f\u52a8\u7269\u4fdd\u62a4\u3002",
-    insP2:"\u52a8\u7269\u5bb9\u6613\u5f15\u53d1\u540c\u60c5\u4e0e\u5171\u9e23\u3002\u690d\u7269\u4e0d\u80fd\u8bf4\u8bdd\uff0c\u4e0d\u80fd\u79fb\u52a8\uff0c\u5b83\u4eec\u9ed8\u9ed8\u5730\u5b58\u5728\u3002\u8fd9\u662f\u5b83\u4eec\u5728\u73af\u5883\u8bae\u9898\u4e2d\u5c61\u5c61\u88ab\u8fb9\u7f18\u5316\u7684\u539f\u56e0\u3002",
-    insP3:"\u690d\u7269\u706d\u7eeb\u662f\u4e00\u4e2a\u91cd\u8981\u4e14\u7d27\u8feb\u7684\u95ee\u9898\uff0c\u5bf9\u4e8e\u73af\u5883\u754c\u4eba\u58eb\u800c\u8a00\u5341\u5206\u8feb\u5207\uff0c\u4f46\u5927\u4f17\u5c1a\u672a\u610f\u8bc6\u5230\u4fdd\u62a4\u690d\u7269\u591a\u6837\u6027\u7684\u91cd\u8981\u6027\u3002\u56e0\u6b64\uff0c\u6211\u5e0c\u671b\u901a\u8fc7\u8fd9\u4ef6\u88c5\u7f6e\u63d0\u5347\u4eba\u4eec\u5bf9\u690d\u7269\u4fdd\u62a4\u7684\u5173\u6ce8\u3002",
-    hScroll:"\u4e0a\u4e0b\u6eda\u52a8\u5bfc\u822a",
-    chResearch:"\u7814\u7a76",
-    r1Lbl:"\u8c03\u67e5",
-    r1P1:"\u5730\u7403\u4e0a\u5b58\u5728\u7ea645\u4e07\u79cd\u690d\u7269\uff08Wikipedia\uff09\uff0c\u6bcf\u5e74\u706f\u706d\u7684\u79cd\u6570\u4e0d\u65ad\u589e\u52a0\u3002\u76ee\u524d\u706f\u706d\u901f\u5ea6\u662f\u81ea\u7136\u672c\u666f\u706f\u706d\u7387\u768410,000\u500d\uff08WWF\uff09\u3002",
-    r1K1:"\u672c\u666f\u706f\u706d\u7387",r1K2:"\u5f53\u524d\u63a8\u4f30\u706f\u706d\u7387",
-    r1P2:"1\u5e74\u76f48,760\u5c0f\u65f6\u3002\u56e0\u6b64\uff0c585 \u00f7 8,760 \u2248 <strong>\u6bcf\u7ea6898\u5206\u949f\u5c31\u6709\u4e001\u79cd\u690d\u7269\u706f\u706d</strong>\u3002",
-    r2Lbl:"\u80cc\u666f",
-    r2Head:"\u690d\u7269\u4e3a\u4f55\u88ab\u8fb9\u7f18\u5316",
-    r2P1:"\u751f\u6001\u7cfb\u591a\u6837\u6027\u7684\u4fdd\u62a4\u4e0d\u4ec5\u5305\u62ec\u52a8\u7269\uff0c\u8fd8\u5305\u62ec\u6211\u4eec\u8eab\u8fb9\u7684\u690d\u7269\u3002\u7136\u800c\u52a8\u7269\u5bb9\u6613\u5f15\u53d1\u540c\u60c5\u4e0e\u5171\u9e23\uff0c\u516c\u4f17\u5bf9\u52a8\u7269\u4fdd\u62a4\u7684\u5173\u6ce8\u5ea6\u8fdc\u9ad8\u4e8e\u690d\u7269\u4fdd\u62a4\u3002",
-    r2P2:"\u690d\u7269\u4e0d\u80fd\u8bf4\u8bdd\uff0c\u4e0d\u80fd\u79fb\u52a8\uff0c\u9ed8\u9ed8\u5730\u5b58\u5728\u3002\u56e0\u6b64\uff0c\u6211\u5e0c\u671b\u901a\u8fc7\u8fd9\u4ef6\u88c5\u7f6e\u5c06\u690d\u7269\u7684\u6d88\u5931\u53ef\u89c6\u5316\u3002",
-    chConcept:"\u6982\u5ff5",
-    c1Lbl:"\u88c5\u7f6e\u7ed3\u6784",
-    c1Head:"\u9502\u677f\u4e0e\u6d88\u901d\u7684\u7eff\u5149",
-    c1P1:"\u5728\u9502\u677f\u4e0a\u6392\u5217\u706f\u6cae\uff0c\u8fd9\u4e9b\u706f\u6cae\u8bbe\u8ba1\u4e3a\u7eff\u8272\uff0c\u4ee3\u8868\u81ea\u7136\u754c\u4e2d\u7684\u690d\u7269\u3002\u6309\u7167\u73b0\u5b9e\u4e16\u754c\u706f\u706d\u7684\u9650\u5ea6\uff0c\u968f\u673a\u5c06\u706f\u6cae\u718a\u706f\u3002\u6bcf\u5f53\u4e00\u4e2a\u690d\u7269\u79cd\u718a\u706f\uff0c\u4e00\u76cf\u7eff\u706f\u718a\u706f\u3002",
-    c1P2:"\u9502\u677f\u8bbe\u8ba1\u7684\u7075\u611f\u6765\u81ea\u5de5\u4e1a\u8bbe\u5907\uff0c\u8c61\u5f81\u4eba\u7c7b\u5de5\u4e1a\u6587\u660e\u4e0e\u81ea\u7136\u4e4b\u95f4\u7684\u5bf9\u7acb\u3002\u81ea\u5de5\u4e1a\u9769\u547d\u4ee5\u6765\uff0c\u690d\u7269\u706f\u706d\u6570\u91cf\u4e0d\u65ad\u589e\u52a0\uff0c\u5de5\u4e1a\u4e0e\u73af\u5883\u4e8e\u690d\u7269\u706f\u706d\u5bc6\u5207\u76f8\u5173\u3002",
-    c1K1:"\u706f\u6cae\u6570\u91cf",c1K2:"\u718a\u706f\u9891\u7387",c1K2v:"\u6bcf898\u5206\u949f1\u76cf",
-    c1K3:"\u5bf9\u8c61",c1K3v:"\u6781\u5c11\u6f0f\u690d\u7269\u79cd\uff08\u5360\u603b\u657024.2\uff05\uff09",
-    c2Lbl:"\u58f0\u97f3\u4e0e\u5149",
-    c2Head:"\u706f\u6cae\u8c61\u5f81\u7740\u8fd9\u300c\u751f\u547d\u4e4b\u5149\u300d",
-    c2P1:"\u8fd9\u4e9b\u7eff\u5149\u9010\u6e10\u718a\u706f\uff0c\u4e0d\u4ec5\u610f\u5473\u7740\u690d\u7269\u7684\u6d88\u5931\uff0c\u4e5f\u610f\u5473\u7740\u6574\u4e2a\u751f\u6001\u7cfb\u751f\u547d\u529b\u7684\u8870\u8910\u3002\u751f\u6001\u7cfb\u4e2d\uff0c\u6bcf\u4e00\u79cd\u690d\u7269\u90fd\u626f\u6f14\u7740\u72ec\u7279\u7684\u89d2\u8272\uff0c\u5c31\u50cf\u88c5\u7f6e\u4e2d\u6bcf\u4e00\u76cf\u706f\u6cae\u90fd\u53d1\u51fa\u72ec\u7279\u7684\u81ea\u7136\u4e4b\u58f0\u3002",
-    c2P2:"\u4e00\u76cf\u706f\u718a\u706f\uff0c\u4e00\u79cd\u81ea\u7136\u4e4b\u58f0\u6d88\u5931\uff0c\u53d6\u800c\u4ee3\u4e4b\u7684\u662f\u547c\u5438\u58f0\u3002\u968f\u7740\u66f4\u591a\u690d\u7269\u6d88\u5931\uff0c\u8d8a\u6765\u8d8a\u5f3a\u7684\u547c\u5438\u58f0\u4f1a\u53d8\u5f97\u8d8a\u6765\u8d8a\u6e05\u6670\u3002",
-    c2P3:"\u6307\u793a\u706f\u662f\u65e5\u5e38\u751f\u6d3b\u4e2d\u673a\u5668\u51fa\u73b0\u5f02\u5e38\u7684\u6700\u5e38\u89c1\u4fe1\u53f7\u3002\u73b0\u5728\uff0c\u8fd9\u4e9b\u706f\u6cae\u6b63\u5728\u63d0\u793a\u201c\u751f\u547d\u5371\u673a\u201d\u3002",
-    chExhibition:"\u5c55\u793a",
-    chFilm:"\u5f71\u50cf",
-    nxLbl:"\u4e0b\u4e00\u4ef6\u4f5c\u54c1",
-    nxT:"\u4e0b\u4e00\u4ef6\u4f5c\u54c1",
-    backLbl:"\u8fd4\u56de\u4e3b\u9875"
+    navTtl:"消失",
+    hCat:"装置",
+    hSub:"SHŌSHITSU / 消失",
+    hYl:"年份",hMl:"材料",
+    hMed:"钢板、绿色指示灯、驱动板",
+    cLbl:"概念",
+    cHead:"本作品通过逐渐熄灭的光与消失的声音，将人类活动加速的植物物种灭绝可视化，并重新审视常被忽视的植物保护现状。",
+    insLbl:"灵感来源",
+    insP1:"我曾在一家致力于保护生物多样性的企业工作，并由此认识到环境保护的重要性。近年来，中国社会对环境问题的关注不断提高，但公众的注意力往往集中在动物保护上，植物保护则容易被忽视。",
+    insP2:"动物能够通过动作和表情引发共情。植物不能发声，也无法移动，因此人们很难察觉它们正在消失。然而，生物多样性不仅包括动物，也离不开我们身边的草木与其他植物。",
+    insP3:"因此，我希望制作一件让观众通过光与声音的变化感受植物物种消失的装置，使植物保护成为一个能够被切身理解的问题。",
+    hScroll:"上下滚动导航",
+    chResearch:"研究",
+    r1Lbl:"估算与换算",
+    r1P1:"本作品的估算以地球上约有45万种植物，以及当前灭绝速度最高可达自然本底灭绝率约10,000倍等公开资料为依据。这些数字并非已经观测确认的固定值，而是用于设定作品时间尺度的估算前提。",
+    r1Note:"注：该计算是2023年创作时采用的概念模型，并非已经确认的年度灭绝记录。植物物种总数和灭绝风险评估仍在持续更新，许多物种也尚未完成评估。参考：<a href='https://iucn.org/sites/default/files/import/downloads/species_extinction_05_2007.pdf' target='_blank' rel='noopener'>IUCN《Species Extinction – The Facts》</a>、<a href='https://nrl.iucnredlist.org/resources/summary-statistics' target='_blank' rel='noopener'>IUCN红色名录统计说明</a>、<a href='https://www.kew.org/science/collections-and-resources/data-and-digital/names-and-taxonomy' target='_blank' rel='noopener'>Kew世界维管植物名录</a>。",
+    r1K1:"相对本底灭绝率的最高倍数",
+    r1Formula:"本底灭绝率：0.05–0.13 E/MSY<br>当前估算：0.05–0.13 × 10,000<br>= 500–1,300 E/MSY<br><br>500–1,300 ÷ 1,000,000 × 450,000<br>≈ <strong>225–585种 / 年</strong><br><br>每年225种时：8,760 ÷ 225 ≈ 38.93小时（2,336分钟）<br>每年585种时：8,760 ÷ 585 ≈ 14.97小时（898分钟）",
+    r1P2:"依据这一估算，植物物种每年灭绝约225–585种，相当于约每2,336分钟至898分钟灭绝1种。页面重点显示的898分钟对应每年585种的最高估算情景，并非平均值。",
+    r2Lbl:"估算说明",
+    r2Head:"898分钟对应最高估算情景，而非平均值",
+    r2P1:"E/MSY表示在一年内，每100万个物种中灭绝的物种数量。本作品根据本底灭绝率、植物物种总数以及当前灭绝速度的倍率三个前提，换算出每年的灭绝种数与时间间隔。",
+    r2P2:"估算结果可能随参考资料的更新与统计范围而变化。为了呈现危机发生的时间感，作品在概念设定中采用了最高估算情景。这并不意味着现实中的物种灭绝会以固定间隔发生。",
+    chConcept:"概念",
+    c1Lbl:"装置结构",
+    c1Head:"钢板上逐渐消失的绿光",
+    c1P1:"本作品原案假定24.2%的植物物种面临灭绝威胁，并将450,000 × 24.2%＝108,900种作为概念换算对象。这并不是实际安装的指示灯数量；24.2%同样是创作时采用的概念设定，并非当前全球统计。在装置的概念设定中，一盏绿色指示灯象征一个植物物种，并按照最高估算情景，以约每898分钟熄灭一盏的间隔随机熄灭。",
+    c1P2:"钢板的造型源自工业机械。作品将无机质的钢板与象征生命的绿光并置，表现工业化所扩张的人类活动与承受其压力的自然环境之间的紧张关系。",
+    c1K1:"概念换算对象种数",c1K2:"最高估算下的熄灭间隔",c1K2v:"每898分钟1盏",
+    c1K3:"换算条件",c1K3v:"450,000种 × 24.2%（创作时假定）",
+    dotgridCap:"108,900种（概念换算） · 最高估算情景下每898分钟熄灭1盏",
+    c2Lbl:"声音与光",
+    c2Head:"一束光、一个物种，以及一种消失的声音",
+    c2P1:"绿光逐渐熄灭，不仅意味着植物物种的消失，也意味着整个生态系统生命力的损失。正如每一种植物都在生态系统中承担着独特的作用，装置中的每一盏指示灯也与一种不同的自然之声相连。",
+    c2P2:"一盏灯熄灭，一种自然之声便随之消失，取而代之的是呼吸声。随着消失不断发生，呼吸声层层叠加，变得更响、更急促，使观众不仅能看见，也能听见植物物种的丧失。",
+    c2P3:"指示灯是日常生活中提示机器异常的常见信号。本作品将这一含义转向生态系统，以绿色指示灯发出关于“生命危机”的警告。",
+    conclLbl:"结论",
+    conclP1:"我希望通过本作品，让更多人直接感受到植物物种灭绝所带来的冲击。这并非只发生在遥远之处，而是正在我们身边的环境中发生。环境保护不只有应对气候变化和保护动物；守护植物多样性同样重要。",
+    chExhibition:"展示",
+    chFilm:"影像",
+    backLbl:"返回主页"
   },
 
   en:{
     navTtl:"Disappearance",
     hCat:"Installation",
-    hSub:"SHOUSHITSU / 消失",
+    hSub:"SHŌSHITSU / 消失",
     hYl:"Year",hMl:"Materials",
-    hMed:"Steel Plate, Indicator Lamps, Drive Board",
+    hMed:"Steel Plate, Green Indicator Lamps, Driver Board",
     cLbl:"Concept",
-    cHead:"This work presents the number of plant species that go extinct each year as a reminder of the current state of environmental protection under human influence.",
+    cHead:"This installation uses fading lights and disappearing sounds to visualize plant-species extinction accelerated by human activity, drawing attention to the often-overlooked need for plant conservation.",
     insLbl:"Inspiration",
-    insP1:"I work at a company dedicated to preserving biodiversity. Through this work, I came to understand how critical the issue of environmental protection truly is. In recent years, China has given increasing attention to the environment, but most public focus remains on animal conservation.",
-    insP2:"Animals are easy to empathize with. Plants cannot speak or move. They exist in silence, easily overlooked. This is why they are so often marginalized in environmental discourse.",
-    insP3:"Plant extinction is an urgent problem, pressing for those within environmental circles but still largely invisible to the general public. For this reason, I wanted to create an installation that raises awareness of plant conservation.",
+    insP1:"Through my experience working for a company engaged in biodiversity conservation, I came to understand the importance of environmental protection. Although environmental awareness has grown in China, public attention tends to focus on animal conservation, while plants are more easily overlooked.",
+    insP2:"Animals can evoke empathy through movement and expression. Plants neither speak nor move, making their disappearance difficult to notice. Yet biodiversity depends not only on animals, but also on the grasses, flowers, and other plants around us.",
+    insP3:"I therefore set out to create an installation in which changes in light and sound allow viewers to experience the disappearance of plant species and recognize plant conservation as an issue close to their own lives.",
     hScroll:"Scroll to navigate",
     chResearch:"Research",
-    r1Lbl:"Survey",
-    r1P1:"Earth is home to 450,000 plant species (Wikipedia), and the number going extinct each year continues to rise. The current extinction rate is 10,000 times the natural background rate (WWF).",
-    r1K1:"Background Rate",r1K2:"Estimated Current Rate",
-    r1P2:"One year is 8,760 hours. Therefore 585 \u00f7 8,760 \u2248 <strong>one plant species goes extinct approximately every 898 minutes</strong>.",
-    r2Lbl:"Background",
-    r2Head:"Why Plants Are Marginalized",
-    r2P1:"Protecting biodiversity means protecting not only animals but also the plants around us. Yet animals are far easier to empathize with, and public attention to animal conservation vastly exceeds that for plants.",
-    r2P2:"Plants cannot speak or move. They exist in silence. This is precisely why I wanted to use this installation to make the disappearance of plants visible.",
+    r1Lbl:"Estimate & Conversion",
+    r1P1:"The calculation used in this work draws on published estimates of approximately 450,000 plant species worldwide and a current extinction rate reaching up to roughly 10,000 times the natural background rate. These figures are not fixed, directly observed values; they are assumptions used to establish the work’s conceptual timescale.",
+    r1Note:"Note: This calculation is a conceptual model developed for the work in 2023, not a record of confirmed annual extinctions. Counts of known plant species and extinction-risk assessments continue to change, and many species remain unevaluated. References: <a href='https://iucn.org/sites/default/files/import/downloads/species_extinction_05_2007.pdf' target='_blank' rel='noopener'>IUCN, Species Extinction – The Facts</a>, <a href='https://nrl.iucnredlist.org/resources/summary-statistics' target='_blank' rel='noopener'>IUCN Red List Summary Statistics</a>, and <a href='https://www.kew.org/science/collections-and-resources/data-and-digital/names-and-taxonomy' target='_blank' rel='noopener'>Kew, World Checklist of Vascular Plants</a>.",
+    r1K1:"Upper multiplier vs. background rate",
+    r1Formula:"Background rate: 0.05–0.13 E/MSY<br>Current estimate: 0.05–0.13 × 10,000<br>= 500–1,300 E/MSY<br><br>500–1,300 ÷ 1,000,000 × 450,000<br>≈ <strong>225–585 species / year</strong><br><br>At 225 species: 8,760 ÷ 225 ≈ 38.93 hours (2,336 min)<br>At 585 species: 8,760 ÷ 585 ≈ 14.97 hours (898 min)",
+    r1P2:"Under this calculation, the estimated range is roughly 225–585 plant species per year, equivalent to one species every 2,336 to 898 minutes. The prominently displayed 898 minutes corresponds to the upper estimate of 585 species per year; it is not an average.",
+    r2Lbl:"Reading the Estimate",
+    r2Head:"898 Minutes Represents the Upper Estimate, Not an Average",
+    r2P1:"E/MSY measures extinctions per million species-years: the number of species expected to disappear among one million species over one year. This work converts three assumptions—the background rate, the number of plant species, and the multiplier applied to the current rate—into annual losses and a time interval.",
+    r2P2:"The result may change as source data and statistical scope are updated. To convey a sense of temporal urgency, the work uses the upper-estimate scenario as its conceptual timing. This does not imply that extinctions occur at regular intervals in reality.",
     chConcept:"Concept",
     c1Lbl:"Installation Structure",
-    c1Head:"Steel Plate and the Fading Green Light",
-    c1P1:"Lights are arranged on steel plates, each lamp designed in green to represent a living plant species. Following the real-world pace of extinction, lamps go dark at random. Each time a species is lost, a green light goes out.",
-    c1P2:"The steel plate design draws inspiration from industrial machinery, symbolizing the conflict between human industrial civilization and nature. Since the Industrial Revolution, plant extinction rates have climbed steadily. Industry and the environment are deeply intertwined with plant loss.",
-    c1K1:"Number of lamps",c1K2:"Extinction pace",c1K2v:"One lamp every 898 min",
-    c1K3:"Scope",c1K3v:"Critically endangered species (24.2% of total)",
+    c1Head:"Green Lights Fading Across a Steel Plate",
+    c1P1:"The original concept assumes that 24.2% of plant species face a risk of extinction. Multiplying 450,000 by 24.2% gives 108,900 species as the conceptual population represented by the work; it is not the number of indicator lamps physically installed. The 24.2% figure is likewise a design assumption from 2023, not a current global statistic. In the installation concept, each green indicator lamp symbolizes one plant species and goes dark at random according to the upper-estimate interval of approximately 898 minutes.",
+    c1P2:"The steel structure draws its form from industrial machinery. By placing inorganic steel beside green light as a sign of life, the work expresses the tension between human activity expanded through industrialization and the natural environments subjected to its pressure.",
+    c1K1:"Conceptual species count",c1K2:"Upper-estimate fade interval",c1K2v:"One light / 898 min",
+    c1K3:"Conversion basis",c1K3v:"450,000 × 24.2% (2023 assumption)",
+    dotgridCap:"108,900 species (conceptual conversion) · one light every 898 min at the upper estimate",
     c2Lbl:"Sound & Light",
-    c2Head:"Each Lamp Symbolizes a \u201cLight of Life\u201d",
-    c2P1:"As these green lights gradually go out, it signals not only the disappearance of plants but the decline of vitality across the entire ecosystem. Every plant plays a unique role, just as each lamp in the installation emits a distinct sound of nature.",
-    c2P2:"When one light goes out, one natural sound is lost and replaced by the sound of breathing. As more plants disappear, that breathing grows louder and more insistent.",
-    c2P3:"Indicator lamps are the most common signal in daily life that something is wrong with a machine. Now, these lamps signal a crisis of life itself.",
+    c2Head:"One Light, One Species, and One Sound Lost",
+    c2P1:"As the green lights gradually go out, they signify not only the disappearance of plant species but also a loss of vitality across the ecosystem. Just as every plant species plays a distinct ecological role, each indicator lamp in the installation is connected to a different sound from nature.",
+    c2P2:"When one light goes out, one natural sound disappears and is replaced by breathing. As the losses continue, the breaths accumulate, becoming louder and more urgent. The disappearance of plant species is therefore experienced not only visually, but also through sound.",
+    c2P3:"Indicator lamps commonly signal that something is wrong with a machine. This work redirects that familiar meaning toward the ecosystem, using green indicator lamps to warn of a crisis of life.",
+    conclLbl:"Conclusion",
+    conclP1:"Through this work, I want more people to feel the impact of plant-species extinction directly. This is not a distant problem; it is unfolding in the environments around us. Environmental protection is not limited to climate action or animal conservation. Protecting plant diversity is equally essential.",
     chExhibition:"Exhibition",
     chFilm:"Film",
-    nxLbl:"Next Work",
-    nxT:"Next Work",
     backLbl:"Back to Home"
   }
 };
 
-/* ═══════════ LANG CYCLE ═══════════ */
+/* ═══════════ LANG ═══════════ */
 const LANGS = ["ja","zh","en"];
 let lang = "ja";
+
+/* extra labels not in the shared dictionary */
+const EX = {
+  ja:{ species:"試算に用いた植物種数", punchUnit:"分" },
+  zh:{ species:"估算采用的植物物种数", punchUnit:"分钟" },
+  en:{ species:"Plant species used in estimate", punchUnit:"min" }
+};
 
 function applyLang(l){
   lang = l;
   const t = T[l];
-  document.documentElement.lang = l;
+  document.documentElement.lang = l === "zh" ? "zh-CN" : l;
   document.documentElement.className = "lang-" + l;
+  document.title = (t.navTtl || "消失") + " — 何梁宇";
 
-  const set = (id, html) => {
-    const el = document.getElementById(id);
-    if(el) el.innerHTML = html;
-  };
+  const set = (id, html) => { const el = document.getElementById(id); if(el) el.innerHTML = html; };
 
   set("nav-ttl", t.navTtl);
   set("h-cat",   t.hCat);
+  set("h-ttl",   t.navTtl);
   set("h-sub",   t.hSub);
   set("h-yl",    t.hYl);
   set("h-ml",    t.hMl);
@@ -567,14 +541,17 @@ function applyLang(l){
   set("ch-research",t.chResearch);
   set("r1-lbl",  t.r1Lbl);
   set("r1-p1",   t.r1P1);
+  set("r1-note", t.r1Note);
   set("r1-k1",   t.r1K1);
-  set("r1-k2",   t.r1K2);
+  set("r1-formula", t.r1Formula);
   set("r1-p2",   t.r1P2);
+  set("stat-species", EX[l].species);
+  set("punch-unit",   EX[l].punchUnit);
   set("r2-lbl",  t.r2Lbl);
   set("r2-head", t.r2Head);
   set("r2-p1",   t.r2P1);
   set("r2-p2",   t.r2P2);
-  // Concept
+  // Concept / device
   set("ch-concept", t.chConcept);
   set("c1-lbl",  t.c1Lbl);
   set("c1-head", t.c1Head);
@@ -585,12 +562,16 @@ function applyLang(l){
   set("c1-k2v",  t.c1K2v);
   set("c1-k3",   t.c1K3);
   set("c1-k3v",  t.c1K3v);
+  set("dotgrid-cap", t.dotgridCap);
+  // Sound & light
   set("c2-lbl",  t.c2Lbl);
   set("c2-head", t.c2Head);
   set("c2-p1",   t.c2P1);
   set("c2-p2",   t.c2P2);
   set("c2-p3",   t.c2P3);
-  // Exhibition / Film / Next
+  set("concl-lbl", t.conclLbl);
+  set("concl-p1",  t.conclP1);
+  // Exhibition / film / back
   set("ch-exhibition", t.chExhibition);
   set("ch-film",       t.chFilm);
   set("back-lbl",      t.backLbl);
@@ -599,47 +580,140 @@ function applyLang(l){
 }
 
 document.getElementById("lang-btn").addEventListener("click", () => {
-  const next = LANGS[(LANGS.indexOf(lang) + 1) % LANGS.length];
-  applyLang(next);
+  applyLang(LANGS[(LANGS.indexOf(lang) + 1) % LANGS.length]);
 });
 
-/* ═══════════ DOTS / TRACKS ═══════════ */
-function initTrack(id){
-  const track = document.getElementById("track-" + id);
-  const dotsEl = document.getElementById("dots-" + id);
-  if(!track || !dotsEl) return;
-  const slides = track.querySelectorAll(".slide");
-  if(slides.length <= 1){ dotsEl.style.display = "none"; return; }
-  slides.forEach((_, i) => {
-    const d = document.createElement("span");
-    d.className = "dot" + (i === 0 ? " on" : "");
-    d.onclick = () => track.scrollTo({ left: i * track.clientWidth, behavior:"smooth" });
-    dotsEl.appendChild(d);
+/* ═══════════ SMOOTH INSPIRATION DISCLOSURE ═══════════ */
+(function initInspirationDisclosure(){
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll("details.insp").forEach(details => {
+    const summary = details.querySelector("summary");
+    const body = details.querySelector(".insp-body");
+    if (!summary || !body) return;
+
+    let closeTimer = 0;
+    let motionToken = 0;
+    const setExpanded = value => summary.setAttribute("aria-expanded", String(value));
+    const finishClose = token => {
+      if (token !== motionToken || details.classList.contains("is-open")) return;
+      details.open = false;
+      details.classList.remove("is-closing");
+    };
+
+    if (details.open) details.classList.add("is-open");
+    setExpanded(details.open);
+
+    summary.addEventListener("click", event => {
+      event.preventDefault();
+      const token = ++motionToken;
+      window.clearTimeout(closeTimer);
+
+      if (!details.classList.contains("is-open")) {
+        details.open = true;
+        details.classList.remove("is-closing");
+        setExpanded(true);
+        if (reduce) {
+          details.classList.add("is-open");
+          return;
+        }
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          if (token === motionToken) details.classList.add("is-open");
+        }));
+        return;
+      }
+
+      details.classList.remove("is-open");
+      details.classList.add("is-closing");
+      setExpanded(false);
+      if (reduce) {
+        finishClose(token);
+        return;
+      }
+      closeTimer = window.setTimeout(() => finishClose(token), 580);
+    });
+
+    body.addEventListener("transitionend", event => {
+      if (event.propertyName === "grid-template-rows" && details.classList.contains("is-closing")) {
+        finishClose(motionToken);
+      }
+    });
   });
-  const upd = () => {
-    const i = Math.round(track.scrollLeft / track.clientWidth);
-    dotsEl.querySelectorAll(".dot").forEach((d,j) => d.classList.toggle("on", j === i));
-  };
-  track.addEventListener("scroll", upd, { passive:true });
-}
-["research","concept"].forEach(initTrack);
+})();
+
+/* ═══════════ NAV solidify on scroll ═══════════ */
+const navEl = document.getElementById("nav");
+const onScroll = () => navEl.classList.toggle("solid", window.scrollY > window.innerHeight * 0.72);
+window.addEventListener("scroll", onScroll, { passive:true });
+onScroll();
 
 /* ═══════════ LIGHTBOX ═══════════ */
-const lb  = document.getElementById("lb");
-const lbi = document.getElementById("lb-img");
+const lb = document.getElementById("lb"), lbi = document.getElementById("lb-img");
 document.querySelectorAll(".exh-c img").forEach(img => {
-  img.addEventListener("click", () => {
-    lbi.src = img.src; lb.classList.add("open");
-    document.body.style.overflow = "hidden";
-  });
+  img.addEventListener("click", () => { lbi.src = img.src; lb.classList.add("open"); document.body.style.overflow = "hidden"; });
 });
 const closeLB = () => { lb.classList.remove("open"); document.body.style.overflow = ""; };
 document.getElementById("lb-x").addEventListener("click", closeLB);
 lb.addEventListener("click", e => { if(e.target === lb || e.target === lbi) closeLB(); });
 document.addEventListener("keydown", e => { if(e.key === "Escape") closeLB(); });
 
-/* ═══════════ VIDEO ═══════════ */
+/* ═══════════ LED DOT GRID ═══════════ */
+(function(){
+  const canvas = document.getElementById("dotgrid");
+  if(!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const reduce = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  const GREEN = [94,240,138], DARK = [26,32,28];
+  const GAP = 15, R = 2.1;
+  let cols=0, rows=0, cells=[], dpr=1, raf=0;
 
+  function build(){
+    const rect = canvas.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio||1, 2);
+    canvas.width = rect.width*dpr; canvas.height = rect.height*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    cols = Math.floor(rect.width/GAP); rows = Math.floor(rect.height/GAP);
+    const offX = (rect.width - cols*GAP)/2 + GAP/2;
+    const offY = (rect.height - rows*GAP)/2 + GAP/2;
+    cells = [];
+    for(let y=0;y<rows;y++) for(let x=0;x<cols;x++){
+      cells.push({ x:offX+x*GAP, y:offY+y*GAP, lit: Math.random()>0.14 ? 1 : 0.06, target:null });
+    }
+  }
+  function draw(){
+    const rect = canvas.getBoundingClientRect();
+    ctx.clearRect(0,0,rect.width,rect.height);
+    for(const c of cells){
+      if(c.target!==null){
+        c.lit += (c.target - c.lit) * 0.06;
+        if(Math.abs(c.target - c.lit) < 0.02){ c.lit = c.target; c.target = null; }
+      }
+      const t = c.lit;
+      const r = Math.round(DARK[0]+(GREEN[0]-DARK[0])*t);
+      const g = Math.round(DARK[1]+(GREEN[1]-DARK[1])*t);
+      const b = Math.round(DARK[2]+(GREEN[2]-DARK[2])*t);
+      ctx.beginPath();
+      ctx.arc(c.x, c.y, R + t*0.7, 0, Math.PI*2);
+      ctx.fillStyle = `rgb(${r},${g},${b})`;
+      if(t>0.5){ ctx.shadowColor = "rgba(94,240,138,.7)"; ctx.shadowBlur = 6*t; } else { ctx.shadowBlur = 0; }
+      ctx.fill();
+    }
+    ctx.shadowBlur = 0;
+  }
+  function tick(){
+    // fade one lit lamp toward dark; occasionally relight one to hold density
+    const lit = cells.filter(c=>c.lit>0.5 && c.target===null);
+    if(lit.length > cells.length*0.55){ const c = lit[Math.floor(Math.random()*lit.length)]; if(c) c.target = 0.06; }
+    else { const dark = cells.filter(c=>c.lit<0.2 && c.target===null); const c = dark[Math.floor(Math.random()*dark.length)]; if(c) c.target = 1; }
+  }
+  function loop(){ draw(); raf = requestAnimationFrame(loop); }
+
+  build();
+  if(reduce){ draw(); }
+  else { loop(); setInterval(tick, 620); }
+
+  let rt;
+  window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(()=>{ build(); if(reduce) draw(); }, 200); });
+})();
 
 /* ═══════════ INIT ═══════════ */
 try { const s = localStorage.getItem("hl-lang"); if(s && LANGS.includes(s)) lang = s; } catch(e){}

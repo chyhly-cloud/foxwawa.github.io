@@ -2,1036 +2,495 @@
 <html lang="ja" class="lang-ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light">
+<meta name="description" content="自分勝手 — 社会の規律と自由意志のあいだを、身体と軌道によって問う動的インスタレーション。">
 <title>自分勝手 — 何梁宇</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Serif+JP:wght@300;400&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Noto+Sans+SC:wght@300;400;500;700;900&amp;family=Noto+Serif+JP:wght@300;400;500;600&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:light only}
-html{forced-color-adjust:none}
 :root{
-  --ink:#000;--ink2:#111;--ink3:#aaa;
-  --rule:rgba(0,0,0,.12);
-  --nav-h:50px;--bar-h:44px;
+  color-scheme:light;
+  --paper:#f7f6f2;
+  --white:#fff;
+  --ink:#111;
+  --muted:#6f6e69;
+  --faint:#aaa8a1;
+  --rule:rgba(17,17,17,.16);
+  --rule-strong:rgba(17,17,17,.42);
+  --signal:#ee9418;
+  --acid:#c8e500;
+  --blue:#49a7d8;
+  --nav-h:58px;
+  --max:1440px;
+  --gutter:clamp(1.2rem,4vw,4.5rem);
   --mono:"Space Mono",monospace;
-  --safe-bottom:0px;
-  --browser-bottom-gap:0px;
-  --bottom-clearance:0px;
-  --app-height:100vh;
+  --serif:"Noto Serif JP",serif;
+  --sans:"Inter","Noto Sans SC",sans-serif;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{
-  height:100%;overflow:hidden;
-  background:#fff !important;color:#000 !important;
-  font-family:var(--mono);-webkit-text-size-adjust:100%;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  text-rendering:optimizeLegibility;
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--paper);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+img{display:block;width:100%;height:auto}
+button,a{font:inherit;color:inherit}
+a{text-decoration:none}
+button{border:0;background:none;padding:0}
+::selection{background:var(--signal);color:#fff}
+.lang-ja .display,.lang-ja .copy,.lang-ja .question,.lang-ja .atlas-title,.lang-ja .section-title,.lang-ja .layer-title{font-family:var(--serif)}
+.lang-zh .display,.lang-zh .copy,.lang-zh .question,.lang-zh .atlas-title,.lang-zh .section-title,.lang-zh .layer-title{font-family:"Noto Sans SC",sans-serif}
+.lang-en .display,.lang-en .copy,.lang-en .question,.lang-en .atlas-title,.lang-en .section-title,.lang-en .layer-title{font-family:var(--sans)}
+.skip{position:fixed;left:1rem;top:-5rem;z-index:1000;background:#000;color:#fff;padding:.75rem 1rem;font:700 11px var(--mono);letter-spacing:.08em}
+.skip:focus{top:1rem}
+:focus-visible{outline:2px solid var(--signal);outline-offset:4px}
+.site-nav{position:fixed;inset:0 0 auto;z-index:100;height:var(--nav-h);display:flex;align-items:center;gap:2rem;padding:0 var(--gutter);background:rgba(247,246,242,.88);border-bottom:1px solid var(--rule);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.nav-home{font:700 12px var(--mono);letter-spacing:.14em;display:flex;gap:.8rem;align-items:center;white-space:nowrap}
+.nav-home span:first-child{font-size:17px;transition:transform .2s}
+.nav-home:hover span:first-child{transform:translateX(-4px)}
+.lang-btn{margin-left:auto;width:32px;height:32px;display:grid;place-items:center;cursor:pointer;color:var(--ink);opacity:.55;transition:opacity .2s,color .2s}
+.lang-btn:hover{opacity:1;color:var(--signal)}
+.visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.progress{position:fixed;left:0;top:calc(var(--nav-h) - 2px);z-index:101;width:100%;height:2px;transform-origin:left;background:var(--signal);transform:scaleX(0);pointer-events:none}
+main{padding-top:var(--nav-h)}
+.eyebrow{margin:0 0 1.1rem;font:700 10px var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.eyebrow.signal{color:var(--signal)}
+.section-head{max-width:var(--max);margin:0 auto;padding:clamp(5rem,11vw,9rem) var(--gutter) clamp(2.5rem,5vw,4.5rem);display:grid;grid-template-columns:minmax(240px,.8fr) minmax(300px,1.5fr);gap:clamp(2rem,8vw,9rem);align-items:end}
+.section-title{font-size:clamp(2.5rem,6vw,6.7rem);line-height:.92;letter-spacing:-.05em;font-weight:500;margin:0}
+.section-intro{font-size:clamp(.98rem,1.4vw,1.2rem);line-height:1.9;margin:0;max-width:45em;color:#333}
+.section-intro p{margin:0}.section-intro p+p{margin-top:1rem}
+.hero{min-height:calc(100svh - var(--nav-h));position:relative;display:grid;align-items:end;overflow:hidden;background:#ddd}
+.hero-media{position:absolute;inset:0}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 47%}
+.hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.02) 46%,rgba(0,0,0,.72) 100%)}
+.hero-copy{position:relative;z-index:1;color:#fff;padding:clamp(2.2rem,7vw,6.5rem) var(--gutter);display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end}
+.hero-type{font:700 10px var(--mono);letter-spacing:.24em;text-transform:uppercase;margin:0 0 1.4rem;color:rgba(255,255,255,.75)}
+.hero-title{font-size:clamp(4rem,13vw,11.5rem);font-weight:300;line-height:.79;letter-spacing:-.06em;margin:0;text-shadow:0 6px 30px rgba(0,0,0,.2)}
+.lang-ja .hero-title{letter-spacing:-.03em}
+.hero-sub{font:700 10px var(--mono);letter-spacing:.2em;text-transform:uppercase;margin:1.5rem 0 0;color:rgba(255,255,255,.78)}
+.hero-index{font:700 clamp(2rem,5vw,4.7rem) var(--mono);line-height:1;color:rgba(255,255,255,.35);padding-bottom:.25rem}
+.core{background:var(--white);border-bottom:1px solid var(--rule)}
+.core-grid{max-width:var(--max);margin:auto;padding:clamp(5rem,12vw,11rem) var(--gutter);display:grid;grid-template-columns:minmax(250px,.72fr) minmax(320px,1.28fr);gap:clamp(3rem,9vw,11rem)}
+.core-sticky{align-self:start;position:sticky;top:calc(var(--nav-h) + 2rem)}
+.question{font-size:clamp(2.1rem,4.8vw,5.3rem);line-height:1.12;letter-spacing:-.04em;font-weight:400;margin:0;max-width:9.6em}
+.core-body{max-width:47rem}
+.copy{font-size:clamp(1rem,1.35vw,1.22rem);line-height:2;color:#2e2e2b;margin:0}
+.copy+.copy{margin-top:1.5rem}
+.source-note{margin-top:3.2rem;padding-top:2.2rem;border-top:1px solid var(--rule)}
+.source-note h3{font:700 10px var(--mono);letter-spacing:.2em;text-transform:uppercase;margin:0 0 1rem}
+.source-note p{font-size:.93rem;line-height:1.9;color:var(--muted);margin:0}
+.source-note p+p{margin-top:1rem}
+.meta-line{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule);margin-top:3rem}
+.meta-item{padding:1.2rem 1rem 0 0;border-right:1px solid var(--rule)}
+.meta-item:last-child{border-right:0;padding-left:1rem}
+.meta-item:nth-child(2){padding-left:1rem}
+.meta-label{display:block;font:700 8px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--faint);margin-bottom:.55rem}
+.meta-value{font-size:.9rem;line-height:1.5}
+.research{background:var(--paper);border-bottom:1px solid var(--rule)}
+.atlas-nav{max-width:var(--max);margin:0 auto;padding:0 var(--gutter) 1rem;display:flex;justify-content:flex-end;align-items:center;gap:.55rem}
+.atlas-hint{font:700 9px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-right:.7rem}
+.atlas-btn{width:38px;height:34px;border:1px solid var(--rule-strong);cursor:pointer;font:700 14px var(--mono);transition:background .2s,color .2s}
+.atlas-btn:hover{background:var(--ink);color:#fff}
+.atlas-scroller{overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:var(--ink) transparent;padding-bottom:1.5rem}
+.atlas-scroller::-webkit-scrollbar{height:4px}.atlas-scroller::-webkit-scrollbar-thumb{background:var(--ink)}
+.atlas-track{display:flex;align-items:stretch;width:max-content;min-width:100%;padding:0 var(--gutter) clamp(4rem,8vw,7rem)}
+.atlas-node{width:min(76vw,920px);min-height:620px;display:grid;grid-template-columns:minmax(260px,.9fr) minmax(340px,1.1fr);background:var(--white);border:1px solid var(--rule-strong);scroll-snap-align:center}
+.atlas-visual{position:relative;min-height:100%;overflow:hidden;background:#fff;border-right:1px solid var(--rule)}
+.atlas-visual img{width:100%;height:100%;object-fit:contain;padding:clamp(1.2rem,3vw,2.8rem)}
+.atlas-code{position:absolute;left:1rem;top:1rem;font:700 9px var(--mono);letter-spacing:.18em;color:var(--muted)}
+.atlas-text{padding:clamp(2rem,4vw,4rem);display:flex;flex-direction:column}
+.atlas-number{font:700 10px var(--mono);letter-spacing:.18em;color:var(--signal);margin-bottom:auto}
+.atlas-title{font-size:clamp(1.7rem,3vw,3.4rem);line-height:1.12;letter-spacing:-.035em;font-weight:500;margin:4rem 0 1.5rem}
+.atlas-copy{font-size:.96rem;line-height:1.95;color:#333;margin:0}
+.atlas-copy+.atlas-copy{margin-top:1rem}
+.atlas-insight{display:block;margin-top:2rem;font:700 8px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--signal)}
+.atlas-tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.75rem}
+.atlas-tag{font:700 8px var(--mono);letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--rule);padding:.45rem .65rem}
+.atlas-link{width:clamp(90px,10vw,180px);position:relative;flex:none;display:grid;place-items:center}
+.atlas-link::before{content:"";height:1px;background:var(--rule-strong);position:absolute;left:0;right:0;top:50%}
+.atlas-link::after{content:"";width:8px;height:8px;border-top:1px solid var(--ink);border-right:1px solid var(--ink);transform:rotate(45deg);position:absolute;right:2px;top:calc(50% - 4px)}
+.atlas-link span{position:relative;background:var(--paper);padding:.5rem;font:700 8px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);writing-mode:vertical-rl}
+.plan-a{background:#ecebe7;border-bottom:1px solid var(--rule)}
+.plan-shell{max-width:var(--max);margin:auto;padding:clamp(5rem,10vw,9rem) var(--gutter);display:grid;grid-template-columns:minmax(320px,1.05fr) minmax(300px,.95fr);gap:clamp(2.5rem,7vw,8rem);align-items:center}
+.plan-image{background:#fff;border:1px solid var(--rule-strong);padding:clamp(1rem,3vw,2.5rem);position:relative}
+.plan-image img{max-height:72vh;object-fit:contain}
+.plan-stamp{position:absolute;right:1rem;top:1rem;width:54px;height:54px;border:2px solid #b3312c;color:#b3312c;display:grid;place-items:center;font:700 22px var(--mono);transform:rotate(7deg);background:rgba(255,255,255,.85)}
+.plan-label{font:700 10px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:#b3312c;margin:0 0 1.2rem}
+.plan-a .section-title{font-size:clamp(2.3rem,4.8vw,5.1rem);line-height:1.04;margin-bottom:2rem}
+.plan-a-copy{font-size:1rem;line-height:1.95;color:#333;margin:0}
+.verdict{margin-top:2.5rem;border-top:1px solid var(--rule-strong);padding-top:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.verdict h3{font:700 9px var(--mono);letter-spacing:.16em;text-transform:uppercase;margin:0 0 .9rem}
+.verdict ul{list-style:none;padding:0;margin:0}
+.verdict li{font-size:.9rem;line-height:1.65;margin:.55rem 0;padding-left:1.1rem;position:relative}
+.verdict .pro li::before{content:"+";position:absolute;left:0}.verdict .con li::before{content:"−";position:absolute;left:0;color:#999}
+.rejected{margin:2rem 0 0;padding:1rem 1.2rem;border-left:3px solid #b3312c;background:rgba(255,255,255,.55);font-size:.9rem;line-height:1.7}
+.experiments{background:var(--white);border-bottom:1px solid var(--rule)}
+.experiment-list{max-width:var(--max);margin:auto;padding:0 var(--gutter) clamp(5rem,10vw,9rem)}
+.experiment-row{display:grid;grid-template-columns:minmax(300px,1.12fr) minmax(280px,.88fr);border-top:1px solid var(--rule-strong);min-height:600px}
+.experiment-row:last-child{border-bottom:1px solid var(--rule-strong)}
+.experiment-row.reverse{grid-template-columns:minmax(280px,.88fr) minmax(300px,1.12fr)}
+.experiment-row.reverse .experiment-media{order:2;border-right:0;border-left:1px solid var(--rule)}
+.experiment-media{min-height:100%;border-right:1px solid var(--rule);background:#fff;overflow:hidden}
+.experiment-media img{width:100%;height:100%;object-fit:contain;padding:clamp(1.5rem,4vw,4rem)}
+.experiment-copy{padding:clamp(2.5rem,5vw,5rem);display:flex;flex-direction:column;justify-content:center}
+.experiment-index{font:700 9px var(--mono);letter-spacing:.18em;color:var(--signal);margin-bottom:2rem}
+.experiment-copy .section-title{font-size:clamp(2rem,4vw,4rem);line-height:1.08;margin-bottom:1.7rem}
+.result-line{margin-top:2rem;padding-top:1.25rem;border-top:1px solid var(--rule);font:700 10px/1.7 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.plan-b{background:#0d0d0d;color:#fff}
+.plan-b-head{max-width:var(--max);margin:auto;padding:clamp(5rem,10vw,9rem) var(--gutter) clamp(3rem,6vw,5rem);display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(3rem,9vw,10rem);align-items:end}
+.plan-b .eyebrow{color:var(--acid)}
+.plan-b .section-title{font-size:clamp(2.8rem,6vw,6.5rem)}
+.plan-b-intro{font-size:clamp(1rem,1.45vw,1.2rem);line-height:1.95;color:#cfcfcf;margin:0}
+.plan-b-visual{max-width:var(--max);margin:auto;padding:0 var(--gutter)}
+.plan-b-visual img{max-height:74vh;object-fit:contain;background:#f0f0f0;border:1px solid rgba(255,255,255,.2)}
+.layers{max-width:var(--max);margin:auto;padding:0 var(--gutter) clamp(5rem,10vw,9rem);display:grid;grid-template-columns:repeat(3,1fr)}
+.layer{padding:clamp(2rem,3.5vw,3.5rem);border-left:1px solid rgba(255,255,255,.22);border-bottom:1px solid rgba(255,255,255,.22)}
+.layer:last-child{border-right:1px solid rgba(255,255,255,.22)}
+.layer-no{font:700 9px var(--mono);letter-spacing:.18em;color:var(--acid)}
+.layer-title{font-size:clamp(1.5rem,2.4vw,2.5rem);font-weight:500;line-height:1.15;margin:2.8rem 0 1.2rem}
+.layer p{font-size:.92rem;line-height:1.9;color:#c9c9c9;margin:0}
+.selection{max-width:var(--max);margin:auto;padding:0 var(--gutter) clamp(5rem,9vw,8rem);display:grid;grid-template-columns:auto 1fr;gap:2rem;border-top:1px solid rgba(255,255,255,.2)}
+.selection-label{font:700 9px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--acid);padding-top:2.3rem}
+.selection p{margin:0;padding-top:2rem;font-size:1rem;line-height:1.85;color:#e2e2e2;max-width:54rem}
+.evidence{background:var(--paper);border-bottom:1px solid var(--rule)}
+.evidence-board{max-width:var(--max);margin:auto;padding:0 var(--gutter) clamp(5rem,10vw,9rem);display:grid;grid-template-columns:1.15fr .85fr;grid-template-rows:auto auto;gap:1px;background:var(--rule)}
+.evidence-cell{background:var(--white);min-height:360px;position:relative;overflow:hidden}
+.evidence-cell.big{grid-row:span 2;min-height:760px}
+.evidence-cell img{width:100%;height:100%;object-fit:cover}
+.evidence-cell.big img{object-fit:contain;padding:2rem}
+.evidence-caption{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.86));color:#fff;padding:5rem 1.5rem 1.4rem}
+.evidence-k{font:700 8px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acid);display:block;margin-bottom:.55rem}
+.evidence-caption p{font-size:.86rem;line-height:1.65;margin:0;max-width:45em}
+.process-strip{max-width:var(--max);margin:-1px auto 0;padding:0 var(--gutter) clamp(5rem,10vw,9rem);display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--rule)}
+.process-strip figure{margin:0;background:#fff;aspect-ratio:1;overflow:hidden}
+.process-strip img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:filter .25s,transform .35s}
+.process-strip figure:hover img{filter:grayscale(0);transform:scale(1.04)}
+.exhibition{background:var(--white)}
+.exhibition-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.zoom{display:block;width:100%;aspect-ratio:4/3;overflow:hidden;cursor:zoom-in;background:#ececea}
+.zoom img{width:100%;height:100%;object-fit:cover;transition:transform .4s,filter .3s}
+.zoom:hover img{transform:scale(1.035);filter:contrast(1.03)}
+.film{min-height:100svh;background:#000;color:#fff;display:flex;flex-direction:column}
+.film-head{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 var(--gutter);border-bottom:1px solid rgba(255,255,255,.18)}
+.film-head h2{font:700 10px var(--mono);letter-spacing:.2em;text-transform:uppercase;margin:0}
+.film-head span{font:400 9px var(--mono);letter-spacing:.14em;color:#777}
+.film-frame{position:relative;flex:1;min-height:calc(100svh - var(--nav-h));overflow:hidden}
+.film-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.footer{min-height:42vh;display:grid;place-items:center;background:var(--paper);text-align:center;padding:4rem var(--gutter)}
+.footer a{font:700 10px var(--mono);letter-spacing:.2em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:.6rem}
+.lightbox{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.96);display:none;align-items:center;justify-content:center;padding:4vw}
+.lightbox.open{display:flex}
+.lightbox img{max-width:92vw;max-height:90vh;width:auto;height:auto;object-fit:contain}
+.lightbox-close{position:absolute;right:1.5rem;top:1.2rem;color:#fff;width:44px;height:44px;border:1px solid rgba(255,255,255,.4);cursor:pointer;font:400 20px var(--mono)}
+@media(max-width:980px){
+  .section-head,.core-grid,.plan-shell,.plan-b-head{grid-template-columns:1fr;gap:2.2rem}
+  .core-sticky{position:static}
+  .question{max-width:13em}
+  .atlas-node{width:min(86vw,820px);grid-template-columns:.9fr 1.1fr}
+  .experiment-row,.experiment-row.reverse{grid-template-columns:1fr 1fr}
+  .evidence-board{grid-template-columns:1fr 1fr}
+  .exhibition-grid{grid-template-columns:repeat(3,1fr)}
 }
-.lang-ja .bhead,.lang-ja .h-ttl,.lang-ja .nx-t,
-.lang-ja .note-p,.lang-ja .bp,.lang-ja .prow,
-.lang-ja .hcb .bhead{font-family:"Noto Serif JP",serif}
-.lang-zh .bhead,.lang-zh .h-ttl,.lang-zh .nx-t,
-.lang-zh .hcb .bhead{font-family:"Noto Sans SC",sans-serif;font-weight:900}
-.lang-zh .note-p,.lang-zh .bp,.lang-zh .prow{font-family:"Noto Sans SC",sans-serif;font-weight:400}
-.lang-en .bhead,.lang-en .h-ttl,.lang-en .nx-t,
-.lang-en .hcb .bhead{font-family:"Inter","Helvetica Neue",sans-serif;font-weight:900}
-
-nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;background:#fff !important;flex-shrink:0}
-.nav-l{display:flex;align-items:center;gap:2rem}
-.nav-back{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);text-decoration:none;transition:color .15s}
-.nav-back:hover{color:#000}
-.nav-ttl{font-size:13px;color:#000;letter-spacing:.3px;font-weight:700}
-.lang-ja .nav-ttl{font-family:"Noto Serif JP",serif}
-.lang-zh .nav-ttl{font-family:"Noto Sans SC",sans-serif}
-.lang-globe{background:none;border:none;cursor:pointer;padding:0;color:#000;display:flex;align-items:center;justify-content:center;opacity:.45;transition:opacity .2s;-webkit-tap-highlight-color:transparent}
-.lang-globe:hover{opacity:1}
-
-#page{height:var(--app-height);overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
-#page::-webkit-scrollbar{display:none}
-
-.sec{height:var(--app-height);scroll-snap-align:start;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column}
-.sec>.sec-bar{flex-shrink:0}
-.sec-exh{height:auto;min-height:var(--app-height)}
-
-.sec-bar{display:flex;align-items:center;padding:0 2.5rem;height:var(--bar-h);gap:1rem;background:#fff !important}
-.s-ttl{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#000;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
-.dots{display:flex;gap:7px;align-items:center;flex-shrink:0}
-.dot{width:5px;height:5px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .2s,transform .18s}
-.dot.on{background:#000;transform:scale(1.4)}
-
-.h-track{flex:1;min-height:0;position:relative;display:flex;overflow-x:scroll;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.h-track::-webkit-scrollbar{display:none}
-.slide{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;overflow:hidden;background:#fff}
-
-.board{display:grid;height:100%}
-.b-half{grid-template-columns:1fr 1fr}
-.b-half .bcell:first-child{border-right:1px solid var(--rule)}
-.b-6040{grid-template-columns:60% 40%}
-.b-6040 .bcell:first-child{border-right:1px solid var(--rule)}
-.b-4060{grid-template-columns:40% 60%}
-.b-4060 .bcell:first-child{border-right:1px solid var(--rule)}
-.bcell{position:relative;overflow:hidden}
-
-.bimg{background:#f4f4f4;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:2rem}
-.bimg img{width:100%;height:100%;object-fit:contain;display:block}
-.bimg.photo{padding:0;background:#e8e8e8}
-.bimg.photo img{object-fit:cover;object-position:center}
-.bph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:#f4f4f4;text-align:center}
-
-.btxt{display:flex;flex-direction:column;justify-content:center;overflow-y:auto;padding:3rem;background:#fff}
-.btxt::-webkit-scrollbar{display:none}
-.brow{margin-bottom:2rem;flex-shrink:0}
-.brow:last-child{margin-bottom:0}
-
-.blbl{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#000;text-transform:uppercase;margin-bottom:.9rem;display:block;font-weight:700}
-.bhead{font-size:clamp(20px,2.5vw,34px);font-weight:900;color:#000;line-height:1.1;margin-bottom:1rem;letter-spacing:-.02em}
-.lang-zh .bhead{letter-spacing:0}
-.lang-ja .bhead{letter-spacing:0;font-weight:400}
-
-.bp{font-size:12px;line-height:1.9;color:#444;margin-bottom:.5rem}
-.bp:last-child{margin-bottom:0}
-.bp b{color:#000;font-weight:700}
-
-.btag{display:inline-block;font-family:var(--mono);font-size:8px;letter-spacing:3px;padding:4px 10px;text-transform:uppercase;margin-bottom:.8rem;font-weight:700;border:1px solid}
-.btag.ok{border-color:#000;color:#000}
-.btag.no{border-color:#aaa;color:#aaa}
-
-.prow{font-size:12px;line-height:1.9;color:#444;padding-left:1.2rem;position:relative;margin-bottom:.25rem}
-.prow::before{position:absolute;left:0;font-weight:700;font-family:var(--mono)}
-.pro::before{content:"+";color:#000}
-.con::before{content:"−";color:#aaa}
-
-.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:.6rem}
-.chip{font-family:var(--mono);font-size:8px;letter-spacing:2px;padding:3px 9px;border:1px solid var(--rule);color:#888;text-transform:uppercase}
-
-#s-hero{background:#fff}
-.hero-g{display:grid;grid-template-columns:58% 42%;height:100%}
-.hero-img{overflow:hidden;border-right:1px solid var(--rule)}
-.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-.hero-nfo{display:flex;flex-direction:column;overflow-y:auto;background:#fff}
-.hero-nfo::-webkit-scrollbar{display:none}
-.hero-nfo::after{content:"";display:block;flex:0 0 0}
-
-.htb{padding:3.5rem 3rem 2rem;flex-shrink:0}
-.h-cat{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:1.5rem;font-weight:700}
-.h-ttl{font-size:clamp(48px,6.5vw,88px);font-weight:900;line-height:.9;color:#000;margin-bottom:.6rem;letter-spacing:-.03em}
-.lang-zh .h-ttl{letter-spacing:0;line-height:.95}
-.lang-ja .h-ttl{letter-spacing:-.01em;font-weight:300;font-size:clamp(40px,5.5vw,72px)}
-.h-sub{font-family:var(--mono);font-size:9px;letter-spacing:2.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:2rem;font-weight:700}
-.specs{display:grid;grid-template-columns:auto 1fr;gap:8px 24px;margin-top:.5rem}
-.sp-l{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:#888;text-transform:uppercase;align-self:center;font-weight:700}
-.sp-v{font-size:13px;color:#000;font-weight:700}
-
-.hcb{padding:0 3rem 2rem;flex-shrink:0;margin-top:-.5rem}
-.hcb .blbl{margin-bottom:.8rem}
-.hcb .bhead{font-size:clamp(15px,1.6vw,19px);font-weight:900;line-height:1.25;letter-spacing:-.01em}
-.lang-ja .hcb .bhead{font-weight:400}
-.hcb .bp{font-size:12px;line-height:1.85;color:#555;margin-top:.6rem}
-
-.ins-det{flex-shrink:0;border-top:1px solid var(--rule)}
-.ins-sum{display:flex;align-items:center;gap:.6rem;padding:1.1rem 3rem;cursor:pointer;list-style:none;outline:none;font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;transition:color .15s;font-weight:700}
-.ins-sum::-webkit-details-marker{display:none}
-.ins-sum::before{content:"▶";font-size:7px;transition:transform .2s;flex-shrink:0}
-.ins-det[open] .ins-sum::before{transform:rotate(90deg)}
-.ins-sum:hover{color:#000}
-.ins-body{padding:0 3rem 2rem}
-.ins-body .note-p{font-size:12px;line-height:1.9;color:#555;margin-bottom:.8rem;font-style:italic}
-.ins-body .note-p:last-of-type{margin-bottom:0}
-.ins-meta{margin-top:1rem;display:flex;gap:1.5rem;flex-wrap:wrap}
-.ins-mi{font-family:var(--mono);font-size:8px;letter-spacing:2.5px;color:var(--ink3);text-transform:uppercase;font-weight:700}
-
-.h-hint{padding:1.5rem 3rem;font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-top:auto;flex-shrink:0;padding-top:0;font-weight:700}
-.h-line{width:28px;height:1px;background:var(--ink3)}
-
-.bhead,.bp,.prow,.note-p,.sp-v{text-wrap:pretty;-webkit-hyphens:auto;hyphens:auto}
-.lang-ja .bp,.lang-ja .prow,.lang-ja .note-p,.lang-ja .hcb .bp,
-.lang-zh .bp,.lang-zh .prow,.lang-zh .note-p,.lang-zh .hcb .bp{
-  text-align:justify;text-justify:inter-ideograph;
+@media(max-width:720px){
+  :root{--nav-h:52px;--gutter:1.15rem}
+  .site-nav{gap:1rem}
+  .hero{min-height:calc(88svh - var(--nav-h))}.hero-copy{grid-template-columns:1fr}.hero-index{display:none}
+  .hero-title{font-size:clamp(4rem,21vw,7rem);line-height:.86}
+  .section-head{padding-top:4.5rem}.section-title{font-size:clamp(2.6rem,15vw,4.8rem)}
+  .core-grid{padding:4.5rem var(--gutter)}.question{font-size:clamp(2.1rem,10vw,3.4rem)}
+  .meta-line{grid-template-columns:1fr}.meta-item,.meta-item:nth-child(2),.meta-item:last-child{padding:1rem 0;border-right:0;border-bottom:1px solid var(--rule)}
+  .atlas-nav{display:none}.atlas-scroller{overflow:visible;padding:0}.atlas-track{display:block;width:auto;padding:0 var(--gutter) 4.5rem}
+  .atlas-node{width:auto;min-height:0;display:block;margin-bottom:1.2rem;scroll-snap-align:none}
+  .atlas-visual{height:min(72vw,360px);border-right:0;border-bottom:1px solid var(--rule)}
+  .atlas-text{padding:1.7rem}.atlas-number{margin-bottom:0}.atlas-title{font-size:clamp(1.75rem,8vw,2.6rem);margin:2.4rem 0 1.2rem}
+  .atlas-link{width:auto;height:76px}.atlas-link::before{left:50%;right:auto;top:0;bottom:0;width:1px;height:auto}.atlas-link::after{right:auto;left:calc(50% - 4px);top:auto;bottom:4px;transform:rotate(135deg)}.atlas-link span{writing-mode:horizontal-tb}
+  .plan-shell{padding:4.5rem var(--gutter)}.verdict{grid-template-columns:1fr;gap:1.5rem}
+  .experiment-list{padding-bottom:4.5rem}.experiment-row,.experiment-row.reverse{display:flex;flex-direction:column;min-height:0}.experiment-row.reverse .experiment-media{order:0;border-left:0}.experiment-media{height:min(100vw,520px);border-right:0;border-bottom:1px solid var(--rule)}.experiment-copy{padding:2rem 1rem 3rem}
+  .plan-b-head{padding-top:4.5rem}.plan-b-visual{padding:0}.plan-b-visual img{border-left:0;border-right:0}
+  .layers{grid-template-columns:1fr;padding:0 var(--gutter) 4.5rem}.layer{border-right:1px solid rgba(255,255,255,.22)}
+  .selection{grid-template-columns:1fr;gap:.5rem;padding-bottom:4.5rem}.selection-label{padding-top:1.5rem}.selection p{padding-top:0}
+  .evidence-board{display:block;background:none;padding-bottom:1rem}.evidence-cell,.evidence-cell.big{min-height:0;height:auto;margin-bottom:1px}.evidence-cell img,.evidence-cell.big img{height:auto;max-height:none;object-fit:contain;padding:0}.evidence-caption{position:relative;background:#111;padding:1.2rem}
+  .process-strip{grid-template-columns:repeat(3,1fr);padding-bottom:4.5rem}
+  .exhibition-grid{grid-template-columns:repeat(2,1fr)}
+  .film{min-height:82svh}.film-frame{min-height:calc(82svh - var(--nav-h))}
 }
-.hero-nfo,.btxt,.ins-body{-webkit-overflow-scrolling:touch}
-
-@supports (height:100svh){:root{--app-height:100svh}}
-@supports (height:100dvh){:root{--app-height:100dvh}}
-
-/* ─ PLAN SLIDES ─ */
-.plan-slide{height:100%;position:relative;background:#f4f4f4}
-.plan-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:2rem;background:#f4f4f4;display:block}
-.plan-panel{position:absolute;top:0;right:0;bottom:0;width:40%;background:#fff;border-left:1px solid var(--rule);display:flex;flex-direction:column;overflow-y:auto}
-.plan-panel::-webkit-scrollbar{display:none}
-
-/* ─ EXHIBITION ─ */
-.exh-wrap{flex:1;min-height:0;overflow-y:auto}
-.exh-wrap::-webkit-scrollbar{display:none}
-.exh-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);min-height:100%}
-.exh-c{overflow:hidden;background:#f4f4f4;cursor:zoom-in;aspect-ratio:4/3}
-.exh-c img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .32s}
-.exh-c:hover img{transform:scale(1.04)}
-
-/* ─ FILM ─ */
-.film-wrap{flex:1;min-height:0;background:#000}
-.vid-wrap{position:relative;width:100%;height:100%}
-.vid-wrap video{width:100%;height:100%;object-fit:cover;display:block}
-.vid-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;cursor:pointer;background:rgba(0,0,0,.28);transition:opacity .3s}
-.vid-ov.gone{opacity:0;pointer-events:none}
-.play-r{width:70px;height:70px;border:1px solid rgba(255,255,255,.45);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:border-color .2s,transform .2s}
-.vid-ov:hover .play-r{border-color:#fff;transform:scale(1.07)}
-.play-t{border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:18px solid rgba(255,255,255,.9);margin-left:4px}
-.vid-lbl{font-family:var(--mono);font-size:9px;letter-spacing:4px;color:rgba(255,255,255,.35);text-transform:uppercase;font-weight:700}
-
-/* ─ BACK ─ */
-#s-back{background:#fff;display:flex;align-items:center;justify-content:center}
-.back-btn{display:flex;align-items:center;gap:.8rem;text-decoration:none;font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;opacity:.35;transition:opacity .2s;font-weight:700}
-.back-btn:hover{opacity:1}
-.back-btn svg{transition:transform .2s}
-.back-btn:hover svg{transform:translateX(-4px)}
-
-/* ─ LIGHTBOX ─ */
-#lb{display:none;position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.96);align-items:center;justify-content:center;cursor:zoom-out}
-#lb.open{display:flex}
-#lb img{max-width:92vw;max-height:92vh;object-fit:contain;display:block}
-#lb-x{position:absolute;top:20px;right:24px;font-size:20px;color:rgba(255,255,255,.4);cursor:pointer;font-family:var(--mono);transition:color .2s}
-#lb-x:hover{color:#fff}
-
-/* ─ RESPONSIVE ─ */
-@media(max-width:768px){
-  :root{--safe-bottom:env(safe-area-inset-bottom,20px)}
-  :root{--bottom-clearance:max(var(--safe-bottom),var(--browser-bottom-gap))}
-  .board.b-half,.board.b-6040,.board.b-4060{grid-template-columns:1fr;grid-template-rows:45% 55%}
-  .hero-g{grid-template-columns:1fr;grid-template-rows:42% 58%}
-  .hero-img{border-right:none}
-  .b-half .bcell:first-child,.b-6040 .bcell:first-child,.b-4060 .bcell:first-child{border-right:none}
-  .plan-panel{width:52%}
-  .exh-grid{grid-template-columns:1fr 1fr}
-  .btxt{padding:2.2rem 1.8rem calc(2.8rem + var(--bottom-clearance))}
-  .htb,.hcb{padding-left:1.8rem;padding-right:1.8rem}
-  .ins-sum,.ins-body,.h-hint{padding-left:1.8rem;padding-right:1.8rem}
-  .h-ttl{font-size:clamp(38px,10vw,60px)}
-  .hero-nfo{padding-bottom:0}
-  .hero-nfo::after{flex-basis:calc(4.5rem + var(--bottom-clearance))}
-  .ins-body{padding-bottom:calc(2rem + var(--bottom-clearance))}
-  .h-hint{padding-bottom:calc(.5rem + var(--bottom-clearance))}
-  #s-back{padding-bottom:var(--bottom-clearance)}
-  .bp{font-size:15px;line-height:2.06;color:#222}
-  .hcb .bp{font-size:15px;line-height:2.06;color:#202020}
-  .prow{font-size:15px;line-height:2.06;color:#222}
-  .ins-body .note-p{font-size:15px;line-height:2.08;color:#2d2d2d}
-  .bhead{font-size:clamp(20px,5vw,28px);line-height:1.22;color:#050505}
-  .hcb .bhead{font-size:clamp(16px,4vw,20px);line-height:1.34}
-  .h-ttl{line-height:1.02}
-  .blbl{font-size:11px}
-  .chip{font-size:9px;padding:4px 10px}
-  .btag{font-size:9px}
-  .sp-v{font-size:14px;letter-spacing:.01em}
-  .nav-ttl{font-size:14px}
-  .brow,.htb > *,.hcb > *,.ins-body > *{max-width:31rem}
-  .bp,.prow,.ins-body .note-p{letter-spacing:.01em}
-}
-
-@supports (-webkit-touch-callout:none){
-  @media(max-width:768px){
-    .bp,.hcb .bp,.prow,.ins-body .note-p{text-shadow:0 0 .01px rgba(0,0,0,.35)}
-    .btxt,.hero-nfo{transform:translateZ(0)}
-  }
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 </style>
 </head>
 <body>
-
-<div id="lb"><span id="lb-x">&#10005;</span><img id="lb-img" src="" alt=""></div>
-
-
-
-<div id="page">
-
-<!-- ══ HERO + CONCEPT ══════════════════════════════ -->
-<section class="sec" id="s-hero">
-<nav>
-  <div class="nav-l">
-    <a class="nav-back" href="../index.html">&#8592;</a>
-    <span class="nav-ttl" id="nav-ttl">自分勝手</span>
-  </div>
-  <button class="lang-globe" id="lang-cycle-btn" title="Switch language" aria-label="Switch language">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<a class="skip" href="#main" data-i18n="skip">本文へ移動</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<nav class="site-nav" aria-label="Project navigation">
+  <a class="nav-home" href="../index.html"><span aria-hidden="true">←</span><span data-i18n="navTitle">自分勝手</span></a>
+  <button class="lang-btn" id="lang-btn" type="button" aria-label="Switch language">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.2"/>
       <ellipse cx="10" cy="10" rx="4" ry="8.5" stroke="currentColor" stroke-width="1.2"/>
       <line x1="1.5" y1="7.5" x2="18.5" y2="7.5" stroke="currentColor" stroke-width="1.2"/>
       <line x1="1.5" y1="12.5" x2="18.5" y2="12.5" stroke="currentColor" stroke-width="1.2"/>
     </svg>
+    <span class="visually-hidden" id="lang-code">JA</span>
   </button>
 </nav>
-  <div class="hero-g">
-    <!-- left: image -->
-    <div class="hero-img">
-      <img src="hero.jpg" alt=""
-        style="width:100%;height:100%;object-fit:cover;object-position:center;display:block"
-        onerror="this.style.display='none'">
-    </div>
-    <!-- right: title + concept + inspiration -->
-    <div class="hero-nfo">
 
-      <!-- title block -->
-      <div class="htb">
-        <p class="h-cat" id="h-cat">装置</p>
-        <h1 class="h-ttl" id="h-ttl">自分勝手</h1>
-        <p class="h-sub" id="h-sub">Self-Wilful / 自我任性</p>
-        <div class="specs">
-          <span class="sp-l" id="h-yl">年份</span><span class="sp-v">2024.11</span>
-          <span class="sp-l" id="h-ml">媒介</span><span class="sp-v" id="h-med">総合材料</span>
-          <span class="sp-l" id="h-tl">形式</span><span class="sp-v" id="h-type">動的インスタレーション</span>
-        </div>
+<main id="main">
+  <header class="hero" aria-labelledby="hero-title">
+    <div class="hero-media"><img src="hero.jpg" alt="自分勝手の展示風景"></div>
+    <div class="hero-copy">
+      <div>
+        <p class="hero-type" data-i18n="heroType">KINETIC INSTALLATION · 2024</p>
+        <h1 class="hero-title display" id="hero-title" data-i18n="heroTitle">自分勝手</h1>
+        <p class="hero-sub" data-i18n="heroSub">SELF-WILL / 動的インスタレーション</p>
       </div>
-
-      <!-- concept -->
-      <div class="hcb">
-        <span class="blbl" id="c-lbl">概念 / Concept</span>
-        <h2 class="bhead" id="c1-head">身体の再構築の可能性を出発点とする動的装置</h2>
-        <p class="bp" id="c1-p1">緻密な計算によってインスタレーションを組み立てる確立された方法は、壮大に定められた運命を象徴し、動きながら体の組み立て姿は、人間の主観や葛藤を象徴している。</p>
-        <p class="bp" id="c1-p2" style="margin-top:.5rem">両者は互いに比較され、同時に動きながら、おそらく決定された運命の枠組みと、人間の主観的な行動の自由意志との関係、人間のすべてが本当に運命の枠組みの中で固定されているのかどうかを探る。</p>
-      </div>
-
-      <!-- inspiration — expandable -->
-      <details class="ins-det">
-        <summary class="ins-sum" id="ins-sum">インスピレーション</summary>
-        <div class="ins-body">
-          <p class="note-p" id="c2-p1">よく人々が「努力すれば何かを得られる」と言うのを聞くことができ、成功者たちも自分の成功の合理性を主張するために自分の努力を提唱するのが好きですが、努力は本当にすべてを得ることができるか。私はかつて工場で生活を体験した際、毎日朝起きて一生懸命働いている人を見る、彼らは本当に生きるために一生懸命働いている。</p>
-          <p class="note-p" id="c2-p2">私も学生時代、一生懸命勉強しても目標を達成できない人がたくさんいた。デザインや創作活動をしていても、既存の枠をどう突破するかということをよく考えていたのだが、気がつくと内在する社会の枠や運命の枠にとらわれていた。だから、努力というのは幻想なのかもしれない。自由意志による決断によって、自分の運命の軌跡をコントロールするという幻想なのかもしれない。</p>
-          <div class="ins-meta">
-            <span class="ins-mi">2024.11</span>
-            <span class="ins-mi" id="c2-med">総合材料</span>
-          </div>
-        </div>
-      </details>
-
-      <p class="h-hint"><span class="h-line"></span><span id="h-scroll">上下スクロールで移動</span></p>
+      <span class="hero-index" aria-hidden="true">01</span>
     </div>
-  </div>
-</section>
+  </header>
 
-<!-- ══ 研究 ══════════════════════════════════════ -->
-<section class="sec">
-  <div class="sec-bar">
-    <span class="s-ttl" id="ch-research">研究</span>
-    <div class="dots" id="dots-research"></div>
-  </div>
-  <div class="h-track" id="track-research">
-
-    <!-- R1: 社会洞察 -->
-    <div class="slide">
-      <div class="board b-half">
-        <div class="bcell bimg">
-          <img src="research-social.jpg" alt=""
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="bph" style="display:none">research-social.jpg</div>
+  <section class="core" id="question" aria-labelledby="question-title">
+    <div class="core-grid">
+      <div class="core-sticky">
+        <p class="eyebrow signal" data-i18n="questionLabel">CONCEPT</p>
+        <h2 class="question" id="question-title" data-i18n="questionTitle">人間のすべては、本当に運命の枠組みの中で固定されているのか。</h2>
+      </div>
+      <div class="core-body">
+        <p class="copy" data-i18n="conceptP1">緻密な計算によって組み立てられたインスタレーションの構造は、壮大に定められた運命を象徴する。一方、動きながら組み立てられていく身体の姿は、人間の主観や葛藤を象徴している。</p>
+        <p class="copy" data-i18n="conceptP2">両者を対比させ、同時に動かすことで、決定された運命の枠組みと、人間の主観的な行動としての自由意志との関係を探る。人間のすべては、本当に運命の枠組みの中で固定されているのだろうか。</p>
+        <div class="source-note">
+          <h3 data-i18n="motivationLabel">INSPIRATION</h3>
+          <p data-i18n="motivationP1">人々が「努力すれば何かを得られる」と言うのをよく耳にする。成功者も、自分の成功の合理性を主張するために努力を語る。しかし、努力すれば本当にすべてを得られるのだろうか。私はかつて工場で生活を体験した際、毎朝起きて懸命に働く人々を見た。彼らは本当に、生きるために懸命に働いていた。</p>
+          <p data-i18n="motivationP2">学生時代には、一生懸命勉強しても目標を達成できない人を多く見た。デザインや創作活動に取り組む中でも、既存の枠をどう突破するかを考えていたが、気づけば内在する社会の枠や運命の枠にとらわれていた。だから、努力というものは幻想なのかもしれない。自由意志による決断によって自分の運命の軌跡をコントロールする、という幻想なのかもしれない。</p>
         </div>
-        <div class="bcell btxt">
-          <div class="brow">
-            <span class="blbl" id="r1-lbl">社会洞察</span>
-            <h3 class="bhead" id="r1-head">リンクによる社会的規律の影響</h3>
-          </div>
-          <div class="brow">
-            <p class="bp" id="r1-p1">自由意志は個人の自由を強調するが、人類の個々の運命は社会の不断の規律技術と個人の形成によって、また各個人が社会的・経済的ニーズに適合するように人間個人を形成することによって形作られるものである。</p>
-          </div>
-          <div class="brow">
-            <p class="bp" id="r1-p2">規律の痕跡は、社会ネットワーク内の「リンク」によって生まれ、ソーシャルネットワークや社会組織、個人に影響を及ぼす。このネットワークの影響から逃れることは難しく、オンラインの社交や社会組織、私たち自身の神経ネットワークにまで広がっている。</p>
-          </div>
-          <div class="brow">
-            <span class="blbl" id="r1-il">洞察</span>
-            <div class="chips">
-              <span class="chip" id="r1-i1">交錯した階層を持つ</span>
-              <span class="chip" id="r1-i2">持続的な動的状態</span>
-            </div>
-          </div>
+        <div class="meta-line">
+          <div class="meta-item"><span class="meta-label" data-i18n="yearLabel">制作年</span><span class="meta-value">2024.11</span></div>
+          <div class="meta-item"><span class="meta-label" data-i18n="mediumLabel">素材</span><span class="meta-value" data-i18n="medium">ミクストメディア</span></div>
+          <div class="meta-item"><span class="meta-label" data-i18n="formatLabel">形式</span><span class="meta-value" data-i18n="format">動的インスタレーション</span></div>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- R2: 生活洞察 -->
-    <div class="slide">
-      <div class="board b-half">
-        <div class="bcell bimg">
-          <img src="research-life.jpg" alt=""
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="bph" style="display:none">research-life.jpg</div>
-        </div>
-        <div class="bcell btxt">
-          <div class="brow">
-            <span class="blbl" id="r2-lbl">生活洞察</span>
-            <h3 class="bhead" id="r2-head">予め設定された選択と自由の見えない枷</h3>
-          </div>
-          <div class="brow">
-            <p class="bp" id="r2-p1">生活には多くの選択肢があるように見えますが、実際にはすでに設定されており、人々は既定の道を辿っているに過ぎません。表面的な自由は容易に手に入らず、外部の社会規則だけでなく、内面の自己制約も生活に影響を与え、自由を追求する過程で見えない枷に囚われてしまいます。</p>
-          </div>
-          <div class="brow">
-            <p class="bp" id="r2-p2">日常生活の明示的なルールと暗黙のルールが、私の日常の動きのルートを共に設計しています。円（サークル）は、私たちの生活の中で無所不在の権力の象徴を構築し、権力と規律に満ちたシンボル社会を形成しています。</p>
-          </div>
-          <div class="brow">
-            <span class="blbl" id="r2-il">洞察</span>
-            <div class="chips">
-              <span class="chip" id="r2-i1">制約された路線</span>
-              <span class="chip" id="r2-i2">自由に見える選択性</span>
-            </div>
-          </div>
-        </div>
+  <section class="research" id="research" aria-labelledby="research-title">
+    <div class="section-head">
+      <div><p class="eyebrow signal" data-i18n="researchLabel">RESEARCH / BACKGROUND</p><h2 class="section-title" id="research-title" data-i18n="researchTitle">自由意志と規律の構造</h2></div>
+      <div class="section-intro"><p data-i18n="researchIntroP1">自由意志は個人の自由を強調する。しかし個人の運命は、社会が継続的に用いる規律の技術と、社会的・経済的な必要に適合するよう個人を形成する力によって形づくられている。</p><p data-i18n="researchIntroP2">この前提から、規律が現れる場所を「社会」「生活」「個体」の三つの尺度に分けて調べ、それぞれの研究から造形へ転換できる特徴を抽出した。</p></div>
+    </div>
+    <div class="atlas-nav" aria-hidden="false">
+      <span class="atlas-hint" data-i18n="atlasHint">横に移動して関係を見る</span>
+      <button class="atlas-btn" id="atlas-prev" type="button" aria-label="Previous research panel">←</button>
+      <button class="atlas-btn" id="atlas-next" type="button" aria-label="Next research panel">→</button>
+    </div>
+    <div class="atlas-scroller" id="atlas" tabindex="0" aria-label="社会、生活、個体の研究図譜">
+      <div class="atlas-track">
+        <article class="atlas-node">
+          <div class="atlas-visual"><span class="atlas-code">01 / SOCIETY</span><img src="research-social.jpg" alt="社会ネットワークと組織構造の研究" loading="lazy"></div>
+          <div class="atlas-text"><span class="atlas-number" data-i18n="socialResearchLabel">RESEARCH 01 / SOCIETY</span><h3 class="atlas-title" data-i18n="socialTitle">リンクによる社会的規律の影響</h3><p class="atlas-copy" data-i18n="socialCopyP1">自由意志は個人の自由を強調するが、個人の運命は、社会が継続的に用いる規律の技術と、社会的・経済的な必要に適合するよう人を形成する力によって形づくられている。</p><p class="atlas-copy" data-i18n="socialCopyP2">規律の痕跡は、社会ネットワーク内の「リンク」によって生まれ、ソーシャルネットワーク、社会組織、個人へと影響する。この影響から逃れることは難しく、オンライン上の交流から私たち自身の神経ネットワークにまで広がっている。</p><span class="atlas-insight" data-i18n="insightLabel">INSIGHT</span><div class="atlas-tags"><span class="atlas-tag" data-i18n="socialTag1">交錯する階層</span><span class="atlas-tag" data-i18n="socialTag2">持続する動的状態</span></div></div>
+        </article>
+        <div class="atlas-link" aria-hidden="true"><span data-i18n="linkOne">構造が経路になる</span></div>
+        <article class="atlas-node">
+          <div class="atlas-visual"><span class="atlas-code">02 / LIFE</span><img src="research-life.jpg" alt="日常の移動経路と規律の研究" loading="lazy"></div>
+          <div class="atlas-text"><span class="atlas-number" data-i18n="lifeResearchLabel">RESEARCH 02 / EVERYDAY LIFE</span><h3 class="atlas-title" data-i18n="lifeTitle">予め設定された選択と、自由の見えない枷</h3><p class="atlas-copy" data-i18n="lifeCopyP1">生活には多くの選択肢があるように見えるが、実際にはすでに設定され、人々は既定の道を辿っているにすぎない。外部の社会規則だけでなく、内面化された自己制約も生活に影響し、自由を追求する過程に見えない枷をつくる。</p><p class="atlas-copy" data-i18n="lifeCopyP2">地図、GPS、ナビゲーションは目的地までの経路を便利に示す一方、移動の選択をあらかじめ用意されたルートへ導く。日常の明示的なルールと暗黙のルールも同様に、私たちの行動範囲と移動経路を設計している。</p><span class="atlas-insight" data-i18n="insightLabel">INSIGHT</span><div class="atlas-tags"><span class="atlas-tag" data-i18n="lifeTag1">制約された経路</span><span class="atlas-tag" data-i18n="lifeTag2">自由に見える選択</span></div></div>
+        </article>
+        <div class="atlas-link" aria-hidden="true"><span data-i18n="linkTwo">経路が身体に刻まれる</span></div>
+        <article class="atlas-node">
+          <div class="atlas-visual"><span class="atlas-code">03 / INDIVIDUAL</span><img src="research-body.jpg" alt="身体の分節化と労働の研究" loading="lazy"></div>
+          <div class="atlas-text"><span class="atlas-number" data-i18n="individualResearchLabel">RESEARCH 03 / INDIVIDUAL</span><h3 class="atlas-title" data-i18n="individualTitle">工業文明における人間の分節化</h3><p class="atlas-copy" data-i18n="individualCopyP1">工業文明は人間の分割を加速させ、個人を商品化・道具化された構成要素へ変えてきた。身体と労働は社会の運営機構に深く組み込まれ、役割とアイデンティティは分けられていく。</p><p class="atlas-copy" data-i18n="individualCopyP2">人は巨大な社会機械に不可欠でありながら、全体としての自主性と一体性を失う。完全な個体ではなく、現代社会によって分解された部品のように感じられる。</p><span class="atlas-insight" data-i18n="insightLabel">INSIGHT</span><div class="atlas-tags"><span class="atlas-tag" data-i18n="individualTag1">現代社会によって分解された個体</span><span class="atlas-tag" data-i18n="individualTag2">不完全な人間</span></div></div>
+        </article>
       </div>
     </div>
+  </section>
 
-    <!-- R3: 個体洞察 -->
-    <div class="slide">
-      <div class="board b-half">
-        <div class="bcell bimg">
-          <img src="research-body.jpg" alt=""
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="bph" style="display:none">research-body.jpg</div>
+  <section class="plan-a" id="development" aria-labelledby="plan-a-title">
+    <div class="plan-shell">
+      <figure class="plan-image"><img src="plan-a.jpg" alt="PLAN Aの構想図" loading="lazy"><span class="plan-stamp" aria-hidden="true">×</span></figure>
+      <div>
+        <p class="plan-label" data-i18n="planALabel">EXPERIMENT / PLAN A · REJECTED</p>
+        <h2 class="section-title" id="plan-a-title" data-i18n="planATitle">生物のパターンを社会の軌道へ重ねる</h2>
+        <p class="plan-a-copy" data-i18n="planACopy">大腸菌、脳皮質線維、血小板などに見られる個体と集団の移動軌跡を抽出し、複数の路線図として重ねることで、人間社会全体の構造を隠喩しようとした。</p>
+        <div class="verdict">
+          <div class="pro"><h3 data-i18n="advantages">可能性</h3><ul><li data-i18n="planAPro1">設計された自由の中に人が閉じ込められる状態を表現できる</li><li data-i18n="planAPro2">社会が個人に与える規律を、複数の軌道として見せられる</li></ul></div>
+          <div class="con"><h3 data-i18n="limitations">限界</h3><ul><li data-i18n="planACon1">関係が複雑になり、制作条件に合わない</li><li data-i18n="planACon2">中心となる問いが読み取りにくい</li></ul></div>
         </div>
-        <div class="bcell btxt">
-          <div class="brow">
-            <span class="blbl" id="r3-lbl">個体洞察</span>
-            <h3 class="bhead" id="r3-head">工業文明における人間の疎外と資本による支配</h3>
-          </div>
-          <div class="brow">
-            <p class="bp" id="r3-p1">工業文明の到来は人間の分割を加速させ、個人は次第に資本によって疎外され、商品化および道具化の一部となっていきました。人間の身体と労働は資本主義の運営メカニズムに深く組み込まれ、自主性を失い、社会による人間の支配が強化されました。</p>
-          </div>
-          <div class="brow">
-            <p class="bp" id="r3-p2">各人の存在は機能化され、全体としての自主性と一体性を失い、巨大な社会機械の中で不可欠でありながらも抑圧された一部となっています。人はもはや完全な個体ではなく、解体された部品のように感じるようになります。</p>
-          </div>
-          <div class="brow">
-            <span class="blbl" id="r3-il">洞察</span>
-            <div class="chips">
-              <span class="chip" id="r3-i1">現代社会によって分解された運命</span>
-              <span class="chip" id="r3-i2">不完全な人間</span>
-            </div>
-          </div>
-        </div>
+        <p class="rejected" data-i18n="planAVerdict">DECISION — 却下：複雑さそのものが前面に出て、自由意志と規律の対立が伝わりにくくなった。</p>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
-
-<!-- ══ 実験 ══════════════════════════════════════ -->
-<section class="sec">
-  <div class="sec-bar">
-    <span class="s-ttl" id="ch-experiment">実験</span>
-    <div class="dots" id="dots-experiment"></div>
-  </div>
-  <div class="h-track" id="track-experiment">
-
-    <!-- E1: 図形研究 -->
-    <div class="slide">
-      <div class="board b-half">
-        <div class="bcell bimg">
-          <img src="experiment-shape.jpg" alt=""
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="bph" style="display:none">experiment-shape.jpg</div>
-        </div>
-        <div class="bcell btxt">
-          <div class="brow">
-            <span class="blbl" id="e1-lbl">図形研究</span>
-            <h3 class="bhead" id="e1-head">高度に凝縮された社会と個人のシンボリックな接点</h3>
-          </div>
-          <div class="brow">
-            <p class="bp" id="e1-shape">高度に凝縮された社会と個人の間のシンボリックな接点を探り、社会的権力の象徴を見つけ出す。円（サークル）は、私たちの生活の中で無所不在の権力の象徴を構築し、権力と規律に満ちたシンボル社会を形成しています。</p>
-          </div>
-          <div class="brow">
-            <p class="bp" id="e1-life">私は日常的に規律された空間で生活しています。日常生活の明示的なルールと暗黙のルールが、私の日常の動きのルートを共に設計しています。無意識のうちに規律された習慣。</p>
-          </div>
-          <div class="brow">
-            <span class="blbl" id="e1-cl">凝縮の結果</span>
-            <p class="prow pro" id="e1-p1">よりシンボル化され、より凝縮され簡潔に</p>
-            <p class="prow pro" id="e1-p2">実現可能性、生産性</p>
-            <p class="prow pro" id="e1-p3">伝達と解釈に優れる</p>
-          </div>
-          <div class="brow">
-            <p class="bp" id="e1-result"><b>高度に凝縮された結果、両者は二つの軌道を形成する。</b></p>
-          </div>
-        </div>
-      </div>
+  <section class="experiments" aria-labelledby="experiment-title">
+    <div class="section-head">
+      <div><p class="eyebrow signal" data-i18n="experimentLabel">EXPERIMENT</p><h2 class="section-title" id="experiment-title" data-i18n="experimentTitle">形態と身体を、二つの軌道へ凝縮する</h2></div>
+      <p class="section-intro" data-i18n="experimentIntro">PLAN Aの複雑さを解きほぐし、社会の構造、日常の経路、分節された身体という三つの尺度を、より少ない記号へ置き換えた。</p>
     </div>
-
-    <!-- E2: 身体実験 -->
-    <div class="slide">
-      <div class="board b-half">
-        <div class="bcell bimg">
-          <img src="experiment-body.jpg" alt=""
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="bph" style="display:none">experiment-body.jpg</div>
-        </div>
-        <div class="bcell btxt">
-          <div class="brow">
-            <span class="blbl" id="e2b-lbl">身体実験</span>
-            <h3 class="bhead" id="e2b-head">近代化におけるモジュール化</h3>
-          </div>
-          <div class="brow">
-            <p class="bp" id="e2b-p1">現代社会では、人間の身体と精神は異なる部分に分割され、その一部は社会システムによって利用される。表面的には、私たちは自分の身体をどう使うかを自由に選べるように見えますが、実際には、私たちはすでに機械の部品のように完全に分解されています。</p>
-          </div>
-          <div class="brow">
-            <p class="bp" id="e2b-p2">工業化社会における人間の身体は、機械と同じように使用され、分節化されてきた。人は生まれながらにして歩き方を知らず、訓練や学習を受けてから徐々に自分の身体をコントロールできるようになり、その身体は訓練の形の提示である。</p>
-          </div>
-        </div>
-      </div>
+    <div class="experiment-list">
+      <article class="experiment-row">
+        <div class="experiment-media"><img src="experiment-shape.jpg" alt="円と生活軌跡の図形研究" loading="lazy"></div>
+        <div class="experiment-copy"><span class="experiment-index">01 / SHAPE EXPERIMENT</span><h3 class="section-title" data-i18n="shapeTitle">社会の円と、生活の変形した経路</h3><p class="copy" data-i18n="shapeCopy">法律、監視、議会、時間、通貨、宗教など、日常に遍在する権力の記号を円へ凝縮した。同時に、私自身の生活軌跡を単純化し、規律によって変形するもう一つの経路をつくった。</p><p class="result-line" data-i18n="shapeResult">EXPERIMENT INSIGHT — 社会形態と個人の生活を表す二つの軌道へ凝縮できる</p></div>
+      </article>
+      <article class="experiment-row reverse">
+        <div class="experiment-media"><img src="experiment-body.jpg" alt="身体を分解し再構成する実験" loading="lazy"></div>
+        <div class="experiment-copy"><span class="experiment-index">02 / BODY EXPERIMENT</span><h3 class="section-title" data-i18n="bodyTitle">訓練された身体を分解し、再び組み立てる</h3><p class="copy" data-i18n="bodyCopy">歩行や姿勢を含む身体の使い方は、学習と訓練を通して後天的に獲得される。社会化された身体を石膏と3Dプリントによって部分へ分け、それぞれを独立して移動できる要素として再構成した。</p><p class="result-line" data-i18n="bodyResult">EXPERIMENT INSIGHT — 身体は一つの全体ではなく、移動する複数の部位として表現できる</p></div>
+      </article>
     </div>
+  </section>
 
-    <!-- E3: PLAN A (plan-a.jpg) -->
-    <div class="slide">
-      <div class="board b-half">
-        <div class="bcell" style="background:#f7f7f5;display:flex;align-items:center;justify-content:center;overflow:hidden">
-          <img src="plan-a.jpg" alt="PLAN A"
-            style="max-width:100%;max-height:100%;width:auto;height:auto;display:block"
-            onerror="this.style.display='none'">
-        </div>
-        <div class="bcell btxt">
-          <div class="brow">
-            <span class="btag no" id="e2-tag">&#215; 却下</span>
-            <p class="blbl">PLAN A</p>
-            <h3 class="bhead" id="e2-head">生物と人間社会の隠喩</h3>
-          </div>
-          <div class="brow">
-            <p class="bp" id="e2-desc">大腸菌ミックス、大脳皮質線維、血小板など、人体のさまざまな細胞の個々の移動軌跡や集団の移動経路を、さまざまな軌跡のルートマップとして抽出し、異なる軌道の路線図を作成して重ね合わせることで、人間社会全体のシステムに対する完全な隠喩を完成させます。</p>
-          </div>
-          <div class="brow">
-            <span class="blbl" id="e2-pl">利点</span>
-            <p class="prow pro" id="e2-pro1">人が一見自由に見えながら、デザインされた自由の中に閉じ込められていることを面白く表現できる</p>
-            <p class="prow pro" id="e2-pro2">社会が個人に対して行う規律を表現できる</p>
-          </div>
-          <div class="brow">
-            <span class="blbl" id="e2-cl">欠点 / 却下理由</span>
-            <p class="prow con" id="e2-con1">複雑すぎて、工場では製作できない</p>
-            <p class="prow con" id="e2-con2">意図が明確に伝わらず、混乱を招きやすい</p>
-          </div>
-        </div>
-      </div>
+  <section class="plan-b" aria-labelledby="plan-b-title">
+    <div class="plan-b-head">
+      <div><p class="eyebrow" data-i18n="planBLabel">DECISION / PLAN B · SELECTED</p><h2 class="section-title" id="plan-b-title" data-i18n="planBTitle">三つの尺度を、三本の軌道に凝縮する</h2></div>
+      <p class="plan-b-intro" data-i18n="planBIntro">社会、生活、個体を別々の層として構成し、それぞれの軌道上で身体部位を動かす。あらかじめ決められた経路と、その中で動き続ける身体を重ねることで、個人の意志と社会的規律のあいだに真の自由が存在するかを問う。</p>
     </div>
-
-    <!-- E4: PLAN B (plan-b.jpg) -->
-    <div class="slide">
-      <div class="board b-half">
-        <div class="bcell" style="background:#f7f7f5;display:flex;align-items:center;justify-content:center;overflow:hidden">
-          <img src="plan-b.jpg" alt="PLAN B"
-            style="max-width:100%;max-height:100%;width:auto;height:auto;display:block"
-            onerror="this.style.display='none'">
-        </div>
-        <div class="bcell btxt">
-          <div class="brow">
-            <span class="btag ok" id="e3-tag">&#10003; 採用</span>
-            <p class="blbl">PLAN B</p>
-            <h3 class="bhead" id="e3-head">三層構造による高度な凝縮</h3>
-          </div>
-          <div class="brow">
-            <p class="bp" id="e3-thesis">三つの層を通じて、高度に明確化されたシンボルによって、個人の意志と社会的規律の間に真の自由が存在するかどうかという問題を投げかけられる。</p>
-          </div>
-          <div class="brow">
-            <span class="blbl" id="e3-ll">三層構造</span>
-            <p class="bp" id="e3-l1"><b>第一層 社会形態 —</b> 既に凝縮されシンボル化された社会の運行形態と、その社会の下で運行される肢体</p>
-            <p class="bp" id="e3-l2" style="margin-top:.4rem"><b>第二層 生活 —</b> 個人の生活における規律のルートを示し、個人が自由だと考える身体の運行を表現</p>
-            <p class="bp" id="e3-l3" style="margin-top:.4rem"><b>第三層 個体 —</b> 分解された個体の部品と、空を見上げる頭部。人間が社会に支配されていることを象徴しながらも、なお自由を求めていることを表現</p>
-          </div>
-          <div class="brow">
-            <span class="blbl" id="e3-pl">採用理由</span>
-            <p class="prow pro" id="e3-pro1">より高度に凝縮されたシンボルであり、解釈や伝達に適した方法</p>
-            <p class="prow pro" id="e3-pro2">より生産しやすく、実現可能な目標を達成できる方法</p>
-            <p class="prow pro" id="e3-pro3">伝えたい意味を正確に伝えることができる</p>
-          </div>
-        </div>
-      </div>
+    <figure class="plan-b-visual"><img src="plan-b.jpg" alt="PLAN Bの三層構造図" loading="lazy"></figure>
+    <div class="layers">
+      <article class="layer"><span class="layer-no">LAYER 01</span><h3 class="layer-title" data-i18n="layerOneTitle">社会形態</h3><p data-i18n="layerOneCopy">円形の軌道。凝縮され、記号化された社会の運行構造と、その構造の中で動く身体部位を示す。</p></article>
+      <article class="layer"><span class="layer-no">LAYER 02</span><h3 class="layer-title" data-i18n="layerTwoTitle">生活</h3><p data-i18n="layerTwoCopy">変形した軌道。個人の日常に組み込まれた規律の経路と、本人が自由だと考える身体の動きを示す。</p></article>
+      <article class="layer"><span class="layer-no">LAYER 03</span><h3 class="layer-title" data-i18n="layerThreeTitle">個体</h3><p data-i18n="layerThreeCopy">傾斜した軌道。分解された身体部位と空を見上げる頭部によって、社会に形づくられながらも自由を求める個人を示す。</p></article>
     </div>
+    <div class="selection"><span class="selection-label" data-i18n="selectionLabel">DECISION / 採用理由</span><p data-i18n="selectionCopy">問いを三つの層へ明確に整理でき、解釈と伝達に適している。さらに、制作可能な構造へ変換しながら、意図を失わずに実現できるため、この案を最終案として採用した。</p></div>
+  </section>
 
-  </div>
-</section>
-
-<!-- ══ シミュレーション + 制作 ══════════════════ -->
-<section class="sec">
-  <div class="sec-bar">
-    <span class="s-ttl" id="ch-sim">シミュレーション + 制作</span>
-    <div class="dots" id="dots-sim"></div>
-  </div>
-  <div class="h-track" id="track-sim">
-
-    <!-- S1: 3DS MAX 3Dシミュレーション -->
-    <div class="slide">
-      <div class="board b-half">
-        <div class="bcell bimg">
-          <img src="sim-3d.jpg" alt=""
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="bph" style="display:none">sim-3d.jpg</div>
-        </div>
-        <div class="bcell btxt">
-          <div class="brow">
-            <span class="blbl" id="sim-lbl">3DS MAX — 3Dシミュレーション</span>
-            <h3 class="bhead" id="sim-head">形態と構造の検証</h3>
-          </div>
-          <div class="brow">
-            <p class="bp" id="sim-p1">3DS MAXを用いてインスタレーションの空間構成をシミュレーション。PLAN Bの三層構造がどのように立体的な空間を構成するかを精密に計算し、人体の分節化された部位と金属レールの運動軌跡を視覚化した。</p>
-          </div>
-        </div>
-      </div>
+  <section class="evidence" id="fabrication" aria-labelledby="evidence-title">
+    <div class="section-head">
+      <div><p class="eyebrow signal" data-i18n="evidenceLabel">SIMULATION + FABRICATION</p><h2 class="section-title" id="evidence-title" data-i18n="evidenceTitle">構想を、動く構造へ変換する</h2></div>
+      <div class="section-intro"><p data-i18n="evidenceIntroP1">3DS MAXで三層の軌道、支持構造、身体部位の位置関係と、展示空間における観者との距離を検証した。その後、全長、高さ、傾斜角度、接合部を定義した施工図へ展開した。</p><p data-i18n="evidenceIntroP2">SUS304の曲げ加工と精密溶接でレールフレームを制作し、研磨して鏡面に仕上げた。モーターと駆動基板を組み込んだ自走台車が各身体部位を載せ、決められた軌道上を循環し続ける。</p></div>
     </div>
-
-    <!-- S2: 技術図面 + CAD -->
-    <div class="slide">
-      <div class="board b-half">
-        <!-- 2枚の図面を縦に並べる -->
-        <div class="bcell" style="display:grid;grid-template-rows:1fr 1fr;background:#f0f0ee">
-          <div style="overflow:hidden;border-bottom:.5px solid var(--rule);display:flex;align-items:center;justify-content:center;padding:.5rem">
-            <img src="process-12.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block"
-              onerror="this.style.display='none'">
-          </div>
-          <div style="overflow:hidden;display:flex;align-items:center;justify-content:center;padding:.5rem">
-            <img src="process-13.jpg" alt="" style="width:100%;height:100%;object-fit:contain;display:block"
-              onerror="this.style.display='none'">
-          </div>
-        </div>
-        <div class="bcell btxt">
-          <div class="brow">
-            <span class="blbl" id="sim-lbl-bp">技術図面 / Technical Drawings</span>
-            <h3 class="bhead" id="sim-head-bp">精密寸法と施工仕様</h3>
-          </div>
-          <div class="brow">
-            <p class="bp" id="sim-p-bp">レール全長・高さ・傾斜角度・接合部の寸法を精密に定義し、工場での加工に対応した施工図を作成。第一層（円形 φ2000mm）・第二層（インゲン型 1996×1205mm）・第三層（傾斜レール）それぞれの断面形状と接合方法を明示した。</p>
-          </div>
-        </div>
-      </div>
+    <div class="evidence-board">
+      <figure class="evidence-cell big"><img src="sim-3d.jpg" alt="三層構造の3Dシミュレーション" loading="lazy"><figcaption class="evidence-caption"><span class="evidence-k">01 / SIMULATION</span><p data-i18n="simCaption">三層の軌道、支持構造、身体部位の位置関係を3D上で検討した。</p></figcaption></figure>
+      <figure class="evidence-cell"><img src="process-12.jpg" alt="軌道の技術図面" loading="lazy"><figcaption class="evidence-caption"><span class="evidence-k">02 / DRAWING</span><p data-i18n="drawingCaption">図面上の主要寸法：円形軌道 2,000 mm、変形軌道 約1,996.25 × 1,205.35 mm。</p></figcaption></figure>
+      <figure class="evidence-cell"><img src="process-13.jpg" alt="制作時のCAD確認" loading="lazy"><figcaption class="evidence-caption"><span class="evidence-k">03 / CHECK</span><p data-i18n="checkCaption">加工前後に軌道形状と接合位置を確認し、三層の関係を調整した。</p></figcaption></figure>
     </div>
-
-    <!-- S3: 鋼材加工 製作過程 -->
-    <div class="slide">
-      <div class="board b-half">
-        <!-- 3×2 grid of process photos -->
-        <div class="bcell" style="display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;background:#222;padding:2px">
-          <div style="overflow:hidden"><img src="process-2.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentNode.style.background='#333'"></div>
-          <div style="overflow:hidden"><img src="process-1.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentNode.style.background='#333'"></div>
-          <div style="overflow:hidden"><img src="process-4.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentNode.style.background='#333'"></div>
-          <div style="overflow:hidden"><img src="process-5.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentNode.style.background='#333'"></div>
-          <div style="overflow:hidden"><img src="process-3.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentNode.style.background='#333'"></div>
-          <div style="overflow:hidden"><img src="process-6.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentNode.style.background='#333'"></div>
-        </div>
-        <div class="bcell btxt">
-          <div class="brow">
-            <span class="blbl" id="sim-lbl2">制作 — ステンレス鋼加工</span>
-            <h3 class="bhead" id="sim-head2">レールフレームの製造</h3>
-          </div>
-          <div class="brow">
-            <p class="bp" id="sim-p2">ステンレス鋼（SUS304）の曲げ加工と精密溶接によってレールフレームを制作。各軌道を個別に加工し、精密に組み合わせた。</p>
-          </div>
-          <div class="brow">
-            <p class="bp" id="sim-p2b">溶接後グラインダーで研磨し鏡面仕上げに。継手と支柱によって三層の高さ関係を固定し、展示空間での設置に対応した構造を実現。</p>
-          </div>
-        </div>
-      </div>
+    <div class="process-strip" aria-label="Fabrication process photographs">
+      <figure><img src="process-1.jpg" alt="レール加工工程1" loading="lazy"></figure><figure><img src="process-2.jpg" alt="レール加工工程2" loading="lazy"></figure><figure><img src="process-4.jpg" alt="レール加工工程3" loading="lazy"></figure><figure><img src="process-7.jpg" alt="移動機構の試作" loading="lazy"></figure><figure><img src="process-8.jpg" alt="台車と駆動部" loading="lazy"></figure><figure><img src="process-11.jpg" alt="軌道上の動作確認" loading="lazy"></figure>
     </div>
+  </section>
 
-    <!-- S4: 駆動機構 -->
-    <div class="slide">
-      <div class="board b-half">
-        <!-- 2×2 grid of drive car photos -->
-        <div class="bcell" style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;background:#222;padding:2px">
-          <div style="overflow:hidden"><img src="process-7.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentNode.style.background='#333'"></div>
-          <div style="overflow:hidden"><img src="process-8.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentNode.style.background='#333'"></div>
-          <div style="overflow:hidden"><img src="process-9.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentNode.style.background='#333'"></div>
-          <div style="overflow:hidden"><img src="process-11.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentNode.style.background='#333'"></div>
-        </div>
-        <div class="bcell btxt">
-          <div class="brow">
-            <span class="blbl" id="sim-lbl4">制作 — 駆動機構</span>
-            <h3 class="bhead" id="sim-head4">自走式ループ駆動システム</h3>
-          </div>
-          <div class="brow">
-            <p class="bp" id="sim-p4">駆動ボードとモーターを組み込んだ自走式の台車が、レール上を永続的に循環する。台車の上には身体部位（石膏・3Dプリント製）が搭載され、延々のループを描き続ける。</p>
-          </div>
-          <div class="brow">
-            <p class="bp" id="sim-p4b">ライントレースセンサーを用いてレールの軌道を検知し、自律的にルートを辿る。バッテリー駆動による安定した連続稼働を実現した。</p>
-          </div>
-        </div>
-      </div>
+  <section class="exhibition" id="exhibition" aria-labelledby="exhibition-title">
+    <div class="section-head">
+      <div><p class="eyebrow signal" data-i18n="exhibitionLabel">EXHIBITION</p><h2 class="section-title" id="exhibition-title" data-i18n="exhibitionTitle">決められた軌道上で、身体は動き続ける</h2></div>
+      <p class="section-intro" data-i18n="exhibitionIntro">三つの軌道は一つの空間に重なり、分解された身体部位はそれぞれの経路を循環する。観者は、全体を見渡しながら、個々の身体が同じ構造から逃れられない状態に立ち会う。</p>
     </div>
-
-  </div>
-</section>
-
-<!-- ══ 展示 ════════════════════════════════════ -->
-<!-- sec-exh: min-height:100vh, exhibition grid scrolls inside -->
-<section class="sec sec-exh">
-  <div class="sec-bar">
-    <span class="s-ttl" id="ch-exh">展示</span>
-  </div>
-  <div class="exh-wrap">
-    <!--
-      ★ 画像追加方法: <div class="exh-c"><img src="exhibition-N.jpg" alt=""></div>
-         枚数制限なし。grid-template-columns: repeat(3,1fr) で自動折り返し。
-    -->
-    <div class="exh-grid">
-      <div class="exh-c"><img src="exhibition-1.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
-      <div class="exh-c"><img src="exhibition-2.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
-      <div class="exh-c"><img src="exhibition-3.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
-      <div class="exh-c"><img src="exhibition-4.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
-      <div class="exh-c"><img src="exhibition-5.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
-      <div class="exh-c"><img src="exhibition-6.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
-      <div class="exh-c"><img src="exhibition-7.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
-      <div class="exh-c"><img src="exhibition-8.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
-      <div class="exh-c"><img src="exhibition-9.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
-      <div class="exh-c"><img src="exhibition-10.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
-      <div class="exh-c"><img src="exhibition-11.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
-      <div class="exh-c"><img src="exhibition-12.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
-      <div class="exh-c"><img src="exhibition-13.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
-      <div class="exh-c"><img src="exhibition-14.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
-      <div class="exh-c"><img src="exhibition-15.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
-      <div class="exh-c"><img src="exhibition-16.jpg" alt="" onerror="this.parentNode.style.background='#dddbd9'"></div>
+    <div class="exhibition-grid">
+      <button class="zoom" type="button"><img src="exhibition-1.jpg" alt="展示風景1" loading="lazy"></button><button class="zoom" type="button"><img src="exhibition-2.jpg" alt="展示風景2" loading="lazy"></button><button class="zoom" type="button"><img src="exhibition-3.jpg" alt="展示風景3" loading="lazy"></button><button class="zoom" type="button"><img src="exhibition-4.jpg" alt="展示風景4" loading="lazy"></button><button class="zoom" type="button"><img src="exhibition-5.jpg" alt="展示風景5" loading="lazy"></button><button class="zoom" type="button"><img src="exhibition-6.jpg" alt="展示風景6" loading="lazy"></button><button class="zoom" type="button"><img src="exhibition-7.jpg" alt="展示風景7" loading="lazy"></button><button class="zoom" type="button"><img src="exhibition-8.jpg" alt="展示風景8" loading="lazy"></button><button class="zoom" type="button"><img src="exhibition-9.jpg" alt="展示風景9" loading="lazy"></button><button class="zoom" type="button"><img src="exhibition-10.jpg" alt="展示風景10" loading="lazy"></button><button class="zoom" type="button"><img src="exhibition-11.jpg" alt="展示風景11" loading="lazy"></button><button class="zoom" type="button"><img src="exhibition-12.jpg" alt="展示風景12" loading="lazy"></button><button class="zoom" type="button"><img src="exhibition-13.jpg" alt="展示風景13" loading="lazy"></button><button class="zoom" type="button"><img src="exhibition-14.jpg" alt="展示風景14" loading="lazy"></button><button class="zoom" type="button"><img src="exhibition-15.jpg" alt="展示風景15" loading="lazy"></button><button class="zoom" type="button"><img src="exhibition-16.jpg" alt="展示風景16" loading="lazy"></button>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══ 映像 ════════════════════════════════════ -->
-<section class="sec">
-  <div class="sec-bar">
-    <span class="s-ttl" id="ch-film">映像</span>
-  </div>
-  <div class="film-wrap">
-    <div class="vid-wrap">
-      <iframe src="https://www.youtube.com/embed/c7eFAmFgp7Y" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="width:100%;height:100%;position:absolute;inset:0"></iframe>
-      <span class="vid-lbl" id="film-lbl">映画 · Documentary Film</span>
-    </div>
-  </div>
-</section>
+  <section class="film" aria-labelledby="film-title">
+    <div class="film-head"><h2 id="film-title" data-i18n="filmTitle">FILM / 記録映像</h2><span>2024 · 16:9</span></div>
+    <div class="film-frame"><iframe src="https://www.youtube.com/embed/c7eFAmFgp7Y" title="自分勝手 — 記録映像" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+  </section>
 
-<!-- ══ BACK ════════════════════════════════════ -->
-<section class="sec" id="s-back">
-  <a class="back-btn" href="../index.html">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <line x1="14" y1="8" x2="2" y2="8" stroke="currentColor" stroke-width="1.5"/>
-      <polyline points="6,3 1,8 6,13" stroke="currentColor" stroke-width="1.5" fill="none"/>
-    </svg>
-    <span id="back-lbl">ホームへ戻る</span>
-  </a>
-</section>
+  <footer class="footer"><a href="../index.html" data-i18n="back">← ホームへ戻る</a></footer>
+</main>
 
-</div><!-- #page -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview"><button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close image preview">×</button><img id="lightbox-image" src="" alt=""></div>
 
 <script>
-const L = {
-ja:{
-  "nav-ttl":"自分勝手",
-  "h-cat":"装置","h-ttl":"自分勝手","h-sub":"Self-Wilful / 自我任性",
-  "h-yl":"年份","h-ml":"媒介","h-tl":"形式",
-  "h-med":"総合材料","h-type":"動的インスタレーション",
-  "h-scroll":"上下スクロールで移動",
-  "c-lbl":"概念 / Concept",
-  "c1-head":"身体の再構築の可能性を出発点とする動的装置",
-  "c1-p1":"緻密な計算によってインスタレーションを組み立てる確立された方法は、壮大に定められた運命を象徴し、動きながら体の組み立て姿は、人間の主観や葛藤を象徴している。",
-  "c1-p2":"両者は互いに比較され、同時に動きながら、おそらく決定された運命の枠組みと、人間の主観的な行動の自由意志との関係、人間のすべてが本当に運命の枠組みの中で固定されているのかどうかを探る。",
-  "ins-sum":"インスピレーション",
-  "c2-p1":"よく人々が「努力すれば何かを得られる」と言うのを聞くことができ、成功者たちも自分の成功の合理性を主張するために自分の努力を提唱するのが好きですが、努力は本当にすべてを得ることができるか。私はかつて工場で生活を体験した際、毎日朝起きて一生懸命働いている人を見る、彼らは本当に生きるために一生懸命働いている。",
-  "c2-p2":"私も学生時代、一生懸命勉強しても目標を達成できない人がたくさんいた。デザインや創作活動をしていても、既存の枠をどう突破するかということをよく考えていたのだが、気がつくと内在する社会の枠や運命の枠にとらわれていた。だから、努力というのは幻想なのかもしれない。自由意志による決断によって、自分の運命の軌跡をコントロールするという幻想なのかもしれない。",
-  "c2-med":"総合材料",
-  "ch-research":"研究",
-  "r1-lbl":"社会洞察","r1-head":"リンクによる社会的規律の影響",
-  "r1-p1":"自由意志は個人の自由を強調するが、人類の個々の運命は社会の不断の規律技術と個人の形成によって、また各個人が社会的・経済的ニーズに適合するように人間個人を形成することによって形作られるものである。",
-  "r1-p2":"規律の痕跡は、社会ネットワーク内の「リンク」によって生まれ、ソーシャルネットワークや社会組織、個人に影響を及ぼす。このネットワークの影響から逃れることは難しく、オンラインの社交や社会組織、私たち自身の神経ネットワークにまで広がっている。",
-  "r1-il":"洞察","r1-i1":"交錯した階層を持つ","r1-i2":"持続的な動的状態",
-  "r2-lbl":"生活洞察","r2-head":"予め設定された選択と自由の見えない枷",
-  "r2-p1":"生活には多くの選択肢があるように見えますが、実際にはすでに設定されており、人々は既定の道を辿っているに過ぎません。表面的な自由は容易に手に入らず、外部の社会規則だけでなく、内面の自己制約も生活に影響を与え、自由を追求する過程で見えない枷に囚われてしまいます。",
-  "r2-p2":"日常生活の明示的なルールと暗黙のルールが、私の日常の動きのルートを共に設計しています。円（サークル）は、私たちの生活の中で無所不在の権力の象徴を構築し、権力と規律に満ちたシンボル社会を形成しています。",
-  "r2-il":"洞察","r2-i1":"制約された路線","r2-i2":"自由に見える選択性",
-  "r3-lbl":"個体洞察","r3-head":"工業文明における人間の疎外と資本による支配",
-  "r3-p1":"工業文明の到来は人間の分割を加速させ、個人は次第に資本によって疎外され、商品化および道具化の一部となっていきました。人間の身体と労働は資本主義の運営メカニズムに深く組み込まれ、自主性を失い、社会による人間の支配が強化されました。",
-  "r3-p2":"各人の存在は機能化され、全体としての自主性と一体性を失い、巨大な社会機械の中で不可欠でありながらも抑圧された一部となっています。人はもはや完全な個体ではなく、解体された部品のように感じるようになります。",
-  "r3-il":"洞察","r3-i1":"現代社会によって分解された運命","r3-i2":"不完全な人間",
-  "ch-experiment":"実験",
-  "e1-lbl":"図形研究","e1-head":"高度に凝縮された社会と個人のシンボリックな接点",
-  "e1-shape":"高度に凝縮された社会と個人の間のシンボリックな接点を探り、社会的権力の象徴を見つけ出す。円（サークル）は、私たちの生活の中で無所不在の権力の象徴を構築し、権力と規律に満ちたシンボル社会を形成しています。",
-  "e1-life":"私は日常的に規律された空間で生活しています。日常生活の明示的なルールと暗黙のルールが、私の日常の動きのルートを共に設計しています。無意識のうちに規律された習慣。",
-  "e1-cl":"凝縮の結果",
-  "e1-p1":"よりシンボル化され、より凝縮され簡潔に",
-  "e1-p2":"実現可能性、生産性",
-  "e1-p3":"伝達と解釈に優れる",
-  "e1-result":"高度に凝縮された結果、両者は二つの軌道を形成する。",
-  "e2b-lbl":"身体実験","e2b-head":"近代化におけるモジュール化",
-  "e2b-p1":"現代社会では、人間の身体と精神は異なる部分に分割され、その一部は社会システムによって利用される。表面的には、私たちは自分の身体をどう使うかを自由に選べるように見えますが、実際には、私たちはすでに機械の部品のように完全に分解されています。",
-  "e2b-p2":"工業化社会における人間の身体は、機械と同じように使用され、分節化されてきた。人は生まれながらにして歩き方を知らず、訓練や学習を受けてから徐々に自分の身体をコントロールできるようになり、その身体は訓練の形の提示である。",
-  "e2-tag":"× 却下","e2-head":"生物と人間社会の隠喩",
-  "e2-desc":"大腸菌ミックス、大脳皮質線維、血小板など、人体のさまざまな細胞の個々の移動軌跡や集団の移動経路を、さまざまな軌跡のルートマップとして抽出し、異なる軌道の路線図を作成して重ね合わせることで、人間社会全体のシステムに対する完全な隠喩を完成させます。",
-  "e2-pl":"利点",
-  "e2-pro1":"人が一見自由に見えながら、デザインされた自由の中に閉じ込められていることを面白く表現できる",
-  "e2-pro2":"社会が個人に対して行う規律を表現できる",
-  "e2-cl":"欠点 / 却下理由",
-  "e2-con1":"複雑すぎて、工場では製作できない",
-  "e2-con2":"意図が明確に伝わらず、混乱を招きやすい",
-  "e3-tag":"✓ 採用","e3-head":"三層構造による高度な凝縮",
-  "e3-thesis":"三つの層を通じて、高度に明確化されたシンボルによって、個人の意志と社会的規律の間に真の自由が存在するかどうかという問題を投げかけられる。",
-  "e3-ll":"三層構造",
-  "e3-l1":"第一層 社会形態 — 既に凝縮されシンボル化された社会の運行形態と、その社会の下で運行される肢体",
-  "e3-l2":"第二層 生活 — 個人の生活における規律のルートを示し、個人が自由だと考える身体の運行を表現",
-  "e3-l3":"第三層 個体 — 分解された個体の部品と、空を見上げる頭部。人間が社会に支配されながらもなお自由を求めていることを表現",
-  "e3-pl":"採用理由",
-  "e3-pro1":"より高度に凝縮されたシンボルであり、解釈や伝達に適した方法",
-  "e3-pro2":"より生産しやすく、実現可能な目標を達成できる方法",
-  "e3-pro3":"伝えたい意味を正確に伝えることができる",
-  "ch-sim":"シミュレーション + 制作",
-  "sim-lbl":"3D シミュレーション — 3DS MAX","sim-head":"形態と構造の検証",
-  "sim-p1":"3DS MAXを用いてインスタレーションの空間構成をシミュレーション。人体の分節化された部位と金属レールの運動軌跡を視覚化し、展示空間における観者との距離関係を検証。",
-  "sim-lbl2":"制作",
-  "sim-p2":"ステンレス鋼の曲げ加工と精密溶接によってレールフレームを制作。駆動ボードとモーターを用いた連続循環制御システムを組み込み、身体部位が延々のループを描く動的装置を実現。",
-  "sim-lbl3":"素材","sim-mat":"ステンレス鋼 / 継手 / モーター / ワイヤー / 3Dプリント部品",
-  "ch-exh":"展示",
-  "ch-film":"映像","film-lbl":"映画 · Documentary Film",
-  "back-lbl":"ホームへ戻る",
-  "sim-lbl":"3DS MAX — デジタルシミュレーション","sim-head":"形態と構造の検証",
-  "sim-p1":"3DS MAXを用いてインスタレーションの空間構成をシミュレーション。PLAN Bの三層構造がどのように立体的な空間を構成するかを精密に計算し、人体の分節化された部位と金属レールの運動軌跡を視覚化した。",
-  "sim-lbl-bp":"技術図面 / Technical Drawings","sim-head-bp":"精密寸法と施工仕様",
-  "sim-p-bp":"展示空間における観者との距離関係を検証。レール全長・高さ・傾斜角度・接合部の寸法を精密に定義し、工場での加工に対応した施工図を作成。",
-  "sim-lbl3":"素材","sim-mat":"ステンレス鋼（SUS304） / 継手 / モーター / ワイヤー / 3Dプリント部品",
-  "sim-lbl2":"制作 — ステンレス鋼加工","sim-head2":"レールフレームの製造",
-  "sim-p2":"ステンレス鋼（SUS304）の曲げ加工と精密溶接によってレールフレームを制作。各軌道を個別に制作し、精密に組み合わせた。",
-  "sim-p2b":"溶接後、グラインダーで磨き上げ鏡面仕上げに。継手と支柱によって三層の高さ関係を固定し、展示空間での設置に対応した構造を実現。",
-  "sim-lbl4":"制作 — 駆動機構","sim-head4":"自走式ループ駆動システム",
-  "sim-p4":"駆動ボードとモーターを組み込んだ自走式の台車が、レール上を永続的に循環する。台車の上には身体部位（石膏・3Dプリント製）が搭載され、延々のループを描き続ける。",
-  "sim-p4b":"ライントレースセンサーを用いてレールの軌道を検知し、自律的にルートを辿る。バッテリー駆動による安定した連続稼働を実現した。"
-},
-zh:{
-  "nav-ttl":"自我任性",
-  "h-cat":"装置","h-ttl":"自我任性","h-sub":"自分勝手 / Self-Wilful",
-  "h-yl":"年份","h-ml":"媒介","h-tl":"形式",
-  "h-med":"综合材料","h-type":"动态装置",
-  "h-scroll":"上下滚动切换板块",
-  "c-lbl":"概念 / Concept",
-  "c1-head":"以身体重构的可能性为出发点的动态装置",
-  "c1-p1":"通过精密计算组装装置的既定方法，象征着宏大而注定的命运，而在运动中组装身体的姿态，则象征着人类的主观意志与内心挣扎。",
-  "c1-p2":"两者相互对照，同时运动，探索被决定的命运框架与人类主观行动的自由意志之间的关系——人类的一切是否真的被固定在命运的框架之中。",
-  "ins-sum":"灵感",
-  "c2-p1":"人们常说「努力就能得到」，成功者也喜欢用自己的努力来证明成功的合理性，但努力真的能得到一切吗？我曾在工厂生活，每天看到那些为了生活而拼命工作的人，他们真的是在为活着而拼命。",
-  "c2-p2":"我在学生时代也看到很多拼命学习却无法实现目标的人。做设计和创作时，经常在想如何突破既有的框架，但不知不觉中已被内在的社会框架和命运的框架束缚。所以，努力或许只是一种幻觉。通过自由意志做出决断、掌控自己命运轨迹的想法，或许也只是幻觉。",
-  "c2-med":"综合材料",
-  "ch-research":"研究",
-  "r1-lbl":"社会洞察","r1-head":"链接所带来的社会规训影响",
-  "r1-p1":"自由意志强调个人的自由，但人类个体的命运，是通过社会不断的规训技术与个体塑造，使每个人适应社会与经济需求而形成的。社会行为与社会生存本质上是规训的一种形式。",
-  "r1-p2":"规训的痕迹通过社会网络中的「链接」而产生，影响着社交网络、社会组织和个人。这种网络的影响难以逃脱，蔓延至网络社交、社会组织，乃至我们自身的神经网络。",
-  "r1-il":"洞察","r1-i1":"具有交错的层级","r1-i2":"持续的动态状态",
-  "r2-lbl":"生活洞察","r2-head":"预设的选择与自由看不见的枷锁",
-  "r2-p1":"生活看似有很多选择，但实际上已经被预设好了，人们只是在沿着既定的道路走。表面的自由并不容易获得，不仅外部的社会规则，内心的自我约束也影响着生活，在追求自由的过程中陷入看不见的枷锁。",
-  "r2-p2":"日常生活中的明示规则与暗示规则共同设计着我日常的移动路径。圆形在我们的生活中构建了无处不在的权力象征，形成充满权力与规训的符号社会。",
-  "r2-il":"洞察","r2-i1":"受约束的路径","r2-i2":"看似自由的选择性",
-  "r3-lbl":"个体洞察","r3-head":"工业文明中人的异化与资本的支配",
-  "r3-p1":"工业文明的到来加速了人的分割，个体逐渐被资本异化，成为商品化与工具化的一部分。人的身体与劳动被深深嵌入资本主义运营机制，失去自主性，社会对人的控制得到强化。",
-  "r3-p2":"每个人的存在被功能化，丧失了整体的自主性与一体性，成为庞大社会机器中不可或缺却又被压制的一部分。人不再是完整的个体，而是感觉像是被拆解的零件。",
-  "r3-il":"洞察","r3-i1":"被现代社会分解的命运","r3-i2":"不完整的人",
-  "ch-experiment":"实验",
-  "e1-lbl":"图形研究","e1-head":"高度凝练的社会与个人的符号性接点",
-  "e1-shape":"探寻高度凝练的社会与个人之间的符号性接点，寻找社会权力的象征。圆形在我们的生活中构建了无处不在的权力象征，形成充满权力与规训的符号社会。",
-  "e1-life":"我生活在日常被规训的空间里。日常生活中的明示规则与暗示规则共同设计着我日常的移动路径。无意识中处于被规训的习惯之中。",
-  "e1-cl":"凝练的结果",
-  "e1-p1":"更符号化，更凝练简洁",
-  "e1-p2":"可实现性，生产性",
-  "e1-p3":"更利于传达与解释",
-  "e1-result":"高度凝练的结果，两者形成了两条轨道。",
-  "e2b-lbl":"身体实验","e2b-head":"近代化中的模块化",
-  "e2b-p1":"在现代社会中，人的身体与精神被分割为不同部分，其中一部分被社会系统利用。表面上看似可以自由使用身体，但实际上已经像机器零件一样被完全分解。",
-  "e2b-p2":"工业化社会中的人体像机器一样被使用和分节化。人并非生来就知道如何行走，经过训练与学习才逐渐能够控制自己的身体，其身体是训练形态的呈现。",
-  "e2-tag":"× 已否决","e2-head":"以生物隐喻人类社会",
-  "e2-desc":"将大肠杆菌混合、大脑皮质纤维、血小板等人体各种细胞的个体移动轨迹和群体移动路径，作为各种轨迹的路线图提取出来，创建不同轨道的线路图并重叠，完成对整个人类社会系统的完整隐喻。",
-  "e2-pl":"优点",
-  "e2-pro1":"能够表现人看似自由，实则被困于设计好的自由之中",
-  "e2-pro2":"能够表现社会对个人施加的规训",
-  "e2-cl":"缺点 / 否决理由",
-  "e2-con1":"过于复杂，工厂无法制作",
-  "e2-con2":"意图不够清晰，容易引发混乱",
-  "e3-tag":"✓ 采用","e3-head":"三层结构的高度凝练",
-  "e3-thesis":"通过三个层次，以高度明确化的符号，投射出个人意志与社会规训之间是否存在真正自由的问题。",
-  "e3-ll":"三层结构",
-  "e3-l1":"第一层 社会形态 — 呈现已凝练符号化的社会运行形态，以及在该社会之下运行的肢体",
-  "e3-l2":"第二层 生活 — 呈现个人生活中规训的路径，表现个人认为自由的身体运行",
-  "e3-l3":"第三层 个体 — 被分解的个体部件与仰望天空的头部，象征人被社会支配的同时，仍在追求自由",
-  "e3-pl":"采用理由",
-  "e3-pro1":"更高度凝练的符号，适合诠释和传达的方法",
-  "e3-pro2":"更易于生产，能够实现可行目标的方法",
-  "e3-pro3":"能够准确传达想表达的含义",
-  "ch-sim":"模拟 + 制作",
-  "sim-lbl":"3D 模拟 — 3DS MAX","sim-head":"形态与结构的验证",
-  "sim-p1":"使用3DS MAX模拟装置的空间构成。将人体分节化的部位与金属轨道的运动轨迹可视化，验证展示空间中观者与装置的距离关系。精密计算PLAN B三层结构如何构成立体空间。",
-  "sim-lbl2":"制作",
-  "sim-p2":"通过不锈钢弯曲加工与精密焊接制作轨道框架。内置驱动板与电机的连续循环控制系统，实现身体部位描绘无尽循环的动态装置。",
-  "sim-lbl3":"材料","sim-mat":"不锈钢 / 接头 / 电机 / 钢丝 / 3D打印部件",
-  "ch-exh":"展示",
-  "ch-film":"影像","film-lbl":"纪录影片 · Documentary Film",
-  "back-lbl":"返回主页",
-  "sim-lbl":"3DS MAX — 数字模拟","sim-head":"形态与结构的验证",
-  "sim-p1":"使用3DS MAX模拟装置的空间构成，精密计算PLAN B三层结构如何构成立体空间，将人体分节化的部位与金属轨道的运动轨迹可视化。",
-  "sim-lbl-bp":"技术图纸","sim-head-bp":"精密尺寸与施工规范",
-  "sim-p-bp":"验证展示空间中观者与装置的距离关系。精密定义轨道全长、高度、倾斜角度和接合部尺寸，制作适合工厂加工的施工图。",
-  "sim-lbl3":"材料","sim-mat":"不锈钢（SUS304） / 接头 / 电机 / 钢丝 / 3D打印部件",
-  "sim-lbl2":"制作 — 不锈钢加工","sim-head2":"轨道框架的制造",
-  "sim-p2":"通过不锈钢（SUS304）弯曲加工与精密焊接制作轨道框架。各轨道分别制作，精密组合。",
-  "sim-p2b":"焊接后用磨光机打磨至镜面效果。通过接头和支柱固定三层的高度关系，实现适合展示空间安装的结构。",
-  "sim-lbl4":"制作 — 驱动机构","sim-head4":"自驱循环驱动系统",
-  "sim-p4":"内置驱动板与电机的自驱小车在轨道上永续循环。小车上搭载身体部位（石膏·3D打印制成），持续描绘无尽的循环轨迹。",
-  "sim-p4b":"通过循迹传感器检测轨道路径，自主沿路线行进。电池供电实现稳定的连续运行。"
-},
-en:{
-  "nav-ttl":"Self-Wilful",
-  "h-cat":"Installation","h-ttl":"Self-Wilful","h-sub":"自分勝手 / 自我任性",
-  "h-yl":"Year","h-ml":"Medium","h-tl":"Type",
-  "h-med":"Mixed Media","h-type":"Kinetic Installation",
-  "h-scroll":"Scroll to navigate",
-  "c-lbl":"Concept",
-  "c1-head":"A Kinetic Installation Departing from the Possibility of Bodily Reconstruction",
-  "c1-p1":"The established method of assembling the installation through precise calculation symbolises a grand, predetermined fate, while the posture of assembling the body in motion symbolises human subjectivity and inner struggle.",
-  "c1-p2":"The two are compared with each other, moving simultaneously, exploring the relationship between the determined framework of fate and the free will of human subjective action — whether everything about a person is truly fixed within the framework of fate.",
-  "ins-sum":"Inspiration",
-  "c2-p1":"People often say that if you work hard you can achieve anything. I once lived and worked in a factory, watching people wake up every day and labour with all their strength simply to survive — they were truly working hard just to live.",
-  "c2-p2":"During my student years I saw many people study hard but fail to reach their goals. Even while doing design and creative work, I often thought about how to break through existing frameworks — yet I gradually realised I was already caught within implicit social and fated frameworks. So effort may be an illusion — the illusion that one can control the trajectory of one's own fate through decisions made by free will.",
-  "c2-med":"Mixed Media",
-  "ch-research":"研究",
-  "r1-lbl":"Social Insight","r1-head":"The Influence of Social Discipline through Links",
-  "r1-p1":"While free will emphasises individual freedom, the fate of each human individual is shaped by the unceasing disciplinary techniques of society and the formation of individuals, moulding each person to fit social and economic needs. Social behaviour and social survival are essentially a form of discipline.",
-  "r1-p2":"The traces of discipline arise through 'links' in the social network, influencing social networks, social organisations, and individuals. It is difficult to escape this network's influence — it extends to online social interaction, social organisations, and even our own neural networks.",
-  "r1-il":"Insight","r1-i1":"Intersecting layers","r1-i2":"Persistent dynamic state",
-  "r2-lbl":"Life Insight","r2-head":"Preset Choices and the Invisible Shackles of Freedom",
-  "r2-p1":"Life appears to offer many choices, but in reality they are already set, and people are simply following predetermined paths. Surface-level freedom is not easily attained; not only external social rules but also internal self-constraints affect life, trapping one in invisible shackles in the pursuit of freedom.",
-  "r2-p2":"The explicit and implicit rules of daily life co-design the routes of my everyday movement. The circle (as symbol) constructs an omnipresent symbol of power in our lives, forming a society of symbols saturated with power and discipline.",
-  "r2-il":"Insight","r2-i1":"Constrained routes","r2-i2":"Apparently free choice",
-  "r3-lbl":"Individual Insight","r3-head":"Human Alienation in Industrial Civilisation and the Dominance of Capital",
-  "r3-p1":"The arrival of industrial civilisation accelerated the division of the human being; individuals were gradually alienated by capital and became part of commodification and instrumentalisation. Human bodies and labour were deeply embedded in the mechanisms of capitalism, losing autonomy, and societal control over human beings was reinforced.",
-  "r3-p2":"Each person's existence becomes functionalised, losing the autonomy and integrity of the whole, becoming an indispensable yet suppressed part of a vast social machine. People feel no longer like complete individuals but like dismantled parts.",
-  "r3-il":"Insight","r3-i1":"Fate decomposed by modern society","r3-i2":"The incomplete human",
-  "ch-experiment":"実験",
-  "e1-lbl":"Shape Research","e1-head":"Highly Condensed Symbolic Intersection of Society and Individual",
-  "e1-shape":"Searching for the highly condensed symbolic intersection between society and the individual, locating the symbols of social power. The circle (as symbol) constructs an omnipresent symbol of power in our lives, forming a society of symbols saturated with power and discipline.",
-  "e1-life":"I live in a space disciplined by everyday life. The explicit and implicit rules of daily life co-design the routes of my everyday movement. Unconsciously embedded in disciplined habits.",
-  "e1-cl":"Result of condensation",
-  "e1-p1":"More symbolised, more condensed and concise",
-  "e1-p2":"Feasibility and productivity",
-  "e1-p3":"Better suited for communication and interpretation",
-  "e1-result":"As a result of high condensation, the two form two separate trajectories.",
-  "e2b-lbl":"Body Experiments","e2b-head":"Modularisation in Modernisation",
-  "e2b-p1":"In modern society, the human body and mind are divided into different parts, some of which are utilised by the social system. On the surface it appears we can freely choose how to use our bodies, but in reality we are already fully decomposed like machine parts.",
-  "e2b-p2":"In industrial society the human body has been used and segmented in the same way as machines. People are not born knowing how to walk — the body is a presentation of the form of training.",
-  "e2-tag":"× Rejected","e2-head":"Biological Metaphor for Human Society",
-  "e2-desc":"The individual movement trajectories and collective movement paths of various human cells — E. coli mix, cortical fibres, platelets — are extracted as route maps and overlaid to complete a perfect metaphor for the entire human social system.",
-  "e2-pl":"Advantages",
-  "e2-pro1":"Can express how people appear free while actually trapped in a designed freedom",
-  "e2-pro2":"Can express the discipline society imposes on individuals",
-  "e2-cl":"Disadvantages / Reason for Rejection",
-  "e2-con1":"Too complex to be fabricated in a factory",
-  "e2-con2":"Intention not clearly conveyed, easily causes confusion",
-  "e3-tag":"✓ Selected","e3-head":"Highly Condensed Three-Layer Structure",
-  "e3-thesis":"Through three layers, with highly clarified symbols, the question of whether true freedom exists between individual will and social discipline is raised.",
-  "e3-ll":"Three-Layer Structure",
-  "e3-l1":"Layer 1 Social Form — presents the condensed and symbolised form of social operation, and the limbs operating under that society",
-  "e3-l2":"Layer 2 Life — shows the route of discipline in individual daily life, expressing the bodily movement the individual believes to be free",
-  "e3-l3":"Layer 3 Individual — decomposed body parts and a head looking up at the sky; symbolising human beings controlled by society while still seeking freedom",
-  "e3-pl":"Reasons for Selection",
-  "e3-pro1":"A more highly condensed symbol, better suited for interpretation and communication",
-  "e3-pro2":"Easier to produce, achieves a feasible goal",
-  "e3-pro3":"Can accurately convey the intended meaning",
-  "ch-sim":"シミュレーション + 制作",
-  "sim-lbl":"3D Simulation — 3DS MAX","sim-head":"Verification of Form and Structure",
-  "sim-p1":"3DS MAX was used to simulate the spatial composition of the installation. Movement trajectories of segmented body parts and metal rails were visualised, verifying the viewer-installation distance relationship in the exhibition space.",
-  "sim-lbl2":"Fabrication",
-  "sim-p2":"Rail frames were fabricated through stainless steel bending and precision welding. A continuous-loop control system incorporating drive boards and motors was embedded, realising a kinetic installation in which body parts trace an endless loop.",
-  "sim-lbl3":"Materials","sim-mat":"Stainless steel / Joints / Motors / Wire / 3D-printed components",
-  "ch-exh":"展示",
-  "ch-film":"映像","film-lbl":"Documentary Film",
-  "back-lbl":"Back to Home",
-  "sim-lbl":"3DS MAX — Digital Simulation","sim-head":"Verification of Form and Structure",
-  "sim-p1":"3DS MAX was used to simulate the spatial composition of the installation, precisely calculating how the three-layer structure of PLAN B constitutes a three-dimensional space, and visualising the movement trajectories of segmented body parts and metal rails.",
-  "sim-lbl-bp":"Technical Drawings","sim-head-bp":"Precise Dimensions and Fabrication Specifications",
-  "sim-p-bp":"The distance relationship between viewer and installation in the exhibition space was verified. Rail length, height, inclination angle, and joint dimensions were precisely defined, and fabrication drawings suitable for factory processing were produced.",
-  "sim-lbl3":"Materials","sim-mat":"Stainless steel (SUS304) / Joints / Motors / Wire / 3D-printed components",
-  "sim-lbl2":"Fabrication — Stainless Steel Processing","sim-head2":"Rail Frame Manufacturing",
-  "sim-p2":"Rail frames were fabricated through stainless steel (SUS304) bending and precision welding. Each track was fabricated separately and precisely combined.",
-  "sim-p2b":"After welding, ground to a mirror finish. The height relationships of the three layers were fixed using joints and columns, achieving a structure suitable for installation in the exhibition space.",
-  "sim-lbl4":"Fabrication — Drive Mechanism","sim-head4":"Self-propelled Loop Drive System",
-  "sim-p4":"A self-propelled cart incorporating drive boards and motors circulates perpetually on the rails. Body parts (plaster and 3D-printed) are mounted on the cart, tracing an endless loop.",
-  "sim-p4b":"Line-tracing sensors detect the rail path, enabling autonomous route-following. Stable continuous operation is achieved through battery power."
-}
+const COPY={
+  ja:{
+    skip:"本文へ移動",navTitle:"自分勝手",
+    heroType:"KINETIC INSTALLATION · 2024",heroTitle:"自分勝手",heroSub:"SELF-WILL / 動的インスタレーション",
+    questionLabel:"CONCEPT",questionTitle:"人間のすべては、本当に運命の枠組みの中で固定されているのか。",
+    conceptP1:"緻密な計算によって組み立てられたインスタレーションの構造は、壮大に定められた運命を象徴する。一方、動きながら組み立てられていく身体の姿は、人間の主観や葛藤を象徴している。",
+    conceptP2:"両者を対比させ、同時に動かすことで、決定された運命の枠組みと、人間の主観的な行動としての自由意志との関係を探る。人間のすべては、本当に運命の枠組みの中で固定されているのだろうか。",
+    motivationLabel:"INSPIRATION",motivationP1:"人々が「努力すれば何かを得られる」と言うのをよく耳にする。成功者も、自分の成功の合理性を主張するために努力を語る。しかし、努力すれば本当にすべてを得られるのだろうか。私はかつて工場で生活を体験した際、毎朝起きて懸命に働く人々を見た。彼らは本当に、生きるために懸命に働いていた。",motivationP2:"学生時代には、一生懸命勉強しても目標を達成できない人を多く見た。デザインや創作活動に取り組む中でも、既存の枠をどう突破するかを考えていたが、気づけば内在する社会の枠や運命の枠にとらわれていた。だから、努力というものは幻想なのかもしれない。自由意志による決断によって自分の運命の軌跡をコントロールする、という幻想なのかもしれない。",
+    yearLabel:"制作年",mediumLabel:"素材",medium:"ミクストメディア",formatLabel:"形式",format:"動的インスタレーション",
+    researchLabel:"RESEARCH / BACKGROUND",researchTitle:"自由意志と規律の構造",researchIntroP1:"自由意志は個人の自由を強調する。しかし個人の運命は、社会が継続的に用いる規律の技術と、社会的・経済的な必要に適合するよう個人を形成する力によって形づくられている。",researchIntroP2:"この前提から、規律が現れる場所を「社会」「生活」「個体」の三つの尺度に分けて調べ、それぞれの研究から造形へ転換できる特徴を抽出した。",atlasHint:"横に移動して関係を見る",
+    insightLabel:"INSIGHT / 洞察",socialResearchLabel:"RESEARCH 01 / 社会",socialTitle:"リンクによる社会的規律の影響",socialCopyP1:"自由意志は個人の自由を強調するが、個人の運命は、社会が継続的に用いる規律の技術と、社会的・経済的な必要に適合するよう人を形成する力によって形づくられている。",socialCopyP2:"規律の痕跡は、社会ネットワーク内の「リンク」によって生まれ、ソーシャルネットワーク、社会組織、個人へと影響する。この影響から逃れることは難しく、オンライン上の交流から私たち自身の神経ネットワークにまで広がっている。",socialTag1:"交錯する階層",socialTag2:"持続する動的状態",
+    linkOne:"構造が経路になる",lifeResearchLabel:"RESEARCH 02 / 生活",lifeTitle:"予め設定された選択と、自由の見えない枷",lifeCopyP1:"生活には多くの選択肢があるように見えるが、実際にはすでに設定され、人々は既定の道を辿っているにすぎない。外部の社会規則だけでなく、内面化された自己制約も生活に影響し、自由を追求する過程に見えない枷をつくる。",lifeCopyP2:"地図、GPS、ナビゲーションは目的地までの経路を便利に示す一方、移動の選択をあらかじめ用意されたルートへ導く。日常の明示的なルールと暗黙のルールも同様に、私たちの行動範囲と移動経路を設計している。",lifeTag1:"制約された経路",lifeTag2:"自由に見える選択",
+    linkTwo:"経路が身体に刻まれる",individualResearchLabel:"RESEARCH 03 / 個体",individualTitle:"工業文明における人間の分節化",individualCopyP1:"工業文明は人間の分割を加速させ、個人を商品化・道具化された構成要素へ変えてきた。身体と労働は社会の運営機構に深く組み込まれ、役割とアイデンティティは分けられていく。",individualCopyP2:"人は巨大な社会機械に不可欠でありながら、全体としての自主性と一体性を失う。完全な個体ではなく、現代社会によって分解された部品のように感じられる。",individualTag1:"現代社会によって分解された個体",individualTag2:"不完全な人間",
+    planALabel:"EXPERIMENT / PLAN A · REJECTED",planATitle:"生物のパターンを社会の軌道へ重ねる",planACopy:"大腸菌、脳皮質線維、血小板などに見られる個体と集団の移動軌跡を抽出し、複数の路線図として重ねることで、人間社会全体の構造を隠喩しようとした。",advantages:"可能性",limitations:"限界",planAPro1:"設計された自由の中に人が閉じ込められる状態を表現できる",planAPro2:"社会が個人に与える規律を、複数の軌道として見せられる",planACon1:"関係が複雑になり、制作条件に合わない",planACon2:"中心となる問いが読み取りにくい",planAVerdict:"DECISION — 却下：複雑さそのものが前面に出て、自由意志と規律の対立が伝わりにくくなった。",
+    experimentLabel:"EXPERIMENT",experimentTitle:"形態と身体を、二つの軌道へ凝縮する",experimentIntro:"PLAN Aの複雑さを解きほぐし、社会の構造、日常の経路、分節された身体という三つの尺度を、より少ない記号へ置き換えた。",
+    shapeTitle:"社会の円と、生活の変形した経路",shapeCopy:"法律、監視、議会、時間、通貨、宗教など、日常に遍在する権力の記号を円へ凝縮した。同時に、私自身の生活軌跡を単純化し、規律によって変形するもう一つの経路をつくった。",shapeResult:"EXPERIMENT INSIGHT — 社会形態と個人の生活を表す二つの軌道へ凝縮できる",
+    bodyTitle:"訓練された身体を分解し、再び組み立てる",bodyCopy:"歩行や姿勢を含む身体の使い方は、学習と訓練を通して後天的に獲得される。社会化された身体を石膏と3Dプリントによって部分へ分け、それぞれを独立して移動できる要素として再構成した。",bodyResult:"EXPERIMENT INSIGHT — 身体は一つの全体ではなく、移動する複数の部位として表現できる",
+    planBLabel:"DECISION / PLAN B · SELECTED",planBTitle:"三つの尺度を、三本の軌道に凝縮する",planBIntro:"社会、生活、個体を別々の層として構成し、それぞれの軌道上で身体部位を動かす。あらかじめ決められた経路と、その中で動き続ける身体を重ねることで、個人の意志と社会的規律のあいだに真の自由が存在するかを問う。",
+    layerOneTitle:"社会形態",layerOneCopy:"円形の軌道。凝縮され、記号化された社会の運行構造と、その構造の中で動く身体部位を示す。",layerTwoTitle:"生活",layerTwoCopy:"変形した軌道。個人の日常に組み込まれた規律の経路と、本人が自由だと考える身体の動きを示す。",layerThreeTitle:"個体",layerThreeCopy:"傾斜した軌道。分解された身体部位と空を見上げる頭部によって、社会に形づくられながらも自由を求める個人を示す。",selectionLabel:"DECISION / 採用理由",selectionCopy:"問いを三つの層へ明確に整理でき、解釈と伝達に適している。さらに、制作可能な構造へ変換しながら、意図を失わずに実現できるため、この案を最終案として採用した。",
+    evidenceLabel:"SIMULATION + FABRICATION",evidenceTitle:"構想を、動く構造へ変換する",evidenceIntroP1:"3DS MAXで三層の軌道、支持構造、身体部位の位置関係と、展示空間における観者との距離を検証した。その後、全長、高さ、傾斜角度、接合部を定義した施工図へ展開した。",evidenceIntroP2:"SUS304の曲げ加工と精密溶接でレールフレームを制作し、研磨して鏡面に仕上げた。モーターと駆動基板を組み込んだ自走台車が各身体部位を載せ、決められた軌道上を循環し続ける。",simCaption:"三層の軌道、支持構造、身体部位の位置関係を3D上で検討した。",drawingCaption:"図面上の主要寸法：円形軌道 2,000 mm、変形軌道 約1,996.25 × 1,205.35 mm。",checkCaption:"加工前後に軌道形状と接合位置を確認し、三層の関係を調整した。",
+    exhibitionLabel:"EXHIBITION",exhibitionTitle:"決められた軌道上で、身体は動き続ける",exhibitionIntro:"三つの軌道は一つの空間に重なり、分解された身体部位はそれぞれの経路を循環する。観者は、全体を見渡しながら、個々の身体が同じ構造から逃れられない状態に立ち会う。",filmTitle:"FILM / 記録映像",back:"← ホームへ戻る",atlasAria:"社会、生活、個体の研究図譜"
+  },
+  zh:{
+    skip:"跳到正文",navTitle:"自分勝手",
+    heroType:"动态装置 · 2024",heroTitle:"自分勝手",heroSub:"自我意志 / 动态装置",
+    questionLabel:"概念",questionTitle:"人的一切，是否真的被固定在命运的框架之中？",
+    conceptP1:"通过精密计算组装起来的装置结构，象征着宏大而注定的命运；而身体在运动中被重新组合的姿态，则象征着人的主观意志与内心挣扎。",
+    conceptP2:"两者相互对照并同时运动，以探索被决定的命运框架与人类主观行动中的自由意志之间的关系：人的一切是否真的被固定在命运的框架之中？",
+    motivationLabel:"灵感",motivationP1:"人们常说「努力就能得到」，成功者也喜欢用自己的努力证明成功的合理性。但努力真的能得到一切吗？我曾在工厂体验生活时，每天看到那些为了生活而拼命工作的人；他们真的是在为了活着而拼命。",motivationP2:"学生时代，我也看到许多人即使拼命学习仍无法实现目标。做设计和创作时，我经常思考如何突破既有框架，却在不知不觉间被内在的社会框架和命运框架束缚。所以，努力或许只是一种幻觉；通过自由意志做出决断并掌控自己命运轨迹的想法，或许也只是一种幻觉。",
+    yearLabel:"制作年份",mediumLabel:"材料",medium:"综合材料",formatLabel:"形式",format:"动态装置",
+    researchLabel:"研究 / 背景",researchTitle:"自由意志与规训的结构",researchIntroP1:"自由意志强调个人的自由，但个体的命运，也会被社会持续运用的规训技术所塑造；社会同时把人塑造成符合社会与经济需要的个体。",researchIntroP2:"以此为前提，研究从「社会」「生活」「个体」三个尺度寻找规训出现的位置，并从每一部分提取能够转化为造型语言的特征。",atlasHint:"横向浏览它们的关系",
+    insightLabel:"洞察",socialResearchLabel:"研究 01 / 社会",socialTitle:"链接所带来的社会规训影响",socialCopyP1:"自由意志强调个人的自由，但个体的命运，也会被社会持续运用的规训技术所塑造；社会同时把人塑造成符合社会与经济需要的个体。",socialCopyP2:"规训的痕迹通过社会网络中的「链接」产生，影响社交网络、社会组织和个人。这种影响难以逃脱，从网络交流和社会组织，一直延伸至我们自身的神经网络。",socialTag1:"交错的层级",socialTag2:"持续的动态状态",
+    linkOne:"结构转化为路径",lifeResearchLabel:"研究 02 / 生活",lifeTitle:"预先设定的选择与自由看不见的枷锁",lifeCopyP1:"生活看似有很多选择，实际上却常已被预设，人们只是在沿着既定道路行进。外部的社会规则与内化的自我约束共同影响生活，在追求自由的过程中形成看不见的枷锁。",lifeCopyP2:"地图、GPS与导航系统便利地给出通往目的地的路线，也会把移动选择引向预先准备好的路径。日常生活中的明示规则与隐性规则，同样在设计我们的行动范围与移动路线。",lifeTag1:"受约束的路径",lifeTag2:"看似自由的选择",
+    linkTwo:"路径被刻入身体",individualResearchLabel:"研究 03 / 个体",individualTitle:"工业文明中的人体分节化",individualCopyP1:"工业文明加速了人的分割，使个体逐渐成为商品化与工具化的构件。身体与劳动被深深嵌入社会运行机制，人的角色与身份不断被分割。",individualCopyP2:"个体既是庞大社会机器中不可缺少的一部分，也失去了整体的自主性与一体性。人不再像完整的个体，而更像被现代社会拆解的零件。",individualTag1:"被现代社会拆解的个体",individualTag2:"不完整的人",
+    planALabel:"实验 / PLAN A · 已否决",planATitle:"将生物模式叠加为社会轨道",planACopy:"方案提取大肠杆菌、大脑皮质纤维、血小板等对象中个体与群体的移动轨迹，把它们转化为多组线路图并相互叠加，以隐喻整个人类社会的结构。",advantages:"可能性",limitations:"局限",planAPro1:"可以表现人被困在设计好的自由之中",planAPro2:"可以把社会施加于个体的规训呈现为多条轨道",planACon1:"关系过于复杂，不符合制作条件",planACon2:"核心问题难以被清楚读取",planAVerdict:"决定 — 否决：复杂性本身压过了作品核心，自由意志与社会规训之间的对立变得不够清晰。",
+    experimentLabel:"实验",experimentTitle:"将形态与身体凝练为两条轨道",experimentIntro:"在拆解PLAN A的复杂关系后，作品把社会结构、日常路径与被分节的身体三个尺度，转换为更少、更明确的符号。",
+    shapeTitle:"社会的圆，与被生活改变的路径",shapeCopy:"法律、监视、议会、时间、货币与宗教等日常生活中无处不在的权力符号，被凝练为圆。同时，我也简化自己的生活轨迹，形成另一条被规训改变的路径。",shapeResult:"实验洞察 — 可以凝练为分别代表社会形态与个人生活的两条轨道",
+    bodyTitle:"拆解被训练的身体，再重新组合",bodyCopy:"包括行走和姿势在内的身体使用方式，都是通过学习与训练在后天获得的。作品以石膏和3D打印把社会化的身体拆分为不同部位，再将其重构为能够分别移动的元素。",bodyResult:"实验洞察 — 身体可以不再作为单一整体，而被表现为多个移动部位",
+    planBLabel:"决定 / PLAN B · 最终采用",planBTitle:"将三个尺度凝练为三条轨道",planBIntro:"社会、生活与个体被构成三个不同层次，身体部位分别沿各自轨道移动。作品把预先决定的路径与仍在其中持续行动的身体叠加，追问个人意志与社会规训之间是否存在真正的自由。",
+    layerOneTitle:"社会形态",layerOneCopy:"圆形轨道。呈现经过凝练与符号化的社会运行结构，以及在结构中移动的身体部位。",layerTwoTitle:"生活",layerTwoCopy:"变形轨道。呈现嵌入个人日常生活的规训路径，以及个体认为自由的身体运动。",layerThreeTitle:"个体",layerThreeCopy:"倾斜轨道。被拆解的身体部位与仰望天空的头部，共同表现一个在被社会塑造的同时仍追求自由的个体。",selectionLabel:"决定 / 采用理由",selectionCopy:"方案把问题清楚地整理为三个层次，更适合观看、理解与传达；同时能够在不损失作品意图的前提下转化为可制作的结构，因此被确定为最终方案。",
+    evidenceLabel:"模拟 + 制作",evidenceTitle:"将构想转化为可以运动的结构",evidenceIntroP1:"使用3DS MAX检验三层轨道、支撑结构、身体部位之间的位置关系，以及观者与装置在展示空间中的距离。随后，把轨道全长、高度、倾斜角度与接合部转化为施工图。",evidenceIntroP2:"通过SUS304不锈钢弯曲加工和精密焊接制作轨道框架，打磨至镜面效果。装有电机与驱动板的自走台车承载各个身体部位，持续沿既定轨道循环。",simCaption:"通过3D模拟检验三层轨道、支撑结构与身体部位之间的位置关系。",drawingCaption:"图纸中的主要尺寸：圆形轨道2,000 mm，变形轨道约1,996.25 × 1,205.35 mm。",checkCaption:"在加工前后检查轨道形态与连接位置，并调整三层结构之间的关系。",
+    exhibitionLabel:"展示",exhibitionTitle:"身体沿着既定轨道持续移动",exhibitionIntro:"三条轨道在同一空间中重叠，被拆解的身体部位分别沿各自路径循环。观者在观看整体的同时，也目睹每一个身体都无法脱离同一结构的状态。",filmTitle:"影像 / 记录影片",back:"← 返回主页",atlasAria:"社会、生活与个体的研究图谱"
+  },
+  en:{
+    skip:"Skip to content",navTitle:"自分勝手",
+    heroType:"KINETIC INSTALLATION · 2024",heroTitle:"自分勝手",heroSub:"SELF-WILL / KINETIC INSTALLATION",
+    questionLabel:"CONCEPT",questionTitle:"Is everything about us truly fixed within the framework of fate?",
+    conceptP1:"The installation structure, assembled through precise calculation, symbolises a grand and predetermined fate. In contrast, the image of a body being reassembled while in motion symbolises human subjectivity and inner struggle.",
+    conceptP2:"By placing these two conditions in contrast and setting them in motion together, the work explores the relationship between a determined framework of fate and free will as subjective human action. Is everything about us truly fixed within the framework of fate?",
+    motivationLabel:"INSPIRATION",motivationP1:"People often say that effort brings reward, and successful people frequently cite their own effort to justify the legitimacy of their success. But can effort truly obtain everything? During a period in which I observed and experienced everyday life in a factory, I watched people rise each morning and work with all their strength. They were working desperately simply to live.",motivationP2:"As a student, I also saw many people study intensely yet fail to reach their goals. In design and creative practice, I often considered how to break through existing frameworks, only to realise that I had already been caught within internalised social and fated frameworks. Perhaps effort itself is an illusion—the illusion that decisions made through free will can control the trajectory of one's fate.",
+    yearLabel:"Year",mediumLabel:"Medium",medium:"Mixed media",formatLabel:"Format",format:"Kinetic installation",
+    researchLabel:"RESEARCH / BACKGROUND",researchTitle:"The structure of free will and discipline",researchIntroP1:"Free will emphasises individual freedom. Yet individual fate is also shaped by society's continuing disciplinary techniques and by the formation of people to meet social and economic needs.",researchIntroP2:"From this premise, the research examines where discipline appears at three scales—society, everyday life, and the individual—and extracts characteristics from each that can be translated into form.",atlasHint:"Scroll sideways to trace the relationship",
+    insightLabel:"INSIGHT",socialResearchLabel:"RESEARCH 01 / SOCIETY",socialTitle:"The disciplinary influence of social links",socialCopyP1:"Free will emphasises individual freedom. Yet individual fate is also shaped by society's continuing disciplinary techniques and by the formation of people to meet social and economic needs.",socialCopyP2:"Traces of discipline emerge through the links within social networks and affect social media, organisations, and individuals. Their influence is difficult to escape, extending from online interaction and social organisations to our own neural networks.",socialTag1:"Intersecting hierarchies",socialTag2:"Persistent dynamic state",
+    linkOne:"Structure becomes route",lifeResearchLabel:"RESEARCH 02 / EVERYDAY LIFE",lifeTitle:"Preset choices and the invisible restraints on freedom",lifeCopyP1:"Life appears to offer many choices, but these are often already configured and people merely follow predetermined routes. External social rules and internalised self-restraint both shape everyday life, creating invisible restraints within the pursuit of freedom.",lifeCopyP2:"Maps, GPS, and navigation systems conveniently provide routes to a destination, but they also guide movement into paths prepared in advance. Explicit and implicit rules similarly design the range and routes of our everyday actions.",lifeTag1:"Constrained routes",lifeTag2:"Apparently free choice",
+    linkTwo:"Routes are inscribed on the body",individualResearchLabel:"RESEARCH 03 / INDIVIDUAL",individualTitle:"The fragmentation of the human body under industrial civilisation",individualCopyP1:"Industrial civilisation accelerated the division of human beings, turning individuals into commodified and instrumental components. Bodies and labour became embedded in society's operating systems, while roles and identities were divided.",individualCopyP2:"A person remains indispensable to the larger social machine yet loses autonomy and wholeness. Rather than a complete individual, the person comes to resemble a component disassembled by modern society.",individualTag1:"Individual fragmented by modern society",individualTag2:"Incomplete human",
+    planALabel:"EXPERIMENT / PLAN A · REJECTED",planATitle:"Overlaying biological patterns as social routes",planACopy:"This proposal extracted individual and collective movement paths found in E. coli, cortical fibres, platelets, and other biological structures, then overlaid them as route maps to construct a metaphor for the system of human society.",advantages:"Potential",limitations:"Limitations",planAPro1:"It could show people trapped within a freedom that had already been designed",planAPro2:"It could express social discipline through multiple trajectories",planACon1:"The relationships became too complex for the fabrication conditions",planACon2:"The central question was difficult to read",planAVerdict:"DECISION — REJECTED: complexity became the dominant message, obscuring the tension between free will and social discipline.",
+    experimentLabel:"EXPERIMENT",experimentTitle:"Condensing form and body into two trajectories",experimentIntro:"After unravelling the complexity of PLAN A, the project translated social structure, everyday routes, and the fragmented body into fewer and more legible symbols.",
+    shapeTitle:"The circle of society and the altered route of everyday life",shapeCopy:"Symbols of power embedded in daily life—law, surveillance, parliament, time, currency, and religion—were condensed into a circle. At the same time, I simplified my own daily movements into a second route reshaped by discipline.",shapeResult:"EXPERIMENT INSIGHT — the research can be condensed into two trajectories representing social form and individual life",
+    bodyTitle:"Taking apart the trained body and assembling it again",bodyCopy:"Ways of using the body, including walking and posture, are acquired through learning and training. Plaster casting and 3D printing divided the socialised body into separate parts, which were then reconstructed as elements capable of moving independently.",bodyResult:"EXPERIMENT INSIGHT — the body can be expressed as multiple moving parts rather than a single whole",
+    planBLabel:"DECISION / PLAN B · SELECTED",planBTitle:"Condensing three scales into three tracks",planBIntro:"Society, everyday life, and the individual form three distinct layers, each carrying moving body parts. By overlaying predetermined routes with bodies that continue to act within them, the work asks whether true freedom can exist between individual will and social discipline.",
+    layerOneTitle:"Social form",layerOneCopy:"A circular track representing the condensed, symbolic structure of society and the body parts moving within that structure.",layerTwoTitle:"Everyday life",layerTwoCopy:"A deformed track representing disciplinary routes embedded in daily life and the bodily movement an individual believes to be free.",layerThreeTitle:"Individual",layerThreeCopy:"An inclined track carrying fragmented body parts and a head looking upward, representing a person shaped by society who continues to seek freedom.",selectionLabel:"DECISION / WHY SELECTED",selectionCopy:"The proposal organises the question into three legible layers, making it easier to interpret and communicate. It also translates the concept into a fabricable structure without losing its central intention, and was therefore selected as the final direction.",
+    evidenceLabel:"SIMULATION + FABRICATION",evidenceTitle:"Translating the concept into a moving structure",evidenceIntroP1:"3DS MAX was used to test the relationship between the three tracks, their supports, the body parts, and the viewer's distance from the installation. The full lengths, heights, inclinations, and joints were then defined in fabrication drawings.",evidenceIntroP2:"The rail frames were bent and precision-welded from SUS304 stainless steel, then polished to a mirror finish. Self-propelled carriages containing motors and control boards carry the body parts continuously along their predetermined tracks.",simCaption:"The spatial relationship between the three tracks, their supports, and the body parts was studied in 3D.",drawingCaption:"Principal dimensions shown in the drawings: circular track 2,000 mm; deformed track approximately 1,996.25 × 1,205.35 mm.",checkCaption:"Track geometry and connection points were checked before and after fabrication, and the relationship between the three layers was adjusted.",
+    exhibitionLabel:"EXHIBITION",exhibitionTitle:"Bodies keep moving along predetermined tracks",exhibitionIntro:"The three tracks overlap within one space, while fragmented body parts circulate along their respective routes. Viewers encounter the installation as a whole and witness each body remaining unable to leave the same structure.",filmTitle:"FILM / DOCUMENTATION",back:"← Back to home",atlasAria:"Research atlas connecting society, everyday life, and the individual"
+  }
 };
 
-/* ═══════════ LANG ═══════════ */
-
-let lang="ja";try{lang=localStorage.getItem("hl-lang")||"ja"}catch(e){}
-
-const IDS = [
-  "nav-ttl","h-cat","h-ttl","h-sub","h-yl","h-ml","h-tl","h-med","h-type","h-scroll",
-  "c-lbl","c1-head","c1-p1","c1-p2","ins-sum","c2-p1","c2-p2","c2-med",
-  "ch-research",
-  "r1-lbl","r1-head","r1-p1","r1-p2","r1-il","r1-i1","r1-i2",
-  "r2-lbl","r2-head","r2-p1","r2-p2","r2-il","r2-i1","r2-i2",
-  "r3-lbl","r3-head","r3-p1","r3-p2","r3-il","r3-i1","r3-i2",
-  "ch-experiment",
-  "e1-lbl","e1-head","e1-shape","e1-life","e1-cl","e1-p1","e1-p2","e1-p3","e1-result",
-  "e2b-lbl","e2b-head","e2b-p1","e2b-p2",
-  "e2-tag","e2-head","e2-desc","e2-pl","e2-pro1","e2-pro2","e2-cl","e2-con1","e2-con2",
-  "e3-tag","e3-head","e3-thesis","e3-ll","e3-l1","e3-l2","e3-l3","e3-pl","e3-pro1","e3-pro2","e3-pro3",
-  "ch-sim","sim-lbl","sim-head","sim-p1","sim-lbl-bp","sim-head-bp","sim-p-bp","sim-lbl2","sim-head2","sim-p2","sim-p2b","sim-lbl4","sim-head4","sim-p4","sim-p4b",
-  "ch-exh","ch-film","film-lbl","back-lbl"
-];
-
-function applyLang(l){
-  lang=l;try{localStorage.setItem("hl-lang",l)}catch(e){}
-  document.documentElement.setAttribute("lang",l==="zh"?"zh-CN":l);
-  document.documentElement.className="lang-"+l;
-  const d=L[l]||L.ja;
-  document.title=(d["h-ttl"]||"Work")+" — 何梁宇";
-  const ttl=document.getElementById("nav-ttl");
-  if(ttl) ttl.textContent=d["h-ttl"]||"";
-  IDS.forEach(id=>{const el=document.getElementById(id);if(el&&d[id]!==undefined)el.textContent=d[id]});
-  // section titles (monolingual)
-  const st={
-    ja:{research:"研究",experiment:"実験",sim:"シミュレーション + 制作",exh:"展示",film:"映像"},
-    zh:{research:"研究",experiment:"实验",sim:"模拟 + 制作",exh:"展示",film:"影像"},
-    en:{research:"Research",experiment:"Experiment",sim:"Simulation + Fabrication",exh:"Exhibition",film:"Film"}
-  }[l]||{};
-  const smap={research:"ch-research",experiment:"ch-experiment",sim:"ch-sim",exh:"ch-exh",film:"ch-film"};
-  Object.entries(smap).forEach(([k,id])=>{const e=document.getElementById(id);if(e&&st[k])e.textContent=st[k]});
-  // ins-sum label
-  const insSumLabels={ja:"インスピレーション",zh:"灵感",en:"Inspiration"};
-  const is=document.getElementById("ins-sum");if(is)is.textContent=insSumLabels[l]||"";
+const LANGS=["ja","zh","en"];
+let lang="ja";
+try{const saved=localStorage.getItem("hl-lang");if(LANGS.includes(saved))lang=saved}catch(e){}
+const langCode={ja:"JA",zh:"中",en:"EN"};
+function applyLanguage(next){
+  lang=LANGS.includes(next)?next:"ja";
+  const dict=COPY[lang];
+  document.documentElement.lang=lang==="zh"?"zh-CN":lang;
+  document.documentElement.className="lang-"+lang;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{const key=el.dataset.i18n;if(dict[key]!==undefined)el.textContent=dict[key]});
+  document.getElementById("lang-code").textContent=langCode[lang];
+  document.getElementById("atlas").setAttribute("aria-label",dict.atlasAria);
+  document.title=(dict.heroTitle||"自分勝手")+" — 何梁宇";
+  try{localStorage.setItem("hl-lang",lang)}catch(e){}
 }
+document.getElementById("lang-btn").addEventListener("click",()=>applyLanguage(LANGS[(LANGS.indexOf(lang)+1)%LANGS.length]));
+applyLanguage(lang);
 
-const cycleBtn=document.getElementById("lang-cycle-btn");
-const langs=["ja","zh","en"];
-function cycleLang(){const idx=langs.indexOf(lang);applyLang(langs[(idx+1)%langs.length])}
-if(cycleBtn)cycleBtn.addEventListener("click",cycleLang);
+const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const atlas=document.getElementById("atlas");
+function moveAtlas(direction){atlas.scrollBy({left:direction*Math.min(atlas.clientWidth*.78,820),behavior:reduce?"auto":"smooth"})}
+document.getElementById("atlas-prev").addEventListener("click",()=>moveAtlas(-1));
+document.getElementById("atlas-next").addEventListener("click",()=>moveAtlas(1));
+atlas.addEventListener("keydown",event=>{if(event.key==="ArrowRight"){event.preventDefault();moveAtlas(1)}if(event.key==="ArrowLeft"){event.preventDefault();moveAtlas(-1)}});
 
-function syncViewportVars(){
-  const root=document.documentElement;
-  const vv=window.visualViewport;
-  const viewportHeight=vv?vv.height:window.innerHeight;
-  const viewportTop=vv?vv.offsetTop:0;
-  const layoutHeight=Math.max(root.clientHeight,window.innerHeight);
-  const browserBottom=Math.max(0,layoutHeight-viewportHeight-viewportTop);
-  root.style.setProperty("--app-height",Math.round(viewportHeight)+"px");
-  root.style.setProperty("--browser-bottom-gap",Math.round(browserBottom)+"px");
-}
-syncViewportVars();
-window.addEventListener("resize",syncViewportVars,{passive:true});
-window.addEventListener("orientationchange",syncViewportVars,{passive:true});
-if(window.visualViewport){
-  window.visualViewport.addEventListener("resize",syncViewportVars,{passive:true});
-  window.visualViewport.addEventListener("scroll",syncViewportVars,{passive:true});
-}
+const progress=document.getElementById("progress");
+let progressFrame=0;
+function updateProgress(){progressFrame=0;const root=document.documentElement;const distance=root.scrollHeight-root.clientHeight;const value=distance>0?root.scrollTop/distance:0;progress.style.transform=`scaleX(${Math.max(0,Math.min(1,value))})`}
+window.addEventListener("scroll",()=>{if(!progressFrame)progressFrame=requestAnimationFrame(updateProgress)},{passive:true});
+updateProgress();
 
-function initTrack(id){
-  const track=document.getElementById("track-"+id);if(!track)return;
-  const slides=track.querySelectorAll(".slide");const n=slides.length;
-  const dotsEl=document.getElementById("dots-"+id);
-  if(dotsEl){dotsEl.innerHTML="";for(let i=0;i<n;i++){const d=document.createElement("div");d.className="dot"+(i===0?" on":"");d.onclick=()=>go(i);dotsEl.appendChild(d)}}
-  const curIdx=()=>Math.round(track.scrollLeft/track.clientWidth);
-  const go=i=>track.scrollTo({left:i*track.clientWidth,behavior:"smooth"});
-  function upd(){const i=curIdx();if(dotsEl)dotsEl.querySelectorAll(".dot").forEach((d,j)=>d.classList.toggle("on",j===i))}
-  track.addEventListener("scroll",upd,{passive:true});upd();
-}
-["research","experiment","sim"].forEach(initTrack);
-
-const lb=document.getElementById("lb"),lbi=document.getElementById("lb-img");
-const closeLB=()=>{lb.classList.remove("open");document.body.style.overflow=""};
-document.getElementById("lb-x").addEventListener("click",closeLB);
-lb.addEventListener("click",e=>{if(e.target===lb||e.target===lbi)closeLB()});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLB()});
-document.querySelectorAll(".exh-c img").forEach(img=>{
-  img.addEventListener("click",()=>{lbi.src=img.src;lb.classList.add("open");document.body.style.overflow="hidden"});
-});
-
-
-applyLang(lang);
+const lightbox=document.getElementById("lightbox");
+const lightboxImage=document.getElementById("lightbox-image");
+const lightboxClose=document.getElementById("lightbox-close");
+let lastFocus=null;
+function openLightbox(button){const image=button.querySelector("img");lastFocus=button;lightboxImage.src=image.currentSrc||image.src;lightboxImage.alt=image.alt;lightbox.classList.add("open");document.body.style.overflow="hidden";lightboxClose.focus()}
+function closeLightbox(){lightbox.classList.remove("open");lightboxImage.src="";document.body.style.overflow="";if(lastFocus)lastFocus.focus()}
+document.querySelectorAll(".zoom").forEach(button=>button.addEventListener("click",()=>openLightbox(button)));
+lightboxClose.addEventListener("click",closeLightbox);
+lightbox.addEventListener("click",event=>{if(event.target===lightbox)closeLightbox()});
+document.addEventListener("keydown",event=>{if(event.key==="Escape"&&lightbox.classList.contains("open"))closeLightbox()});
 </script>
 </body>
 </html>

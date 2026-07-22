@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="ja" class="lang-ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="description" content="我思う故に我在り — 現実、記憶、存在の重なりを、インスタレーションとパフォーマンスで問い直す作品。">
+<title>我思う故に我在り — 何梁宇</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;family=Noto+Serif+JP:wght@300;400&amp;family=Noto+Sans+SC:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light only}
+html{forced-color-adjust:none}
+:root{
+  --ink:#000;--ink2:#111;--ink3:#aaa;
+  --rule:rgba(0,0,0,.12);
+  --nav-h:50px;--bar-h:44px;
+  --mono:"Space Mono",monospace;
+  --safe-bottom:0px;
+  --browser-bottom-gap:0px;
+  --bottom-clearance:0px;
+  --app-height:100vh;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  height:100%;overflow:hidden;
+  background:#fff !important;color:#000 !important;
+  font-family:var(--mono);-webkit-text-size-adjust:100%;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+}
+.lang-ja .bhead,.lang-ja .h-ttl,.lang-ja .nx-t,
+.lang-ja .note-p,.lang-ja .bp,.lang-ja .prow,
+.lang-ja .hcb .bhead{font-family:"Noto Serif JP",serif}
+.lang-zh .bhead,.lang-zh .h-ttl,.lang-zh .nx-t,
+.lang-zh .hcb .bhead{font-family:"Noto Sans SC",sans-serif;font-weight:900}
+.lang-zh .note-p,.lang-zh .bp,.lang-zh .prow{font-family:"Noto Sans SC",sans-serif;font-weight:400}
+.lang-en .bhead,.lang-en .h-ttl,.lang-en .nx-t,
+.lang-en .hcb .bhead{font-family:"Inter","Helvetica Neue",sans-serif;font-weight:900}
+
+nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;background:#fff !important;flex-shrink:0}
+.nav-l{display:flex;align-items:center;gap:2rem}
+.nav-back{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);text-decoration:none;transition:color .15s}
+.nav-back:hover{color:#000}
+.nav-ttl{font-size:13px;color:#000;letter-spacing:.3px;font-weight:700}
+.lang-ja .nav-ttl{font-family:"Noto Serif JP",serif}
+.lang-zh .nav-ttl{font-family:"Noto Sans SC",sans-serif}
+.lang-globe{background:none;border:none;cursor:pointer;padding:0;color:#000;display:flex;align-items:center;justify-content:center;opacity:.45;transition:opacity .2s;-webkit-tap-highlight-color:transparent}
+.lang-globe:hover{opacity:1}
+
+#page{height:var(--app-height);overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
+#page::-webkit-scrollbar{display:none}
+
+.sec{height:var(--app-height);scroll-snap-align:start;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+.sec>.sec-bar{flex-shrink:0}
+
+.sec-bar{display:flex;align-items:center;padding:0 2.5rem;height:var(--bar-h);gap:1rem;background:#fff !important}
+.s-ttl{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#000;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+.dots{display:flex;gap:7px;align-items:center;flex-shrink:0}
+.dot{width:5px;height:5px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .2s,transform .18s}
+.dot.on{background:#000;transform:scale(1.4)}
+
+.h-track{flex:1;min-height:0;position:relative;display:flex;overflow-x:scroll;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.h-track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;overflow:hidden;background:#fff}
+
+.board{display:grid;height:100%}
+.b-half{grid-template-columns:1fr 1fr}
+.b-half .bcell:first-child{border-right:1px solid var(--rule)}
+.bcell{position:relative;overflow:hidden}
+
+.bimg{background:#f4f4f4;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:2rem}
+.bimg img{width:100%;height:100%;object-fit:contain;display:block}
+.bimg.photo{padding:0;background:#e8e8e8}
+.bimg.photo img{object-fit:cover;object-position:center}
+.bph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:#f4f4f4;text-align:center}
+
+.btxt{display:flex;flex-direction:column;justify-content:center;overflow-y:auto;padding:3rem;background:#fff}
+.btxt::-webkit-scrollbar{display:none}
+.brow{margin-bottom:2rem;flex-shrink:0}
+.brow:last-child{margin-bottom:0}
+
+.blbl{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#000;text-transform:uppercase;margin-bottom:.9rem;display:block;font-weight:700}
+.bhead{font-size:clamp(20px,2.5vw,34px);font-weight:900;color:#000;line-height:1.1;margin-bottom:1rem;letter-spacing:-.02em}
+.lang-zh .bhead{letter-spacing:0}
+.lang-ja .bhead{letter-spacing:0;font-weight:400}
+
+.bp{font-size:12px;line-height:1.9;color:#444;margin-bottom:.5rem}
+.bp:last-child{margin-bottom:0}
+.bp b{color:#000;font-weight:700}
+
+.btag{display:inline-block;font-family:var(--mono);font-size:8px;letter-spacing:3px;padding:4px 10px;text-transform:uppercase;margin-bottom:.8rem;font-weight:700;border:1px solid}
+.btag.ok{border-color:#000;color:#000}
+
+.prow{font-size:12px;line-height:1.9;color:#444;padding-left:1.2rem;position:relative;margin-bottom:.25rem}
+.prow::before{position:absolute;left:0;font-weight:700;font-family:var(--mono)}
+.pro::before{content:"+";color:#000}
+
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:.6rem}
+.chip{font-family:var(--mono);font-size:8px;letter-spacing:2px;padding:3px 9px;border:1px solid var(--rule);color:#888;text-transform:uppercase}
+
+#s-hero{background:#fff}
+.hero-g{display:grid;grid-template-columns:58% 42%;height:100%}
+.hero-img{overflow:hidden;border-right:1px solid var(--rule)}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.hero-nfo{display:flex;flex-direction:column;overflow-y:auto;background:#fff}
+.hero-nfo::-webkit-scrollbar{display:none}
+.hero-nfo::after{content:"";display:block;flex:0 0 0}
+
+.htb{padding:3.5rem 3rem 2rem;flex-shrink:0}
+.h-cat{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:1.5rem;font-weight:700}
+.h-ttl{font-size:clamp(48px,6.5vw,88px);font-weight:900;line-height:.9;color:#000;margin-bottom:.6rem;letter-spacing:-.03em}
+.lang-zh .h-ttl{letter-spacing:0;line-height:.95}
+.lang-ja .h-ttl{letter-spacing:-.01em;font-weight:300;font-size:clamp(40px,5.5vw,72px)}
+.h-sub{font-family:var(--mono);font-size:9px;letter-spacing:2.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:2rem;font-weight:700}
+.specs{display:grid;grid-template-columns:auto 1fr;gap:8px 24px;margin-top:.5rem}
+.sp-l{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:#888;text-transform:uppercase;align-self:center;font-weight:700}
+.sp-v{font-size:13px;color:#000;font-weight:700}
+
+.hcb{padding:0 3rem 2rem;flex-shrink:0;margin-top:-.5rem}
+.hcb .blbl{margin-bottom:.8rem}
+.hcb .bhead{font-size:clamp(15px,1.6vw,19px);font-weight:900;line-height:1.25;letter-spacing:-.01em}
+.lang-ja .hcb .bhead{font-weight:400}
+.hcb .bp{font-size:12px;line-height:1.85;color:#555;margin-top:.6rem}
+
+.ins-det{flex-shrink:0;border-top:1px solid var(--rule)}
+.ins-sum{display:flex;align-items:center;gap:.6rem;padding:1.1rem 3rem;cursor:pointer;list-style:none;outline:none;font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;transition:color .15s;font-weight:700}
+.ins-sum::-webkit-details-marker{display:none}
+.ins-sum::before{content:"▶";font-size:7px;transition:transform .2s;flex-shrink:0}
+.ins-det[open] .ins-sum::before{transform:rotate(90deg)}
+.ins-sum:hover{color:#000}
+.ins-body{padding:0 3rem 2rem}
+.ins-body .note-p{font-size:12px;line-height:1.9;color:#555;margin-bottom:.8rem;font-style:italic}
+.ins-body .note-p:last-of-type{margin-bottom:0}
+.ins-meta{margin-top:1rem;display:flex;gap:1.5rem;flex-wrap:wrap}
+.ins-mi{font-family:var(--mono);font-size:8px;letter-spacing:2.5px;color:var(--ink3);text-transform:uppercase;font-weight:700}
+
+.h-hint{padding:1.5rem 3rem;font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-top:auto;flex-shrink:0;padding-top:0;font-weight:700}
+.h-line{width:28px;height:1px;background:var(--ink3)}
+
+.bhead,.bp,.prow,.note-p,.sp-v{
+  text-wrap:pretty;
+  -webkit-hyphens:auto;
+  hyphens:auto;
+}
+
+.hero-nfo,.btxt,.ins-body{
+  -webkit-overflow-scrolling:touch;
+}
+
+@supports (height:100svh){
+  :root{--app-height:100svh}
+}
+
+@supports (height:100dvh){
+  :root{--app-height:100dvh}
+}
+
+.film-wrap{flex:1;min-height:0;background:#000}
+.vid-wrap{position:relative;width:100%;height:100%}
+.vid-wrap video{width:100%;height:100%;object-fit:cover;display:block}
+.vid-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;cursor:pointer;background:rgba(0,0,0,.28);transition:opacity .3s}
+.vid-ov.gone{opacity:0;pointer-events:none}
+.play-r{width:70px;height:70px;border:1px solid rgba(255,255,255,.45);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:border-color .2s,transform .2s}
+.vid-ov:hover .play-r{border-color:#fff;transform:scale(1.07)}
+.play-t{border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:18px solid rgba(255,255,255,.9);margin-left:4px}
+.vid-lbl{font-family:var(--mono);font-size:9px;letter-spacing:4px;color:rgba(255,255,255,.35);text-transform:uppercase;font-weight:700}
+
+/* ─ BACK ─ */
+#s-back{background:#fff;display:flex;align-items:center;justify-content:center}
+.back-btn{display:flex;align-items:center;gap:.8rem;text-decoration:none;font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;opacity:.35;transition:opacity .2s;font-weight:700}
+.back-btn:hover{opacity:1}
+.back-btn svg{transition:transform .2s}
+.back-btn:hover svg{transform:translateX(-4px)}
+
+#lb{display:none;position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.96);align-items:center;justify-content:center;cursor:zoom-out}
+#lb.open{display:flex}
+#lb img{max-width:92vw;max-height:92vh;object-fit:contain;display:block}
+#lb-x{position:absolute;top:20px;right:24px;font-size:20px;color:rgba(255,255,255,.4);cursor:pointer;font-family:var(--mono);transition:color .2s}
+#lb-x:hover{color:#fff}
+
+@media(max-width:768px){
+  :root{--safe-bottom:env(safe-area-inset-bottom,20px)}
+  :root{--bottom-clearance:max(var(--safe-bottom),var(--browser-bottom-gap))}
+  .board.b-half{grid-template-columns:1fr;grid-template-rows:45% 55%}
+  .hero-g{grid-template-columns:1fr;grid-template-rows:42% 58%}
+  .hero-img{border-right:none}
+  .b-half .bcell:first-child{border-right:none}
+  .btxt{padding:2.2rem 1.8rem calc(2.8rem + var(--bottom-clearance))}
+  .htb,.hcb{padding-left:1.8rem;padding-right:1.8rem}
+  .ins-sum,.ins-body,.h-hint{padding-left:1.8rem;padding-right:1.8rem}
+  .h-ttl{font-size:clamp(38px,10vw,60px)}
+  .nx-t{font-size:clamp(28px,10vw,52px)}
+
+  /* safe-area: keep bottom text clear of iPhone home indicator */
+  .hero-nfo{padding-bottom:0}
+  .hero-nfo::after{flex-basis:calc(4.5rem + var(--bottom-clearance))}
+  .ins-body{padding-bottom:calc(2rem + var(--bottom-clearance))}
+  .h-hint{padding-bottom:calc(.5rem + var(--bottom-clearance))}
+  #s-back{padding-bottom:var(--bottom-clearance)}
+
+  /* larger fonts for mobile readability */
+  .bp{font-size:15px;line-height:2.06;color:#222}
+  .hcb .bp{font-size:15px;line-height:2.06;color:#202020}
+  .prow{font-size:15px;line-height:2.06;color:#222}
+  .ins-body .note-p{font-size:15px;line-height:2.08;color:#2d2d2d}
+  .bhead{font-size:clamp(20px,5vw,28px)}
+  .hcb .bhead{font-size:clamp(16px,4vw,20px)}
+  .blbl{font-size:11px}
+  .chip{font-size:9px;padding:4px 10px}
+  .btag{font-size:9px}
+  .sp-v{font-size:14px}
+  .nav-ttl{font-size:14px}
+
+  .bhead{line-height:1.22;color:#050505}
+  .hcb .bhead{line-height:1.34}
+  .h-ttl{line-height:1.02}
+
+  .brow,
+  .htb > *,
+  .hcb > *,
+  .ins-body > *{
+    max-width:31rem;
+  }
+
+  .bp,
+  .prow,
+  .ins-body .note-p,
+  .sp-v{
+    letter-spacing:.01em;
+  }
+}
+
+@supports (-webkit-touch-callout:none){
+  @media(max-width:768px){
+    .bp,
+    .hcb .bp,
+    .prow,
+    .ins-body .note-p{
+      text-shadow:0 0 .01px rgba(0,0,0,.35);
+    }
+
+    .btxt,
+    .hero-nfo{
+      transform:translateZ(0);
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   2026 narrative rebuild — portfolio pp. 8–13
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  --paper:#f6f3ed;
+  --paper-2:#ece8df;
+  --charcoal:#151515;
+  --muted:#706d67;
+  --accent:#ec4a2f;
+  --hair:rgba(21,21,21,.18);
+  --nav-h:54px;
+  --bar-h:58px;
+}
+
+html,body{background:var(--paper)!important;color:var(--charcoal)!important}
+body{overflow:hidden}
+
+.site-nav{
+  position:fixed;inset:0 0 auto 0;z-index:500;height:var(--nav-h);
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:0 clamp(1rem,2.6vw,3rem);border-bottom:1px solid var(--hair);
+  background:rgba(246,243,237,.9)!important;backdrop-filter:blur(16px);
+}
+.site-nav .nav-back{justify-self:start;display:flex;align-items:center;gap:.65rem;color:var(--charcoal);opacity:.58}
+.site-nav .nav-back:hover,.site-nav .nav-back:focus-visible{opacity:1}
+.site-nav .nav-ttl{justify-self:center;max-width:48vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-tools{justify-self:end;display:flex;align-items:center;gap:1rem}
+.section-count{font-size:8px;letter-spacing:2px;color:var(--muted);min-width:54px;text-align:right}
+.lang-globe:focus-visible,.nav-back:focus-visible,.zoomable:focus-visible,.back-btn:focus-visible,.lb-close:focus-visible{
+  outline:2px solid var(--accent);outline-offset:4px
+}
+
+#page{
+  height:var(--app-height);overflow-y:auto;overflow-x:hidden;
+  scroll-snap-type:y mandatory;scroll-behavior:smooth;background:var(--paper);
+}
+.sec{
+  height:var(--app-height);min-height:640px;padding-top:var(--nav-h);
+  scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;
+  background:var(--paper);display:flex;flex-direction:column;
+}
+.section-head{
+  height:var(--bar-h);flex:0 0 var(--bar-h);display:grid;
+  grid-template-columns:72px 1fr auto;align-items:center;
+  gap:1.2rem;padding:0 clamp(1rem,2.6vw,3rem);border-bottom:1px solid var(--hair);
+}
+.section-no,.section-label,.micro-label,.node-label,.stage-no,.spec-label{
+  font-family:var(--mono);text-transform:uppercase;font-weight:700;
+}
+.section-no{font-size:8px;letter-spacing:2px;color:var(--accent)}
+.section-label{font-size:10px;letter-spacing:3px;color:var(--charcoal)}
+.section-note{font-size:8px;letter-spacing:1.5px;color:var(--muted)}
+.section-body{position:relative;flex:1;min-height:0;overflow:auto;overscroll-behavior:contain}
+.section-copy{font-size:clamp(12px,1vw,15px);line-height:1.85;color:#3e3c38;text-wrap:pretty}
+.section-copy + .section-copy{margin-top:.8rem}
+.micro-label{font-size:8px;letter-spacing:2.5px;color:var(--accent)}
+.display-title{font-size:clamp(31px,5.2vw,82px);line-height:.94;letter-spacing:-.045em;text-wrap:balance}
+.lang-ja .display-title{font-family:"Noto Serif JP",serif;font-weight:300;letter-spacing:-.025em}
+.lang-zh .display-title{font-family:"Noto Sans SC",sans-serif;font-weight:500;letter-spacing:-.02em}
+.lang-en .display-title{font-family:"Helvetica Neue",Arial,sans-serif;font-weight:700}
+
+/* cinematic proposition */
+.hero-sec{padding-top:0;background:#101010;color:#fff}
+.hero-frame{position:absolute;inset:0;overflow:hidden}
+.hero-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.12) 0%,rgba(0,0,0,.05) 42%,rgba(0,0,0,.78) 100%),linear-gradient(0deg,rgba(0,0,0,.7),transparent 55%)}
+.hero-frame img{width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.78) contrast(1.03)}
+.hero-content{
+  position:relative;z-index:2;height:100%;padding:calc(var(--nav-h) + 5vh) clamp(1.2rem,4.5vw,5.5rem) 6vh;
+  display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:6vw;align-items:end;
+}
+.hero-title-block{align-self:end}
+.hero-kicker{font-size:9px;letter-spacing:3.5px;text-transform:uppercase;color:rgba(255,255,255,.68);margin-bottom:1.2rem}
+.hero-sec .display-title{max-width:10ch;color:#fff;text-shadow:0 2px 22px rgba(0,0,0,.22)}
+.hero-sub{margin-top:1.2rem;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.65);text-transform:uppercase}
+.hero-specs{display:flex;flex-wrap:wrap;gap:.55rem 1.5rem;margin-top:2rem}
+.hero-spec{display:flex;gap:.55rem;font-size:9px;letter-spacing:1.2px;color:rgba(255,255,255,.78)}
+.hero-spec .spec-label{color:rgba(255,255,255,.45);font-size:8px;letter-spacing:1.8px}
+.hero-manifesto{align-self:end;border-left:1px solid rgba(255,255,255,.35);padding-left:clamp(1.2rem,2.4vw,2.4rem);max-height:72vh;overflow:auto}
+.hero-question{font-family:"Noto Serif JP",serif;font-size:clamp(20px,2.2vw,35px);font-weight:300;line-height:1.45;margin:.75rem 0 1.4rem;text-wrap:balance}
+.lang-zh .hero-question{font-family:"Noto Sans SC",sans-serif}
+.lang-en .hero-question{font-family:"Helvetica Neue",Arial,sans-serif}
+.hero-manifesto .section-copy{color:rgba(255,255,255,.76);font-size:clamp(11px,.84vw,14px);line-height:1.75}
+.hero-inspiration{margin-top:1.2rem;padding-top:1.1rem;border-top:1px solid rgba(255,255,255,.2)}
+
+/* nonlinear research constellation */
+.constellation{height:100%;min-height:570px;position:relative;background:radial-gradient(circle at 49% 49%,rgba(236,74,47,.055),transparent 29%),var(--paper)}
+.constellation-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.constellation-lines path{fill:none;stroke:rgba(21,21,21,.34);stroke-width:1.2;stroke-dasharray:5 7;vector-effect:non-scaling-stroke}
+.constellation-lines path.accent{stroke:var(--accent);stroke-dasharray:none;opacity:.72}
+.research-node{position:absolute;z-index:2;padding:1rem 1.1rem;background:rgba(246,243,237,.93);border:1px solid var(--hair);box-shadow:0 12px 30px rgba(21,21,21,.06);overflow:auto}
+.research-node::before{content:"";position:absolute;left:-1px;top:-1px;width:22px;height:2px;background:var(--accent)}
+.node-label{font-size:7px;letter-spacing:2px;color:var(--accent);margin-bottom:.45rem}
+.node-head{font-family:"Noto Serif JP",serif;font-size:clamp(15px,1.45vw,23px);line-height:1.25;font-weight:400;margin-bottom:.55rem}
+.lang-zh .node-head{font-family:"Noto Sans SC",sans-serif;font-weight:500}
+.lang-en .node-head{font-family:"Helvetica Neue",Arial,sans-serif;font-weight:650}
+.node-copy{font-size:clamp(9px,.72vw,12px);line-height:1.65;color:#4a4843}
+.node-media{width:100%;height:58px;object-fit:cover;filter:grayscale(.25);margin:.1rem 0 .55rem}
+.node-core{left:37%;top:31%;width:25%;min-height:34%;display:flex;flex-direction:column;justify-content:center;border-radius:50%;padding:2rem 2.3rem;background:var(--charcoal);color:#fff;border:none;box-shadow:0 24px 50px rgba(0,0,0,.16)}
+.node-core::before{display:none}.node-core .node-label{color:#ff826d}.node-core .node-head{font-size:clamp(17px,1.75vw,28px)}.node-core .node-copy{color:rgba(255,255,255,.7)}
+.node-sf{left:4%;top:7%;width:27%;height:37%}
+.node-reality{left:5%;bottom:6%;width:24%;height:32%}
+.node-collective{left:35%;bottom:5%;width:27%;height:24%}
+.node-house{right:4%;top:7%;width:28%;height:37%}
+.node-house .node-media{height:64px;object-position:center 70%}
+.node-interview{right:4%;bottom:5%;width:29%;height:45%}
+.interview-row{display:grid;grid-template-columns:30px 1fr;gap:.55rem;padding:.38rem 0;border-top:1px solid var(--hair)}
+.interview-age{font-size:7px;letter-spacing:1px;color:var(--accent)}
+.interview-text{font-size:clamp(8px,.65vw,11px);line-height:1.5;color:#484640}
+.margin-note{position:absolute;z-index:3;font-size:8px;line-height:1.35;color:var(--accent);font-style:italic;transform:rotate(-4deg)}
+.margin-note.one{left:29%;top:17%}.margin-note.two{right:32%;bottom:15%;transform:rotate(3deg)}
+
+/* image reconstruction lineage */
+.lineage-layout{height:100%;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(320px,.55fr)}
+.lineage-images{padding:clamp(1rem,2vw,2rem);display:grid;grid-template-rows:1fr 1fr;gap:1rem;border-right:1px solid var(--hair);min-height:0}
+.lineage-figure{position:relative;min-height:0;background:#fff;overflow:hidden;border:1px solid var(--hair)}
+.lineage-figure img{width:100%;height:100%;object-fit:contain;display:block}
+.zoomable{border:0;background:transparent;padding:0;cursor:zoom-in;display:block;width:100%;height:100%;overflow:hidden}
+.lineage-notes{padding:clamp(1.4rem,3vw,3.6rem);display:flex;flex-direction:column;justify-content:center;overflow:auto}
+.lineage-flow{margin:1.6rem 0;display:grid;grid-template-columns:repeat(4,1fr);gap:.3rem;position:relative}
+.lineage-flow::before{content:"";position:absolute;left:7%;right:7%;top:9px;border-top:1px dashed var(--muted)}
+.lineage-step{position:relative;padding-top:1.7rem;font-size:8px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);text-align:center}
+.lineage-step::before{content:"";position:absolute;top:5px;left:50%;width:8px;height:8px;border-radius:50%;background:var(--paper);border:1px solid var(--charcoal);transform:translateX(-50%)}
+.method-tags{display:flex;flex-wrap:wrap;gap:.38rem;margin-top:1.3rem}
+.method-tag{font-size:7px;letter-spacing:1.6px;text-transform:uppercase;padding:.35rem .55rem;border:1px solid var(--hair);color:#555}
+
+/* comparison laboratory */
+.lab-layout{height:100%;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(380px,.8fr)}
+.lab-visual{padding:clamp(.8rem,1.7vw,1.8rem);border-right:1px solid var(--hair);min-height:0}
+.lab-visual .zoomable{background:#fff;border:1px solid var(--hair)}
+.lab-visual img{width:100%;height:100%;object-fit:contain}
+.lab-notes{display:grid;grid-template-rows:auto repeat(3,1fr);overflow:auto}
+.lab-intro{padding:1.5rem 2rem;border-bottom:1px solid var(--hair)}
+.lab-row{display:grid;grid-template-columns:74px 1fr;gap:1.1rem;align-content:center;padding:1rem 2rem;border-bottom:1px solid var(--hair)}
+.lab-row:last-child{border-bottom:0}
+.lab-medium{font-family:"Noto Serif JP",serif;font-size:clamp(20px,2vw,32px);font-weight:300}
+.lang-zh .lab-medium{font-family:"Noto Sans SC",sans-serif}.lang-en .lab-medium{font-family:"Helvetica Neue",Arial,sans-serif}
+
+/* selected air / balloon method */
+.method-layout{height:100%;display:grid;grid-template-columns:minmax(280px,.42fr) minmax(0,.58fr)}
+.method-axis{background:#fff;border-right:1px solid var(--hair);padding:clamp(1.2rem,2.5vw,2.8rem);display:flex;align-items:center;justify-content:center;min-height:0}
+.method-axis img{width:100%;height:100%;object-fit:contain}
+.method-copy{padding:clamp(1.5rem,4vw,5rem);display:flex;flex-direction:column;justify-content:center;overflow:auto}
+.selected-pill{align-self:flex-start;border:1px solid var(--accent);color:var(--accent);font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:.4rem .65rem;margin-bottom:1.2rem}
+.method-copy h2{font-size:clamp(31px,5vw,72px);line-height:.95;font-weight:400;margin:.5rem 0 1.6rem}
+.method-reasons{margin-top:1.6rem;border-top:1px solid var(--hair)}
+.method-reason{display:grid;grid-template-columns:32px 1fr;gap:.8rem;padding:.75rem 0;border-bottom:1px solid var(--hair);font-size:10px;line-height:1.55;color:#444}
+.method-reason span:first-child{color:var(--accent);font-size:8px;letter-spacing:1px}
+
+/* simulation and making */
+.making-layout{height:100%;display:grid;grid-template-columns:1.35fr .65fr}
+.sim-panel,.fabrication-panel{min-height:0;display:flex;flex-direction:column}
+.sim-panel{border-right:1px solid var(--hair)}
+.making-copy{padding:1rem clamp(1rem,2vw,2rem);border-bottom:1px solid var(--hair)}
+.making-copy h3{font-size:clamp(18px,1.8vw,28px);font-weight:400;margin:.35rem 0 .55rem}
+.making-copy .section-copy{font-size:11px;line-height:1.65}
+.sim-grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:2px;background:var(--hair)}
+.process-grid{flex:1;min-height:0;display:grid;grid-template-rows:1fr 1fr;gap:2px;background:var(--hair)}
+.sim-grid .zoomable,.process-grid .zoomable{background:#ddd}
+.sim-grid img,.process-grid img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease}
+.sim-grid .zoomable:hover img,.process-grid .zoomable:hover img{transform:scale(1.025)}
+
+/* three-stage performance */
+.performance-layout{height:100%;padding:clamp(1rem,2.2vw,2.4rem);overflow:auto}
+.performance-intro{display:flex;justify-content:space-between;gap:2rem;margin-bottom:1.2rem;align-items:flex-end}
+.performance-intro .section-copy{max-width:62ch}
+.timeline{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.7rem,1.4vw,1.4rem);height:calc(100% - 72px);min-height:410px}
+.timeline::before{content:"";position:absolute;left:8%;right:8%;top:16px;border-top:1px solid var(--charcoal);z-index:2}
+.stage{position:relative;display:grid;grid-template-rows:minmax(180px,56%) 1fr;border:1px solid var(--hair);background:#fff;min-height:0}
+.stage::before{content:"";position:absolute;z-index:3;top:11px;left:50%;width:10px;height:10px;border-radius:50%;background:var(--paper);border:1px solid var(--charcoal);transform:translateX(-50%)}
+.stage-media{min-height:0;overflow:hidden;background:#ddd}
+.stage-media .zoomable,.stage-media img{width:100%;height:100%}.stage-media img{object-fit:cover;display:block;filter:saturate(.8)}
+.stage-copy{padding:1rem 1.15rem;overflow:auto}
+.stage-no{font-size:7px;letter-spacing:2px;color:var(--accent)}
+.stage-head{font-family:"Noto Serif JP",serif;font-size:clamp(16px,1.4vw,23px);font-weight:400;line-height:1.25;margin:.35rem 0 .55rem}
+.lang-zh .stage-head{font-family:"Noto Sans SC",sans-serif}.lang-en .stage-head{font-family:"Helvetica Neue",Arial,sans-serif;font-weight:600}
+.stage-copy .section-copy{font-size:clamp(9px,.72vw,12px);line-height:1.65}
+
+/* exhibition */
+.exhibition-layout{height:100%;position:relative;padding:clamp(.7rem,1.5vw,1.5rem)}
+.exhibition-grid{height:100%;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);gap:3px;background:var(--hair)}
+.exhibition-grid .zoomable{background:#ddd}.exhibition-grid img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.82)}
+.exhibition-statement{position:absolute;left:clamp(1.4rem,3vw,3rem);bottom:clamp(1.4rem,3vw,3rem);z-index:3;width:min(460px,46vw);padding:1.3rem 1.5rem;background:rgba(246,243,237,.94);border-left:3px solid var(--accent);box-shadow:0 18px 45px rgba(0,0,0,.14)}
+
+.film-sec{background:#000}.film-sec .section-head{color:#fff;border-color:rgba(255,255,255,.2);background:#080808}.film-sec .section-label{color:#fff}.film-sec .section-note{color:#888}
+.film-wrap{flex:1;min-height:0;background:#000}.film-wrap iframe{width:100%;height:100%;border:0;display:block}
+
+.back-sec{align-items:center;justify-content:center}.back-btn{opacity:.55}.back-btn:focus-visible,.back-btn:hover{opacity:1}
+
+/* accessible modal */
+#lb{width:100vw;max-width:none;height:100vh;max-height:none;border:0;padding:0;background:rgba(0,0,0,.96);color:#fff}
+#lb::backdrop{background:rgba(0,0,0,.96)}
+#lb[open]{display:grid;place-items:center}
+#lb img{max-width:92vw;max-height:90vh;object-fit:contain}
+.lb-close{position:fixed;z-index:2;top:18px;right:22px;width:42px;height:42px;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(0,0,0,.2);color:#fff;font-size:20px;cursor:pointer}
+
+@media(max-width:900px){
+  #page{scroll-snap-type:y proximity}
+  .sec{height:auto;min-height:var(--app-height);scroll-snap-stop:normal}
+  .section-head{grid-template-columns:44px 1fr}.section-note{display:none}
+  .hero-content{grid-template-columns:1fr;align-content:end;gap:1.4rem;padding-bottom:3rem}
+  .hero-frame::after{background:linear-gradient(0deg,rgba(0,0,0,.86),rgba(0,0,0,.05) 74%)}
+  .hero-manifesto{max-height:44vh;border-left:0;border-top:1px solid rgba(255,255,255,.32);padding:1.1rem 0 0}
+  .hero-sec .display-title{font-size:clamp(42px,11vw,72px)}
+
+  .constellation{height:auto;min-height:0;padding:1rem;display:grid;grid-template-columns:1fr;gap:.8rem;overflow:auto}
+  .constellation-lines,.margin-note{display:none}
+  .research-node{position:relative!important;inset:auto!important;width:auto!important;height:auto!important;min-height:0;border-radius:0;padding:1.1rem}
+  .node-core{order:-1}.node-media{height:96px}.node-house .node-media{height:110px}
+  .node-core .node-head{font-size:22px}
+
+  .lineage-layout,.lab-layout,.method-layout,.making-layout{height:auto;min-height:calc(var(--app-height) - var(--nav-h) - var(--bar-h));grid-template-columns:1fr}
+  .lineage-images{height:54vh;min-height:430px;border-right:0;border-bottom:1px solid var(--hair)}
+  .lineage-notes{overflow:visible}
+  .lab-visual{height:48vh;min-height:360px;border-right:0;border-bottom:1px solid var(--hair)}
+  .lab-notes{grid-template-rows:auto repeat(3,auto)}.lab-row{min-height:125px}
+  .method-axis{height:42vh;min-height:320px;border-right:0;border-bottom:1px solid var(--hair)}
+  .method-copy{overflow:visible}
+  .making-layout{display:block}.sim-panel{height:68vh;min-height:480px;border-right:0;border-bottom:1px solid var(--hair)}.fabrication-panel{height:64vh;min-height:450px}
+
+  .performance-layout{height:auto;min-height:calc(var(--app-height) - var(--nav-h) - var(--bar-h));overflow:visible}
+  .performance-intro{display:block}.timeline{height:auto;grid-template-columns:1fr;min-height:0;padding-left:18px}
+  .timeline::before{left:22px;right:auto;top:5%;bottom:5%;height:auto;border-top:0;border-left:1px solid var(--charcoal)}
+  .stage{grid-template-rows:260px auto}.stage::before{left:-13px;top:32px}
+
+  .exhibition-layout{height:auto;min-height:calc(var(--app-height) - var(--nav-h) - var(--bar-h));padding:.7rem}
+  .exhibition-grid{height:110vh;min-height:760px;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(4,1fr)}
+  .exhibition-statement{position:sticky;bottom:1rem;width:calc(100% - 1.4rem);margin:-160px .7rem 1rem}
+}
+
+@media(max-width:560px){
+  .site-nav{grid-template-columns:auto 1fr auto;padding:0 1rem}.nav-back span:last-child{display:none}.site-nav .nav-ttl{font-size:11px;max-width:45vw}.section-count{display:none}
+  .hero-content{padding-left:1.2rem;padding-right:1.2rem}.hero-question{font-size:20px}.hero-manifesto .section-copy{font-size:11px}
+  .lineage-flow{grid-template-columns:1fr 1fr}.lineage-flow::before{display:none}.lineage-step{padding-top:.45rem;border-top:1px dashed var(--muted)}
+  .lab-row{grid-template-columns:54px 1fr;padding:1rem 1.2rem}.lab-intro{padding:1.2rem}
+  .method-copy{padding:2rem 1.2rem}.method-copy h2{font-size:38px}
+  .sim-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,1fr)}
+  .stage{grid-template-rows:210px auto}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<dialog id="lb" aria-label="Image preview">
+  <button class="lb-close" id="lb-x" type="button" aria-label="Close">&#10005;</button>
+  <img id="lb-img" src="" alt="">
+</dialog>
+
+<nav class="site-nav" aria-label="Project navigation">
+  <a class="nav-back" href="../index.html"><span aria-hidden="true">&#8592;</span><span data-i18n="nav-back">戻る</span></a>
+  <span class="nav-ttl" data-i18n="nav-title">我思う故に我在り</span>
+  <div class="nav-tools">
+    <span class="section-count" id="section-count" aria-live="polite">01 / 09</span>
+    <button class="lang-globe" id="lang-cycle-btn" type="button" title="言語を切り替える" aria-label="言語を切り替える">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.2"/>
+        <ellipse cx="10" cy="10" rx="4" ry="8.5" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="1.5" y1="7.5" x2="18.5" y2="7.5" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="1.5" y1="12.5" x2="18.5" y2="12.5" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<main id="page" tabindex="0" aria-label="Project story">
+
+<!-- 01 · CINEMATIC PROPOSITION -->
+<section class="sec hero-sec" id="opening" data-counted>
+  <div class="hero-frame"><img src="hero.jpg" alt=""></div>
+  <div class="hero-content">
+    <div class="hero-title-block">
+      <p class="hero-kicker" data-i18n="hero-kicker">INSTALLATION / PERFORMANCE · 2024</p>
+      <h1 class="display-title" data-i18n="hero-title">我思う故に我在り</h1>
+      <p class="hero-sub" data-i18n="hero-sub">I THINK, THEREFORE I AM / 我思故我在</p>
+      <div class="hero-specs">
+        <span class="hero-spec"><span class="spec-label" data-i18n="year-label">制作年</span><span>2024.11</span></span>
+        <span class="hero-spec"><span class="spec-label" data-i18n="medium-label">媒体</span><span data-i18n="medium-value">総合材料</span></span>
+        <span class="hero-spec"><span class="spec-label" data-i18n="format-label">形式</span><span data-i18n="format-value">インスタレーション／パフォーマンス</span></span>
+      </div>
+    </div>
+    <article class="hero-manifesto">
+      <p class="micro-label" data-i18n="question-label">PROPOSITION 01</p>
+      <h2 class="hero-question" data-i18n="hero-question">私が現実を観察しているのでしょうか。それとも、現実が私をつくっているのでしょうか。</h2>
+      <p class="section-copy" data-i18n="hero-p1">現実と存在は固定されたものではなく、思考の投影と物理的な対象が重なり合うたびに再構築されます。本作でいう「リアル」は、物理的実体だけでなく、仮想空間のデジタルな存在や個人の記憶に残る像も含みます。「存在」は物質から思考まで、過去から未来までを横断します。</p>
+      <p class="section-copy" data-i18n="hero-p2">私は創作者であると同時に観察者となり、家や車、そして自分自身の像を、インスタレーションと行為によって組み替えます。鑑賞者には、「現実」と「存在」が時間と空間の中で変化する様子を、考えるだけでなく体験してほしいと考えています。</p>
+      <div class="hero-inspiration">
+        <p class="micro-label" data-i18n="inspiration-label">INSPIRATION</p>
+        <p class="section-copy" data-i18n="inspiration-p">古いSF映画の未来は、いまを生きる私たちの現在であるはずなのに、現実はまだその姿になっていません。映画の中の未来は、当時の理性と感情がつくった、夢の中の並行世界のように見えました。</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 02 · NON-LINEAR RESEARCH CONSTELLATION -->
+<section class="sec" id="research" data-counted aria-labelledby="research-title">
+  <header class="section-head">
+    <span class="section-no">02</span>
+    <h2 class="section-label" id="research-title" data-i18n="research-title">非線形研究星図</h2>
+    <p class="section-note" data-i18n="research-note">THOUGHT ↔ REALITY ↔ MEMORY</p>
+  </header>
+  <div class="section-body constellation">
+    <svg class="constellation-lines" viewBox="0 0 1000 620" preserveAspectRatio="none" aria-hidden="true">
+      <defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="#ec4a2f"/></marker></defs>
+      <path class="accent" d="M285 150 C390 105 425 210 485 260" marker-end="url(#arrow)"/>
+      <path d="M230 455 C340 430 365 360 430 330"/>
+      <path d="M500 470 C505 425 505 400 510 370"/>
+      <path class="accent" d="M742 155 C660 155 625 220 575 270" marker-end="url(#arrow)"/>
+      <path d="M742 455 C655 430 630 370 585 330"/>
+      <path d="M285 500 C470 570 650 555 748 470"/>
+    </svg>
+    <p class="margin-note one" data-i18n="margin-one">想像は未来を予測するのではなく、現在を映す。</p>
+    <p class="margin-note two" data-i18n="margin-two">ひとつの意識、複数の像。</p>
+
+    <article class="research-node node-core">
+      <p class="node-label" data-i18n="core-label">CORE QUESTION</p>
+      <h3 class="node-head" data-i18n="core-head">意識の投影と現実の存在のあいだには、何が生まれるのでしょうか。</h3>
+      <p class="node-copy" data-i18n="core-copy">確率と非決定論。想像と重なりが、私たちの知覚する状態を決めていきます。</p>
+    </article>
+
+    <article class="research-node node-sf">
+      <p class="node-label" data-i18n="sf-label">SCIENCE FICTION</p>
+      <img class="node-media" src="research-film.jpg" alt="" loading="lazy">
+      <h3 class="node-head" data-i18n="sf-head">未来都市は、その時代の欲望と不安を映す</h3>
+      <p class="node-copy" data-i18n="sf-copy">情報技術、オートメーション、電化への期待をたどると、日本の技術崇拝と技術不安が、同じ映画の中に共存していました。</p>
+    </article>
+
+    <article class="research-node node-reality">
+      <p class="node-label" data-i18n="reality-label">REALITY</p>
+      <h3 class="node-head" data-i18n="reality-head">現実は重なりによって構築される</h3>
+      <p class="node-copy" data-i18n="reality-copy">意識の投影はひとつでも、異なる複数の像として現れます。物理世界と意識の世界のあいだにも、ひとつの「実在」が立ち上がります。</p>
+    </article>
+
+    <article class="research-node node-collective">
+      <p class="node-label" data-i18n="collective-label">COLLECTIVE COGNITION</p>
+      <h3 class="node-head" data-i18n="collective-head">存在は、複数のリアルの重なり</h3>
+      <p class="node-copy" data-i18n="collective-copy">私たちが存在と呼ぶものは、個人の知覚だけでなく、集団の認知によって形成される重層的なリアルです。</p>
+    </article>
+
+    <article class="research-node node-house">
+      <p class="node-label" data-i18n="house-label">MEMORY / OLD HOUSE</p>
+      <img class="node-media" src="research-image-2.jpg" alt="" loading="lazy" style="object-position:34% 58%">
+      <h3 class="node-head" data-i18n="house-head">恐ろしかった古い家は、静かな廃墟になった</h3>
+      <p class="node-copy" data-i18n="house-copy">成長とともに変わったのは建物でしょうか、私の認識でしょうか。その記憶から、失われた家を実験的に再構成したいと考えました。</p>
+    </article>
+
+    <article class="research-node node-interview">
+      <p class="node-label" data-i18n="interview-label">INTERVIEW / 20s—40s</p>
+      <h3 class="node-head" data-i18n="interview-head">SF映画と時代は、どのように結びついていますか。</h3>
+      <div class="interview-row"><span class="interview-age">20s</span><p class="interview-text" data-i18n="interview-20">SFが現実になると、映画の美しさと現実の間には差が現れます。</p></div>
+      <div class="interview-row"><span class="interview-age">30s</span><p class="interview-text" data-i18n="interview-30">経済状況が変わると、人は未来を想像しなくなります。バブル期の日本映画にもそれが表れています。</p></div>
+      <div class="interview-row"><span class="interview-age">40s</span><p class="interview-text" data-i18n="interview-40">過去でも未来でも、どの時代の想像力にも固有の面白さがあります。</p></div>
+    </article>
+  </div>
+</section>
+
+<!-- 03 · IMAGE RECONSTRUCTION LINEAGE -->
+<section class="sec" id="lineage" data-counted aria-labelledby="lineage-title">
+  <header class="section-head">
+    <span class="section-no">03</span>
+    <h2 class="section-label" id="lineage-title" data-i18n="lineage-title">画像再構成の系譜</h2>
+    <p class="section-note" data-i18n="lineage-note">EXTRACT → FRACTURE → OVERLAP</p>
+  </header>
+  <div class="section-body lineage-layout">
+    <div class="lineage-images">
+      <figure class="lineage-figure"><button class="zoomable" type="button"><img src="research-image-1.jpg" alt="" loading="lazy"></button></figure>
+      <figure class="lineage-figure"><button class="zoomable" type="button"><img src="research-image-2.jpg" alt="" loading="lazy"></button></figure>
+    </div>
+    <article class="lineage-notes">
+      <p class="micro-label" data-i18n="lineage-label">IMAGE RESEARCH</p>
+      <h2 class="node-head" style="font-size:clamp(24px,3vw,46px)" data-i18n="lineage-head">日常の像を分解し、存在しない存在を組み立てる</h2>
+      <p class="section-copy" data-i18n="lineage-p1">SF映画に現れる多くの道具は、日常生活から生まれています。車と家を、機能ごとの断片へ分け、異なる時代の像や記憶と重ね合わせました。</p>
+      <p class="section-copy" data-i18n="lineage-p2">記憶の中の旧宅を再構築するとき、私は失われた建物を再現するだけでなく、「存在しない存在」をつくっています。もし意識が現実を再構築できるなら、そこに立つ私は何なのでしょうか。</p>
+      <div class="lineage-flow" aria-label="Image reconstruction sequence">
+        <span class="lineage-step" data-i18n="flow-1">参照</span>
+        <span class="lineage-step" data-i18n="flow-2">要素抽出</span>
+        <span class="lineage-step" data-i18n="flow-3">破裂・分割</span>
+        <span class="lineage-step" data-i18n="flow-4">再重合</span>
+      </div>
+      <div class="method-tags">
+        <span class="method-tag" data-i18n="tag-block">ブロック状</span><span class="method-tag" data-i18n="tag-assemblage">寄せ集め</span>
+        <span class="method-tag" data-i18n="tag-division">分割</span><span class="method-tag" data-i18n="tag-function">機能</span>
+        <span class="method-tag" data-i18n="tag-incomplete">不完全</span><span class="method-tag" data-i18n="tag-rupture">破裂</span>
+        <span class="method-tag" data-i18n="tag-layer">層重ね</span><span class="method-tag" data-i18n="tag-code">コード</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 04 · COMPARATIVE MEDIA LAB -->
+<section class="sec" id="laboratory" data-counted aria-labelledby="lab-title">
+  <header class="section-head">
+    <span class="section-no">04</span>
+    <h2 class="section-label" id="lab-title" data-i18n="lab-title">比較実験室：光・空気・水</h2>
+    <p class="section-note" data-i18n="lab-note">INTANGIBLE ↔ TANGIBLE</p>
+  </header>
+  <div class="section-body lab-layout">
+    <div class="lab-visual"><button class="zoomable" type="button"><img src="experiment-medium.jpg" alt="" loading="lazy"></button></div>
+    <div class="lab-notes">
+      <div class="lab-intro">
+        <p class="micro-label" data-i18n="lab-label">MEDIUM TEST</p>
+        <p class="section-copy" data-i18n="lab-intro">像を「実在する物体」から離し、虚と実のあいだに置くために、性質の異なる三つの媒体を同じ問いのもとで比較しました。</p>
+      </div>
+      <article class="lab-row">
+        <h3 class="lab-medium" data-i18n="light-head">光</h3>
+        <p class="section-copy" data-i18n="light-copy">プロジェクターで光と影をつくり、触れることのできない像を空間に現します。異なる照明環境で、像が物体から離れる状態を観察しました。</p>
+      </article>
+      <article class="lab-row">
+        <h3 class="lab-medium" data-i18n="air-head">空気</h3>
+        <p class="section-copy" data-i18n="air-copy">目に見えない空気は、風船によって一時的な形を得ます。その表面へ像を重ねることで、有形と無形が同じ場所に共存します。</p>
+      </article>
+      <article class="lab-row">
+        <h3 class="lab-medium" data-i18n="water-head">水</h3>
+        <p class="section-copy" data-i18n="water-copy">水は透明でありながら、触れることのできる実在です。撮影後の画像を水に溶かし、水の中で像を分離し、再構成しました。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · SELECTED METHOD -->
+<section class="sec" id="method" data-counted aria-labelledby="method-title">
+  <header class="section-head">
+    <span class="section-no">05</span>
+    <h2 class="section-label" id="method-title" data-i18n="method-title">選定した方法</h2>
+    <p class="section-note" data-i18n="method-note">AIR / BALLOON / COLLAGE</p>
+  </header>
+  <div class="section-body method-layout">
+    <div class="method-axis"><button class="zoomable" type="button"><img src="experiment-gas.jpg" alt="" loading="lazy"></button></div>
+    <article class="method-copy">
+      <span class="selected-pill" data-i18n="selected-label">SELECTED MEDIUM</span>
+      <p class="micro-label" data-i18n="method-label">FROM THE INTANGIBLE TO A TEMPORARY BODY</p>
+      <h2 data-i18n="method-head">空気／風船</h2>
+      <p class="section-copy" data-i18n="method-p1">空気は目に見えませんが、風船の膜によって一時的な輪郭を持ちます。その不安定な身体に、家、車、記憶、そして私自身の像をコラージュします。</p>
+      <p class="section-copy" data-i18n="method-p2">像は表面に固定されているように見えても、内部の空気が失われれば形ごと崩れます。この関係を、複数のリアルが重なって成立する「存在」のモデルとして用いました。</p>
+      <div class="method-reasons">
+        <p class="method-reason"><span>01</span><span data-i18n="reason-1">虚と実のあいだを、触れられる輪郭として示す</span></p>
+        <p class="method-reason"><span>02</span><span data-i18n="reason-2">異なる時代と記憶の像を、同じ表面に重ねる</span></p>
+        <p class="method-reason"><span>03</span><span data-i18n="reason-3">日常の物体を、不安定で変化する身体へ置き換える</span></p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 06 · SIMULATION AND MAKING -->
+<section class="sec" id="making" data-counted aria-labelledby="making-title">
+  <header class="section-head">
+    <span class="section-no">06</span>
+    <h2 class="section-label" id="making-title" data-i18n="making-title">シミュレーションと制作</h2>
+    <p class="section-note" data-i18n="making-note">MODEL → SCALE → SURFACE</p>
+  </header>
+  <div class="section-body making-layout">
+    <article class="sim-panel">
+      <div class="making-copy">
+        <p class="micro-label" data-i18n="simulation-label">3D SIMULATION</p>
+        <h3 data-i18n="simulation-head">家と車を、同じ風景の中で組み直す</h3>
+        <p class="section-copy" data-i18n="simulation-copy">3Dモデルを用いて、再構成された家、車、人の尺度と配置を比較しました。ここでは最終的な技術仕様ではなく、物体同士の関係と見え方を検討しています。</p>
+      </div>
+      <div class="sim-grid">
+        <button class="zoomable" type="button"><img src="sim-3d-1.jpg" alt="" loading="lazy"></button>
+        <button class="zoomable" type="button"><img src="sim-3d-2.jpg" alt="" loading="lazy"></button>
+        <button class="zoomable" type="button"><img src="sim-3d-3.jpg" alt="" loading="lazy"></button>
+        <button class="zoomable" type="button"><img src="sim-3d-4.jpg" alt="" loading="lazy"></button>
+        <button class="zoomable" type="button"><img src="sim-3d-5.jpg" alt="" loading="lazy"></button>
+        <button class="zoomable" type="button"><img src="sim-3d-6.jpg" alt="" loading="lazy"></button>
+      </div>
+    </article>
+    <article class="fabrication-panel">
+      <div class="making-copy">
+        <p class="micro-label" data-i18n="fabrication-label">FABRICATION</p>
+        <h3 data-i18n="fabrication-head">断片を、膨らむ表面へ</h3>
+        <p class="section-copy" data-i18n="fabrication-copy">印刷した像を切り分け、風船で形づくられた家と車の表面へ重ねました。制作の途中でも、像の境界と物体の輪郭は絶えず変化します。</p>
+      </div>
+      <div class="process-grid">
+        <button class="zoomable" type="button"><img src="process-1.jpg" alt="" loading="lazy"></button>
+        <button class="zoomable" type="button"><img src="process-2.jpg" alt="" loading="lazy"></button>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 07 · THREE-STAGE PERFORMANCE -->
+<section class="sec" id="performance" data-counted aria-labelledby="performance-title">
+  <header class="section-head">
+    <span class="section-no">07</span>
+    <h2 class="section-label" id="performance-title" data-i18n="performance-title">三段階のパフォーマンス</h2>
+    <p class="section-note" data-i18n="performance-note">INHABIT → PIERCE → RELEASE</p>
+  </header>
+  <div class="section-body performance-layout">
+    <div class="performance-intro">
+      <p class="micro-label" data-i18n="performance-label">A BODY MOVES THROUGH THREE STATES</p>
+      <p class="section-copy" data-i18n="performance-intro">作品は、ひとつの身体が「重なる」「破れる」「手放される」という三つの状態を通過する時間として構成されています。</p>
+    </div>
+    <div class="timeline">
+      <article class="stage">
+        <div class="stage-media"><button class="zoomable" type="button"><img src="exhibition-ch2-1.jpg" alt="" loading="lazy"></button></div>
+        <div class="stage-copy"><p class="stage-no">01 / INHABIT</p><h3 class="stage-head" data-i18n="stage-1-head">風船に自己を重ねる</h3><p class="section-copy" data-i18n="stage-1-copy">空気で膨らむ身体に再構成した像と私の肖像をまとわせ、私は風船へ入り込みます。風船は、もうひとつの私になります。</p></div>
+      </article>
+      <article class="stage">
+        <div class="stage-media"><button class="zoomable" type="button"><img src="exhibition-ch3-1.jpg" alt="" loading="lazy"></button></div>
+        <div class="stage-copy"><p class="stage-no">02 / PIERCE</p><h3 class="stage-head" data-i18n="stage-2-head">投影された私を刺し破る</h3><p class="section-copy" data-i18n="stage-2-copy">思考の投影としてつくられた「私」を刺し破ります。複数のリアルで保たれていた輪郭が崩れ、その確かさが虚構へ反転します。</p></div>
+      </article>
+      <article class="stage">
+        <div class="stage-media"><button class="zoomable" type="button"><img src="exhibition-ch4-1.jpg" alt="" loading="lazy"></button></div>
+        <div class="stage-copy"><p class="stage-no">03 / RELEASE</p><h3 class="stage-head" data-i18n="stage-3-head">残された像を風に返す</h3><p class="section-copy" data-i18n="stage-3-copy">二元論的な対立を問い直した後、残されたものを凧へ変え、風に乗せて手放します。「認識は現実なのか」という問いを、答えで閉じず空へ返します。</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 08 · EXHIBITION -->
+<section class="sec" id="exhibition" data-counted aria-labelledby="exhibition-title">
+  <header class="section-head">
+    <span class="section-no">08</span>
+    <h2 class="section-label" id="exhibition-title" data-i18n="exhibition-title">展示</h2>
+    <p class="section-note" data-i18n="exhibition-note">OBSERVER / OBJECT / FIELD</p>
+  </header>
+  <div class="section-body exhibition-layout">
+    <div class="exhibition-grid">
+      <button class="zoomable" type="button"><img src="exhibition-ch1-1.jpg" alt="" loading="lazy"></button>
+      <button class="zoomable" type="button"><img src="exhibition-ch1-2.jpg" alt="" loading="lazy"></button>
+      <button class="zoomable" type="button"><img src="exhibition-ch1-3.jpg" alt="" loading="lazy"></button>
+      <button class="zoomable" type="button"><img src="exhibition-ch1-4.jpg" alt="" loading="lazy"></button>
+      <button class="zoomable" type="button"><img src="exhibition-ch1-7.jpg" alt="" loading="lazy"></button>
+      <button class="zoomable" type="button"><img src="exhibition-ch1-9.jpg" alt="" loading="lazy"></button>
+      <button class="zoomable" type="button"><img src="exhibition-ch1-13.jpg" alt="" loading="lazy"></button>
+      <button class="zoomable" type="button"><img src="exhibition-ch1-16.jpg" alt="" loading="lazy"></button>
+    </div>
+    <article class="exhibition-statement">
+      <p class="micro-label" data-i18n="exhibition-label">THE VIEWER ENTERS THE QUESTION</p>
+      <p class="section-copy" data-i18n="exhibition-copy">展示では、私は観察する主体であると同時に、観察される対象になります。鑑賞者の視線と行為が加わるたびに、作品は別の現実として読み替えられます。</p>
+    </article>
+  </div>
+</section>
+
+<!-- 09 · FILM -->
+<section class="sec film-sec" id="film" data-counted aria-labelledby="film-title">
+  <header class="section-head">
+    <span class="section-no">09</span>
+    <h2 class="section-label" id="film-title" data-i18n="film-title">映像</h2>
+    <p class="section-note" data-i18n="film-note">FULL PERFORMANCE FILM</p>
+  </header>
+  <div class="film-wrap">
+    <iframe src="https://www.youtube.com/embed/EJ9MsBiKmZs" title="I Think, Therefore I Am — performance film" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+</section>
+
+<!-- BACK -->
+<section class="sec back-sec" id="s-back" aria-label="Back to portfolio">
+  <a class="back-btn" href="../index.html">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <line x1="14" y1="8" x2="2" y2="8" stroke="currentColor" stroke-width="1.5"/>
+      <polyline points="6,3 1,8 6,13" stroke="currentColor" stroke-width="1.5" fill="none"/>
+    </svg>
+    <span data-i18n="back-label">ホームへ戻る</span>
+  </a>
+</section>
+
+</main>
+
+<script>
+const COMMON={
+  "hero-kicker":"INSTALLATION / PERFORMANCE · 2024",
+  "question-label":"PROPOSITION 01",
+  "inspiration-label":"INSPIRATION",
+  "research-note":"THOUGHT ↔ REALITY ↔ MEMORY",
+  "core-label":"CORE QUESTION",
+  "sf-label":"SCIENCE FICTION",
+  "reality-label":"REALITY",
+  "collective-label":"COLLECTIVE COGNITION",
+  "house-label":"MEMORY / OLD HOUSE",
+  "interview-label":"INTERVIEW / 20s—40s",
+  "lineage-note":"EXTRACT → FRACTURE → OVERLAP",
+  "lineage-label":"IMAGE RESEARCH",
+  "lab-note":"INTANGIBLE ↔ TANGIBLE",
+  "lab-label":"MEDIUM TEST",
+  "method-note":"AIR / BALLOON / COLLAGE",
+  "selected-label":"SELECTED MEDIUM",
+  "method-label":"FROM THE INTANGIBLE TO A TEMPORARY BODY",
+  "making-note":"MODEL → SCALE → SURFACE",
+  "simulation-label":"3D SIMULATION",
+  "fabrication-label":"FABRICATION",
+  "performance-note":"INHABIT → PIERCE → RELEASE",
+  "performance-label":"A BODY MOVES THROUGH THREE STATES",
+  "exhibition-note":"OBSERVER / OBJECT / FIELD",
+  "exhibition-label":"THE VIEWER ENTERS THE QUESTION",
+  "film-note":"FULL PERFORMANCE FILM"
+};
+
+const L={
+ja:{...COMMON,
+  "nav-back":"戻る","nav-title":"我思う故に我在り","lang-switch":"言語を切り替える","open-image":"画像を拡大する","close-image":"閉じる",
+  "hero-title":"我思う故に我在り","hero-sub":"I THINK, THEREFORE I AM / 我思故我在",
+  "year-label":"制作年","medium-label":"媒体","medium-value":"総合材料","format-label":"形式","format-value":"インスタレーション／パフォーマンス",
+  "hero-question":"私が現実を観察しているのでしょうか。それとも、現実が私をつくっているのでしょうか。",
+  "hero-p1":"現実と存在は固定されたものではなく、思考の投影と物理的な対象が重なり合うたびに再構築されます。本作でいう「リアル」は、物理的実体だけでなく、仮想空間のデジタルな存在や個人の記憶に残る像も含みます。「存在」は物質から思考まで、過去から未来までを横断します。",
+  "hero-p2":"私は創作者であると同時に観察者となり、家や車、そして自分自身の像を、インスタレーションと行為によって組み替えます。鑑賞者には、「現実」と「存在」が時間と空間の中で変化する様子を、考えるだけでなく体験してほしいと考えています。",
+  "inspiration-p":"古いSF映画の未来は、いまを生きる私たちの現在であるはずなのに、現実はまだその姿になっていません。映画の中の未来は、当時の理性と感情がつくった、夢の中の並行世界のように見えました。",
+  "research-title":"非線形研究星図","margin-one":"想像は未来を予測するのではなく、現在を映す。","margin-two":"ひとつの意識、複数の像。",
+  "core-head":"意識の投影と現実の存在のあいだには、何が生まれるのでしょうか。","core-copy":"確率と非決定論。想像と重なりが、私たちの知覚する状態を決めていきます。",
+  "sf-head":"未来都市は、その時代の欲望と不安を映す","sf-copy":"情報技術、オートメーション、電化への期待をたどると、日本の技術崇拝と技術不安が、同じ映画の中に共存していました。",
+  "reality-head":"現実は重なりによって構築される","reality-copy":"意識の投影はひとつでも、異なる複数の像として現れます。物理世界と意識の世界のあいだにも、ひとつの「実在」が立ち上がります。",
+  "collective-head":"存在は、複数のリアルの重なり","collective-copy":"私たちが存在と呼ぶものは、個人の知覚だけでなく、集団の認知によって形成される重層的なリアルです。",
+  "house-head":"恐ろしかった古い家は、静かな廃墟になった","house-copy":"成長とともに変わったのは建物でしょうか、私の認識でしょうか。その記憶から、失われた家を実験的に再構成したいと考えました。",
+  "interview-head":"SF映画と時代は、どのように結びついていますか。","interview-20":"SFが現実になると、映画の美しさと現実の間には差が現れます。","interview-30":"経済状況が変わると、人は未来を想像しなくなります。バブル期の日本映画にもそれが表れています。","interview-40":"過去でも未来でも、どの時代の想像力にも固有の面白さがあります。",
+  "lineage-title":"画像再構成の系譜","lineage-head":"日常の像を分解し、存在しない存在を組み立てる",
+  "lineage-p1":"SF映画に現れる多くの道具は、日常生活から生まれています。車と家を、機能ごとの断片へ分け、異なる時代の像や記憶と重ね合わせました。",
+  "lineage-p2":"記憶の中の旧宅を再構築するとき、私は失われた建物を再現するだけでなく、「存在しない存在」をつくっています。もし意識が現実を再構築できるなら、そこに立つ私は何なのでしょうか。",
+  "flow-1":"参照","flow-2":"要素抽出","flow-3":"破裂・分割","flow-4":"再重合",
+  "tag-block":"ブロック状","tag-assemblage":"寄せ集め","tag-division":"分割","tag-function":"機能","tag-incomplete":"不完全","tag-rupture":"破裂","tag-layer":"層重ね","tag-code":"コード",
+  "lab-title":"比較実験室：光・空気・水","lab-intro":"像を「実在する物体」から離し、虚と実のあいだに置くために、性質の異なる三つの媒体を同じ問いのもとで比較しました。",
+  "light-head":"光","light-copy":"プロジェクターで光と影をつくり、触れることのできない像を空間に現します。異なる照明環境で、像が物体から離れる状態を観察しました。",
+  "air-head":"空気","air-copy":"目に見えない空気は、風船によって一時的な形を得ます。その表面へ像を重ねることで、有形と無形が同じ場所に共存します。",
+  "water-head":"水","water-copy":"水は透明でありながら、触れることのできる実在です。撮影後の画像を水に溶かし、水の中で像を分離し、再構成しました。",
+  "method-title":"選定した方法","method-head":"空気／風船",
+  "method-p1":"空気は目に見えませんが、風船の膜によって一時的な輪郭を持ちます。その不安定な身体に、家、車、記憶、そして私自身の像をコラージュします。",
+  "method-p2":"像は表面に固定されているように見えても、内部の空気が失われれば形ごと崩れます。この関係を、複数のリアルが重なって成立する「存在」のモデルとして用いました。",
+  "reason-1":"虚と実のあいだを、触れられる輪郭として示す","reason-2":"異なる時代と記憶の像を、同じ表面に重ねる","reason-3":"日常の物体を、不安定で変化する身体へ置き換える",
+  "making-title":"シミュレーションと制作","simulation-head":"家と車を、同じ風景の中で組み直す","simulation-copy":"3Dモデルを用いて、再構成された家、車、人の尺度と配置を比較しました。ここでは最終的な技術仕様ではなく、物体同士の関係と見え方を検討しています。",
+  "fabrication-head":"断片を、膨らむ表面へ","fabrication-copy":"印刷した像を切り分け、風船で形づくられた家と車の表面へ重ねました。制作の途中でも、像の境界と物体の輪郭は絶えず変化します。",
+  "performance-title":"三段階のパフォーマンス","performance-intro":"作品は、ひとつの身体が「重なる」「破れる」「手放される」という三つの状態を通過する時間として構成されています。",
+  "stage-1-head":"風船に自己を重ねる","stage-1-copy":"空気で膨らむ身体に再構成した像と私の肖像をまとわせ、私は風船へ入り込みます。風船は、もうひとつの私になります。",
+  "stage-2-head":"投影された私を刺し破る","stage-2-copy":"思考の投影としてつくられた「私」を刺し破ります。複数のリアルで保たれていた輪郭が崩れ、その確かさが虚構へ反転します。",
+  "stage-3-head":"残された像を風に返す","stage-3-copy":"二元論的な対立を問い直した後、残されたものを凧へ変え、風に乗せて手放します。「認識は現実なのか」という問いを、答えで閉じず空へ返します。",
+  "exhibition-title":"展示","exhibition-copy":"展示では、私は観察する主体であると同時に、観察される対象になります。鑑賞者の視線と行為が加わるたびに、作品は別の現実として読み替えられます。",
+  "film-title":"映像","back-label":"ホームへ戻る"
+},
+zh:{...COMMON,
+  "nav-back":"返回","nav-title":"我思故我在","lang-switch":"切换语言","open-image":"放大图片","close-image":"关闭",
+  "hero-title":"我思故我在","hero-sub":"我思う故に我在り / I THINK, THEREFORE I AM",
+  "year-label":"年份","medium-label":"媒介","medium-value":"综合材料","format-label":"形式","format-value":"装置／行为表演",
+  "hero-question":"是我在观察现实，还是现实正在塑造我？",
+  "hero-p1":"现实与存在并非固定不变。每当思考的投影与物理对象相互叠加，它们都会被重新构成。本作所说的“真实（the real）”不仅包括物理实体，也包括虚拟空间中的数字存在和个人记忆中残留的影像；而“存在”则横跨物质与思考、过去与未来。",
+  "hero-p2":"我既是创作者，也是观察者。我通过装置与行为重新组合房屋、汽车以及自己的影像。我希望观者不仅思考“现实”与“存在”如何在时间和空间中变化，也能亲身感受这一过程。",
+  "inspiration-p":"老科幻电影所想象的未来，本应是我们正在经历的现在，但现实仍未成为电影中的模样。那些未来像是由当时的理性与情感共同构成、存在于梦境中的平行世界。",
+  "research-title":"非线性研究星图","margin-one":"想象并非预测未来，而是在映照现在。","margin-two":"一种意识，多重影像。",
+  "core-head":"意识的投影与现实的存在之间，会产生怎样的状态？","core-copy":"概率与非决定论。想象与重叠，共同决定我们所感知的状态。",
+  "sf-head":"未来城市映照着时代的欲望与不安","sf-copy":"沿着信息技术、自动化与电气化的想象展开研究后，我发现日本社会对技术的崇拜与不安同时存在于科幻电影之中。",
+  "reality-head":"现实由层层叠加而成","reality-copy":"意识的投影即使源自同一点，也会呈现为多重影像。在物理世界与意识世界之间，也会生成一种“实在”。",
+  "collective-head":"存在是多重真实的叠合","collective-copy":"我们所谓的存在，并非只来自个人知觉，也是由集体认知共同形成的、层层重叠的真实。",
+  "house-head":"曾经可怕的老屋，后来成了安静的废墟","house-copy":"随着成长，改变的是建筑，还是我的认识？这段记忆让我想以实验方式重新构成那座已经消失的房屋。",
+  "interview-head":"科幻电影与它所处的时代如何相互关联？","interview-20":"当科幻成为现实时，电影的美感与日常现实之间会显露出差距。","interview-30":"经济状况变化后，人们会逐渐停止想象未来；日本泡沫时期的电影也体现了这种关系。","interview-40":"无论指向过去还是未来，每个时代的想象力都有独特的趣味。",
+  "lineage-title":"图像重构谱系","lineage-head":"拆解日常影像，组装不存在的存在",
+  "lineage-p1":"科幻电影中的许多物件都源于日常生活。我将汽车和房屋按功能拆成碎片，再与不同时代的影像和记忆重新叠合。",
+  "lineage-p2":"当我重构记忆中的旧宅时，我不只是再现一座消失的建筑，也是在创造一种“不存在的存在”。如果意识可以重构现实，那么站在其中的我究竟是什么？",
+  "flow-1":"参照","flow-2":"提取元素","flow-3":"破裂／分割","flow-4":"重新叠合",
+  "tag-block":"块状","tag-assemblage":"拼合","tag-division":"分割","tag-function":"功能","tag-incomplete":"不完整","tag-rupture":"破裂","tag-layer":"层叠","tag-code":"编码",
+  "lab-title":"比较实验室：光／空气／水","lab-intro":"为了让影像脱离“实际存在的物体”，并被置于虚与实之间，我围绕同一个问题比较了三种性质不同的媒介。",
+  "light-head":"光","light-copy":"我使用投影仪生成光与影，让无法触摸的影像出现在空间中，并在不同照明环境里观察影像脱离物体的状态。",
+  "air-head":"空气","air-copy":"不可见的空气通过气球暂时获得形状。影像叠加在它的表面后，有形与无形便共存于同一个位置。",
+  "water-head":"水","water-copy":"水透明，却是能够触摸的实在。我将拍摄后的图像溶入水中，使影像在水里分离并重新构成。",
+  "method-title":"选定的方法","method-head":"空气／气球",
+  "method-p1":"空气无法被直接看见，却能借助气球的薄膜获得暂时的轮廓。我把房屋、汽车、记忆以及自己的影像拼贴在这具不稳定的身体上。",
+  "method-p2":"影像看似固定在表面，但内部空气一旦消失，形状也会随之坍塌。我以这种关系作为“存在”的模型：它依靠多重真实的叠加而成立。",
+  "reason-1":"以可触摸的轮廓呈现虚与实之间的状态","reason-2":"把不同时代与记忆的影像叠加在同一表面","reason-3":"将日常物体转换成不稳定、持续变化的身体",
+  "making-title":"模拟与制作","simulation-head":"在同一片风景中重新组织房屋与汽车","simulation-copy":"我借助3D模型比较重构后的房屋、汽车与人物的尺度及位置关系。这里呈现的是物件关系与观看方式的推敲，而非未经确认的最终技术规格。",
+  "fabrication-head":"将碎片覆于膨胀的表面","fabrication-copy":"我裁切印刷影像，并把它们叠加在由气球塑形的房屋与汽车表面。即使在制作过程中，影像边界和物体轮廓也在不断变化。",
+  "performance-title":"三阶段行为表演","performance-intro":"作品被组织为同一具身体依次经过“叠合”“破裂”“释放”三种状态的时间过程。",
+  "stage-1-head":"将自我叠加于气球","stage-1-copy":"我让充满空气的身体披上重构的影像与自己的肖像，并进入气球之中。气球由此成为另一个我。",
+  "stage-2-head":"刺破被投射出来的我","stage-2-copy":"我刺破作为思考投影而形成的“我”。由多重真实维持的轮廓随之瓦解，原本的确定性反转为虚构。",
+  "stage-3-head":"把残留的影像交还给风","stage-3-copy":"重新追问二元对立之后，我把剩余之物变成风筝，让它随风离开。我不以答案封闭“认识是否就是现实”这一问题，而是将它重新交还给天空。",
+  "exhibition-title":"展示","exhibition-copy":"在展示中，我既是观察的主体，也是被观察的对象。每当观者的目光与行动加入，作品都会被重新解读为另一种现实。",
+  "film-title":"影像","back-label":"返回主页"
+},
+en:{...COMMON,
+  "nav-back":"Back","nav-title":"I Think, Therefore I Am","lang-switch":"Switch language","open-image":"Enlarge image","close-image":"Close",
+  "hero-title":"I Think, Therefore I Am","hero-sub":"我思う故に我在り / 我思故我在",
+  "year-label":"Year","medium-label":"Medium","medium-value":"Mixed media","format-label":"Format","format-value":"Installation / Performance",
+  "hero-question":"Am I observing reality, or is reality making me?",
+  "hero-p1":"Reality and existence are not fixed. They are reconstructed whenever projections of thought overlap with physical objects. In this work, “the real” includes not only material entities, but also digital presences in virtual space and images held in personal memory. “Existence” extends from matter to thought, and from the past into the future.",
+  "hero-p2":"I act as both maker and observer, recomposing houses, cars, and images of myself through installation and performance. I invite viewers not only to consider, but also to experience, how reality and existence shift through time and space.",
+  "inspiration-p":"The futures imagined by old science-fiction films should have become our present, yet reality still does not resemble them. Those futures appeared to me like parallel worlds in a dream, constructed from the reason and emotion of their own time.",
+  "research-title":"A Non-linear Research Constellation","margin-one":"Imagination does not predict the future; it reflects the present.","margin-two":"One consciousness, multiple images.",
+  "core-head":"What emerges between projected consciousness and material reality?","core-copy":"Probability and indeterminacy: imagination and overlap shape the states we perceive.",
+  "sf-head":"Future cities mirror the desires and anxieties of their time","sf-copy":"Tracing visions of information technology, automation, and electrification revealed that Japan’s fascination with technology and its anxiety about technology coexist in the same films.",
+  "reality-head":"Reality is constructed through overlap","reality-copy":"A single projection of consciousness can appear as multiple images. Between the physical world and the world of consciousness, another form of actuality emerges.",
+  "collective-head":"Existence is an overlap of multiple realities","collective-copy":"What we call existence is shaped not only by individual perception, but also by collective cognition: layered forms of the real.",
+  "house-head":"The frightening old house became a quiet ruin","house-copy":"As I grew, did the building change, or did my perception of it? This memory led me to reconstruct the vanished house experimentally.",
+  "interview-head":"How are science-fiction films connected to their time?","interview-20":"When science fiction becomes reality, a gap emerges between cinematic beauty and everyday life.","interview-30":"Economic conditions can cause people to stop imagining the future; films from Japan’s bubble era also reflect this relationship.","interview-40":"Whether directed toward the past or the future, every era’s imagination has its own fascination.",
+  "lineage-title":"A Lineage of Image Reconstruction","lineage-head":"Dismantling everyday images to assemble a non-existent existence",
+  "lineage-p1":"Many objects in science-fiction films originate in everyday life. I divided cars and houses into functional fragments, then overlaid them with images and memories from different times.",
+  "lineage-p2":"In reconstructing the old house from memory, I am not simply reproducing a lost building; I am creating a “non-existent existence.” If consciousness can reconstruct reality, then what am I within it?",
+  "flow-1":"Reference","flow-2":"Extract","flow-3":"Fracture","flow-4":"Recombine",
+  "tag-block":"Block","tag-assemblage":"Assemblage","tag-division":"Division","tag-function":"Function","tag-incomplete":"Incomplete","tag-rupture":"Rupture","tag-layer":"Layering","tag-code":"Code",
+  "lab-title":"Comparative Laboratory: Light / Air / Water","lab-intro":"To detach the image from an “actually existing object” and place it between the virtual and the real, I compared three media with different material properties through the same question.",
+  "light-head":"Light","light-copy":"A projector produces light and shadow, allowing an untouchable image to appear in space. Tests under different lighting conditions examine the moment when the image separates from the object.",
+  "air-head":"Air","air-copy":"Invisible air acquires a temporary form through a balloon. When an image is placed on its surface, the tangible and intangible coexist in the same location.",
+  "water-head":"Water","water-copy":"Water is transparent, yet physically present and touchable. I dissolved photographed images in water, separating and reconstructing them within it.",
+  "method-title":"Selected Method","method-head":"Air / Balloon",
+  "method-p1":"Air cannot be seen directly, but a balloon’s membrane gives it a temporary contour. Onto this unstable body I collage houses, cars, memories, and images of myself.",
+  "method-p2":"The images appear fixed to the surface, yet when the air inside is lost, the entire form collapses. I use this relationship as a model of existence sustained by overlapping forms of the real.",
+  "reason-1":"Give the space between the virtual and the real a touchable contour","reason-2":"Layer images from different times and memories on one surface","reason-3":"Transform everyday objects into unstable, changing bodies",
+  "making-title":"Simulation and Fabrication","simulation-head":"Recomposing the house and car within one landscape","simulation-copy":"Using 3D models, I compared the scale and placement of the reconstructed house, car, and figure. These studies examine relationships and ways of seeing rather than assert unverified final specifications.",
+  "fabrication-head":"Fragments across an inflated surface","fabrication-copy":"Printed images were cut apart and layered over balloon-formed houses and cars. Throughout fabrication, the boundaries of the images and the contours of the objects continued to shift.",
+  "performance-title":"A Three-stage Performance","performance-intro":"The work unfolds as one body passing through three states: overlap, rupture, and release.",
+  "stage-1-head":"Overlaying the self onto the balloon","stage-1-copy":"I clothe an air-filled body in reconstructed images and my own portrait, then enter the balloon. The balloon becomes another self.",
+  "stage-2-head":"Piercing the projected self","stage-2-copy":"I pierce the “self” constructed as a projection of thought. The contour sustained by multiple realities collapses, and its apparent certainty turns into fiction.",
+  "stage-3-head":"Returning the remaining image to the wind","stage-3-copy":"After questioning binary oppositions, I turn what remains into a kite and release it into the wind. Rather than close the question “Is cognition reality?” with an answer, I return it to the sky.",
+  "exhibition-title":"Exhibition","exhibition-copy":"In the exhibition, I am both the observing subject and the observed object. Each new gaze and action from a viewer causes the work to be read as another reality.",
+  "film-title":"Film","back-label":"Back to Home"
+}
+};
+
+let lang="ja";
+try{
+  const saved=localStorage.getItem("hl-lang");
+  if(["ja","zh","en"].includes(saved))lang=saved;
+}catch(e){}
+
+const page=document.getElementById("page");
+const cycleBtn=document.getElementById("lang-cycle-btn");
+const closeButton=document.getElementById("lb-x");
+const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)");
+
+function applyLang(nextLang){
+  lang=nextLang;
+  try{localStorage.setItem("hl-lang",lang)}catch(e){}
+  const d=L[lang]||L.ja;
+  document.documentElement.lang=lang==="zh"?"zh-CN":lang;
+  document.documentElement.className="lang-"+lang;
+  document.title=(d["hero-title"]||"Work")+" — 何梁宇";
+
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key=el.dataset.i18n;
+    if(d[key]!==undefined)el.textContent=d[key];
+  });
+
+  cycleBtn.title=d["lang-switch"];
+  cycleBtn.setAttribute("aria-label",d["lang-switch"]);
+  closeButton.setAttribute("aria-label",d["close-image"]);
+  document.querySelectorAll(".zoomable").forEach(button=>button.setAttribute("aria-label",d["open-image"]));
+}
+
+const langs=["ja","zh","en"];
+cycleBtn.addEventListener("click",()=>{
+  const index=langs.indexOf(lang);
+  applyLang(langs[(index+1)%langs.length]);
+});
+
+function syncViewportVars(){
+  const root=document.documentElement;
+  const vv=window.visualViewport;
+  const height=vv?vv.height:window.innerHeight;
+  root.style.setProperty("--app-height",Math.round(height)+"px");
+}
+syncViewportVars();
+window.addEventListener("resize",syncViewportVars,{passive:true});
+window.addEventListener("orientationchange",syncViewportVars,{passive:true});
+if(window.visualViewport)window.visualViewport.addEventListener("resize",syncViewportVars,{passive:true});
+
+const countedSections=[...document.querySelectorAll("[data-counted]")];
+const sectionCount=document.getElementById("section-count");
+let activeSection=0;
+
+function updateSection(index){
+  activeSection=Math.max(0,Math.min(index,countedSections.length-1));
+  sectionCount.textContent=String(activeSection+1).padStart(2,"0")+" / "+String(countedSections.length).padStart(2,"0");
+}
+
+if("IntersectionObserver" in window){
+  const observer=new IntersectionObserver(entries=>{
+    const visible=entries.filter(entry=>entry.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+    if(visible)updateSection(countedSections.indexOf(visible.target));
+  },{root:page,threshold:[.35,.55,.75]});
+  countedSections.forEach(section=>observer.observe(section));
+}
+
+function goToSection(index){
+  const target=countedSections[Math.max(0,Math.min(index,countedSections.length-1))];
+  if(target)target.scrollIntoView({behavior:reducedMotion.matches?"auto":"smooth",block:"start"});
+}
+
+page.addEventListener("keydown",event=>{
+  if(event.target!==page||event.metaKey||event.ctrlKey||event.altKey)return;
+  if(["PageDown","ArrowDown"].includes(event.key)){
+    event.preventDefault();goToSection(activeSection+1);
+  }else if(["PageUp","ArrowUp"].includes(event.key)){
+    event.preventDefault();goToSection(activeSection-1);
+  }else if(event.key==="Home"){
+    event.preventDefault();goToSection(0);
+  }else if(event.key==="End"){
+    event.preventDefault();goToSection(countedSections.length-1);
+  }
+});
+
+const lb=document.getElementById("lb");
+const lbImage=document.getElementById("lb-img");
+let lastFocused=null;
+
+function openLightbox(button){
+  const image=button.querySelector("img");
+  if(!image)return;
+  lastFocused=button;
+  lbImage.src=image.currentSrc||image.src;
+  if(typeof lb.showModal==="function")lb.showModal();
+  else lb.setAttribute("open","");
+  closeButton.focus();
+}
+
+function closeLightbox(){
+  if(typeof lb.close==="function"&&lb.open)lb.close();
+  else lb.removeAttribute("open");
+  lbImage.removeAttribute("src");
+  if(lastFocused)lastFocused.focus({preventScroll:true});
+}
+
+document.querySelectorAll(".zoomable").forEach(button=>button.addEventListener("click",()=>openLightbox(button)));
+closeButton.addEventListener("click",closeLightbox);
+lb.addEventListener("cancel",event=>{event.preventDefault();closeLightbox()});
+lb.addEventListener("click",event=>{if(event.target===lb)closeLightbox()});
+
+applyLang(lang);
+updateSection(0);
+</script>
+</body>
+</html>

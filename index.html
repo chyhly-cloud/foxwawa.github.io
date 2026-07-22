@@ -14,7 +14,7 @@ html,body{width:100%;height:100%;background:#ebe7df}
 
 #vp{
 width:100%;height:100vh;overflow:hidden;position:relative;
-background:#ebe7df;font-family:‘Space Mono’,monospace;
+background:#ebe7df;font-family:'Space Mono',monospace;
 cursor:grab;transition:background .6s;
 }
 #vp.dark-mode{background:#ebe7df;cursor:grab}
@@ -25,7 +25,7 @@ position:absolute;top:0;left:0;
 will-change:transform;
 }
 #world::before{
-content:’’;position:absolute;inset:0;
+content:'';position:absolute;inset:0;
 background-image:radial-gradient(circle,rgba(0,0,0,.055) 1px,transparent 1px);
 background-size:52px 52px;pointer-events:none;
 transition:opacity .6s;
@@ -56,7 +56,7 @@ display:flex;align-items:center;justify-content:space-between;
 padding:14px 18px;pointer-events:all;
 }
 .logo-btn{
-font-family:‘Bebas Neue’,sans-serif;font-size:22px;letter-spacing:2.2px;
+font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2.2px;
 color:#1a1a1a;cursor:pointer;transition:color .4s;background:none;border:none;
 pointer-events:all;
 }
@@ -137,7 +137,7 @@ width:min(470px,calc(100vw - 3rem));position:relative;z-index:2;
 pointer-events:auto
 }
 .bio-name{
-font-family:‘Bebas Neue’,sans-serif;
+font-family:'Bebas Neue',sans-serif;
 font-size:92px;line-height:.88;color:#fff;letter-spacing:1px;
 margin-bottom:2.2rem
 }
@@ -162,7 +162,7 @@ display:inline-flex;align-items:center;justify-content:center;
 padding:10px 16px;border:.5px solid rgba(255,255,255,.25);
 background:rgba(255,255,255,.08);color:#fff;
 font-size:12px;letter-spacing:2.2px;text-transform:uppercase;
-font-family:‘Space Mono’,monospace;text-decoration:none;cursor:pointer;
+font-family:'Space Mono',monospace;text-decoration:none;cursor:pointer;
 appearance:none;-webkit-appearance:none;outline:none
 }
 .bio-link-email{
@@ -216,7 +216,7 @@ color:rgba(255,241,236,.64);white-space:nowrap
 #lp-close{position:absolute;top:14px;right:14px;width:28px;height:28px;border:.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);font-size:10px;color:#888;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .28s .1s}
 #lp.open #lp-close{opacity:1;pointer-events:all}
 #lp-close:hover{background:rgba(255,255,255,.12);color:#ccc}
-#lp-cat{font-family:‘Bebas Neue’,sans-serif;font-size:42px;letter-spacing:2.2px;color:#e8e8e6;opacity:0;transform:translateY(8px);transition:opacity .3s .08s,transform .3s .08s}
+#lp-cat{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:2.2px;color:#e8e8e6;opacity:0;transform:translateY(8px);transition:opacity .3s .08s,transform .3s .08s}
 #lp.open #lp-cat{opacity:1;transform:translateY(0)}
 #lp-sub{font-size:11px;letter-spacing:2.2px;color:#666;text-transform:uppercase;margin-bottom:3.2rem;opacity:0;transition:opacity .3s .12s}
 #lp.open #lp-sub{opacity:1}
@@ -241,7 +241,7 @@ color:rgba(255,241,236,.64);white-space:nowrap
 #det-in{padding:4.5rem 2.4rem 4rem;max-width:920px;margin:0 auto}
 .d-hero{display:flex;gap:2.2rem;align-items:flex-start;margin-bottom:1.6rem;padding-top:1.4rem}
 .d-art{display:flex;align-items:center;justify-content:center;flex-shrink:0;filter:drop-shadow(0 6px 18px rgba(0,0,0,.1))}
-.d-title{font-family:‘Bebas Neue’,sans-serif;font-size:52px;line-height:.96;color:#1a1a1a;margin-bottom:8px}
+.d-title{font-family:'Bebas Neue',sans-serif;font-size:52px;line-height:.96;color:#1a1a1a;margin-bottom:8px}
 .d-meta{font-size:12px;letter-spacing:2px;color:#bbb;text-transform:uppercase;margin-bottom:.9rem}
 .d-badge{display:inline-block;font-size:10px;padding:5px 11px;border:.5px solid rgba(0,0,0,.1);color:#aaa;letter-spacing:2px;text-transform:uppercase;margin-bottom:.9rem}
 .d-tags{display:flex;gap:3px;flex-wrap:wrap}
@@ -253,11 +253,11 @@ color:rgba(255,241,236,.64);white-space:nowrap
 .pr{width:28px;height:28px;border:1px solid rgba(255,255,255,.4);border-radius:50%;display:flex;align-items:center;justify-content:center}
 .pt{width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:9px solid rgba(255,255,255,.7);margin-left:2px}
 .d-desc{font-size:15px;line-height:1.95;color:#555;font-style:italic;margin-bottom:1.1rem}
-.d-ar{display:flex;align-items:center;gap:10px;padding:12px 14px;border:.5px solid rgba(0,0,0,.14);background:transparent;width:100%;font-family:‘Space Mono’,monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#333;cursor:pointer;margin-bottom:1rem;transition:background .2s}
+.d-ar{display:flex;align-items:center;gap:10px;padding:12px 14px;border:.5px solid rgba(0,0,0,.14);background:transparent;width:100%;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#333;cursor:pointer;margin-bottom:1rem;transition:background .2s}
 .d-ar:hover{background:rgba(0,0,0,.02)}
 .d-ari{width:22px;height:22px;border:1px solid #555;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}
 .d-acts{display:flex;gap:5px;flex-wrap:wrap}
-.d-btn{padding:8px 14px;border:.5px solid rgba(0,0,0,.13);background:transparent;font-family:‘Space Mono’,monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#555;cursor:pointer;transition:background .2s}
+.d-btn{padding:8px 14px;border:.5px solid rgba(0,0,0,.13);background:transparent;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#555;cursor:pointer;transition:background .2s}
 .d-btn:hover{background:rgba(0,0,0,.03)}
 @media (max-width:760px){
   #topbar{padding:16px 18px}
@@ -322,7 +322,7 @@ color:rgba(255,241,236,.64);white-space:nowrap
       <div id="bio-model-stage">
         <model-viewer
           id="bio-model-viewer"
-          data-model-src="bio-model/199245.glb?v=4"
+          data-model-src="bio-model/199245-lite-draco.glb?v=5"
           alt="HE LIANGYU portrait model"
           reveal="auto"
           loading="eager"
@@ -443,6 +443,8 @@ const I18N={
   }
 };
 let lang='zh';
+try{const s=localStorage.getItem('hl-lang');if(s&&I18N[s])lang=s;}catch(e){}
+try{localStorage.setItem('hl-lang',lang)}catch(e){}
 function t(key){ return I18N[lang][key]||''; }
 const WORK_TITLES={
   "自分勝手":{zh:"自作主张",en:"Self-Willed",ja:"自分勝手"},
@@ -477,40 +479,41 @@ function applyLang(){
 const LANGS=['zh','en','ja'];
 document.getElementById('lang-cycle-btn').addEventListener('click',()=>{
   lang=LANGS[(LANGS.indexOf(lang)+1)%LANGS.length];
+  try{localStorage.setItem('hl-lang',lang)}catch(e){}
   applyLang();
 });
 
 /* ── WORKS DATA ── */
 const WORKS=[
-  {t:"自分勝手",y:"2024",m:"総合材料インスタレーション",cat:"装置",tags:["機械","金属"],video:true,ar:false,w:250,h:152,url:"jibunkatte/index.html",img:"jibunkatte-trim.png",
+  {t:"自分勝手",y:"2024",m:"総合材料インスタレーション",cat:"装置",tags:["機械","金属"],video:true,ar:false,w:250,h:152,url:"jibunkatte/index.html",img:"jibunkatte-trim.webp",
     desc:"身体の再構築の可能性を出発点とし、緻密な計算によって組み立てられたインスタレーションは壮大な定められた運命を象徴する。",
     svg:`...`},
 
-  {t:"我思う故に我在り",y:"2024",m:"総合材料インスタレーション・パフォーマンス",cat:"装置",tags:["パフォーマンス","映像"],video:true,ar:false,w:250,h:110,url:"i-think-therefore-i-am/index.html",img:"watashi-trim.png",
+  {t:"我思う故に我在り",y:"2024",m:"総合材料インスタレーション・パフォーマンス",cat:"装置",tags:["パフォーマンス","映像"],video:true,ar:false,w:250,h:110,url:"i-think-therefore-i-am/index.html",img:"watashi-trim.webp",
     desc:"現実と存在は流動的で多次元的であり、人間の思考の投影と現実の物体は常に重ね合わされ再構築される。",
     svg:`...`},
 
-  {t:"消失",y:"2023",m:"鋼板・電源指示ランプ・ドライブボード",cat:"装置",tags:["LED","データ"],video:true,ar:false,w:220,h:124,url:"kieru/index.html",img:"kieru.png",
+  {t:"消失",y:"2023",m:"鋼板・電源指示ランプ・ドライブボード",cat:"装置",tags:["LED","データ"],video:true,ar:false,w:220,h:124,url:"kieru/index.html",img:"kieru.webp",
     desc:"装置は毎年絶滅する植物種の数を呈示する。鋼板上の数万個の緑色インジケーターランプは実際の絶滅ペースに従って順次消灯される。",
     svg:`...`},
 
-  {t:"海",y:"2023",m:"Cinema 4D · Final Cut Pro · AR",cat:"新媒体艺术",tags:["AR","映像"],video:true,ar:true,w:230,h:134,url:"umi/index.html",img:"umi-trim.png",
+  {t:"海",y:"2023",m:"Cinema 4D · Final Cut Pro · AR",cat:"新媒体艺术",tags:["AR","映像"],video:true,ar:true,w:230,h:134,url:"umi/index.html",img:"umi-trim.webp",
     desc:"この作品を通じて、自然の景観と人との感情的なつながり、そして美の主観性を探求する。",
     svg:`...`},
 
-  {t:"対話",y:"2023",m:"3DS MAX · Reality Composer · AR",cat:"新媒体艺术",tags:["AR","アニメーション"],video:true,ar:true,w:215,h:140,url:"dialogue/index.html",img:"dialogue.png",
+  {t:"対話",y:"2023",m:"3DS MAX · Reality Composer · AR",cat:"新媒体艺术",tags:["AR","アニメーション"],video:true,ar:true,w:215,h:140,url:"dialogue/index.html",img:"dialogue.webp",
     desc:"人間の交流方式を異なる物体間に適用することで、観者は観察者であり同時に参加者として作品に介入できる。",
     svg:`...`},
 
-  {t:"OPPO品牌设计",y:"2019",m:"品牌设计",cat:"品牌设计",tags:["品牌","视觉"],video:false,ar:false,w:230,h:129,url:"oppo/index.html",img:"oppo.png",
+  {t:"OPPO品牌设计",y:"2019",m:"品牌设计",cat:"品牌设计",tags:["品牌","视觉"],video:false,ar:false,w:230,h:129,url:"oppo/index.html",img:"oppo.webp",
     desc:"OPPO 品牌设计项目。",
     svg:`...`},
 
-  {t:"GMANSIRE品牌策划",y:"2021",m:"品牌策划",cat:"品牌设计",tags:["品牌","策划"],video:false,ar:false,w:250,h:77,url:"gm/index.html",img:"gm.png",
+  {t:"GMANSIRE品牌策划",y:"2021",m:"品牌策划",cat:"品牌设计",tags:["品牌","策划"],video:false,ar:false,w:250,h:77,url:"gm/index.html",img:"gm.webp",
     desc:"GMANSIRE 品牌策划项目。",
     svg:`...`},
 
-  {t:"SeeD深圳展览",y:"2025",m:"展览设计",cat:"品牌设计",tags:["展览","品牌"],video:false,ar:false,w:210,h:154,url:"seed/index.html",img:"seed.png",
+  {t:"SeeD深圳展览",y:"2025",m:"展览设计",cat:"品牌设计",tags:["展览","品牌"],video:false,ar:false,w:210,h:154,url:"seed/index.html",img:"seed.webp",
     desc:"SeeD 深圳展览项目。",
     svg:`...`},
 ];
@@ -758,10 +761,15 @@ detBack.addEventListener('click',()=>{det.classList.remove('open');currentDetail
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(det.classList.contains('open')){det.classList.remove('open');currentDetail=null;}else if(lp.classList.contains('open')){lp.classList.remove('open');currentLpCi=null;}else if(bioQr?.classList.contains('open')){closeBioQr();}else closeBioPanel();}});
 
 updateHits();
+if(lang!=='zh')applyLang();
 </script>
 
 <script type="module">
 import './vendor/model-viewer.min.js';
+
+customElements.whenDefined('model-viewer').then(MV=>{
+  MV.dracoDecoderLocation=new URL('vendor/draco/',location.href).toString();
+});
 
 const bioPanel=document.getElementById('bio');
 const bioViewer=document.getElementById('bio-model-viewer');
@@ -786,8 +794,8 @@ if(bioViewer){
     {
       orient:[8,-2,-92],
       orbit:[12,95],
-      compose:{targetOffsetX:-0.06,targetOffsetY:-0.05,targetOffsetZ:0,frameX:0.04,frameY:0.46,distanceScale:0.038},
-      scan:{scanDirection:1,start:-0.58,end:0.62}
+      compose:{targetOffsetX:-0.06,targetOffsetY:0.05,targetOffsetZ:0,frameX:0.04,frameY:0.46,distanceScale:0.038},
+      scan:{scanDirection:-1,start:0.62,end:-0.58}
     },
     {
       orient:[-12,4,-72],
@@ -798,8 +806,8 @@ if(bioViewer){
     {
       orient:[14,5,-98],
       orbit:[24,95],
-      compose:{targetOffsetX:-0.05,targetOffsetY:-0.07,targetOffsetZ:0,frameX:0.02,frameY:0.42,distanceScale:0.036},
-      scan:{scanDirection:1,start:-0.60,end:0.64}
+      compose:{targetOffsetX:-0.05,targetOffsetY:0.07,targetOffsetZ:0,frameX:0.02,frameY:0.42,distanceScale:0.036},
+      scan:{scanDirection:-1,start:0.64,end:-0.60}
     },
     {
       orient:[-10,-2,-82],
@@ -1097,9 +1105,17 @@ if(bioViewer){
     }
   });
 
+  const FALLBACK_MODEL_SRC='bio-model/199245.glb?v=4';
+  let triedFallbackModel=false;
   bioViewer.addEventListener('error',()=>{
-    modelRequested=false;
     modelBounds=null;
+    if(!triedFallbackModel){
+      triedFallbackModel=true;
+      setStatus('Loading 3D Portrait...');
+      bioViewer.setAttribute('src',FALLBACK_MODEL_SRC);
+      return;
+    }
+    modelRequested=false;
     setStatus('3D Model Unavailable');
   });
 

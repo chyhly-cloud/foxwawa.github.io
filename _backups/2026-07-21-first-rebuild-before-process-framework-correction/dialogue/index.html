@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ja" class="lang-ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="対話 / Dialogue — 物体同士の対話を通して自己と存在を問い直す、何梁宇のARシリーズ作品。">
+<title>対話 — 何梁宇</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Noto+Sans+SC:wght@300;400;500;700;900&amp;family=Noto+Serif+JP:wght@300;400;500;600&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --paper:#fff;
+  --paper-2:#f4f4f1;
+  --ink:#090909;
+  --ink-2:#3e3e3a;
+  --muted:#84847e;
+  --line:rgba(9,9,9,.16);
+  --line-dark:rgba(255,255,255,.18);
+  --signal:#3f62ff;
+  --mono:"Space Mono",monospace;
+  --serif:"Noto Serif JP",serif;
+  --sans:"Inter","Helvetica Neue",Arial,sans-serif;
+  --nav-h:58px;
+  --page-pad:clamp(1.25rem,4vw,4.5rem);
+  --content:1680px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--paper)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body,button,a,summary{font-family:inherit}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{color:inherit}
+.lang-ja .display,.lang-ja .body-copy,.lang-ja .work-name,.lang-ja .voice-copy{font-family:var(--serif)}
+.lang-zh .display,.lang-zh .body-copy,.lang-zh .work-name,.lang-zh .voice-copy{font-family:"Noto Sans SC",sans-serif}
+.lang-en .display,.lang-en .body-copy,.lang-en .work-name,.lang-en .voice-copy{font-family:var(--sans)}
+.skip-link{position:fixed;z-index:1000;top:.6rem;left:.6rem;padding:.65rem .9rem;background:var(--ink);color:#fff;transform:translateY(-160%);transition:transform .2s;text-decoration:none;font:700 11px/1 var(--mono);letter-spacing:.08em}
+.skip-link:focus{transform:translateY(0)}
+:focus-visible{outline:2px solid var(--signal);outline-offset:4px}
+.shell{width:min(100%,var(--content));margin:0 auto;padding-inline:var(--page-pad)}
+.eyebrow{margin:0;font:700 10px/1.4 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.section-no{color:var(--signal);margin-right:.8rem}
+.display{font-weight:400;letter-spacing:-.025em}
+.body-copy{font-size:clamp(.96rem,1.15vw,1.08rem);line-height:1.95;color:var(--ink-2);text-wrap:pretty}
+.body-copy p{margin:0}
+.body-copy p+p{margin-top:1em}
+.section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(17rem,.55fr);gap:clamp(2rem,6vw,7rem);align-items:end;margin-bottom:clamp(2.5rem,5vw,5rem)}
+.section-title{font-size:clamp(2.25rem,5.4vw,5.6rem);line-height:.98;margin:.75rem 0 0;max-width:11ch}
+.section-intro{margin:0 0 .2rem;max-width:38rem}
+
+/* navigation */
+.site-nav{position:fixed;z-index:100;inset:0 0 auto;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding-inline:var(--page-pad);background:rgba(255,255,255,.84);border-bottom:1px solid var(--line);transition:background .25s;color:var(--ink);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.site-nav.solid{background:rgba(255,255,255,.97)}
+.nav-left,.nav-right,.nav-sections{display:flex;align-items:center}
+.nav-left{gap:1.25rem}
+.nav-right{gap:1.5rem}
+.nav-sections{gap:1.5rem}
+.nav-back,.nav-section,.lang-button{font:700 9px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;text-decoration:none}
+.nav-back{font-size:14px;line-height:1}
+.nav-title{font-size:13px;font-weight:600;text-decoration:none}
+.lang-ja .nav-title{font-family:var(--serif);font-weight:500}
+.nav-section{opacity:.58;transition:opacity .2s}
+.nav-section:hover{opacity:1}
+.lang-button{display:flex;align-items:center;gap:.55rem;background:none;border:0;padding:.4rem 0;cursor:pointer}
+.lang-button svg{width:18px;height:18px}
+.lang-code{min-width:2ch}
+
+/* hero */
+.hero{min-height:100svh;display:grid;grid-template-columns:minmax(0,58%) minmax(26rem,42%);background:#e9e9e7}
+.hero-media{position:relative;min-height:100svh;overflow:hidden;border-right:1px solid rgba(0,0,0,.12)}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:center}
+.hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18),transparent 22%,transparent 76%,rgba(0,0,0,.16));pointer-events:none}
+.hero-copy{min-height:100svh;padding:calc(var(--nav-h) + clamp(2.3rem,6vh,5.5rem)) clamp(2rem,4vw,5rem) clamp(2rem,5vh,4rem);display:flex;flex-direction:column;background:var(--paper)}
+.hero-kicker{display:flex;justify-content:space-between;gap:1rem}
+.hero-title{font-size:clamp(4.2rem,8vw,8.4rem);line-height:.86;margin:clamp(2rem,6vh,4.6rem) 0 .8rem}
+.hero-sub{margin:0;font:700 9px/1.5 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.overview{margin-top:clamp(2.5rem,6vh,5rem);padding-top:1.4rem;border-top:1px solid var(--line)}
+.overview-title{font-size:clamp(1.45rem,2.35vw,2.5rem);line-height:1.3;margin:.75rem 0 1.2rem;max-width:20ch}
+.overview .body-copy{max-width:42rem}
+.ar-premise{margin-top:clamp(2rem,4vh,3.2rem);padding:1.15rem 0 0;border-top:1px solid var(--line);display:grid;grid-template-columns:3.25rem 1fr;gap:1.15rem}
+.ar-mark{font:700 12px/1 var(--mono);letter-spacing:.1em;color:var(--signal);padding-top:.15rem}
+.ar-premise h3{font-size:clamp(1.05rem,1.4vw,1.3rem);line-height:1.4;margin:0 0 .55rem}
+.ar-premise p{font-size:.88rem;line-height:1.75;margin:0;color:var(--ink-2)}
+.hero-specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:auto;padding-top:2rem}
+.hero-spec{border-top:1px solid var(--line);padding:.85rem 1rem 0 0}
+.hero-spec+.hero-spec{padding-left:1rem;border-left:1px solid var(--line)}
+.spec-label{display:block;font:700 8px/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.spec-value{font:700 10px/1.55 var(--mono)}
+.scroll-cue{position:absolute;z-index:2;left:var(--page-pad);bottom:1.6rem;color:#fff;display:flex;align-items:center;gap:.8rem;font:700 8px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase}
+.scroll-cue::before{content:"";width:2.5rem;height:1px;background:currentColor;animation:breathe 2.2s ease-in-out infinite;transform-origin:left}
+@keyframes breathe{0%,100%{transform:scaleX(.45);opacity:.45}50%{transform:scaleX(1);opacity:1}}
+
+/* research atlas */
+.research{padding:clamp(6rem,12vw,11rem) 0;background:var(--paper)}
+.research-grid{display:grid;grid-template-columns:minmax(18rem,.72fr) minmax(0,1.55fr);gap:clamp(3rem,6vw,8rem);align-items:start}
+.research-copy{position:sticky;top:calc(var(--nav-h) + 2.5rem)}
+.research-title{font-size:clamp(2.2rem,4.7vw,5.1rem);line-height:1.02;margin:.9rem 0 2rem;max-width:9ch}
+.research-copy .body-copy{max-width:34rem}
+.relation-axis{margin-top:2.6rem;border-top:1px solid var(--line)}
+.relation-row{display:grid;grid-template-columns:2rem 1fr;gap:1rem;padding:.9rem 0;border-bottom:1px solid var(--line);align-items:center}
+.relation-row span:first-child{font:700 9px/1 var(--mono);color:var(--signal)}
+.relation-row span:last-child{font:700 10px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.atlas{display:grid;grid-template-columns:1.02fr .98fr;grid-template-rows:minmax(260px,46vh) minmax(220px,38vh);gap:1px;background:var(--line);border:1px solid var(--line)}
+.atlas-figure{margin:0;background:var(--paper-2);overflow:hidden;position:relative}
+.atlas-figure:first-child{grid-row:1/-1}
+.atlas-figure img{width:100%;height:100%;object-fit:contain;transition:transform .7s cubic-bezier(.2,.65,.2,1)}
+.atlas-figure:hover img{transform:scale(1.018)}
+.atlas-pair{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);min-height:0}
+.atlas-cap{position:absolute;left:.8rem;bottom:.65rem;padding:.35rem .45rem;background:rgba(255,255,255,.88);font:700 8px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+
+/* concept */
+.concept{background:#090909;color:#fff;padding:clamp(6rem,12vw,11rem) 0}
+.concept .eyebrow,.concept .body-copy{color:rgba(255,255,255,.62)}
+.concept .section-head{margin-bottom:clamp(3rem,6vw,6rem)}
+.concept .section-title{max-width:13ch}
+.concept-intro{display:grid;grid-template-columns:minmax(0,.88fr) minmax(18rem,.52fr);gap:clamp(3rem,7vw,9rem);align-items:start}
+.concept-thesis{font-size:clamp(1.75rem,3.5vw,4.1rem);line-height:1.16;margin:0;max-width:18ch}
+.concept-purpose{padding-top:.45rem}
+.concept-purpose .body-copy{font-size:clamp(1rem,1.25vw,1.15rem)}
+.absurdity{margin:clamp(4rem,8vw,8rem) 0;border-top:1px solid var(--line-dark)}
+.absurdity-head{padding:1.1rem 0 1.6rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line-dark)}
+.absurdity-list{list-style:none;padding:0;margin:0}
+.absurdity-item{display:grid;grid-template-columns:clamp(3rem,8vw,8rem) 1fr auto;gap:1rem;align-items:center;padding:clamp(1rem,2vw,1.7rem) 0;border-bottom:1px solid var(--line-dark)}
+.absurdity-item .num{font:700 10px/1 var(--mono);color:var(--signal)}
+.absurdity-item .text{font-size:clamp(1.1rem,2.2vw,2.35rem);line-height:1.25}
+.absurdity-item .mark{font:400 clamp(1.2rem,2vw,2rem)/1 var(--mono);color:rgba(255,255,255,.28)}
+.concept-context{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1px;background:var(--line-dark);border:1px solid var(--line-dark)}
+.context-block{background:#090909;padding:clamp(1.5rem,3vw,3rem)}
+.context-block h3{font-size:clamp(1.25rem,2vw,2rem);line-height:1.3;margin:.75rem 0 1.25rem}
+.context-block .body-copy{font-size:.94rem;line-height:1.9}
+.concept-visuals{display:grid;grid-template-columns:1.15fr .85fr;gap:1px;background:var(--line-dark);border:1px solid var(--line-dark);margin-top:1px}
+.concept-visuals figure{margin:0;background:#f3f3f3;min-height:clamp(260px,38vw,580px);overflow:hidden}
+.concept-visuals img{width:100%;height:100%;object-fit:contain}
+
+/* series */
+.series{padding:clamp(6rem,10vw,10rem) 0;background:var(--paper)}
+.series .shell{width:min(100%,1840px)}
+.series-title{max-width:14ch}
+.work-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--line);background:var(--line);gap:1px}
+.work-tab{appearance:none;border:0;background:var(--paper);padding:0;text-align:left;cursor:pointer;min-width:0;transition:background .25s,color .25s}
+.work-tab-inner{display:flex;flex-direction:column;min-height:clamp(260px,30vw,470px)}
+.work-tab-media{position:relative;aspect-ratio:5/6;overflow:hidden;background:var(--paper-2)}
+.work-tab-media img{width:100%;height:100%;object-fit:cover;object-position:top;filter:grayscale(1);opacity:.72;transition:filter .35s,opacity .35s,transform .55s cubic-bezier(.2,.65,.2,1)}
+.work-tab:hover .work-tab-media img,.work-tab[aria-selected="true"] .work-tab-media img{filter:grayscale(0);opacity:1;transform:scale(1.025)}
+.work-tab-copy{padding:1rem;display:flex;flex-direction:column;gap:.7rem;flex:1;border-top:1px solid var(--line)}
+.work-tab-no{font:700 9px/1 var(--mono);letter-spacing:.16em;color:var(--signal)}
+.work-tab .work-name{font-size:clamp(.95rem,1.4vw,1.4rem);line-height:1.45;margin:0}
+.work-tab-meta{font:700 8px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:auto}
+.work-tab[aria-selected="true"]{background:var(--ink);color:#fff}
+.work-tab[aria-selected="true"] .work-tab-copy{border-color:var(--line-dark)}
+.work-tab[aria-selected="true"] .work-tab-meta{color:rgba(255,255,255,.55)}
+.work-detail{border:1px solid var(--line);border-top:0;background:var(--paper)}
+.detail-top{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;padding:1rem clamp(1rem,2vw,2rem);border-bottom:1px solid var(--line)}
+.detail-id{display:flex;align-items:baseline;gap:1rem;min-width:0}
+.detail-no{font:700 10px/1 var(--mono);letter-spacing:.16em;color:var(--signal)}
+.detail-name{margin:0;font-size:clamp(1rem,1.7vw,1.5rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.detail-actions{display:flex;align-items:center;gap:1.4rem;flex-shrink:0}
+.detail-interaction{font:700 8px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.ar-link{display:inline-flex;align-items:center;gap:.7rem;background:var(--ink);color:#fff;text-decoration:none;padding:.72rem 1rem;font:700 9px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;transition:background .2s,color .2s}
+.ar-link::before{content:"AR";color:#8fa2ff}
+.ar-link:hover{background:var(--signal)}
+.detail-main{display:grid;grid-template-columns:minmax(300px,.82fr) minmax(0,1.18fr);min-height:clamp(520px,64vw,880px)}
+.detail-image{margin:0;background:var(--paper-2);border-right:1px solid var(--line);min-height:0;overflow:hidden}
+.detail-image img{width:100%;height:100%;object-fit:contain;object-position:center}
+.detail-voice{display:flex;flex-direction:column;justify-content:center;padding:clamp(2rem,5vw,6rem)}
+.voice-label{font:700 9px/1.4 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--signal);margin-bottom:clamp(1.5rem,3vw,3rem)}
+.voice-copy{white-space:pre-line;font-size:clamp(1.5rem,3.15vw,4rem);line-height:1.5;letter-spacing:-.015em;margin:0;text-wrap:balance}
+.detail-meaning{display:grid;grid-template-columns:minmax(10rem,.32fr) minmax(0,1fr);gap:clamp(2rem,5vw,6rem);padding:clamp(2rem,4vw,4rem);border-top:1px solid var(--line)}
+.meaning-label{font:700 9px/1.5 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.meaning-copy{max-width:64rem;margin:0}
+.series-mobile{display:none}
+
+/* mobile sequential works */
+.mobile-work{border-top:1px solid var(--line)}
+.mobile-work:last-child{border-bottom:1px solid var(--line)}
+.mobile-work summary{list-style:none;cursor:pointer;padding:1.15rem 0;display:grid;grid-template-columns:3.3rem 1fr auto;gap:1rem;align-items:center}
+.mobile-work summary::-webkit-details-marker{display:none}
+.mobile-work summary::after{content:"+";font:400 20px/1 var(--mono);transition:transform .2s}
+.mobile-work[open] summary::after{transform:rotate(45deg)}
+.mobile-work-no{font:700 9px/1 var(--mono);letter-spacing:.12em;color:var(--signal)}
+.mobile-work-summary .mobile-title{display:block;font-size:1.05rem;line-height:1.45}
+.mobile-work-summary>span:last-child{display:block;font:700 8px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:.35rem}
+.mobile-work-body{padding:0 0 3.5rem}
+.mobile-work-image{margin:0;background:var(--paper-2);border:1px solid var(--line)}
+.mobile-work-image img{width:100%;height:auto;max-height:72svh;object-fit:contain}
+.mobile-voice{padding:2.4rem 0}
+.mobile-voice .voice-copy{font-size:clamp(1.45rem,7vw,2.45rem);line-height:1.55}
+.mobile-meaning{border-top:1px solid var(--line);padding-top:1.4rem}
+.mobile-meaning .body-copy{font-size:1rem}
+.mobile-actions{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-top:1.8rem}
+
+/* film and footer */
+.film{min-height:100svh;background:#000;color:#fff;display:flex;flex-direction:column}
+.film-head{display:flex;align-items:end;justify-content:space-between;gap:2rem;padding:clamp(1.4rem,3vw,3rem) var(--page-pad);border-bottom:1px solid var(--line-dark)}
+.film .eyebrow{color:rgba(255,255,255,.48)}
+.film-title{font-size:clamp(2rem,4vw,4.6rem);line-height:1;margin:.55rem 0 0}
+.film-note{max-width:32rem;margin:0;color:rgba(255,255,255,.55);font-size:.9rem;line-height:1.7}
+.film-frame{flex:1;min-height:clamp(420px,72svh,920px);position:relative;background:#000}
+.film-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.footer{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:2rem var(--page-pad);background:var(--paper);border-top:1px solid var(--line)}
+.footer-back{display:inline-flex;align-items:center;gap:.8rem;text-decoration:none;font:700 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase}
+.footer-back span:first-child{font-size:16px;transition:transform .2s}
+.footer-back:hover span:first-child{transform:translateX(-4px)}
+.footer-meta{font:700 8px/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+@media(max-width:1100px){
+  .hero{grid-template-columns:52% 48%}
+  .hero-title{font-size:clamp(3.8rem,8vw,6.8rem)}
+  .overview{margin-top:2.5rem}
+  .hero-specs{grid-template-columns:1fr;gap:.65rem;margin-top:2rem}
+  .hero-spec{display:grid;grid-template-columns:7rem 1fr;border-top:1px solid var(--line);padding:.65rem 0 0}
+  .hero-spec+.hero-spec{padding-left:0;border-left:0}
+  .relation-axis{margin-top:2rem}
+  .detail-main{grid-template-columns:.72fr 1.28fr}
+}
+@media(max-width:900px){
+  :root{--nav-h:54px;--page-pad:clamp(1rem,5vw,2rem)}
+  .site-nav{color:var(--ink);background:rgba(255,255,255,.94);border-color:var(--line)}
+  .nav-sections{display:none}
+  .hero{display:block;background:var(--paper)}
+  .hero-media{min-height:52svh;height:52svh;border-right:0;border-bottom:1px solid var(--line)}
+  .hero-copy{min-height:auto;padding:clamp(2.6rem,8vw,5rem) var(--page-pad) clamp(3.5rem,10vw,6rem)}
+  .hero-kicker{margin-top:0}
+  .hero-title{font-size:clamp(4rem,18vw,7rem);margin:2.2rem 0 .75rem}
+  .overview-title{max-width:25ch}
+  .hero-specs{margin-top:2.5rem}
+  .scroll-cue{display:none}
+  .section-head{grid-template-columns:1fr;gap:1.4rem}
+  .section-title{max-width:15ch}
+  .section-intro{max-width:44rem}
+  .research-grid{grid-template-columns:1fr;gap:3rem}
+  .research-copy{position:static}
+  .research-title{max-width:13ch}
+  .atlas{grid-template-columns:1fr;grid-template-rows:auto;background:transparent;border:0;gap:1px}
+  .atlas-figure:first-child{grid-row:auto;min-height:62svh;border:1px solid var(--line)}
+  .atlas> .atlas-figure:nth-child(2){min-height:42svh;border:1px solid var(--line)}
+  .atlas-pair{min-height:42svh;border:1px solid var(--line)}
+  .concept-intro,.concept-context{grid-template-columns:1fr}
+  .concept-visuals{grid-template-columns:1fr}
+  .concept-visuals figure{min-height:44svh}
+  .absurdity-item{grid-template-columns:2.5rem 1fr auto}
+  .series-desktop{display:none}
+  .series-mobile{display:block}
+  .series .section-head{margin-bottom:2.2rem}
+  .film-head{align-items:start;flex-direction:column}
+  .film-note{max-width:42rem}
+  .film-frame{min-height:72svh}
+}
+@media(max-width:560px){
+  .nav-left{gap:.8rem}
+  .nav-title{font-size:12px}
+  .lang-code{display:none}
+  .hero-media{height:44svh;min-height:44svh}
+  .hero-kicker{display:block}
+  .hero-kicker .eyebrow+.eyebrow{margin-top:.45rem}
+  .ar-premise{grid-template-columns:2.5rem 1fr}
+  .hero-spec{grid-template-columns:6rem 1fr}
+  .atlas-pair{grid-template-columns:1fr;min-height:auto}
+  .atlas-pair .atlas-figure{height:42svh}
+  .concept-thesis{font-size:clamp(1.7rem,8vw,2.7rem)}
+  .absurdity-item .mark{display:none}
+  .absurdity-item{grid-template-columns:2.2rem 1fr}
+  .context-block{padding:1.4rem}
+  .mobile-actions{align-items:flex-start;flex-direction:column}
+  .film-frame{min-height:64svh}
+  .footer{align-items:flex-start;flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main" data-copy="skip"></a>
+
+<nav class="site-nav" id="site-nav" aria-label="Primary">
+  <div class="nav-left">
+    <a class="nav-back" href="../index.html" aria-label="Back">&#8592;</a>
+    <a class="nav-title" href="#overview" data-copy="title"></a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-sections" aria-label="Sections">
+      <a class="nav-section" href="#research" data-copy="navResearch"></a>
+      <a class="nav-section" href="#concept" data-copy="navConcept"></a>
+      <a class="nav-section" href="#series" data-copy="navSeries"></a>
+      <a class="nav-section" href="#film" data-copy="navFilm"></a>
+    </div>
+    <button class="lang-button" id="lang-button" type="button" aria-label="Switch language">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.2"/>
+        <ellipse cx="10" cy="10" rx="4" ry="8.5" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M1.8 7.5h16.4M1.8 12.5h16.4" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+      <span class="lang-code" id="lang-code">JA</span>
+    </button>
+  </div>
+</nav>
+
+<main id="main">
+  <section class="hero" id="overview" aria-labelledby="hero-title">
+    <div class="hero-media">
+      <img src="hero.jpg" id="hero-image" alt="" fetchpriority="high">
+      <div class="scroll-cue" data-copy="scroll"></div>
+    </div>
+    <div class="hero-copy">
+      <div class="hero-kicker">
+        <p class="eyebrow" data-copy="heroKicker"></p>
+        <p class="eyebrow">2023.08</p>
+      </div>
+      <h1 class="hero-title display" id="hero-title" data-copy="title"></h1>
+      <p class="hero-sub" data-copy="subtitle"></p>
+
+      <div class="overview">
+        <p class="eyebrow" data-copy="overviewLabel"></p>
+        <h2 class="overview-title display" data-copy="overviewTitle"></h2>
+        <div class="body-copy"><p data-copy="overviewBody"></p></div>
+      </div>
+
+      <div class="ar-premise">
+        <div class="ar-mark">AR</div>
+        <div>
+          <h3 class="display" data-copy="arTitle"></h3>
+          <p data-copy="arBody"></p>
+        </div>
+      </div>
+
+      <div class="hero-specs" aria-label="Project details">
+        <div class="hero-spec"><span class="spec-label" data-copy="yearLabel"></span><span class="spec-value">2023.08</span></div>
+        <div class="hero-spec"><span class="spec-label" data-copy="toolsLabel"></span><span class="spec-value">3DS MAX · Reality Composer</span></div>
+        <div class="hero-spec"><span class="spec-label" data-copy="interactionLabel"></span><span class="spec-value" data-copy="interactionValue"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="research" id="research" aria-labelledby="research-title">
+    <div class="shell">
+      <div class="research-grid">
+        <div class="research-copy">
+          <p class="eyebrow"><span class="section-no">01</span><span data-copy="researchKicker"></span></p>
+          <h2 class="research-title display" id="research-title" data-copy="researchTitle"></h2>
+          <div class="body-copy">
+            <p data-copy="researchP1"></p>
+            <p data-copy="researchP2"></p>
+          </div>
+          <div class="relation-axis" aria-label="Relationship axes">
+            <div class="relation-row"><span>01</span><span data-copy="relation1"></span></div>
+            <div class="relation-row"><span>02</span><span data-copy="relation2"></span></div>
+            <div class="relation-row"><span>03</span><span data-copy="relation3"></span></div>
+            <div class="relation-row"><span>04</span><span data-copy="relation4"></span></div>
+          </div>
+        </div>
+
+        <div class="atlas" aria-label="Research image atlas">
+          <figure class="atlas-figure">
+            <img src="research-1.jpg" loading="lazy" id="research-image-1" alt="">
+            <figcaption class="atlas-cap" data-copy="atlasCap1"></figcaption>
+          </figure>
+          <figure class="atlas-figure">
+            <img src="research-2.jpg" loading="lazy" id="research-image-2" alt="">
+            <figcaption class="atlas-cap" data-copy="atlasCap2"></figcaption>
+          </figure>
+          <div class="atlas-pair">
+            <figure class="atlas-figure">
+              <img src="research-3.jpg" loading="lazy" id="research-image-3" alt="">
+              <figcaption class="atlas-cap" data-copy="atlasCap3"></figcaption>
+            </figure>
+            <figure class="atlas-figure">
+              <img src="research-4.jpg" loading="lazy" id="research-image-4" alt="">
+              <figcaption class="atlas-cap" data-copy="atlasCap4"></figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="concept" id="concept" aria-labelledby="concept-title">
+    <div class="shell">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow"><span class="section-no">02</span><span data-copy="conceptKicker"></span></p>
+          <h2 class="section-title display" id="concept-title" data-copy="conceptTitle"></h2>
+        </div>
+        <p class="section-intro body-copy" data-copy="conceptIntro"></p>
+      </div>
+
+      <div class="concept-intro">
+        <p class="concept-thesis display" data-copy="conceptThesis"></p>
+        <div class="concept-purpose body-copy">
+          <p data-copy="conceptPurpose"></p>
+          <p data-copy="conceptPosition"></p>
+        </div>
+      </div>
+
+      <div class="absurdity">
+        <div class="absurdity-head">
+          <p class="eyebrow" data-copy="absurdityLabel"></p>
+          <p class="eyebrow">01—04</p>
+        </div>
+        <ol class="absurdity-list">
+          <li class="absurdity-item"><span class="num">01</span><span class="text display" data-copy="absurd1"></span><span class="mark">○</span></li>
+          <li class="absurdity-item"><span class="num">02</span><span class="text display" data-copy="absurd2"></span><span class="mark">□</span></li>
+          <li class="absurdity-item"><span class="num">03</span><span class="text display" data-copy="absurd3"></span><span class="mark">△</span></li>
+          <li class="absurdity-item"><span class="num">04</span><span class="text display" data-copy="absurd4"></span><span class="mark">◇</span></li>
+        </ol>
+      </div>
+
+      <div class="concept-context">
+        <article class="context-block">
+          <p class="eyebrow" data-copy="contextLabel"></p>
+          <h3 class="display" data-copy="contextTitle"></h3>
+          <div class="body-copy"><p data-copy="contextBody"></p></div>
+        </article>
+        <article class="context-block">
+          <p class="eyebrow" data-copy="questionLabel"></p>
+          <h3 class="display" data-copy="questionTitle"></h3>
+          <div class="body-copy"><p data-copy="questionBody"></p></div>
+        </article>
+      </div>
+
+      <div class="concept-visuals" aria-label="Concept development images">
+        <figure><img src="concept-1.jpg" loading="lazy" id="concept-image-1" alt=""></figure>
+        <figure><img src="concept-2.jpg" loading="lazy" id="concept-image-2" alt=""></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="series" id="series" aria-labelledby="series-title">
+    <div class="shell">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow"><span class="section-no">03</span><span data-copy="seriesKicker"></span></p>
+          <h2 class="section-title series-title display" id="series-title" data-copy="seriesTitle"></h2>
+        </div>
+        <p class="section-intro body-copy" data-copy="seriesIntro"></p>
+      </div>
+
+      <div class="series-desktop">
+        <div class="work-tabs" id="work-tabs" role="tablist" aria-label="Five works"></div>
+        <article class="work-detail" id="work-detail" role="tabpanel" tabindex="0" aria-live="polite"></article>
+      </div>
+
+      <div class="series-mobile" id="series-mobile"></div>
+    </div>
+  </section>
+
+  <section class="film" id="film" aria-labelledby="film-title">
+    <div class="film-head">
+      <div>
+        <p class="eyebrow"><span class="section-no">04</span><span data-copy="filmKicker"></span></p>
+        <h2 class="film-title display" id="film-title" data-copy="filmTitle"></h2>
+      </div>
+      <p class="film-note body-copy" data-copy="filmNote"></p>
+    </div>
+    <div class="film-frame">
+      <iframe id="film-player" src="https://www.youtube.com/embed/THiRS9xRXY4" title="Dialogue — documentary film" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <a class="footer-back" href="../index.html"><span>&#8592;</span><span data-copy="back"></span></a>
+  <span class="footer-meta">TAIWA / DIALOGUE · HE LIANGYU · 2023</span>
+</footer>
+
+<noscript>このページの作品説明と言語切替を表示するにはJavaScriptが必要です。</noscript>
+
+<script>
+const CONTENT = {
+  ja: {
+    metaDescription:"対話 / Dialogue — 物体同士の対話を通して自己と存在を問い直す、何梁宇のARシリーズ作品。",
+    skip:"本文へ移動", title:"対話", subtitle:"TAIWA / 対話 / DIALOGUE",
+    navResearch:"調査", navConcept:"概念", navSeries:"シリーズ", navFilm:"映像",
+    heroKicker:"New Media · AR Series", scroll:"下へスクロール",
+    overviewLabel:"シリーズ概要",
+    overviewTitle:"物体同士の対話に参加し、自分自身を見つめ直す",
+    overviewBody:"このシリーズは物体を擬人化し、鑑賞者が異なる存在同士の対話に参加することで、自己を再認識する過程へ向かうことを目指している。科学的探求によって決定論がますます明確になり、技術とAIが急速に発展する時代に、作品は荒唐さを通して、自らの存在価値と意味を問い直す。",
+    arTitle:"現実に現れ、現実空間には存在しない",
+    arBody:"ARという仮想形式によって、作品は空間、時間、場所の制約から解放される。鑑賞者は異なる配置を選び、日常生活の荒唐さと作品の荒唐さを結びながら、作品との関係を自らつくる。仮想の物体は現実の生活に現れながら、物理的な現実空間には存在しない。",
+    yearLabel:"制作年", toolsLabel:"使用ツール", interactionLabel:"シリーズ全体", interactionValue:"AR · アニメーション（NO.01のみタッチ）",
+    researchKicker:"Research Atlas", researchTitle:"茶館から、物の関係地図へ",
+    researchP1:"対話は、人間社会でもっとも一般的なコミュニケーションの方法である。かつて中国では、茶館は多くの人にとって社交の中心であり、対話が始まり、終わる場所でもあった。",
+    researchP2:"この人間の交流形式を異なる物体の間へ移すため、茶館での配置と関係を観察し、日常の物、自然物、人工物を同じ場に置いたときに生まれる関係を図にした。",
+    relation1:"自然物 ↔ 人工物", relation2:"用途 ↔ 脱文脈", relation3:"人間 ↔ 物体", relation4:"時間 · 欲望 · 身体",
+    atlasCap1:"茶館 / 対話", atlasCap2:"観察 / 配置", atlasCap3:"物の図譜", atlasCap4:"関係地図",
+    conceptKicker:"Concept & Absurdity", conceptTitle:"荒唐さを通して、自己を見つける",
+    conceptIntro:"特定の答えを示す代わりに、人間以外の存在との対話を仮定し、鑑賞者自身の位置を揺さぶる。",
+    conceptThesis:"人間の交流方式を物体の間へ移すとき、私たちは観察者であると同時に参加者になる。",
+    conceptPurpose:"作品の目的は、特定の見解を提示することではない。荒唐な組み合わせをきっかけに、鑑賞者がそれぞれの角度から理解を深め、その過程で自己を見つけることにある。物体化された私たちは、物体同士の対話へ参加できる。",
+    conceptPosition:"問いによって、すべてを見直す。創作者は伝道師のように考えを押しつけるのではなく、人間を神聖で特別な存在とみなす自己陶酔や人間中心主義から距離を取り、より平等な関係のなかで共に考える。",
+    absurdityLabel:"四つの荒唐さ", absurd1:"仮想の物体について考える", absurd2:"自分とは異なる種の対話に参加する", absurd3:"自分自身を物体化する", absurd4:"荒唐さの中に意味を見つける",
+    contextLabel:"背景 — 技術と人間", contextTitle:"新たな創造主は、何者になるのか",
+    contextBody:"第一次産業革命は生産と生活だけでなく、人間の精神世界と信仰を大きく揺さぶった。神は死に、人類は新たな創造主となった。科学技術とAIが急速に発展し、人間が誇ってきた脳、理性、感性さえ機械に追い越されようとしている。AIが人間の思考と革新の仕組みを解き明かした後、私たちは何者であり続けるのか。",
+    questionLabel:"中心の問い", questionTitle:"私たちは何のために存在するのか",
+    questionBody:"決定論が示す人生の荒唐さのなかで、個々の小さな存在は時代の波に乗って前進する。人生の究極の目標は、この世界で自己を見つけ、探究する過程にあるのかもしれない。作品はその問いを、物体との対話として鑑賞者へ返す。",
+    seriesKicker:"Five Dialogues", seriesTitle:"五つの組み合わせ、五つの存在の問い",
+    seriesIntro:"五つの作品を並べると、自然物、人工物、欲望、時間、身体の違いと共通点が見えてくる。作品を選び、物体の声と意味、固有のインタラクションを開く。",
+    meaningLabel:"関係と意味", viewAR:"ARで見る", toolsShort:"3DS MAX · Reality Composer",
+    filmKicker:"Film", filmTitle:"映像", filmNote:"シリーズの空間、動き、ARでの現れ方を映像で記録した。プレーヤーの全画面ボタンから全画面表示できる。", filmIframeTitle:"対話 — 記録映像",
+    back:"ホームへ戻る", langLabel:"言語を切り替える",
+    imageAlts:{hero:"物体がグリッド空間に浮かぶ『対話』シリーズの全景",research1:"中国の茶館における対話と配置の調査",research2:"茶館と庭園の観察写真",research3:"自然物と人工物を重ねた物の図譜",research4:"物体同士の関係を描いた構想図",concept1:"物体の組み合わせを検討した概念図",concept2:"対話の配置と鑑賞者の関係を描いたスケッチ"},
+    works:[
+      {no:"NO.01",name:"石・トイレ・電気",interaction:"タッチ · AR · アニメーション",image:"no1.jpg",ar:"no1.reality",voiceLabel:"トイレの言葉",voice:"人間がいないとき\n私たちは何であり\n何になったのか\n私たちの存在には意味があるのか\n私たちの意味は何か\n私たちはどこを目指し\nどこから来たのか\n私たちは自由を持っているのか\n私たちは自己を持っているのか\n私たちは道具化されているのか\nだから\n私たちは何であるのか",description:"石の一つ、電線の一本、便器の一つ。その間には、どのような対話が生まれるのか。石は道や公園に散らばり、電気は目に見えないまま生活を支え、トイレは毎日使われる。これらは道具として存在し、人間によって「使われる意味」を与えられてきた。人工物、自然物、使用される物が本来の環境から切り離されたとき、その意味は何になり、彼ら自身は何へ変わるのだろうか。"},
+      {no:"NO.02",name:"假山（かざん）・盆栽・電動扇風機",interaction:"AR · アニメーション",image:"no2.jpg",ar:"no2.reality",voiceLabel:"時間と空間の対話",voice:"これは時間と空間の対話であり、\n静かに失われた価値を\n見つめ直す。",description:"これは過去を語る対話である。假山と盆栽は、中国・江南の伝統庭園を代表する配置であり、私自身も江南に生まれた。「樹静かならんと欲すれども、風止まず」という言葉では、樹は静止する存在を、風は流れ続ける時間を示す。ここでは電動扇風機の風が、歳月のなかで散り散りになった假山と盆栽を吹き抜ける。かつて江南の庭で貴族に愛されたこれらは、旧時代の貴族が姿を消した後に破壊され、いま再び歴史的遺産として評価されている。"},
+      {no:"NO.03",name:"時計・スタンドライト・消波ブロック",interaction:"AR · アニメーション",image:"no3.jpg",ar:"no3.reality",voiceLabel:"物体の問い",voice:"価値を剥ぎ取られたとき、\n彼らは何になるのか。\nその意味はどこへ行くのか。",description:"時計、スタンドライト、消波ブロックは、三つの全く異なる場面に属しながら、いずれも人間と客観世界を媒介する。波の力に抗うために消波ブロックを、夜の暗さに抗うために灯りを、そして自分たちの尺度を測るために時間を必要としてきた。異なる空間にある三者は、人間が自然に抗うのを支えるという点で、同じ価値を与えられているように見える。では、それらが使用の文脈から完全に切り離されたとき、何になるのだろうか。"},
+      {no:"NO.04",name:"招き猫・おもちゃ・ゴミ箱",interaction:"AR · アニメーション",image:"no4.jpg",ar:"no4.reality",voiceLabel:"ゴミ箱の言葉",voice:"人類が捨てているのは\n実際には欲望や迷いそのものであり\n本当に捨てられているのは物ではなく\n人類そのものである。",description:"これらの物体は、人間の感情から派生した存在である。招き猫は欲望の象徴であり、その意味も人間によってつくられた。人間の期待から離れ、自身として存在するなら何になるのか。おもちゃは想像力と現実を結ぶ媒介である。その精神的な支えとしての役割を失ったとき、どのように変わるのか。ゴミ箱は捨てられた物への人間の態度を引き受け、精神の避難場所になる。欲望、想像力、逃避する能力が失われたとき、これらの物体は自身の実存的な立場をどう捉えるのだろうか。"},
+      {no:"NO.05",name:"胃・心臓・膀胱",interaction:"AR · アニメーション",image:"no5.jpg",ar:"no5.reality",voiceLabel:"器官の問い",voice:"そのとき、彼らの間には\nどのような対話が\n生まれるのだろうか。",description:"人間の本質は、細胞の集まりによって形成された融合体であり、身体の器官は意識を維持するために存在している。つまり、人間はこの肉体に寄生する存在ともいえる。もし器官が本来の役割に戻り、人間から独立して存在するならば、彼らも人間と同じように自己と個性を持つだろう。"}
+    ]
+  },
+  zh: {
+    metaDescription:"对话 / Dialogue — 通过物体之间的对话重新审视自我与存在的何梁宇AR系列作品。",
+    skip:"跳至正文", title:"对话", subtitle:"TAIWA / 对话 / DIALOGUE",
+    navResearch:"调研", navConcept:"概念", navSeries:"系列", navFilm:"影像",
+    heroKicker:"新媒体 · AR系列", scroll:"向下滚动",
+    overviewLabel:"系列概要", overviewTitle:"参与物体之间的对话，重新凝视自身",
+    overviewBody:"这一系列将物体拟人化，让观者参与不同存在之间的对话，并由此进入重新认识自我的过程。在科学探索使决定论愈发清晰、技术与人工智能迅速发展的时代，作品借由荒诞，促使人们重新思考自身的存在价值与意义。",
+    arTitle:"出现在现实中，却不存在于现实空间",
+    arBody:"借助AR这一虚拟形式，作品摆脱空间、时间与地点的限制。观者可以选择不同的配置，将日常生活的荒诞与作品的荒诞连接起来，主动建立自己与作品的关系。虚拟物体出现在现实生活中，却并不实际存在于物理空间。",
+    yearLabel:"制作年份", toolsLabel:"制作工具", interactionLabel:"系列整体", interactionValue:"AR · 动画（仅NO.01含触控）",
+    researchKicker:"调研图谱", researchTitle:"从茶馆，走向物的关系地图",
+    researchP1:"对话是人类社会中最普遍的交流方式。过去在中国，茶馆曾是许多人进行社交的中心，也是对话开始与结束的地方。",
+    researchP2:"为了把这种人类交流方式转移到不同物体之间，我观察茶馆中的配置与关系，并将日常物、自然物和人工物置于同一场景，绘制它们可能产生的联系。",
+    relation1:"自然物 ↔ 人工物", relation2:"用途 ↔ 脱离语境", relation3:"人类 ↔ 物体", relation4:"时间 · 欲望 · 身体",
+    atlasCap1:"茶馆 / 对话", atlasCap2:"观察 / 配置", atlasCap3:"物的图谱", atlasCap4:"关系地图",
+    conceptKicker:"概念与荒诞", conceptTitle:"通过荒诞，发现自我",
+    conceptIntro:"作品不提供特定答案，而是假设一场与非人存在之间的对话，动摇观者对于自身位置的认知。",
+    conceptThesis:"当人类的交流方式被转移到物体之间，我们既是观察者，也是参与者。",
+    conceptPurpose:"作品的目的并非表达特定观点，而是以荒诞的组合为契机，让每位观者从自己的角度深化理解，并在这个过程中发现自我。被物体化的我们，也得以进入物体之间的对话。",
+    conceptPosition:"通过提问重新审视一切。创作者不应像传道者一样强加自己的思想，而应与把人类视为神圣特殊存在的自我陶醉和人类中心主义保持距离，在更平等的关系中共同思考。",
+    absurdityLabel:"四重荒诞", absurd1:"思考虚拟物体", absurd2:"参与不属于自身物种的对话", absurd3:"将自身物体化", absurd4:"在荒诞之中发现意义",
+    contextLabel:"背景 — 技术与人类", contextTitle:"新的造物主，将成为什么",
+    contextBody:"第一次工业革命不仅改变了生产与生活，也强烈动摇了人类的精神世界与信仰。上帝死了，人类成为新的造物主。科学技术与人工智能迅速发展，人类引以为傲的大脑、理性与感性也可能被机器超越。当AI最终揭示人类思考与创新的机制之后，我们还将作为怎样的存在继续生活？",
+    questionLabel:"核心问题", questionTitle:"我们为何而存在",
+    questionBody:"决定论所揭示的人生荒诞之中，每一个微小个体都随着时代浪潮前行。人生的终极目标，也许正是在这个世界中发现与探索自我的过程。作品把这个问题转化为与物体的对话，重新交还给观者。",
+    seriesKicker:"五组对话", seriesTitle:"五种组合，五个关于存在的问题",
+    seriesIntro:"将五件作品并置，自然物、人工物、欲望、时间与身体之间的差异和共性便会显现。选择一件作品，展开物体的声音、意义、交互与AR。",
+    meaningLabel:"关系与意义", viewAR:"在AR中查看", toolsShort:"3DS MAX · Reality Composer",
+    filmKicker:"影像", filmTitle:"影像", filmNote:"影像记录了系列的空间、运动以及在AR中的呈现方式，可通过播放器的全屏按钮观看。", filmIframeTitle:"《对话》记录影像",
+    back:"返回主页", langLabel:"切换语言",
+    imageAlts:{hero:"物体漂浮在网格空间中的《对话》系列全景",research1:"对中国茶馆中的对话与配置进行调研",research2:"茶馆与园林的观察照片",research3:"自然物与人工物叠合的物件图谱",research4:"描绘物体关系的构想图",concept1:"研究物体组合的概念图",concept2:"描绘对话配置与观者关系的草图"},
+    works:[
+      {no:"NO.01",name:"石头・马桶・电",interaction:"触控 · AR · 动画",image:"no1.jpg",ar:"no1.reality",voiceLabel:"马桶的话",voice:"当人类不在时\n我们是什么\n又成为了什么\n我们的存在有意义吗\n我们的意义是什么\n我们要去往何处\n又从何而来\n我们拥有自由吗\n我们拥有自我吗\n我们正在被工具化吗\n所以\n我们究竟是什么",description:"一块石头、一段电线、一个马桶，它们之间会产生怎样的对话？石头散落在道路与公园中，电在不可见的状态下支撑生活，马桶则每天被人使用。它们作为工具而存在，并由人类赋予“被使用的意义”。当人工物、自然物与被使用之物脱离原有环境时，它们的意义会变成什么，它们自身又将变成什么？"},
+      {no:"NO.02",name:"假山・盆栽・电风扇",interaction:"AR · 动画",image:"no2.jpg",ar:"no2.reality",voiceLabel:"时间与空间的对话",voice:"这是一场时间与空间的对话，\n重新凝视那些\n悄然失去的价值。",description:"这是一场关于过去的对话。假山与盆栽是中国江南传统园林的典型配置，而我也出生于江南。“树欲静而风不止”中，树代表静止的存在，风则指向不断流逝的时间。在这里，电风扇吹出的风掠过随岁月散落的假山与盆栽。它们曾是江南园林中深受贵族喜爱的装饰，在旧时代的贵族消失后遭到破坏，如今又被重新视为历史遗产。"},
+      {no:"NO.03",name:"时钟・台灯・消波块",interaction:"AR · 动画",image:"no3.jpg",ar:"no3.reality",voiceLabel:"物体的追问",voice:"当价值被剥离，\n它们会成为什么？\n意义又将去往何处？",description:"时钟、台灯与消波块来自三个完全不同的场景，却都充当着人类与客观世界之间的媒介。我们需要消波块抵御波浪，需要灯光抵御黑夜，也需要时间丈量自身的尺度。三者存在于不同空间，却都因帮助人类抵抗自然而被赋予相似的价值。那么，当它们被彻底抽离使用语境之后，又会成为什么？"},
+      {no:"NO.04",name:"招财猫・玩具・垃圾桶",interaction:"AR · 动画",image:"no4.jpg",ar:"no4.reality",voiceLabel:"垃圾桶的话",voice:"人类所丢弃的\n其实正是欲望与迷惘本身\n真正被丢弃的并不是物\n而是人类自身。",description:"这些物体是人类情感的衍生物。招财猫象征欲望，它的意义也由人类创造；当它脱离人类的期待、仅作为自身存在时，会成为什么？玩具连接想象与现实；失去精神支撑的角色后，又会如何变化？垃圾桶承接人类对废弃之物的态度，成为精神的避难所。当欲望、想象力与逃避的能力消失，这些物体又会怎样理解自身的存在处境？"},
+      {no:"NO.05",name:"胃・心脏・膀胱",interaction:"AR · 动画",image:"no5.jpg",ar:"no5.reality",voiceLabel:"器官的追问",voice:"那时，它们之间\n将会产生\n怎样的对话？",description:"人类本质上是由细胞聚合而成的融合体，身体器官为了维持意识而存在。也就是说，人类也可以被理解为寄生在肉体之上的存在。如果器官回到原本的角色，独立于人类而存在，它们或许也会像人一样拥有自我与个性。"}
+    ]
+  },
+  en: {
+    metaDescription:"Dialogue — He Liangyu's AR series re-examining selfhood and existence through conversations between objects.",
+    skip:"Skip to content", title:"Dialogue", subtitle:"TAIWA / 対話 / DIALOGUE",
+    navResearch:"Research", navConcept:"Concept", navSeries:"Series", navFilm:"Film",
+    heroKicker:"New Media · AR Series", scroll:"Scroll down",
+    overviewLabel:"Series Overview", overviewTitle:"Enter a dialogue between objects and look again at the self",
+    overviewBody:"This series personifies objects and invites viewers into dialogues between different forms of existence, setting in motion a process of rediscovering the self. In an age when scientific inquiry is making determinism increasingly tangible and technology and AI are advancing rapidly, the work uses absurdity to question the value and meaning of our own existence.",
+    arTitle:"Present in reality, absent from physical space",
+    arBody:"AR releases the work from constraints of space, time, and location. Viewers choose their own arrangements, connect the absurdity of everyday life with that of the work, and actively form a relationship with it. The virtual objects appear within lived reality while remaining absent from physical space.",
+    yearLabel:"Year", toolsLabel:"Tools", interactionLabel:"Across the series", interactionValue:"AR · Animation (touch in NO.01)",
+    researchKicker:"Research Atlas", researchTitle:"From the teahouse to a map of object relations",
+    researchP1:"Dialogue is one of the most common forms of communication in human society. In China, the teahouse was once a social center for many people—a place where conversations began and ended.",
+    researchP2:"To transfer this human mode of exchange to objects, I observed arrangements and relationships in teahouses, then mapped what might emerge when everyday things, natural matter, and manufactured objects share the same setting.",
+    relation1:"Natural ↔ Manufactured", relation2:"Use ↔ Decontextualization", relation3:"Human ↔ Object", relation4:"Time · Desire · Body",
+    atlasCap1:"Teahouse / Dialogue", atlasCap2:"Observation / Arrangement", atlasCap3:"Object Atlas", atlasCap4:"Relation Map",
+    conceptKicker:"Concept & Absurdity", conceptTitle:"Finding the self through absurdity",
+    conceptIntro:"Rather than offering a fixed answer, the work imagines dialogue with nonhuman beings and unsettles the viewer's sense of their own position.",
+    conceptThesis:"When human modes of exchange are transferred to objects, we become participants as well as observers.",
+    conceptPurpose:"The work does not aim to assert a particular view. Its absurd combinations prompt each viewer to deepen their understanding from a different angle and to discover the self in the process. Objectified, we can enter the dialogue between things.",
+    conceptPosition:"Questions make everything available for reconsideration. Instead of imposing ideas like a preacher, the artist steps away from anthropocentrism and from the self-flattering belief that humans are sacred and exceptional, inviting thought within a more equal relationship.",
+    absurdityLabel:"Four Absurdities", absurd1:"Contemplating virtual objects", absurd2:"Entering a dialogue beyond one's own species", absurd3:"Turning oneself into an object", absurd4:"Finding meaning within absurdity",
+    contextLabel:"Context — Technology & Humanity", contextTitle:"What will the new creator become?",
+    contextBody:"The first Industrial Revolution transformed not only production and daily life but also humanity's spiritual world and systems of belief. God was declared dead, and humanity became the new creator. As science, technology, and AI advance, even the brain, reason, and sensibility that humans take pride in may be surpassed by machines. Once AI reveals the mechanisms of human thought and innovation, what kind of beings will we remain?",
+    questionLabel:"Central Question", questionTitle:"What do we exist for?",
+    questionBody:"Within the absurdity of life disclosed by determinism, each small individual moves forward on the tide of an era. Perhaps the ultimate aim of a life lies in the process of finding and exploring the self in this world. The series returns that question to the viewer as a dialogue with objects.",
+    seriesKicker:"Five Dialogues", seriesTitle:"Five combinations, five questions of existence",
+    seriesIntro:"Seen side by side, the five works reveal differences and affinities among natural matter, manufactured objects, desire, time, and the body. Select a work to unfold its voice, meaning, interaction, and AR experience.",
+    meaningLabel:"Relation & Meaning", viewAR:"View in AR", toolsShort:"3DS MAX · Reality Composer",
+    filmKicker:"Film", filmTitle:"Film", filmNote:"The film records the series' spaces, motion, and appearances in AR. Use the player's full-screen control for an immersive view.", filmIframeTitle:"Dialogue — documentary film",
+    back:"Back to Home", langLabel:"Switch language",
+    imageAlts:{hero:"Overview of the Dialogue series with objects floating in a gridded space",research1:"Research into dialogue and arrangement in Chinese teahouses",research2:"Observational photographs of teahouses and gardens",research3:"An object atlas combining natural and manufactured things",research4:"A concept map of relationships between objects",concept1:"Concept study of object combinations",concept2:"Sketch mapping arrangements, dialogue, and the viewer"},
+    works:[
+      {no:"NO.01",name:"Stone · Toilet · Electricity",interaction:"Touch · AR · Animation",image:"no1.jpg",ar:"no1.reality",voiceLabel:"Words of the Toilet",voice:"When humans are absent,\nwhat are we,\nand what have we become?\nDoes our existence have meaning?\nWhat is our meaning?\nWhere are we going,\nand where did we come from?\nDo we possess freedom?\nDo we possess a self?\nHave we been reduced to tools?\nThen—\nwhat are we?",description:"A stone, a length of electrical cable, and a toilet: what kind of dialogue could arise between them? Stones lie scattered along roads and through parks; electricity sustains life while remaining unseen; the toilet is used every day. They exist as tools, and humans assign them meaning through use. Once manufactured, natural, and utilitarian objects are removed from their original contexts, what becomes of their meaning—and what do the objects become?"},
+      {no:"NO.02",name:"Garden Rockery (Jiashan) · Potted Landscape · Electric Fan",interaction:"AR · Animation",image:"no2.jpg",ar:"no2.reality",voiceLabel:"A Dialogue of Time and Space",voice:"This is a dialogue of time and space,\nlooking again at values\nthat quietly disappeared.",description:"This is a dialogue about the past. The garden rockery and potted landscape are characteristic arrangements in traditional Jiangnan gardens, and I was born in Jiangnan. In the saying, “the tree longs for stillness, but the wind will not cease,” the tree represents a stationary presence while the wind points to time in constant motion. Here, air from an electric fan passes through rockery and plants scattered by the years. Once cherished by the nobility in Jiangnan gardens, they were damaged after the old aristocracy disappeared and are now valued again as cultural heritage."},
+      {no:"NO.03",name:"Clock · Lamp · Wave-dissipating Block",interaction:"AR · Animation",image:"no3.jpg",ar:"no3.reality",voiceLabel:"The Objects Ask",voice:"When their value is stripped away,\nwhat do they become?\nWhere does their meaning go?",description:"The clock, lamp, and wave-dissipating block belong to entirely different settings, yet each mediates between humans and the objective world. We rely on the block to resist waves, on light to resist darkness, and on time to measure our own scale. Although they occupy different spaces, all three appear to share a value: helping humans resist nature. What, then, do they become when removed entirely from the contexts in which they are used?"},
+      {no:"NO.04",name:"Maneki-neko · Toy · Trash Can",interaction:"AR · Animation",image:"no4.jpg",ar:"no4.reality",voiceLabel:"Words of the Trash Can",voice:"What humanity discards\nis in fact desire and uncertainty themselves.\nWhat is truly discarded is not the object,\nbut humanity itself.",description:"These objects derive from human emotion. The maneki-neko symbolizes desire, and its meaning is created by people. What would it become if freed from human expectation and allowed to exist as itself? A toy connects imagination and reality; how would it change after losing its role as emotional support? The trash can bears our attitude toward discarded things and becomes a refuge for the spirit. If desire, imagination, and the capacity to escape disappeared, how would these objects understand their own existential position?"},
+      {no:"NO.05",name:"Stomach · Heart · Bladder",interaction:"AR · Animation",image:"no5.jpg",ar:"no5.reality",voiceLabel:"The Organs Ask",voice:"What kind of dialogue\nwould then arise\nbetween them?",description:"Human beings are essentially composites formed by gatherings of cells, while bodily organs exist to sustain consciousness. In that sense, a human can be understood as a being parasitic upon the body. If organs returned to their original roles and existed independently of humans, they too might possess a self and individuality."}
+    ]
+  }
+};
+
+const LANGS = ["ja","zh","en"];
+let lang = "ja";
+let activeWork = 0;
+try {
+  const saved = localStorage.getItem("hl-lang");
+  if (LANGS.includes(saved)) lang = saved;
+} catch(e) {}
+
+const copyNodes = [...document.querySelectorAll("[data-copy]")];
+const langButton = document.getElementById("lang-button");
+const langCode = document.getElementById("lang-code");
+const workTabs = document.getElementById("work-tabs");
+const workDetail = document.getElementById("work-detail");
+const mobileSeries = document.getElementById("series-mobile");
+
+function escapeHTML(value){
+  return String(value).replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[char]));
+}
+
+function workImageAlt(work){
+  if(lang === "ja") return `${work.name}を配置した${work.no}の展示・AR記録`;
+  if(lang === "zh") return `${work.no}中${work.name}的展示与AR记录`;
+  return `${work.no}, an installation and AR view of ${work.name}`;
+}
+
+function desktopDetailMarkup(work,index){
+  const c = CONTENT[lang];
+  return `
+    <div class="detail-top">
+      <div class="detail-id"><span class="detail-no">${escapeHTML(work.no)}</span><h3 class="detail-name work-name">${escapeHTML(work.name)}</h3></div>
+      <div class="detail-actions"><span class="detail-interaction">${escapeHTML(work.interaction)}</span><a class="ar-link" href="${escapeHTML(work.ar)}" rel="ar">${escapeHTML(c.viewAR)}</a></div>
+    </div>
+    <div class="detail-main">
+      <figure class="detail-image"><img src="${escapeHTML(work.image)}" alt="${escapeHTML(workImageAlt(work))}" loading="lazy"></figure>
+      <div class="detail-voice"><span class="voice-label">${escapeHTML(work.voiceLabel)}</span><blockquote class="voice-copy">${escapeHTML(work.voice)}</blockquote></div>
+    </div>
+    <div class="detail-meaning"><span class="meaning-label">${escapeHTML(c.meaningLabel)}</span><p class="meaning-copy body-copy">${escapeHTML(work.description)}</p></div>`;
+}
+
+function renderDesktopWorks(){
+  const c = CONTENT[lang];
+  workTabs.setAttribute("aria-label", c.seriesTitle);
+  workTabs.innerHTML = c.works.map((work,index) => `
+    <button class="work-tab" id="work-tab-${index}" type="button" role="tab" aria-selected="${index === activeWork}" aria-controls="work-detail" tabindex="${index === activeWork ? 0 : -1}" data-index="${index}">
+      <span class="work-tab-inner">
+        <span class="work-tab-media"><img src="${escapeHTML(work.image)}" alt="" loading="lazy"></span>
+        <span class="work-tab-copy"><span class="work-tab-no">${escapeHTML(work.no)}</span><span class="work-name">${escapeHTML(work.name)}</span><span class="work-tab-meta">${escapeHTML(work.interaction)}</span></span>
+      </span>
+    </button>`).join("");
+  const work = c.works[activeWork];
+  workDetail.setAttribute("aria-labelledby", `work-tab-${activeWork}`);
+  workDetail.innerHTML = desktopDetailMarkup(work,activeWork);
+}
+
+function renderMobileWorks(){
+  const c = CONTENT[lang];
+  mobileSeries.innerHTML = c.works.map((work,index) => `
+    <details class="mobile-work" data-index="${index}" ${index === activeWork ? "open" : ""}>
+      <summary>
+        <span class="mobile-work-no">${escapeHTML(work.no)}</span>
+        <span class="mobile-work-summary"><span class="mobile-title work-name">${escapeHTML(work.name)}</span><span>${escapeHTML(work.interaction)}</span></span>
+      </summary>
+      <div class="mobile-work-body">
+        <figure class="mobile-work-image"><img src="${escapeHTML(work.image)}" alt="${escapeHTML(workImageAlt(work))}" loading="lazy"></figure>
+        <div class="mobile-voice"><span class="voice-label">${escapeHTML(work.voiceLabel)}</span><blockquote class="voice-copy">${escapeHTML(work.voice)}</blockquote></div>
+        <div class="mobile-meaning"><span class="meaning-label">${escapeHTML(c.meaningLabel)}</span><p class="body-copy">${escapeHTML(work.description)}</p></div>
+        <div class="mobile-actions"><span class="detail-interaction">${escapeHTML(work.interaction)} · ${escapeHTML(c.toolsShort)}</span><a class="ar-link" href="${escapeHTML(work.ar)}" rel="ar">${escapeHTML(c.viewAR)}</a></div>
+      </div>
+    </details>`).join("");
+}
+
+function setImageAlts(c){
+  document.getElementById("hero-image").alt = c.imageAlts.hero;
+  [1,2,3,4].forEach(n => { document.getElementById(`research-image-${n}`).alt = c.imageAlts[`research${n}`]; });
+  document.getElementById("concept-image-1").alt = c.imageAlts.concept1;
+  document.getElementById("concept-image-2").alt = c.imageAlts.concept2;
+}
+
+function applyLanguage(nextLang){
+  lang = LANGS.includes(nextLang) ? nextLang : "ja";
+  const c = CONTENT[lang];
+  document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+  document.documentElement.className = `lang-${lang}`;
+  document.title = `${c.title} — 何梁宇`;
+  document.querySelector('meta[name="description"]').content = c.metaDescription;
+  copyNodes.forEach(node => {
+    const key = node.dataset.copy;
+    if(c[key] !== undefined) node.textContent = c[key];
+  });
+  langCode.textContent = lang.toUpperCase();
+  langButton.setAttribute("aria-label", c.langLabel);
+  langButton.title = c.langLabel;
+  document.getElementById("film-player").title = c.filmIframeTitle;
+  setImageAlts(c);
+  renderDesktopWorks();
+  renderMobileWorks();
+  try { localStorage.setItem("hl-lang",lang); } catch(e) {}
+}
+
+function selectWork(index,focusTab=false){
+  const works = CONTENT[lang].works;
+  activeWork = Math.max(0,Math.min(index,works.length-1));
+  renderDesktopWorks();
+  renderMobileWorks();
+  if(focusTab) document.getElementById(`work-tab-${activeWork}`)?.focus();
+}
+
+workTabs.addEventListener("click",event => {
+  const button = event.target.closest(".work-tab");
+  if(button) selectWork(Number(button.dataset.index));
+});
+
+workTabs.addEventListener("keydown",event => {
+  const button = event.target.closest(".work-tab");
+  if(!button) return;
+  let next = activeWork;
+  if(event.key === "ArrowRight") next = (activeWork + 1) % CONTENT[lang].works.length;
+  else if(event.key === "ArrowLeft") next = (activeWork - 1 + CONTENT[lang].works.length) % CONTENT[lang].works.length;
+  else if(event.key === "Home") next = 0;
+  else if(event.key === "End") next = CONTENT[lang].works.length - 1;
+  else return;
+  event.preventDefault();
+  selectWork(next,true);
+});
+
+mobileSeries.addEventListener("click",event => {
+  const summary = event.target.closest("summary");
+  if(summary) activeWork = Number(summary.parentElement.dataset.index);
+});
+
+langButton.addEventListener("click",() => {
+  const next = LANGS[(LANGS.indexOf(lang)+1)%LANGS.length];
+  applyLanguage(next);
+});
+
+const nav = document.getElementById("site-nav");
+function updateNav(){ nav.classList.toggle("solid",window.scrollY > Math.min(120,window.innerHeight*.12)); }
+window.addEventListener("scroll",updateNav,{passive:true});
+updateNav();
+applyLanguage(lang);
+</script>
+</body>
+</html>

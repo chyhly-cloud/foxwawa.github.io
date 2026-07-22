@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ja" class="lang-ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="color-scheme" content="light">
+<title>対話 — 何梁宇</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Serif+JP:wght@300;400&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light only}
+html{forced-color-adjust:none}
+:root{
+  --ink:#000;--ink2:#111;--ink3:#aaa;
+  --rule:rgba(0,0,0,.12);
+  --nav-h:50px;--bar-h:44px;
+  --mono:"Space Mono",monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  height:100%;overflow:hidden;
+  background:#fff !important;color:#000 !important;
+  font-family:var(--mono);-webkit-text-size-adjust:100%;
+}
+.lang-ja .bhead,.lang-ja .h-ttl,
+.lang-ja .note-p,.lang-ja .bp,.lang-ja .prow,
+.lang-ja .hcb .bhead{font-family:"Noto Serif JP",serif}
+.lang-zh .bhead,.lang-zh .h-ttl,
+.lang-zh .hcb .bhead{font-family:"Noto Sans SC",sans-serif;font-weight:900}
+.lang-zh .note-p,.lang-zh .bp,.lang-zh .prow{font-family:"Noto Sans SC",sans-serif;font-weight:400}
+.lang-en .bhead,.lang-en .h-ttl,
+.lang-en .hcb .bhead{font-family:"Inter","Helvetica Neue",sans-serif;font-weight:900}
+
+nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;background:#fff !important;flex-shrink:0}
+.nav-l{display:flex;align-items:center;gap:2rem}
+.nav-back{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);text-decoration:none;transition:color .15s}
+.nav-back:hover{color:#000}
+.nav-ttl{font-size:13px;color:#000;letter-spacing:.3px;font-weight:700}
+.lang-ja .nav-ttl{font-family:"Noto Serif JP",serif}
+.lang-zh .nav-ttl{font-family:"Noto Sans SC",sans-serif}
+.lang-globe{background:none;border:none;cursor:pointer;padding:0;color:#000;display:flex;align-items:center;justify-content:center;opacity:.45;transition:opacity .2s;-webkit-tap-highlight-color:transparent}
+.lang-globe:hover{opacity:1}
+
+#page{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
+#page::-webkit-scrollbar{display:none}
+
+.sec{height:100vh;scroll-snap-align:start;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column}
+.sec>.sec-bar{flex-shrink:0}
+
+.sec-bar{display:flex;align-items:center;padding:0 2.5rem;height:var(--bar-h);gap:1rem;background:#fff !important}
+.s-ttl{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#000;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
+.dots{display:flex;gap:7px;align-items:center;flex-shrink:0}
+.dot{width:5px;height:5px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .2s,transform .18s}
+.dot.on{background:#000;transform:scale(1.4)}
+
+.h-track{flex:1;min-height:0;position:relative;display:flex;overflow-x:scroll;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.h-track::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;overflow:hidden;background:#fff}
+
+.board{display:grid;height:100%}
+.b-half{grid-template-columns:1fr 1fr}
+.b-half .bcell:first-child{border-right:1px solid var(--rule)}
+.bcell{position:relative;overflow:hidden}
+
+.bimg{background:#f7f7f7;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:1.5rem}
+.bimg img{width:100%;height:100%;object-fit:contain;display:block}
+.bimg.photo{padding:1.5rem;background:#f7f7f7}
+.bimg.photo img{object-fit:contain}
+.bph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:#f7f7f7;text-align:center}
+
+.btxt{display:flex;flex-direction:column;justify-content:center;overflow-y:auto;padding:3rem;background:#fff}
+.btxt::-webkit-scrollbar{display:none}
+.brow{margin-bottom:2rem;flex-shrink:0}
+.brow:last-child{margin-bottom:0}
+
+.blbl{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#000;text-transform:uppercase;margin-bottom:.9rem;display:block;font-weight:700}
+.bhead{font-size:clamp(20px,2.5vw,34px);font-weight:900;color:#000;line-height:1.1;margin-bottom:1rem;letter-spacing:-.02em}
+.lang-zh .bhead{letter-spacing:0}
+.lang-ja .bhead{letter-spacing:0;font-weight:400}
+
+.bp{font-size:12px;line-height:1.9;color:#444;margin-bottom:.5rem}
+.bp:last-child{margin-bottom:0}
+.bp b{color:#000;font-weight:700}
+.bp.poem{white-space:pre-line;line-height:2.2;font-style:italic}
+
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:.6rem}
+.chip{font-family:var(--mono);font-size:8px;letter-spacing:2px;padding:3px 9px;border:1px solid var(--rule);color:#888;text-transform:uppercase}
+
+/* ─ HERO ─ */
+#s-hero{background:#fff}
+.hero-g{display:grid;grid-template-columns:58% 42%;height:100%}
+.hero-img{overflow:hidden;border-right:1px solid var(--rule)}
+.hero-img img{width:100%;height:100%;object-fit:contain;background:#f7f7f7;display:block}
+.hero-nfo{display:flex;flex-direction:column;overflow-y:auto;background:#fff}
+.hero-nfo::-webkit-scrollbar{display:none}
+
+.htb{padding:3.5rem 3rem 2rem;flex-shrink:0}
+.h-cat{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:1.5rem;font-weight:700}
+.h-ttl{font-size:clamp(48px,6.5vw,88px);font-weight:900;line-height:.9;color:#000;margin-bottom:.6rem;letter-spacing:-.03em}
+.lang-zh .h-ttl{letter-spacing:0;line-height:.95}
+.lang-ja .h-ttl{letter-spacing:-.01em;font-weight:300;font-size:clamp(40px,5.5vw,72px)}
+.h-sub{font-family:var(--mono);font-size:9px;letter-spacing:2.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:2rem;font-weight:700}
+.specs{display:grid;grid-template-columns:auto 1fr;gap:8px 24px;margin-top:.5rem}
+.sp-l{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:#888;text-transform:uppercase;align-self:center;font-weight:700}
+.sp-v{font-size:13px;color:#000;font-weight:700}
+
+.hcb{padding:0 3rem 2rem;flex-shrink:0;margin-top:-.5rem}
+.hcb .blbl{margin-bottom:.8rem}
+.hcb .bhead{font-size:clamp(15px,1.6vw,19px);font-weight:900;line-height:1.25;letter-spacing:-.01em}
+.lang-ja .hcb .bhead{font-weight:400}
+.hcb .bp{font-size:12px;line-height:1.85;color:#555;margin-top:.6rem}
+
+.ins-det{flex-shrink:0;border-top:1px solid var(--rule)}
+.ins-sum{display:flex;align-items:center;gap:.6rem;padding:1.1rem 3rem;cursor:pointer;list-style:none;outline:none;font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;transition:color .15s;font-weight:700}
+.ins-sum::-webkit-details-marker{display:none}
+.ins-sum::before{content:"\25B6";font-size:7px;transition:transform .2s;flex-shrink:0}
+.ins-det[open] .ins-sum::before{transform:rotate(90deg)}
+.ins-sum:hover{color:#000}
+.ins-body{padding:0 3rem 2rem}
+.ins-body .note-p{font-size:12px;line-height:1.9;color:#555;margin-bottom:.8rem;font-style:italic}
+.ins-body .note-p:last-of-type{margin-bottom:0}
+
+.h-hint{padding:1.5rem 3rem;font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-top:auto;flex-shrink:0;padding-top:0;font-weight:700}
+.h-line{width:28px;height:1px;background:var(--ink3)}
+
+/* ─ WORK SECTIONS ─ */
+.work-board{flex:1;min-height:0;height:auto;display:grid;grid-template-columns:1fr 1fr}
+.work-board .bcell:first-child{border-right:1px solid var(--rule)}
+.work-r{display:flex;flex-direction:column;overflow:hidden}
+.work-img{flex:1;min-height:0;overflow:hidden;background:#f7f7f7}
+.work-img img{width:100%;height:100%;object-fit:contain;display:block}
+.work-img .bph{background:#f7f7f7}
+
+/* ─ AR PANEL ─ */
+.ar-panel{
+  flex-shrink:0;height:90px;
+  background:#0c0c14;
+  display:flex;align-items:center;justify-content:center;gap:1rem;
+  text-decoration:none;
+  color:rgba(140,200,255,.65);
+  font-family:var(--mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  transition:background .25s,color .25s;
+  border-top:1px solid rgba(60,120,200,.15);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  position:relative;overflow:hidden;
+}
+.ar-panel::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,rgba(80,140,220,.03) 0px,rgba(80,140,220,.03) 1px,transparent 1px,transparent 40px),
+             repeating-linear-gradient(0deg,rgba(80,140,220,.03) 0px,rgba(80,140,220,.03) 1px,transparent 1px,transparent 40px);
+}
+.ar-panel:hover{background:#111a26;color:rgba(180,220,255,.9)}
+.ar-panel.ar-unavail{cursor:default;opacity:.5}
+.ar-panel.ar-unavail:hover{background:#0c0c14;color:rgba(140,200,255,.65)}
+.ar-icon{flex-shrink:0;position:relative;z-index:1}
+.ar-text{position:relative;z-index:1}
+
+/* ─ FILM ─ */
+.film-wrap{flex:1;min-height:0;background:#000}
+.vid-wrap{position:relative;width:100%;height:100%}
+.vid-wrap video{width:100%;height:100%;object-fit:cover;display:block}
+.vid-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2rem;cursor:pointer;background:rgba(0,0,0,.28);transition:opacity .3s}
+.vid-ov.gone{opacity:0;pointer-events:none}
+.play-r{width:70px;height:70px;border:1px solid rgba(255,255,255,.45);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:border-color .2s,transform .2s}
+.vid-ov:hover .play-r{border-color:#fff;transform:scale(1.07)}
+.play-t{border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:18px solid rgba(255,255,255,.9);margin-left:4px}
+.vid-lbl{font-family:var(--mono);font-size:9px;letter-spacing:4px;color:rgba(255,255,255,.35);text-transform:uppercase;font-weight:700}
+
+/* ─ BACK ─ */
+#s-back{background:#fff;display:flex;align-items:center;justify-content:center}
+.back-btn{display:flex;align-items:center;gap:.8rem;text-decoration:none;font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;opacity:.35;transition:opacity .2s;font-weight:700}
+.back-btn:hover{opacity:1}
+.back-btn svg{transition:transform .2s}
+.back-btn:hover svg{transform:translateX(-4px)}
+
+/* ─ LIGHTBOX ─ */
+#lb{display:none;position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.96);align-items:center;justify-content:center;cursor:zoom-out}
+#lb.open{display:flex}
+#lb img{max-width:92vw;max-height:92vh;object-fit:contain;display:block}
+#lb-x{position:absolute;top:20px;right:24px;font-size:20px;color:rgba(255,255,255,.4);cursor:pointer;font-family:var(--mono);transition:color .2s}
+#lb-x:hover{color:#fff}
+
+@media(max-width:768px){
+  .hero-g{grid-template-columns:1fr;grid-template-rows:42% 58%}
+  .hero-img{border-right:none}
+  .board.b-half{grid-template-columns:1fr;grid-template-rows:45% 55%}
+  .b-half .bcell:first-child{border-right:none;border-bottom:1px solid var(--rule)}
+  .btxt{padding:2rem 1.8rem}
+  .htb,.hcb{padding-left:1.8rem;padding-right:1.8rem}
+  .ins-sum,.ins-body,.h-hint{padding-left:1.8rem;padding-right:1.8rem}
+  .h-ttl{font-size:clamp(38px,10vw,60px)}
+  .work-board{grid-template-columns:1fr;grid-template-rows:1fr 240px}
+  .work-board .bcell:first-child{border-right:none;border-bottom:1px solid var(--rule)}
+}
+</style>
+</head>
+<body>
+<div id="lb"><span id="lb-x">&#10005;</span><img id="lb-img" src="" alt=""></div>
+
+<div id="page">
+
+<!-- ══ HERO ══ -->
+<section class="sec" id="s-hero">
+<nav>
+  <div class="nav-l">
+    <a class="nav-back" href="../index.html">&#8592;</a>
+    <span class="nav-ttl" id="nav-ttl">対話</span>
+  </div>
+  <button class="lang-globe" id="lang-cycle-btn" title="Switch language" aria-label="Switch language">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.2"/>
+      <ellipse cx="10" cy="10" rx="4" ry="8.5" stroke="currentColor" stroke-width="1.2"/>
+      <line x1="1.5" y1="7.5" x2="18.5" y2="7.5" stroke="currentColor" stroke-width="1.2"/>
+      <line x1="1.5" y1="12.5" x2="18.5" y2="12.5" stroke="currentColor" stroke-width="1.2"/>
+    </svg>
+  </button>
+</nav>
+<div class="hero-g">
+  <div class="hero-img">
+    <img src="hero.jpg" alt="" onerror="this.style.display='none'">
+  </div>
+  <div class="hero-nfo">
+    <div class="htb">
+      <p class="h-cat" id="h-cat">新メディア</p>
+      <h1 class="h-ttl" id="h-ttl">対話</h1>
+      <p class="h-sub" id="h-sub">TAIWA / 对话 / DIALOGUE</p>
+      <div class="specs">
+        <span class="sp-l" id="h-yl">制作年</span><span class="sp-v">2023.8</span>
+        <span class="sp-l" id="h-tl">使用ツール</span><span class="sp-v">3DS MAX, Reality Composer</span>
+        <span class="sp-l" id="h-il">インタラクション</span><span class="sp-v" id="h-int">タッチ、AR、アニメーション</span>
+      </div>
+    </div>
+    <div class="hcb">
+      <span class="blbl" id="c-lbl">概念 / Concept</span>
+      <h2 class="bhead" id="c1-head">登場人物を擬人化することで、異なる物体間の対話に参加し、自己再認識の過程へ</h2>
+      <p class="bp" id="c1-p1">科学探索とAIが急速に発展する時代に、作品は荒誕性によって人々に自身の存在価値と意味を再考させます。AR仮想形式を借り、空間・時間・場所の束縛を打破し、個人が様々な配置シーンを選択できるようにします。</p>
+      <p class="bp" id="c1-p2">これらの仮想物体は現実の生活の中に存在しながら、現実の空間には存在しない。</p>
+    </div>
+    <details class="ins-det">
+      <summary class="ins-sum" id="ins-sum">インスピレーション</summary>
+      <div class="ins-body">
+        <p class="note-p" id="ins-p1">第一次産業革命は人類の生産・生活の様式を変革しただけでなく、精神世界にも深刻な衝撃をもたらした。神は死に、人類が新たな創造主となった。AIの急速な台頭により、人類が誇りとする脳・理性・感性はやがて機械に超越され、次の産業革命が訪れようとしている。</p>
+        <p class="note-p" id="ins-p2">決定論は生の荒誕さを露わにする。個々の微小な存在は時代の波に乗り進む。人生の究極の目標は、この世界の中で自己を発見・探求する過程にある。創作者は伝道者のように自らの考えを押しつけるのではなく、より平等な関係の中で「われわれはなぜ存在するのか」という問いを新たに問い直す。</p>
+      </div>
+    </details>
+    <p class="h-hint"><span class="h-line"></span><span id="h-scroll">上下スクロールで移動</span></p>
+  </div>
+</div>
+</section>
+
+<!-- ══ RESEARCH ══ -->
+<section class="sec">
+  <div class="sec-bar">
+    <span class="s-ttl" id="ch-research">リサーチ</span>
+    <div class="dots" id="dots-research"></div>
+  </div>
+  <div class="h-track" id="track-research">
+
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg photo">
+        <img src="research-1.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="bph" style="display:none">research-1.jpg</div>
+      </div>
+      <div class="bcell btxt">
+        <div class="brow">
+          <span class="blbl" id="r1-lbl">調査</span>
+          <h3 class="bhead" id="r1-head">対話は人類のコミュニケーションにおける最も根本的な形式</h3>
+        </div>
+        <div class="brow">
+          <p class="bp" id="r1-p1">誕生から文明の発展に至るまで、人間の思想・文化・文明の進歩を推進してきた。中国の茶館はかつて都市の社会的中心として、さまざまな形の対話が生まれ、また終わった場所であった。</p>
+        </div>
+        <div class="brow">
+          <p class="bp" id="r1-p2">作品は特定の見解を表現するのではなく、これらの物体を通じた荒誕無稽さをきっかけに、それぞれが異なる角度から理解を深め、その過程で自己を発見することにある。</p>
+        </div>
+      </div>
+    </div></div>
+
+    <div class="slide"><div class="board b-half">
+      <div class="bcell bimg photo">
+        <img src="research-2.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="bph" style="display:none">research-2.jpg</div>
+      </div>
+      <div class="bcell bimg photo">
+        <img src="research-3.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="bph" style="display:none">research-3.jpg</div>
+      </div>
+    </div></div>
+
+    <div class="slide"><div class="board b-half">
+      <div class="bcell btxt">
+        <div class="brow">
+          <span class="blbl" id="r2-lbl">洞察</span>
+          <div class="chips">
+            <span class="chip" id="r2-i1">荒誕さの中に自己を見出す</span>
+            <span class="chip" id="r2-i2">物体を通じた存在の再考</span>
+            <span class="chip" id="r2-i3">ARが日常と作品を接続する</span>
+          </div>
+        </div>
+      </div>
+      <div class="bcell bimg photo">
+        <img src="research-4.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="bph" style="display:none">research-4.jpg</div>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- ══ CONCEPT ══ -->
+<section class="sec">
+  <div class="sec-bar">
+    <span class="s-ttl" id="ch-concept">概念</span>
+    <div class="dots" id="dots-concept"></div>
+  </div>
+  <div class="h-track" id="track-concept">
+
+    <div class="slide"><div class="board b-half">
+      <div class="bcell btxt">
+        <div class="brow">
+          <span class="blbl" id="concept-lbl">概念 / Concept</span>
+          <p class="bp" id="concept-p1">人間の交流方式を異なる物体間に適用することで、この対話の中で私たちは観察者として、また参加者としても存在することができます。物体化された私たちは、物体同士の対話に参加することが可能になるのです。</p>
+        </div>
+        <div class="brow">
+          <p class="bp" id="concept-p2">作品の目的は、特定の見解を表現することではなく、これらの物体を通じて、荒唐無稽さをきっかけに、それぞれが作品に対して異なる角度から理解を深める中で、自己を見出すことにあります。この荒唐さは、あなたが仮想の物体について思索するという荒唐さに由来し、自己の種族に属さない対話に参加するという荒唐さ、自らを物体化する荒唐さ、そしてその荒唐さの中で意味を見つけ出せるということ自体の荒唐さを感じ取ることができるでしょう。この作品は、問いかけによってすべてを見直し、クリエイターは、伝道師のように自分の考えを自己満足的に宣伝すべきではない。人々が自分を神聖で特別な存在として自己陶酔するのと同じように、人間中心主義から脱却し、不条理を通して自分自身を発見し、誰もが不条理の中に自分の視点と存在意義を見出している。</p>
+        </div>
+      </div>
+      <div class="bcell bimg photo">
+        <img src="concept-1.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="bph" style="display:none">concept-1.jpg</div>
+      </div>
+    </div></div>
+
+    <div class="slide"><div class="board" style="grid-template-columns:1fr">
+      <div class="bcell bimg photo">
+        <img src="concept-2.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="bph" style="display:none">concept-2.jpg</div>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- ══ NO.01 ══ -->
+<section class="sec">
+  <div class="sec-bar"><span class="s-ttl" id="ch-no1">NO.01</span></div>
+  <div class="work-board">
+    <div class="bcell btxt">
+      <div class="brow">
+        <span class="blbl" id="no1-num">NO.01</span>
+        <h3 class="bhead" id="no1-obj">石・トイレ・電気</h3>
+      </div>
+      <div class="brow">
+        <span class="blbl" id="no1-poem-lbl">トイレの言葉</span>
+        <p class="bp poem" id="no1-poem">私はただの容器だ
+人間が用を足すための
+でも、もし電気がなければ
+私は水を流せない
+もし石がなければ
+私はどこに立つべきか
+三者は異なる世界に存在する
+しかし同じ沈黙の中に在る</p>
+      </div>
+      <div class="brow">
+        <p class="bp" id="no1-desc">石・トイレ・電気。これらは日常生活の中に深く根ざしたものでありながら、互いに全く異なる文脈に属している。石は自然の物質として人類の文明以前から存在する。トイレは人間の身体的需要を満たすための道具であり、電気は現代文明の血脈である。もし彼らが対話できるとしたら、その言葉はどんなものだろうか。</p>
+      </div>
+    </div>
+    <div class="work-r">
+      <div class="work-img">
+        <img src="no1.jpg" alt="NO.01" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=bph>no1.jpg</div>'">
+      </div>
+      <a class="ar-panel" href="no1.reality" rel="ar">
+        <svg class="ar-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <polyline points="10,2 18,7 18,13 10,18 2,13 2,7 10,2" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+          <line x1="10" y1="2" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="2" y1="7" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="18" y1="7" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+        <span class="ar-text ar-lbl-text">AR で見る</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ NO.02 ══ -->
+<section class="sec">
+  <div class="sec-bar"><span class="s-ttl" id="ch-no2">NO.02</span></div>
+  <div class="work-board">
+    <div class="bcell btxt">
+      <div class="brow">
+        <span class="blbl" id="no2-num">NO.02</span>
+        <h3 class="bhead" id="no2-obj">偽山・盆栽・電動扇風機</h3>
+      </div>
+      <div class="brow">
+        <p class="bp" id="no2-desc">これは過去形の叙述である。偽山と盆栽は中国江南の伝統的な庭園の典型的な要素を代表している。「樹は静かにしたいが、風は止まない」という言葉において、樹は客観的な存在を象徴し、風は流れ続ける時間を表す。電動扇風機のそよ風は、歳月とともに散り散りになった偽山と盆栽を吹き抜ける。かつては中国貴族に最も愛された装飾品であったが、旧時の貴族が消滅した後に破壊され、今は歴史の宝として再評価されている。これは時間と空間の対話であり、静かに失われた価値の再認識を促している。</p>
+      </div>
+    </div>
+    <div class="work-r">
+      <div class="work-img">
+        <img src="no2.jpg" alt="NO.02" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=bph>no2.jpg</div>'">
+      </div>
+      <a class="ar-panel" href="no2.reality" rel="ar">
+        <svg class="ar-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <polyline points="10,2 18,7 18,13 10,18 2,13 2,7 10,2" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+          <line x1="10" y1="2" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="2" y1="7" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="18" y1="7" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+        <span class="ar-text ar-lbl-text">AR で見る</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ NO.03 ══ -->
+<section class="sec">
+  <div class="sec-bar"><span class="s-ttl" id="ch-no3">NO.03</span></div>
+  <div class="work-board">
+    <div class="bcell btxt">
+      <div class="brow">
+        <span class="blbl" id="no3-num">NO.03</span>
+        <h3 class="bhead" id="no3-obj">時計・スタンドライト・消波ブロック</h3>
+      </div>
+      <div class="brow">
+        <p class="bp" id="no3-desc">時計・スタンドライト・消波ブロック。これらは三つの全く異なるシーンのアイテムであるが、いずれも人間と客観的な世界との媒介者である。私たちは波の侵害を抵抗するために消波ブロックが必要であり、夜の訪れを抵抗するためにランプが必要であり、私たちの尺度を測るために時間が必要である。これら三つのアイテムは異なる空間に存在したが、同じ価値を持っているように見える。しかし、もしこれらのものが使用のコンテキストから完全に取り除かれたら、その意味はどこへ行くのだろうか。</p>
+      </div>
+    </div>
+    <div class="work-r">
+      <div class="work-img">
+        <img src="no3.jpg" alt="NO.03" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=bph>no3.jpg</div>'">
+      </div>
+      <a class="ar-panel" href="no3.reality" rel="ar">
+        <svg class="ar-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <polyline points="10,2 18,7 18,13 10,18 2,13 2,7 10,2" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+          <line x1="10" y1="2" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="2" y1="7" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="18" y1="7" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+        <span class="ar-text ar-lbl-text">AR で見る</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ NO.04 ══ -->
+<section class="sec">
+  <div class="sec-bar"><span class="s-ttl" id="ch-no4">NO.04</span></div>
+  <div class="work-board">
+    <div class="bcell btxt">
+      <div class="brow">
+        <span class="blbl" id="no4-num">NO.04</span>
+        <h3 class="bhead" id="no4-obj">招き猫・おもちゃ・ゴミ箱</h3>
+      </div>
+      <div class="brow">
+        <span class="blbl" id="no4-poem-lbl">ゴミ箱の言葉</span>
+        <p class="bp poem" id="no4-poem">迷いそのものが
+真に捨てられるのではなく
+人類自身である
+欲望が消え、想像力が消え
+逃避する能力が消えた後
+私は何を収めるのか</p>
+      </div>
+      <div class="brow">
+        <p class="bp" id="no4-desc">これらの物体は人類の感情の派生物である。招き猫は人類の欲望の象徴であり、その意味は人類によって創られた。おもちゃは人類の想像力と現実世界を結ぶ媒介であり、夢と現実をつなぐ役を演じる。ゴミ箱は人類の捨てられたものへの態度を担い、精神の避難所となっている。欲望・想像力・逃避の能力が全て消えた後、これらの物体は自身の存在境地をどう見るのだろうか。</p>
+      </div>
+    </div>
+    <div class="work-r">
+      <div class="work-img">
+        <img src="no4.jpg" alt="NO.04" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=bph>no4.jpg</div>'">
+      </div>
+      <a class="ar-panel" href="no4.reality" rel="ar">
+        <svg class="ar-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <polyline points="10,2 18,7 18,13 10,18 2,13 2,7 10,2" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+          <line x1="10" y1="2" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="2" y1="7" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="18" y1="7" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+        <span class="ar-text ar-lbl-text">AR で見る</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ NO.05 ══ -->
+<section class="sec">
+  <div class="sec-bar"><span class="s-ttl" id="ch-no5">NO.05</span></div>
+  <div class="work-board">
+    <div class="bcell btxt">
+      <div class="brow">
+        <span class="blbl" id="no5-num">NO.05</span>
+        <h3 class="bhead" id="no5-obj">胃・心臓・膀胱</h3>
+      </div>
+      <div class="brow">
+        <p class="bp" id="no5-desc">人間は本質的に細胞が集合した融合体であり、器官の存在は意識を維持するためのものである。これは人間が実は肉体に寄生しているということを意味する。もし器官が人間から独立して存在し、自身の役割に戻ることができるならば、彼らも自我と個性を持つだろう。そうなれば、彼らの間にはどのような対話が生まれるのだろうか。</p>
+      </div>
+    </div>
+    <div class="work-r">
+      <div class="work-img">
+        <img src="no5.jpg" alt="NO.05" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=bph>no5.jpg</div>'">
+      </div>
+      <a class="ar-panel" href="no5.reality" rel="ar">
+        <svg class="ar-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <polyline points="10,2 18,7 18,13 10,18 2,13 2,7 10,2" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+          <line x1="10" y1="2" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="2" y1="7" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="18" y1="7" x2="10" y2="10" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+        <span class="ar-text ar-lbl-text">AR で見る</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FILM ══ -->
+<section class="sec">
+  <div class="sec-bar"><span class="s-ttl" id="ch-film">映像</span></div>
+  <div class="film-wrap">
+    <div class="vid-wrap">
+      <iframe src="https://www.youtube.com/embed/THiRS9xRXY4" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="width:100%;height:100%;position:absolute;inset:0"></iframe>
+        <span class="vid-lbl" id="film-lbl">映像 · Documentary Film</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BACK ══ -->
+<section class="sec" id="s-back">
+  <a class="back-btn" href="../index.html">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <line x1="14" y1="8" x2="2" y2="8" stroke="currentColor" stroke-width="1.5"/>
+      <polyline points="6,3 1,8 6,13" stroke="currentColor" stroke-width="1.5" fill="none"/>
+    </svg>
+    <span id="back-lbl">ホームへ戻る</span>
+  </a>
+</section>
+
+</div>
+
+<script>
+const L = {
+ja:{
+  "nav-ttl":"対話",
+  "h-cat":"新メディア","h-ttl":"対話","h-sub":"TAIWA / 対話 / DIALOGUE",
+  "h-yl":"制作年","h-tl":"使用ツール","h-il":"インタラクション",
+  "h-int":"タッチ、AR、アニメーション",
+  "c-lbl":"概念 / Concept",
+  "c1-head":"登場人物を擬人化することで、異なる物体間の対話に参加し、自己再認識の過程へ",
+  "c1-p1":"科学探索とAIが急速に発展する時代に、作品は荒誕性によって人々に自身の存在価値と意味を再考させます。AR仮想形式を借り、空間・時間・場所の束縛を打破し、個人が様々な配置シーンを選択できるようにします。",
+  "c1-p2":"これらの仮想物体は現実の生活の中に存在しながら、現実の空間には存在しない。",
+  "ins-sum":"インスピレーション",
+  "ins-p1":"第一次産業革命は人類の生産・生活の様式を変革しただけでなく、精神世界にも深刻な衝撃をもたらした。神は死に、人類が新たな創造主となった。AIの急速な台頭により、人類が誇りとする脳・理性・感性はやがて機械に超越され、次の産業革命が訪れようとしている。",
+  "ins-p2":"決定論は生の荒誕さを露わにする。個々の微小な存在は時代の波に乗り進む。人生の究極の目標は、この世界の中で自己を発見・探求する過程にある。創作者は伝道者のように自らの考えを押しつけるのではなく、より平等な関係の中で「われわれはなぜ存在するのか」という問いを新たに問い直す。",
+  "h-scroll":"上下スクロールで移動",
+  "ch-research":"リサーチ",
+  "r1-lbl":"調査","r1-head":"対話は人類のコミュニケーションにおける最も根本的な形式",
+  "r1-p1":"誕生から文明の発展に至るまで、人間の思想・文化・文明の進歩を推進してきた。中国の茶館はかつて都市の社会的中心として、さまざまな形の対話が生まれ、また終わった場所であった。",
+  "r1-p2":"作品は特定の見解を表現するのではなく、これらの物体を通じた荒誕無稽さをきっかけに、それぞれが異なる角度から理解を深め、その過程で自己を発見することにある。",
+  "r2-lbl":"洞察","r2-i1":"荒誕さの中に自己を見出す","r2-i2":"物体を通じた存在の再考","r2-i3":"ARが日常と作品を接続する",
+  "ch-concept":"概念",
+  "concept-lbl":"概念 / Concept",
+  "concept-p1":"人間の交流方式を異なる物体間に適用することで、この対話の中で私たちは観察者として、また参加者としても存在することができます。物体化された私たちは、物体同士の対話に参加することが可能になるのです。",
+  "concept-p2":"作品の目的は、特定の見解を表現することではなく、これらの物体を通じて、荒唐無稽さをきっかけに、それぞれが作品に対して異なる角度から理解を深める中で、自己を見出すことにあります。この荒唐さは、あなたが仮想の物体について思索するという荒唐さに由来し、自己の種族に属さない対話に参加するという荒唐さ、自らを物体化する荒唐さ、そしてその荒唐さの中で意味を見つけ出せるということ自体の荒唐さを感じ取ることができるでしょう。この作品は、問いかけによってすべてを見直し、クリエイターは、伝道師のように自分の考えを自己満足的に宣伝すべきではない。人々が自分を神聖で特別な存在として自己陶酔するのと同じように、人間中心主義から脱却し、不条理を通して自分自身を発見し、誰もが不条理の中に自分の視点と存在意義を見出している。",
+  "ch-no1":"NO.01","no1-num":"NO.01",
+  "no1-obj":"石・トイレ・電気",
+  "no1-poem-lbl":"トイレの言葉",
+  "no1-poem":"私はただの容器だ\n人間が用を足すための\nでも、もし電気がなければ\n私は水を流せない\nもし石がなければ\n私はどこに立つべきか\n三者は異なる世界に存在する\nしかし同じ沈黙の中に在る",
+  "no1-desc":"石・トイレ・電気。これらは日常生活の中に深く根ざしたものでありながら、互いに全く異なる文脈に属している。石は自然の物質として人類の文明以前から存在する。トイレは人間の身体的需要を満たすための道具であり、電気は現代文明の血脈である。もし彼らが対話できるとしたら、その言葉はどんなものだろうか。",
+  "ch-no2":"NO.02","no2-num":"NO.02",
+  "no2-obj":"偽山・盆栽・電動扇風機",
+  "no2-desc":"これは過去形の叙述である。偽山と盆栽は中国江南の伝統的な庭園の典型的な要素を代表している。「樹は静かにしたいが、風は止まない」という言葉において、樹は客観的な存在を象徴し、風は流れ続ける時間を表す。電動扇風機のそよ風は、歳月とともに散り散りになった偽山と盆栽を吹き抜ける。かつては中国貴族に最も愛された装飾品であったが、旧時の貴族が消滅した後に破壊され、今は歴史の宝として再評価されている。",
+  "ch-no3":"NO.03","no3-num":"NO.03",
+  "no3-obj":"時計・スタンドライト・消波ブロック",
+  "no3-desc":"時計・スタンドライト・消波ブロック。これらは三つの全く異なるシーンのアイテムであるが、いずれも人間と客観的な世界との媒介者である。私たちは波の侵害を抵抗するために消波ブロックが必要であり、夜の訪れを抵抗するためにランプが必要であり、私たちの尺度を測るために時間が必要である。もしこれらのものが使用のコンテキストから完全に取り除かれたら、その意味はどこへ行くのだろうか。",
+  "ch-no4":"NO.04","no4-num":"NO.04",
+  "no4-obj":"招き猫・おもちゃ・ゴミ箱",
+  "no4-poem-lbl":"ゴミ箱の言葉",
+  "no4-poem":"迷いそのものが\n真に捨てられるのではなく\n人類自身である\n欲望が消え、想像力が消え\n逃避する能力が消えた後\n私は何を収めるのか",
+  "no4-desc":"これらの物体は人類の感情の派生物である。招き猫は人類の欲望の象徴であり、その意味は人類によって創られた。おもちゃは人類の想像力と現実世界を結ぶ媒介であり、夢と現実をつなぐ役を演じる。ゴミ箱は人類の捨てられたものへの態度を担い、精神の避難所となっている。",
+  "ch-no5":"NO.05","no5-num":"NO.05",
+  "no5-obj":"胃・心臓・膀胱",
+  "no5-desc":"人間は本質的に細胞が集合した融合体であり、器官の存在は意識を維持するためのものである。これは人間が実は肉体に寄生しているということを意味する。もし器官が人間から独立して存在し、自身の役割に戻ることができるならば、彼らも自我と個性を持つだろう。そうなれば、彼らの間にはどのような対話が生まれるのだろうか。",
+  "ch-film":"映像","film-lbl":"映像 · Documentary Film",
+  "back-lbl":"ホームへ戻る",
+  "ar-lbl":"AR で見る"
+},
+zh:{
+  "nav-ttl":"对话",
+  "h-cat":"新媒体","h-ttl":"对话","h-sub":"TAIWA / 对话 / DIALOGUE",
+  "h-yl":"年份","h-tl":"制作工具","h-il":"交互方式",
+  "h-int":"触控、AR、动画",
+  "c-lbl":"概念 / Concept",
+  "c1-head":"通过将角色拟人化，让观众参与不同物体之间的对话，历经自我再认识的过程",
+  "c1-p1":"在科学探索与人工智能迅速发展的时代，作品以荒诞性促使人们重新思考自身的存在价值与意义。借助AR虚拟形式，打破空间、时间与地点的束缚，每个人都可以选择不同的配置场景。",
+  "c1-p2":"这些虚拟对象存在于现实生活之中，却又不存在于现实空间。",
+  "ins-sum":"灵感来源",
+  "ins-p1":"第一次工业革命不仅改变了人类的生产与生活方式，也对精神世界造成了深刻冲击。上帝死了，人类成为新的造物主。随着AI的迅速崛起，人类引以为傲的大脑、理性与感性终将被机器超越，下一次工业革命即将到来。",
+  "ins-p2":"决定论揭示了人生的荒诞，令人想起第一次工业革命后人类信仰的崩塌。每一个微小的个体都随着时代的浪潮前行，人生的终极目标在于在这个世界中发现与探索自我的过程。创作者不应像传道者一样自以为是地传播自己的想法，而是需要重新追问：我们为何而存在？",
+  "h-scroll":"上下滚动切换",
+  "ch-research":"研究",
+  "r1-lbl":"调查","r1-head":"对话是人类沟通中最基本的形式",
+  "r1-p1":"从诞生到文明发展，推动了人类思想、文化与文明的进步。中国的茶馆曾作为城市的社交中心，是各种形式的对话开始与结束的地方。",
+  "r1-p2":"作品的目的不在于表达特定观点，而是通过这些物体营造的荒诞氛围，让观者各自以不同角度深化理解，并在这一过程中发现自我。",
+  "r2-lbl":"洞察","r2-i1":"在荒诞中发现自我","r2-i2":"通过物体重新审视存在","r2-i3":"AR将日常与作品连接",
+  "ch-concept":"概念",
+  "concept-lbl":"概念 / Concept",
+  "concept-p1":"将人类的交流方式应用于不同物体之间，在这场对话中，我们既可以作为观察者，也可以作为参与者而存在。被物体化的我们，得以参与物体之间的对话。",
+  "concept-p2":"作品的目的并非表达特定的观点，而是通过这些物体，以荒诞为契机，让每个人在以不同角度深化对作品理解的过程中，发现自我。这种荒诞来自于：你对虚拟物体进行思索这件事本身的荒诞，参与一场不属于自己种族的对话的荒诞，将自身物体化的荒诞，以及在这种荒诞之中竟然能够找到意义这件事本身的荒诞。这件作品通过追问使一切重新被审视，创作者不应像传道者一样自我满足地宣扬自己的想法。正如人们将自己视为神圣而特殊的存在而自我陶醉一样，我们需要脱离人类中心主义，通过荒诞发现自我，每个人都在荒诞之中找到属于自己的视角与存在意义。",
+  "ch-no1":"NO.01","no1-num":"NO.01",
+  "no1-obj":"石头・马桶・电",
+  "no1-poem-lbl":"马桶的话",
+  "no1-poem":"我只是一个容器\n供人类使用\n但若没有电\n我无法冲水\n若没有石头\n我该立于何处\n三者存在于不同的世界\n却同在这沉默之中",
+  "no1-desc":"石头、马桶、电。这些深深扎根于日常生活的事物，却属于完全不同的语境。石头作为自然物质，早于人类文明而存在；马桶是满足人类身体需求的工具；电是现代文明的血脉。若它们能够对话，那将是怎样的言语？",
+  "ch-no2":"NO.02","no2-num":"NO.02",
+  "no2-obj":"假山・盆栽・电风扇",
+  "no2-desc":"这是一段过去式的叙述。假山与盆栽代表了中国江南传统园林的典型特征。\u300c树欲静而风不止\u300d中，树象征客观存在，风代表不断流逝的时间。电风扇的微风吹拂着随岁月散落的假山与盆栽——曾是中国贵族最珍爱的装饰品，在旧时贵族消亡后遭到破坏，如今却被重新评价为历史珍宝。",
+  "ch-no3":"NO.03","no3-num":"NO.03",
+  "no3-obj":"时钟・台灯・消波块",
+  "no3-desc":"时钟、台灯、消波块。这三件来自完全不同场景的物品，却都是人类与客观世界之间的媒介。我们需要消波块来抵御波浪的侵蚀，需要台灯来抵御黑夜的降临，需要时间来丈量自身的尺度。若将它们完全从使用语境中抽离，它们的意义将去往何处？",
+  "ch-no4":"NO.04","no4-num":"NO.04",
+  "no4-obj":"招财猫・玩具・垃圾桶",
+  "no4-poem-lbl":"垃圾桶的话",
+  "no4-poem":"迷惘本身\n真正被丢弃的不是物\n而是人类自身\n欲望消失、想象力消失\n逃避的能力消失之后\n我将盛放什么",
+  "no4-desc":"这些物体是人类情感的衍生物。招财猫是人类欲望的象征，其意义由人类创造；玩具是连接人类想象力与现实世界的媒介；垃圾桶承载着人类对于被丢弃之物的态度，成为精神的避难所。",
+  "ch-no5":"NO.05","no5-num":"NO.05",
+  "no5-obj":"胃・心脏・膀胱",
+  "no5-desc":"人类本质上是细胞聚合而成的融合体，器官的存在是为了维持意识，这意味着人类其实是寄生在肉体之上的。如果器官能够独立于人类而存在，回归其本身的角色，它们也将拥有自我与个性，那么它们之间将会产生怎样的对话？",
+  "ch-film":"影像","film-lbl":"影像 · Documentary Film",
+  "back-lbl":"返回主页",
+  "ar-lbl":"AR 查看"
+},
+en:{
+  "nav-ttl":"Dialogue",
+  "h-cat":"New Media","h-ttl":"Dialogue","h-sub":"TAIWA / 对话 / DIALOGUE",
+  "h-yl":"Year","h-tl":"Tools","h-il":"Interaction",
+  "h-int":"Touch, AR, Animation",
+  "c-lbl":"Concept",
+  "c1-head":"Using personification to immerse viewers in dialogues between objects, guiding them toward self-reidentification",
+  "c1-p1":"In an era of rapid AI development, the work uses absurdity to prompt re-examination of one's own value and meaning. Through AR, spatial and temporal constraints dissolve — each viewer configures their own scene.",
+  "c1-p2":"These virtual objects exist within our real lives while remaining absent from physical space.",
+  "ins-sum":"Inspiration",
+  "ins-p1":"The first Industrial Revolution not only transformed modes of production but delivered a profound shock to the human spiritual world. God was declared dead; humanity became the new creator. As AI rises, the brain, reason, and sensibility humanity takes pride in will eventually be surpassed by machines, and the next revolution is coming.",
+  "ins-p2":"Determinism reveals life's absurdity. Each individual rides the waves of their era forward. The ultimate goal of a life lies in finding and exploring the self in this world. Creators should not propagate ideas like evangelists — instead, in a more equal relationship, ask anew: what do we exist for?",
+  "h-scroll":"Scroll to navigate",
+  "ch-research":"Research",
+  "r1-lbl":"Survey","r1-head":"Dialogue — the most fundamental form of human communication",
+  "r1-p1":"From its inception, dialogue has driven the progress of human thought, culture, and civilization. The Chinese teahouse once served as the social center of the city — a place where all forms of dialogue began and ended.",
+  "r1-p2":"The work's purpose is not to express a specific view, but to use the absurdity of these objects as a catalyst — letting each viewer deepen understanding from their own angle, and discover themselves in the process.",
+  "r2-lbl":"Insights","r2-i1":"Finding the self within absurdity","r2-i2":"Re-examining existence through objects","r2-i3":"AR connects daily life with the work",
+  "ch-concept":"Concept",
+  "concept-lbl":"Concept",
+  "concept-p1":"By applying human modes of interaction to dialogue between objects, we can exist within this dialogue both as observers and as participants. Objectified, we become capable of joining the conversation between things.",
+  "concept-p2":"The work's purpose is not to express a specific view, but to use these objects — with absurdity as its catalyst — so that each person, in deepening their understanding of the work from their own angle, may discover themselves. This absurdity stems from: the absurdity of contemplating virtual objects, the absurdity of participating in a dialogue that does not belong to your species, the absurdity of objectifying yourself, and the absurdity of being able to find meaning within absurdity itself. The work prompts a re-examination of everything through questioning. The creator should not self-satisfyingly propagate their own ideas like a preacher. Just as people intoxicate themselves by viewing themselves as sacred and special beings, we need to break free from anthropocentrism, discover ourselves through absurdity, and each find our own perspective and reason for existence within it.",
+  "ch-no1":"NO.01","no1-num":"NO.01",
+  "no1-obj":"Stone · Toilet · Electricity",
+  "no1-poem-lbl":"Words of the Toilet",
+  "no1-poem":"I am merely a vessel\nfor human use\nbut without electricity\nI cannot flush\nwithout stone\nwhere shall I stand\nthree things from different worlds\ntogether in this silence",
+  "no1-desc":"Stone, toilet, electricity. Three things deeply rooted in daily life, belonging to entirely different contexts. Stone as natural matter predates human civilization; the toilet serves human bodily need; electricity is the lifeblood of modern civilization. If they could speak to each other — what would they say?",
+  "ch-no2":"NO.02","no2-num":"NO.02",
+  "no2-obj":"Artificial Rock · Bonsai · Electric Fan",
+  "no2-desc":"A past-tense narrative. The artificial rock and bonsai represent classic elements of traditional Jiangnan gardens. In the saying 'the tree wishes for stillness, but the wind will not cease,' the tree symbolizes objective existence while the wind represents ever-flowing time. The electric fan's breeze passes through rocks and bonsai scattered by the years — once cherished by Chinese nobility, destroyed after the old aristocracy vanished, now re-evaluated as historical treasures.",
+  "ch-no3":"NO.03","no3-num":"NO.03",
+  "no3-obj":"Clock · Desk Lamp · Breakwater Block",
+  "no3-desc":"Clock, desk lamp, breakwater block. Three objects from entirely different scenes, yet each a mediator between humans and the objective world. We need the breakwater to resist waves, the lamp to resist darkness, time to measure our scale. Once removed from their context of use entirely — where does their meaning go?",
+  "ch-no4":"NO.04","no4-num":"NO.04",
+  "no4-obj":"Lucky Cat · Toy · Trash Can",
+  "no4-poem-lbl":"Words of the Trash Can",
+  "no4-poem":"Confusion itself —\nwhat is truly discarded\nis not the object\nbut humanity itself\nafter desire fades, imagination fades\nthe capacity to escape fades\nwhat will I hold then",
+  "no4-desc":"These objects are derivatives of human emotion. The lucky cat symbolizes human desire — its meaning created by us. The toy mediates between imagination and reality. The trash can bears our attitude toward discarded things, becoming a refuge for the spirit.",
+  "ch-no5":"NO.05","no5-num":"NO.05",
+  "no5-obj":"Stomach · Heart · Bladder",
+  "no5-desc":"Humans are essentially a fusion of aggregated cells; organs exist to maintain consciousness — meaning humans are in fact parasitic upon the body. If organs could exist independently from humans, returning to their own roles, they too would possess selfhood and individuality. What kind of dialogue would then emerge between them?",
+  "ch-film":"Film","film-lbl":"Film · Documentary",
+  "back-lbl":"Back to Home",
+  "ar-lbl":"View in AR"
+}
+};
+
+let lang = "ja";
+try { lang = localStorage.getItem("hl-lang") || "ja"; } catch(e) {}
+
+const IDS = [
+  "nav-ttl","h-cat","h-ttl","h-sub","h-yl","h-tl","h-il","h-int",
+  "c-lbl","c1-head","c1-p1","c1-p2","ins-sum","ins-p1","ins-p2","h-scroll",
+  "ch-research","r1-lbl","r1-head","r1-p1","r1-p2","r2-lbl","r2-i1","r2-i2","r2-i3",
+  "ch-concept","concept-lbl","concept-p1","concept-p2",
+  "ch-no1","no1-num","no1-obj","no1-poem-lbl","no1-poem","no1-desc",
+  "ch-no2","no2-num","no2-obj","no2-desc",
+  "ch-no3","no3-num","no3-obj","no3-desc",
+  "ch-no4","no4-num","no4-obj","no4-poem-lbl","no4-poem","no4-desc",
+  "ch-no5","no5-num","no5-obj","no5-desc",
+  "ch-film","film-lbl","back-lbl"
+];
+
+function applyLang(l) {
+  lang = l;
+  try { localStorage.setItem("hl-lang", l); } catch(e) {}
+  document.documentElement.setAttribute("lang", l === "zh" ? "zh-CN" : l);
+  document.documentElement.className = "lang-" + l;
+  const d = L[l] || L.ja;
+  document.title = (d["h-ttl"] || "対話") + " — 何梁宇";
+  IDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && d[id] !== undefined) el.textContent = d[id];
+  });
+  document.querySelectorAll(".ar-lbl-text").forEach(el => {
+    if (d["ar-lbl"]) el.textContent = d["ar-lbl"];
+  });
+}
+
+const cycleBtn = document.getElementById("lang-cycle-btn");
+const langs = ["ja","zh","en"];
+function cycleLang() { const idx = langs.indexOf(lang); applyLang(langs[(idx+1) % langs.length]); }
+if (cycleBtn) cycleBtn.addEventListener("click", cycleLang);
+
+function initTrack(id) {
+  const track = document.getElementById("track-" + id); if (!track) return;
+  const slides = track.querySelectorAll(".slide"); const n = slides.length;
+  const dotsEl = document.getElementById("dots-" + id);
+  if (dotsEl) {
+    dotsEl.innerHTML = "";
+    for (let i = 0; i < n; i++) {
+      const d = document.createElement("div");
+      d.className = "dot" + (i === 0 ? " on" : "");
+      d.onclick = () => go(i);
+      dotsEl.appendChild(d);
+    }
+  }
+  const curIdx = () => Math.round(track.scrollLeft / track.clientWidth);
+  const go = i => track.scrollTo({ left: i * track.clientWidth, behavior: "smooth" });
+  function upd() { const i = curIdx(); if (dotsEl) dotsEl.querySelectorAll(".dot").forEach((d,j) => d.classList.toggle("on", j===i)); }
+  track.addEventListener("scroll", upd, { passive:true }); upd();
+}
+["research","concept"].forEach(initTrack);
+
+
+}
+
+applyLang(lang);
+
+/* ─ AR: iOS以外はリンク無効化 ─ */
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+if (!isIOS) {
+  document.querySelectorAll('.ar-panel').forEach(el => {
+    el.removeAttribute('href');
+    el.removeAttribute('rel');
+    el.classList.add('ar-unavail');
+    el.querySelector('.ar-text').textContent = 'AR — iPhone / iPad';
+  });
+}
+</script>
+</body>
+</html>
