@@ -1,0 +1,45 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>shot</title>
+<style>
+  html,body{margin:0;overflow:hidden;background:#555}
+  #wrap{position:absolute;inset:0 auto 0 0}
+  iframe{border:0;display:block;height:100vh}
+  #diag{position:fixed;inset:0;background:#fff;color:#111;font:12px/1.45 monospace;padding:10px;overflow:auto;white-space:pre-wrap;z-index:9}
+</style>
+<div id="wrap"><iframe id="f" src="index.html"></iframe></div>
+<pre id="diag" hidden></pre>
+<script>
+  const q = new URLSearchParams(location.search);
+  const y = +(q.get('y') || 0);
+  const lang = q.get('lang') || 'zh';
+  const diag = q.get('diag');
+  const fw = q.get('w');
+  const f = document.getElementById('f');
+  f.style.width = fw ? fw + 'px' : '100vw';
+  f.addEventListener('load', function () {
+    const w = this.contentWindow, d = this.contentDocument;
+    const clicks = { zh: 0, en: 1, ja: 2 }[lang] || 0;
+    for (let i = 0; i < clicks; i++) d.getElementById('lang-toggle').click();
+    d.documentElement.style.scrollBehavior = 'auto';
+    d.querySelectorAll('.reveal').forEach(n => n.classList.add('is-visible'));
+    w.scrollTo(0, y);
+    w.dispatchEvent(new Event('scroll'));
+    if (diag) {
+      const vw = d.documentElement.clientWidth, rows = [];
+      d.querySelectorAll('body *').forEach(function (el) {
+        const r = el.getBoundingClientRect();
+        if (!r.width && !r.height) return;
+        if (r.right > vw + 1 || r.left < -1) {
+          if (el.closest('.comparison-wrap')) return;
+          const cls = (el.className && typeof el.className === 'string') ? '.' + el.className.trim().split(/\s+/).join('.') : '';
+          rows.push(Math.round(r.left) + '…' + Math.round(r.right) + ' w=' + Math.round(r.width) + '  ' + (el.tagName.toLowerCase() + cls).slice(0, 88));
+        }
+      });
+      const out = document.getElementById('diag');
+      out.hidden = false;
+      out.textContent = 'viewport=' + vw + ' scrollW=' + d.documentElement.scrollWidth +
+        ' bodyScrollW=' + d.body.scrollWidth + '\nOVERFLOW (' + rows.length + '), table excluded:\n' + rows.slice(0, 50).join('\n');
+    }
+  });
+</script>

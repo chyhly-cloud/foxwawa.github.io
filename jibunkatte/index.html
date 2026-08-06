@@ -220,7 +220,7 @@ p{margin:0}
   .interaction-diagram .interaction-society{font-size:34px}
   .interaction-diagram .interaction-gene{font-size:19px}
 }
-.mindmap{width:max(100%,2700px);height:auto;display:block}
+.mindmap,.wide-band .mindmap{width:min(100%,1500px);max-width:1500px;height:auto;margin:0 auto;display:block}
 .mindmap .mm-line{stroke:#2f5f9e;stroke-width:1.6}
 .mindmap .mm-dash{stroke:var(--ink-2);stroke-width:1.6;stroke-dasharray:7 6}
 .mindmap .mm-arrow{stroke:var(--ink-2);stroke-width:2.4;stroke-linejoin:round}
@@ -235,24 +235,32 @@ p{margin:0}
 .wide-band{margin:clamp(2.5rem,6vh,5rem) auto 0;max-width:var(--max);padding:0 var(--gutter);
   overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin}
 .wide-band img{width:100%;height:auto}
-.wide-band:has(.mindmap){position:relative;scrollbar-color:#7089ae var(--rule)}
-.wide-band:has(.mindmap)::-webkit-scrollbar{height:8px}
-.wide-band:has(.mindmap)::-webkit-scrollbar-track{background:var(--rule)}
-.wide-band:has(.mindmap)::-webkit-scrollbar-thumb{background:#7089ae;border-radius:99px}
-.mindmap-cue{display:flex;align-items:center;justify-content:center;gap:1rem;width:min(34rem,calc(100% - var(--gutter)*2));
-  margin:clamp(2.5rem,6vh,5rem) auto 1rem;padding:.72rem 1rem;border:1px solid #7089ae;background:#e6edf6;
-  font-family:var(--sans);font-size:15px;font-weight:600;line-height:1.4;color:#1a3560}
-.mindmap-cue::before,.mindmap-cue::after{font-size:1.45rem;line-height:1;color:#2f5f9e}
-.mindmap-cue::before{content:"←"}.mindmap-cue::after{content:"→"}
+.wide-band:has(.mindmap){position:relative;scrollbar-width:none}
+.wide-band:has(.mindmap)::-webkit-scrollbar{height:0}
+.mindmap-cue{display:flex;align-items:center;justify-content:center;gap:.35rem;width:max-content;max-width:calc(100% - var(--gutter)*2);
+  margin:clamp(.75rem,1.8vh,1.4rem) auto .3rem;padding:0 .1rem .1rem;border:0;
+  background:transparent;opacity:.68;
+  font-family:var(--sans);font-size:clamp(12px,.82vw,13px);font-weight:500;line-height:1.4;color:var(--muted)}
+.mindmap-cue::before,.mindmap-cue::after{font-size:1rem;line-height:1;color:#2f5f9e;animation:swipeCue 1.8s ease-in-out infinite}
+.mindmap-cue::before{content:"←";animation-delay:-.9s}.mindmap-cue::after{content:"→"}
+@keyframes swipeCue{0%,100%{opacity:.28;transform:translateX(0)}50%{opacity:1;transform:translateX(4px)}}
+@media(prefers-reduced-motion:reduce){.mindmap-cue::before,.mindmap-cue::after{animation:none}}
+@media(max-width:699px){
+  .wide-band:has(.mindmap){padding-inline:1rem}
+  .mindmap,.wide-band .mindmap{width:1300px;max-width:none}
+}
 
 /* ---------- 洞察 → 霊感 → 造形：APOSSIBLE式の動く関係線 ---------- */
 .deriv{margin:clamp(3.5rem,7vh,6rem) auto 0;max-width:var(--max);padding:0 var(--gutter)}
 .deriv .section-heading{margin-bottom:clamp(1.7rem,3.2vw,2.8rem)}
-.deriv-flow{overflow-x:auto;border-top:1px solid var(--rule-2);overscroll-behavior-inline:contain;scrollbar-width:thin}
+.deriv-flow{position:relative;overflow-x:auto;border-top:0;overscroll-behavior-inline:contain;scrollbar-width:thin}
+.deriv-flow::before,.deriv-flow::after{content:"";position:absolute;z-index:6;top:.25rem;bottom:.25rem;width:2.2rem;pointer-events:none;opacity:0;transition:opacity .25s ease}
+.deriv-flow::before{left:0;background:linear-gradient(90deg,var(--paper),transparent)}
+.deriv-flow::after{right:0;background:linear-gradient(270deg,var(--paper),transparent)}
 .deriv-network{position:relative;isolation:isolate;display:grid;min-width:980px;
   grid-template-columns:minmax(7rem,.52fr) minmax(15rem,1.35fr) minmax(4.5rem,.36fr)
     minmax(11rem,.95fr) minmax(4.5rem,.36fr) minmax(10rem,.85fr);
-  grid-template-rows:3.2rem repeat(6,minmax(5.25rem,auto));border-bottom:1px solid var(--rule)}
+  grid-template-rows:3.2rem repeat(6,minmax(5.25rem,auto));border-bottom:0}
 .network-head{position:relative;z-index:2;display:flex;align-items:center;padding:0 clamp(1.25rem,2.5vw,2.4rem);
   border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:14px;font-weight:700;
   letter-spacing:1.7px;text-transform:uppercase;color:var(--muted)}
@@ -296,7 +304,10 @@ p{margin:0}
 .network-insight.is-active::before{height:100%}
 .society{--route-accent:var(--s1)}.life{--route-accent:var(--s2)}.individual{--route-accent:var(--s3)}
 @media(max-width:760px){
-  .deriv-flow{margin-right:calc(var(--gutter) * -1);padding-right:var(--gutter)}
+  .deriv-flow{margin-right:calc(var(--gutter) * -1);padding-right:var(--gutter);scrollbar-width:none}
+  .deriv-flow::-webkit-scrollbar{height:0}
+  .deriv-flow::before,.deriv-flow::after{opacity:.78}
+  .deriv-flow::after{content:none}
   .deriv-network{min-width:920px}
 }
 @media(prefers-reduced-motion:reduce){
@@ -547,7 +558,7 @@ p{margin:0}
 .source-board img{position:static!important;left:auto!important;right:auto!important;top:auto!important;
   display:block;width:100%;height:auto}
 .source-board>figcaption{position:static;width:max-content;max-width:100%;margin-top:.65rem;padding:0;
-  font-family:var(--mono);font-size:clamp(13px,.95vw,15px);line-height:1.45;letter-spacing:.35px;color:var(--muted)}
+  font-family:var(--mono);font-size:clamp(14px,.95vw,16px);line-height:1.45;letter-spacing:.35px;color:var(--muted)}
 
 /* society — each source is its own loose evidence fragment, with a protected
    central corridor for the moving text. */
@@ -643,25 +654,25 @@ p{margin:0}
 /* individual — each step follows the portfolio's actual sequence. The centre
    remains clear for the moving explanation while evidence is distributed on
    both sides as separate sketchbook fragments. */
-.individual-experiment{min-height:clamp(3700px,470vh,4400px)}
-.body-module-study{left:1%;top:1%;width:30%}
-.module-analogy{position:relative;width:94%;margin-left:1%;aspect-ratio:16/7.4;
+.individual-experiment{min-height:clamp(3000px,365vh,3400px)}
+.body-module-study{left:1%;top:1%;width:19%}
+.module-analogy{position:relative;width:100%;margin-left:0;aspect-ratio:1806/1266;
   overflow:hidden;background:transparent}
-.module-analogy img{width:100%!important;height:108%!important;object-fit:contain;object-position:center top;
-  mix-blend-mode:normal;clip-path:inset(0 0 8% 0)}
+.module-analogy img{width:100%!important;height:112%!important;object-fit:contain;object-position:center top;
+  mix-blend-mode:multiply;clip-path:inset(2% 1.5% 14% 1.5%)}
 .body-module-study::after{content:none}
 
 /* The portfolio reads the body experiment as three consecutive plates:
    intact body → separated modules → a dense re-combination. Keep the
    sequence readable, but let each plate occupy a different side of the
    protected centre so the evidence feels dispersed around the text. */
-.body-group-study{right:1%;top:10%;width:28.5%}
-.body-parts-study{left:2%;top:18%;width:27.5%}
-.body-pile-study{right:.8%;top:28%;width:30%}
-.body-sequence-plate{position:relative;height:clamp(230px,20vw,310px);overflow:hidden;background:transparent}
-.body-sequence-plate img{position:absolute!important;inset:0!important;width:100%!important;height:108%!important;
-  object-fit:contain;object-position:center top;filter:drop-shadow(0 2px 1px rgba(13,15,17,.12));
-  clip-path:inset(0 0 8% 0)}
+.body-group-study{right:1%;top:5.5%;width:18%}
+.body-parts-study{left:1%;top:15%;width:18%}
+.body-pile-study{display:none}
+.body-sequence-plate{position:relative;height:auto;aspect-ratio:1504/1114;overflow:hidden;background:transparent}
+.body-sequence-plate img{position:absolute!important;inset:0!important;width:100%!important;height:112%!important;
+  object-fit:contain;object-position:center top;filter:none;mix-blend-mode:multiply;
+  clip-path:inset(2% 1.5% 14% 1.5%)}
 .body-sequence-step figcaption{margin-top:.1rem}
 .body-pile-stage{position:relative;height:clamp(250px,22vw,340px);overflow:visible}
 .body-pile-stage img{position:absolute!important;width:var(--w)!important;height:auto!important;
@@ -677,21 +688,21 @@ p{margin:0}
 .fragment-stage img{position:absolute!important;height:auto!important;object-fit:contain;
   mix-blend-mode:normal;transform:none;transform-origin:center;
   filter:drop-shadow(0 2px 1px rgba(13,15,17,.12))}
-.body-combination-field{position:absolute;left:0;right:0;top:34%;height:15%;z-index:5;pointer-events:none}
+.body-combination-field{position:absolute;left:0;right:0;top:27%;height:21%;z-index:1;pointer-events:none}
 .body-combination-field img{position:absolute;width:var(--w);height:auto;object-fit:contain;
   left:var(--x);right:auto;top:var(--y);transform:none;
-  filter:drop-shadow(0 2px 2px rgba(13,15,17,.13))}
-.body-combination-field .frag-01{--x:1%;--y:3%;--w:14%}
-.body-combination-field .frag-02{--x:15%;--y:47%;--w:15%}
-.body-combination-field .frag-03{--x:1.5%;--y:67%;--w:16%}
-.body-combination-field .frag-04{--x:84%;--y:0%;--w:14%}
-.body-combination-field .frag-05{--x:69.5%;--y:46%;--w:17%}
-.body-combination-field .frag-06{--x:84%;--y:70%;--w:15%}
+  filter:none;mix-blend-mode:multiply}
+.body-combination-field .frag-01{--x:2%;--y:2%;--w:12%}
+.body-combination-field .frag-02{--x:14%;--y:57%;--w:13%}
+.body-combination-field .frag-03{--x:1%;--y:77%;--w:14%}
+.body-combination-field .frag-04{--x:87%;--y:1%;--w:12%}
+.body-combination-field .frag-05{--x:73%;--y:57%;--w:13%}
+.body-combination-field .frag-06{--x:87%;--y:77%;--w:13%}
 
 /* Plaster is one material experiment: monochrome making photographs on the
    left, followed by a cut-out, warm-colour result on the right. */
-.body-plaster-process{left:.4%;top:50%;width:32.8%}
-.casting-process{position:relative;width:100%;height:clamp(360px,31vw,480px);margin-left:0}
+.body-plaster-process{left:.5%;top:46%;width:22%}
+.casting-process{position:relative;width:100%;height:clamp(280px,22vw,350px);margin-left:0}
 .casting-process::before,.scan-grid::before,.print-result::before{content:none}
 .casting-process img{position:absolute!important;width:var(--pw,34%)!important;height:var(--ph,64%)!important;
   left:var(--px,0)!important;top:var(--py,0)!important;object-fit:cover;
@@ -701,8 +712,8 @@ p{margin:0}
 .casting-process img:nth-child(2){--px:52%;--py:2%;--pw:48%;--ph:45%}
 .casting-process img:nth-child(3){--px:0%;--py:51%;--pw:48%;--ph:45%}
 .casting-process img:nth-child(4){--px:52%;--py:51%;--pw:48%;--ph:45%}
-.body-plaster-result{right:.3%;top:51%;width:32.8%}
-.plaster-result{position:relative;height:clamp(340px,30vw,460px);overflow:visible}
+.body-plaster-result{right:.5%;top:46.5%;width:22%}
+.plaster-result{position:relative;height:clamp(280px,22vw,350px);overflow:visible}
 .plaster-result img{position:absolute!important;left:0!important;top:-2%!important;width:100%!important;height:104%!important;
   object-fit:contain;object-position:50% 47%;filter:none;
   transform:none;clip-path:none;mix-blend-mode:normal}
@@ -710,12 +721,18 @@ p{margin:0}
 
 /* Material comparison: newspaper remains on the left, clay on the right.
    Every photograph uses the irregular hand-cut crop visible in the portfolio. */
-.body-material-paper{left:1%;top:67%;width:29.5%}
-.body-material-clay{right:.8%;top:69%;width:29.5%}
-.material-cutouts{position:relative;height:clamp(330px,29vw,440px);overflow:visible}
+.body-material-paper{left:1%;top:61.5%;width:21%}
+.body-material-clay{right:1%;top:62.5%;width:21%}
+.material-cutouts{position:relative;height:clamp(260px,21vw,330px);overflow:visible}
 .material-cutouts img{position:absolute!important;width:var(--mw)!important;height:var(--mh)!important;
   left:var(--mx)!important;top:var(--my)!important;object-fit:contain;
-  transform:none;filter:drop-shadow(0 4px 6px rgba(13,15,17,.13));clip-path:none}
+  transform:none;filter:drop-shadow(0 4px 6px rgba(13,15,17,.13))}
+.paper-cutouts img:nth-child(1){clip-path:polygon(8% 5%,32% 1%,55% 4%,60% 43%,75% 55%,96% 68%,98% 90%,89% 98%,58% 95%,39% 81%,18% 77%,6% 60%,3% 28%)}
+.paper-cutouts img:nth-child(2){clip-path:polygon(20% 4%,52% 0,80% 5%,92% 30%,95% 68%,84% 94%,65% 99%,37% 96%,19% 80%,6% 54%,5% 22%)}
+.paper-cutouts img:nth-child(3){clip-path:polygon(6% 4%,32% 0,53% 10%,59% 54%,78% 62%,97% 69%,96% 94%,79% 99%,53% 95%,33% 87%,18% 75%,5% 56%)}
+.clay-cutouts img:nth-child(1){clip-path:polygon(6% 10%,22% 2%,43% 2%,58% 14%,77% 27%,95% 42%,95% 78%,83% 94%,54% 98%,30% 92%,10% 75%,2% 44%)}
+.clay-cutouts img:nth-child(2){clip-path:polygon(28% 2%,58% 0,84% 7%,99% 24%,95% 50%,90% 72%,84% 94%,59% 98%,40% 93%,20% 81%,5% 59%,4% 30%,15% 10%)}
+.clay-cutouts img:nth-child(3){clip-path:polygon(4% 15%,23% 2%,48% 4%,68% 11%,95% 17%,99% 51%,96% 83%,76% 97%,47% 96%,22% 89%,5% 70%)}
 .paper-cutouts img:nth-child(1){--mx:-2%;--my:22%;--mw:46%;--mh:70%}
 .paper-cutouts img:nth-child(2){--mx:29%;--my:0%;--mw:38%;--mh:76%}
 .paper-cutouts img:nth-child(3){--mx:58%;--my:23%;--mw:43%;--mh:68%}
@@ -725,8 +742,8 @@ p{margin:0}
 
 /* 3D printing is the final, selected method. The scan stays monochrome; only
    the printed outcomes return to colour and are cropped as individual pieces. */
-.body-scan-study{left:.1%;top:82%;width:34%}
-.scan-grid{position:relative;width:100%;height:clamp(420px,36vw,540px);margin-left:0}
+.body-scan-study{left:.5%;top:76%;width:22%}
+.scan-grid{position:relative;width:100%;height:clamp(310px,26vw,390px);margin-left:0}
 .scan-grid img{position:absolute!important;filter:grayscale(1) contrast(1.03)}
 .scan-grid img:first-child{left:24%!important;top:14%!important;width:73%!important;height:75%!important;
   object-fit:cover;opacity:.52;clip-path:none;
@@ -739,17 +756,17 @@ p{margin:0}
   clip-path:none;transform:none;opacity:.9}
 .scan-grid img:nth-child(5){left:10%!important;top:52%!important;width:35%!important;height:44%!important;object-fit:cover;
   clip-path:none;transform:none;opacity:.9}
-.body-print-study{right:.1%;top:84%;width:34%}
-.print-result{position:relative;height:clamp(500px,44vw,660px);overflow:visible}
+.body-print-study{right:.5%;top:76.5%;width:23%}
+.print-result{position:relative;height:clamp(360px,31vw,470px);overflow:visible}
 .print-result::before{content:none!important;background:none!important;box-shadow:none!important}
-.print-result-asset{position:absolute;width:var(--tw);height:var(--th);left:var(--tx);top:var(--ty);display:block;border:0;
+.print-result-asset{position:absolute!important;width:var(--tw)!important;height:var(--th)!important;left:var(--tx)!important;top:var(--ty)!important;display:block;border:0;
   filter:saturate(.82) contrast(1.03);z-index:1}
 .print-result-asset:nth-child(1){--tx:2%;--ty:19%;--tw:29%;--th:55%}
 .print-result-asset:nth-child(2){--tx:28%;--ty:2%;--tw:27%;--th:70%}
 .print-result-asset:nth-child(3){--tx:52%;--ty:22%;--tw:27%;--th:63%}
 .print-result-asset:nth-child(4){--tx:73%;--ty:0%;--tw:26%;--th:68%}
 .print-result-asset:nth-child(5){--tx:72%;--ty:54%;--tw:24%;--th:51%}
-.body-print-study .body-conclusion{margin:1rem 0 0;font-size:clamp(12px,.88vw,14px);line-height:1.75;color:var(--ink-2)}
+.body-print-study .body-conclusion{margin:1rem 0 0;font-size:clamp(14px,.88vw,16px);line-height:1.75;color:var(--ink-2)}
 
 @media(max-width:999px){
   .source-board{position:relative;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
@@ -765,8 +782,8 @@ p{margin:0}
   #experiment .experiment-beat.s2 .life-rule-note{grid-column:1/-1;width:min(100%,38rem)!important;
     justify-self:end;margin-top:.2rem}
   .individual-experiment{min-height:0}
-  .module-analogy{width:92%;margin-left:2%}
-  .body-sequence-plate{height:clamp(250px,52vw,380px)}
+  .module-analogy{width:100%;margin-left:0;aspect-ratio:1806/1266}
+  .body-sequence-plate{height:auto;aspect-ratio:1504/1114}
   .body-pile-stage{height:clamp(270px,58vw,410px)}
   .body-combination-field{position:relative;top:auto;height:clamp(720px,160vw,1050px)}
   .casting-process{height:clamp(310px,76vw,480px)}
@@ -781,7 +798,7 @@ p{margin:0}
   #experiment .experiment-beat.s2 .beat-scene{grid-template-columns:1fr}
   #experiment .experiment-beat.s1 .society-symbols,
   #experiment .experiment-beat.s2 .life-route{grid-column:auto}
-  .body-sequence-plate{height:clamp(240px,65vw,350px)}
+  .body-sequence-plate{height:auto;aspect-ratio:1504/1114}
   .body-pile-stage{height:300px}
   .body-combination-field{height:690px}
   .casting-process{height:330px}
@@ -789,6 +806,134 @@ p{margin:0}
   .material-cutouts{height:350px}
   .scan-grid{height:380px}
   .print-result{height:410px}
+}
+
+/* The individual experiment keeps a quiet reading column on small screens,
+   while its evidence becomes a deliberate two-column contact sheet. The
+   reassembled fragments are spread across their own plate instead of being
+   stacked on top of the copy. */
+@media(max-width:999px){
+  #experiment .individual-experiment .beat-scene{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.8rem 1rem;
+    align-items:start;margin-bottom:0
+  }
+  #experiment .individual-experiment .source-board{
+    position:relative!important;left:auto!important;right:auto!important;top:auto!important;
+    width:100%!important;margin:0;transform:none!important
+  }
+  #experiment .individual-experiment .body-module-study{grid-column:1/-1;max-width:31rem;justify-self:start}
+  #experiment .individual-experiment .body-group-study{grid-column:1}
+  #experiment .individual-experiment .body-parts-study{grid-column:2}
+  #experiment .individual-experiment .body-pile-study{display:none}
+  #experiment .individual-experiment .body-combination-field{
+    grid-column:1/-1;position:relative;left:auto;right:auto;top:auto;width:100%;
+    height:clamp(290px,74vw,390px);margin:.1rem 0;z-index:0
+  }
+  #experiment .individual-experiment .body-plaster-process{grid-column:1}
+  #experiment .individual-experiment .body-plaster-result{grid-column:2}
+  #experiment .individual-experiment .body-material-paper{grid-column:1}
+  #experiment .individual-experiment .body-material-clay{grid-column:2}
+  #experiment .individual-experiment .body-scan-study{grid-column:1/-1;max-width:38rem;justify-self:center}
+  #experiment .individual-experiment .body-print-study{grid-column:1/-1;max-width:38rem;justify-self:center}
+  #experiment .individual-experiment .casting-process{height:clamp(260px,62vw,360px)}
+  #experiment .individual-experiment .plaster-result{height:clamp(260px,62vw,360px)}
+  #experiment .individual-experiment .material-cutouts{height:clamp(250px,59vw,340px)}
+  #experiment .individual-experiment .scan-grid{height:clamp(280px,70vw,390px);margin-top:0}
+  #experiment .individual-experiment .print-result{height:clamp(330px,80vw,450px)}
+  #experiment .individual-experiment .body-combination-field .frag-01{--x:2%;--y:2%;--w:29%}
+  #experiment .individual-experiment .body-combination-field .frag-02{--x:35%;--y:4%;--w:29%}
+  #experiment .individual-experiment .body-combination-field .frag-03{--x:68%;--y:2%;--w:29%}
+  #experiment .individual-experiment .body-combination-field .frag-04{--x:8%;--y:53%;--w:29%}
+  #experiment .individual-experiment .body-combination-field .frag-05{--x:39%;--y:55%;--w:30%}
+  #experiment .individual-experiment .body-combination-field .frag-06{--x:71%;--y:53%;--w:28%}
+}
+@media(max-width:600px){
+  #experiment .individual-experiment .beat-scene{grid-template-columns:1fr;gap:1.7rem}
+  #experiment .individual-experiment .body-module-study,
+  #experiment .individual-experiment .body-group-study,
+  #experiment .individual-experiment .body-parts-study,
+  #experiment .individual-experiment .body-plaster-process,
+  #experiment .individual-experiment .body-plaster-result,
+  #experiment .individual-experiment .body-material-paper,
+  #experiment .individual-experiment .body-material-clay,
+  #experiment .individual-experiment .body-scan-study,
+  #experiment .individual-experiment .body-print-study{grid-column:1;max-width:100%;justify-self:stretch}
+  #experiment .individual-experiment .body-combination-field{grid-column:1;height:clamp(280px,92vw,370px)}
+}
+
+/* Final mobile pass: keep the reading column inside the viewport, give each
+   evidence plate breathing room, and use the extracted SVG silhouettes as
+   quiet objects rather than oversized sticker-like blocks. */
+@media(max-width:600px){
+  #experiment .individual-experiment .carriage{
+    width:100%;padding-inline:1rem;box-sizing:border-box
+  }
+  #experiment .individual-experiment .scale-title{
+    font-size:clamp(1.55rem,7vw,2rem);line-height:1.18;overflow-wrap:anywhere
+  }
+  #experiment .individual-experiment .body-t{
+    font-size:14px;line-height:1.8;overflow-wrap:anywhere;word-break:break-word
+  }
+  #experiment .individual-experiment .body-conclusion{
+    overflow-wrap:anywhere;word-break:break-word
+  }
+  /* Source plates should follow the viewport rather than creating a second
+     horizontal scroll region on phones. Keep a quiet page margin and let the
+     extracted artwork breathe inside it. */
+  #experiment .individual-experiment .source-board{
+    width:calc(100% - 2rem)!important;max-width:24rem!important;
+    margin-inline:1rem!important;box-sizing:border-box
+  }
+  #experiment .individual-experiment .body-module-study,
+  #experiment .individual-experiment .body-scan-study,
+  #experiment .individual-experiment .body-print-study{
+    max-width:22rem;justify-self:center
+  }
+  #experiment .individual-experiment .body-group-study,
+  #experiment .individual-experiment .body-parts-study{
+    max-width:19rem;justify-self:center
+  }
+  #experiment .individual-experiment .body-plaster-process,
+  #experiment .individual-experiment .body-plaster-result,
+  #experiment .individual-experiment .body-material-paper,
+  #experiment .individual-experiment .body-material-clay{
+    max-width:20.5rem;justify-self:center
+  }
+  #experiment .individual-experiment .body-module-study,
+  #experiment .individual-experiment .body-scan-study,
+  #experiment .individual-experiment .body-print-study{max-width:22rem;justify-self:center}
+  #experiment .individual-experiment .module-analogy,
+  #experiment .individual-experiment .body-sequence-plate,
+  #experiment .individual-experiment .casting-process,
+  #experiment .individual-experiment .plaster-result,
+  #experiment .individual-experiment .material-cutouts,
+  #experiment .individual-experiment .scan-grid,
+  #experiment .individual-experiment .print-result{width:100%;box-sizing:border-box}
+  #experiment .individual-experiment .plaster-result-asset{
+    left:12%!important;top:4%!important;width:76%!important;height:88%!important
+  }
+  #experiment .individual-experiment .body-combination-field{overflow:hidden}
+  #experiment .individual-experiment .body-combination-field .frag-01{--x:4%;--y:2%;--w:26%}
+  #experiment .individual-experiment .body-combination-field .frag-02{--x:37%;--y:4%;--w:26%}
+  #experiment .individual-experiment .body-combination-field .frag-03{--x:70%;--y:2%;--w:26%}
+  #experiment .individual-experiment .body-combination-field .frag-04{--x:8%;--y:54%;--w:26%}
+  #experiment .individual-experiment .body-combination-field .frag-05{--x:40%;--y:57%;--w:27%}
+  #experiment .individual-experiment .body-combination-field .frag-06{--x:72%;--y:54%;--w:26%}
+  #experiment .individual-experiment .paper-cutouts img:nth-child(1){--mx:0%;--my:24%;--mw:43%;--mh:66%}
+  #experiment .individual-experiment .paper-cutouts img:nth-child(2){--mx:30%;--my:2%;--mw:34%;--mh:70%}
+  #experiment .individual-experiment .paper-cutouts img:nth-child(3){--mx:57%;--my:25%;--mw:38%;--mh:64%}
+  #experiment .individual-experiment .clay-cutouts img:nth-child(1){--mx:0%;--my:43%;--mw:40%;--mh:40%}
+  #experiment .individual-experiment .clay-cutouts img:nth-child(2){--mx:30%;--my:2%;--mw:34%;--mh:72%}
+  #experiment .individual-experiment .clay-cutouts img:nth-child(3){--mx:58%;--my:43%;--mw:38%;--mh:39%}
+  #experiment .individual-experiment .print-result-asset:nth-child(1){--tx:4%;--ty:7%;--tw:25%;--th:42%}
+  #experiment .individual-experiment .print-result-asset:nth-child(2){--tx:28%;--ty:0%;--tw:25%;--th:52%}
+  #experiment .individual-experiment .print-result-asset:nth-child(3){--tx:55%;--ty:6%;--tw:24%;--th:45%}
+  #experiment .individual-experiment .print-result-asset:nth-child(4){--tx:12%;--ty:52%;--tw:25%;--th:45%}
+  #experiment .individual-experiment .print-result-asset:nth-child(5){--tx:62%;--ty:49%;--tw:25%;--th:46%}
+  #experiment .individual-experiment .body-sequence-plate img,
+  #experiment .individual-experiment .body-combination-field img,
+  #experiment .individual-experiment .material-cutouts img,
+  #experiment .individual-experiment .print-result-asset{filter:none!important}
 }
 
 /* ---------- 06 plan B ---------- */
@@ -1660,7 +1805,7 @@ p{margin:0}
         </figure>
         <figure class="source-board body-plaster-result">
           <div class="plaster-result">
-            <object class="plaster-result-asset" type="image/svg+xml" data="assets/experiment/clean/plaster-result.svg" aria-label="石膏成形结果"></object>
+            <object class="plaster-result-asset" data="assets/experiment/clean/plaster-result.svg" type="image/svg+xml" aria-label="石膏成形结果"></object>
           </div>
           <figcaption data-i18n="bodyPlasterResultCap">石膏制作 — 成形結果</figcaption>
         </figure>
@@ -1692,11 +1837,11 @@ p{margin:0}
         </figure>
         <figure class="source-board body-print-study">
           <div class="print-result">
-            <object class="print-result-asset" type="image/svg+xml" data="assets/experiment/clean/print-result-01.svg" aria-label="3D打印人体记录一"></object>
-            <object class="print-result-asset" type="image/svg+xml" data="assets/experiment/clean/print-result-02.svg" aria-label="3D打印人体记录二"></object>
-            <object class="print-result-asset" type="image/svg+xml" data="assets/experiment/clean/print-result-03.svg" aria-label="3D打印人体记录三"></object>
-            <object class="print-result-asset" type="image/svg+xml" data="assets/experiment/clean/print-result-04.svg" aria-label="3D打印人体记录四"></object>
-            <object class="print-result-asset" type="image/svg+xml" data="assets/experiment/clean/print-result-05.svg" aria-label="3D打印人体记录五"></object>
+            <object class="print-result-asset" data="assets/experiment/clean/print-result-01.svg" type="image/svg+xml" aria-label="3D打印人体记录一"></object>
+            <object class="print-result-asset" data="assets/experiment/clean/print-result-02.svg" type="image/svg+xml" aria-label="3D打印人体记录二"></object>
+            <object class="print-result-asset" data="assets/experiment/clean/print-result-03.svg" type="image/svg+xml" aria-label="3D打印人体记录三"></object>
+            <object class="print-result-asset" data="assets/experiment/clean/print-result-04.svg" type="image/svg+xml" aria-label="3D打印人体记录四"></object>
+            <object class="print-result-asset" data="assets/experiment/clean/print-result-05.svg" type="image/svg+xml" aria-label="3D打印人体记录五"></object>
           </div>
           <figcaption data-i18n="bodyPrintCap">3Dプリント — 最終採用</figcaption>
           <p class="body-conclusion" data-i18n="bodyNote"></p>
@@ -1712,7 +1857,7 @@ p{margin:0}
           <h4 data-i18n="matLabel">素材実験</h4>
           <div class="mats">
             <span data-i18n="mat1">新聞</span><span data-i18n="mat2">クレイ</span>
-            <span data-i18n="mat3">3Dプリント</span><span class="sel" data-i18n="mat4">石膏 — 採用</span>
+            <span data-i18n="mat3">石膏</span><span class="sel" data-i18n="mat4">3Dプリント — 採用</span>
           </div>
         </div>
         <p class="result" data-i18n="bodyResult"></p>
@@ -1861,7 +2006,7 @@ p{margin:0}
 <script>
 const COPY={
   ja:{
-    mindmapScroll:"左右にスライドして全体を見る",
+    mindmapScroll:"横に動かして関係を見る",
     mmTitle:"自由主義の本質をめぐる思考の連鎖",mmStart:"個人の自由を強調",mmRoot:"自由主義の本質",mmA:"個人の責任と自己管理を提唱することによって",mmB:"規律を通じて",mmC1:"規律技術の役割",mmC2:"市場競争における規律",mmD1:"自律、自省、自己最適化を通じて",mmD2:"個人をより効率的な行動に導く",mmD3:"社会秩序と経済効率を維持する",mmE1:"個人は適応と最適化を通じて成功を収める",mmI1:"コントロールに反対するように見えるが、規律によって核心的価値を実現する",mmI2:"個人の行動を制御し、規範化する",mmI3:"現代の個人のアイデンティティと行動パターンを形作る",mmF1:"競争メカニズムとしての規律手段",mmF2:"身体のコントロール",mmG1:"秩序化された社会体系",mmG2:"逸脱しないことを確保する",mmH1:"軌道化",mmH2:"身体の再構築",
     derivLabel:"洞察 → 霊感 → 造形",insightCol:"洞察",inspireCol:"霊感",formCol:"造形へ",kw1:"人体の分解",kw2:"軌道運行",kw3:"路線の制約",kw4:"立体構造",kw5:"循環",kw6:"多層構造",
     diagTitle:"社会と個人の相互作用",diagSociety:"社会",diagIndividual:"個人",diagIndividual2:"個人",diagGenes:"遺伝子配列と体内の細菌",lifeToolsNote:"地図ナビやGPSなどのツールは、自由な活動を制約し、生活や視点を固定します。個人の行動は徐々に固定化され、逃れるのが難しくなっています。",
@@ -1916,7 +2061,7 @@ const COPY={
     back:"ホームへ戻る"
   },
   zh:{
-    mindmapScroll:"左右滑动查看完整关系",
+    mindmapScroll:"横向浏览关系",
     mmTitle:"围绕自由主义本质的思考链条",mmStart:"强调个人的自由",mmRoot:"自由主义的本质",mmA:"通过提倡个人责任与自我管理",mmB:"通过规训",mmC1:"规训技术的作用",mmC2:"市场竞争中的规训",mmD1:"通过自律、自省与自我优化",mmD2:"引导个人采取更高效的行动",mmD3:"维持社会秩序与经济效率",mmE1:"个体通过适应与优化取得成功",mmI1:"看似反对控制，却通过规训实现核心价值",mmI2:"控制并规范个体的行动",mmI3:"塑造现代个体的身份与行为模式",mmF1:"作为竞争机制的规训手段",mmF2:"身体的控制",mmG1:"被秩序化的社会体系",mmG2:"确保不会脱轨",mmH1:"轨道化",mmH2:"身体的再建构",
     derivLabel:"洞察 → 灵感 → 造型",insightCol:"洞察",inspireCol:"灵感",formCol:"通向造型",kw1:"人体的分解",kw2:"轨道运行",kw3:"路线的制约",kw4:"立体结构",kw5:"循环",kw6:"多层结构",
     diagTitle:"社会与个体的相互作用",diagSociety:"社会",diagIndividual:"个人",diagIndividual2:"个人",diagGenes:"基因序列与体内的细菌",lifeToolsNote:"地图导航与GPS这类工具制约着自由的活动，把生活与视点固定下来。个体的行动逐渐被固化，越来越难以脱离。",
@@ -1971,7 +2116,7 @@ const COPY={
     back:"返回主页"
   },
   en:{
-    mindmapScroll:"Swipe horizontally to see the full relationship",
+    mindmapScroll:"Drag sideways to trace the links",
     mmTitle:"The chain of thought around liberalism",mmStart:"Emphasis on individual freedom",mmRoot:"The nature of liberalism",mmA:"By advocating personal responsibility and self-management",mmB:"Through discipline",mmC1:"The role of disciplinary technique",mmC2:"Discipline in market competition",mmD1:"Through self-rule, self-examination, self-optimisation",mmD2:"Guiding people toward more efficient action",mmD3:"Maintaining social order and economic efficiency",mmE1:"The individual succeeds through adaptation and optimisation",mmI1:"Appears to oppose control, yet realises core values through discipline",mmI2:"Controls and normalises individual action",mmI3:"Shapes modern identity and patterns of behaviour",mmF1:"Discipline as a mechanism of competition",mmF2:"Control of the body",mmG1:"An ordered social system",mmG2:"Ensuring no one deviates",mmH1:"Put on rails",mmH2:"Reconstruction of the body",
     derivLabel:"INSIGHT → INSPIRATION → FORM",insightCol:"Insight",inspireCol:"Inspiration",formCol:"Toward form",kw1:"Decomposition of the body",kw2:"Orbital motion",kw3:"Route constraint",kw4:"Spatial structure",kw5:"Circulation",kw6:"Multilayer structure",
     diagTitle:"Society and the individual",diagSociety:"Society",diagIndividual:"Individual",diagIndividual2:"Individual",diagGenes:"Gene sequences and gut bacteria",lifeToolsNote:"Map navigation and GPS constrain free movement and fix both our lives and our viewpoints. Individual action gradually hardens into place, and becomes difficult to escape.",
