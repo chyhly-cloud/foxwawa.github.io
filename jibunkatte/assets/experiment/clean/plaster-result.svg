@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="663" height="993" viewBox="0 0 663 993" preserveAspectRatio="none">
+  <defs>
+    <clipPath id="plaster" clipPathUnits="userSpaceOnUse">
+      <!-- A traced outer edge keeps a slim photographic margin. The hole
+           between wrist and base is excluded so the dark work mat disappears. -->
+      <path d="M105 17C127 3 162 1 192 14C214 23 231 20 253 8C280 -6 333 -3 367 10C408 25 442 56 464 93C482 124 493 168 500 215C508 269 505 328 496 378C489 421 476 465 464 503C455 532 440 551 421 565C430 584 435 607 434 631C432 661 420 684 395 694C367 705 334 704 301 699C273 695 244 691 221 680C211 658 210 627 215 600C218 580 221 562 224 548C197 549 169 548 143 541C121 536 105 525 95 509C87 490 85 464 86 438C84 419 82 400 79 376C71 328 67 275 70 225C73 178 80 130 89 91C95 64 97 37 105 17Z"/>
+      <path d="M20 613C39 577 77 550 121 531C173 507 252 497 330 500C409 503 487 515 548 541C605 565 640 604 654 647C669 696 654 760 621 813C588 866 535 908 470 940C408 970 334 982 258 976C182 970 117 947 66 914C24 887 7 847 8 798C9 750 0 658 20 613Z"/>
+    </clipPath>
+  </defs>
+  <image href="plaster-result.png" xlink:href="plaster-result.png" width="663" height="993" preserveAspectRatio="none" clip-path="url(#plaster)"/>
+</svg>

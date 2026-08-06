@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="195" height="496" viewBox="0 0 195 496">
+  <defs>
+    <clipPath id="body" clipPathUnits="userSpaceOnUse">
+      <!-- The source is a pale mannequin on a pale floor.  Keeping the
+           limbs as separate traced shapes removes the floor without
+           punching artificial holes through the torso. -->
+      <path d="M77 15C88 7 109 7 123 19C136 31 140 59 133 85C129 101 120 112 109 119C97 124 84 118 76 107C69 96 68 75 69 53C70 33 72 21 77 15Z"/>
+      <path d="M68 112C79 108 110 108 123 115C137 123 143 145 145 178C148 223 145 276 140 316C137 337 127 351 111 354C94 357 74 350 62 337C56 321 54 293 56 263L61 186C61 151 62 126 68 112Z"/>
+      <path d="M67 119C57 126 50 144 44 168C37 195 31 229 25 263C21 282 23 296 32 300C42 304 48 294 52 276L68 183C73 155 74 133 67 119Z"/>
+      <path d="M121 119C137 126 150 141 159 163C167 184 174 223 175 258C176 277 170 292 160 295C149 298 144 282 140 257L127 184C122 157 117 132 121 119Z"/>
+      <path d="M62 327C72 339 84 346 95 348C92 381 86 421 75 454C70 470 61 478 49 475C38 472 36 461 42 444C51 415 55 380 56 350C56 339 58 332 62 327Z"/>
+      <path d="M94 348C107 348 122 342 136 331C138 367 139 410 153 449C159 464 155 475 145 480C134 484 124 469 117 450C107 421 101 383 94 348Z"/>
+    </clipPath>
+  </defs>
+  <image href="print-result-01.png" xlink:href="print-result-01.png" width="195" height="496" clip-path="url(#body)"/>
+</svg>

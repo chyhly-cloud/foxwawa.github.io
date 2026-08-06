@@ -1,0 +1,478 @@
+- generic [active] [ref=e1]:
+  - link "本文へ移動" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - navigation "Project navigation" [ref=e3]:
+    - link "戻る" [ref=e4] [cursor=pointer]:
+      - /url: ../index.html
+      - generic [ref=e5]: ←
+    - button "Switch language" [ref=e8] [cursor=pointer]:
+      - generic [ref=e12]: JA
+  - main [ref=e13]:
+    - generic [ref=e14]:
+      - img "自分勝手 展示風景" [ref=e16]
+      - generic [ref=e17]:
+        - paragraph [ref=e18]: KINETIC INSTALLATION / 2024
+        - heading "自分勝手" [level=1] [ref=e19]
+        - paragraph [ref=e20]: JIBUNKATTE / SELF-WILL
+      - generic [ref=e21]: Scroll
+    - region [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - generic [ref=e27]: 概念
+          - generic [ref=e28]: CONCEPT / INSPIRATION
+        - generic [ref=e29]:
+          - paragraph [ref=e30]: 人間のすべては、本当に運命の枠組みの中で固定されているのか。
+          - generic [ref=e31]:
+            - paragraph [ref=e32]: 緻密な計算によって組み立てられたインスタレーションの構造は、壮大に定められた運命を象徴する。一方、動きながら組み立てられていく身体の姿は、人間の主観や葛藤を象徴している。
+            - paragraph [ref=e33]: 両者を対比させ、同時に動かすことで、決定された運命の枠組みと、人間の主観的な行動としての自由意志との関係を探る。人間のすべては、本当に運命の枠組みの中で固定されているのだろうか。
+          - group [ref=e34]:
+            - generic "+ 着想の源" [ref=e35] [cursor=pointer]
+        - generic [ref=e36]:
+          - generic [ref=e37]:
+            - generic [ref=e38]: 制作年
+            - generic [ref=e39]: "2024.11"
+          - generic [ref=e40]:
+            - generic [ref=e41]: 素材
+            - generic [ref=e42]: ミクストメディア
+          - generic [ref=e43]:
+            - generic [ref=e44]: 形式
+            - generic [ref=e45]: 動的インスタレーション
+    - region [ref=e46]:
+      - generic [ref=e47]:
+        - generic [ref=e48]:
+          - generic [ref=e49]: RESEARCH / BACKGROUND
+          - generic [ref=e50]: RESEARCH / BACKGROUND
+        - generic [ref=e51]:
+          - heading "自由意志と規律の構造" [level=2] [ref=e52]
+          - paragraph [ref=e53]: 自由意志は個人の自由を強調する。しかし個人の運命は、社会が継続的に用いる規律の技術と、社会的・経済的な必要に適合するよう個人を形成する力によって形づくられている。
+      - article [ref=e54]:
+        - generic:
+          - generic: 規律における個性
+          - generic: 規律と身体のコントロール
+          - generic: 自由主義と現代工業
+        - generic [ref=e55]:
+          - text: 01 / PROJECT BACKGROUND
+          - heading "プロジェクト背景" [level=3] [ref=e56]
+          - paragraph [ref=e57]: 規律・身体・自由主義をめぐる文献を読み、そこから作品の出発点となる問いを取り出した。
+          - paragraph [ref=e58]: この前提から、規律が現れる場所を「社会」「生活」「個体」の三つの尺度に分けて調べ、それぞれの研究から造形へ転換できる特徴を抽出した。
+      - generic [ref=e59]: ← 左右にスライドして全体を見る →
+      - figure [ref=e60]:
+        - img "自由主義の本質をめぐる思考の連鎖" [ref=e61]:
+          - generic [ref=e79]: 個人の自由を強調
+          - generic [ref=e80]: 自由主義の本質
+          - generic [ref=e83]: 個人の責任と自己管理を提唱することによって
+          - generic [ref=e84]: 規律を通じて
+          - generic [ref=e85]: 規律技術の役割
+          - generic [ref=e86]: 市場競争における規律
+          - generic [ref=e87]: 自律、自省、自己最適化を通じて
+          - generic [ref=e88]: 個人をより効率的な行動に導く
+          - generic [ref=e89]: 社会秩序と経済効率を維持する
+          - generic [ref=e90]: 個人は適応と最適化を通じて成功を収める
+          - generic [ref=e91]: コントロールに反対するように見えるが、規律によって核心的価値を実現する
+          - generic [ref=e92]: 個人の行動を制御し、規範化する
+          - generic [ref=e93]: 現代の個人のアイデンティティと行動パターンを形作る
+          - generic [ref=e94]: 競争メカニズムとしての規律手段
+          - generic [ref=e97]: 身体のコントロール
+          - generic [ref=e100]: 秩序化された社会体系
+          - generic [ref=e101]: 逸脱しないことを確保する
+          - generic [ref=e102]: 軌道化
+          - generic [ref=e105]: 身体の再構築
+      - article [ref=e108]:
+        - generic:
+          - generic:
+            - generic: ソーシャルネットワークの視覚化
+            - generic: 交錯する人間関係のネットワーク
+            - generic:
+              - heading "交錯する階層" [level=4]
+              - paragraph: 現代社会は交錯した複数の階層から構成され、個人は各階層で異なる役割を担う。これらの階層は相互に関連し制約し合い、複雑な社会構造を形づくっている。
+          - generic:
+            - generic: 企業組織構造の関係視覚
+            - generic: 組織構造と社会的コントロール
+            - generic:
+              - heading "持続する動的状態" [level=4]
+              - paragraph: 社会と個人は常に変化し続ける動的な状態にある。この持続的な変化は、社会発展の不確実性と、その中で個人が適応し調整していく様子を反映している。
+          - generic:
+            - generic: 人間関係ネットワークの視覚化
+            - generic: 権力の変遷と社会関係
+            - paragraph: 人と人との関係は、社会システムや環境の変化に伴い絶えず進化します。権力は、複雑な相互作用の中で生成され、社会ネットワーク内の位置や資源の分配に依存し、社会規範や制度の影響を受けます。環境の変化に応じて、権力の分布や運用も適応し、その表現形態は多様化します。
+        - generic [ref=e109]:
+          - generic [ref=e110]: 社会
+          - heading "リンクによる社会的規律の影響" [level=3] [ref=e111]
+          - paragraph [ref=e112]: 自由意志は個人の自由を強調するが、個人の運命は、社会が継続的に用いる規律の技術と、社会的・経済的な必要に適合するよう人を形成する力によって形づくられている。
+          - paragraph [ref=e113]: 規律の痕跡は、社会ネットワーク内の「リンク」によって生まれ、ソーシャルネットワーク、社会組織、個人へと影響する。この影響から逃れることは難しく、オンライン上の交流から私たち自身の神経ネットワークにまで広がっている。
+      - article [ref=e114]:
+        - generic:
+          - generic:
+            - generic: 毎日の通勤ルート軌跡の変換
+            - generic:
+              - heading "制約された経路" [level=4]
+              - paragraph: 選択肢が多く見えても、個人の行動は社会システムに制約されており、既定の軌道から抜け出すことは難しい。
+          - generic:
+            - generic: 航路上の生活の変遷
+            - paragraph: 地図ナビやGPSなどのツールは、自由な活動を制約し、生活や視点を固定します。個人の行動は徐々に固定化され、逃れるのが難しくなっています。
+            - generic:
+              - heading "自由に見える選択" [level=4]
+              - paragraph: 現代社会は多くの選択肢を提供しているように見えるが、それらは慎重に設計されており、真に自由な選択は幻に近く、簡単には手に入らない。
+        - generic [ref=e115]:
+          - generic [ref=e116]: 生活
+          - heading "予め設定された選択と、自由の見えない枷" [level=3] [ref=e117]
+          - paragraph [ref=e118]: 生活には多くの選択肢があるように見えるが、実際にはすでに設定され、人々は既定の道を辿っているにすぎない。外部の社会規則だけでなく、内面化された自己制約も生活に影響し、自由を追求する過程に見えない枷をつくる。
+          - paragraph [ref=e119]: 地図、GPS、ナビゲーションは目的地までの経路を便利に示す一方、移動の選択をあらかじめ用意されたルートへ導く。日常の明示的なルールと暗黙のルールも同様に、私たちの行動範囲と移動経路を設計している。
+      - generic [ref=e120]:
+        - img "社会と個人の相互作用" [ref=e121]:
+          - generic [ref=e181]: 社会
+          - generic [ref=e184]: 個人
+          - generic [ref=e190]: 遺伝子配列と体内の細菌
+          - generic [ref=e193]: 個人
+        - paragraph [ref=e194]: 社会における規律は至る所に存在し、個人は規律の影響を受けつつ、社会全体にも影響を与えます。この点で、生物と人間の社会性の隠喩に魅了され、微生物や細胞と人体の関係を用いた表現手法を使いました。
+      - article [ref=e195]:
+        - generic:
+          - generic "被拆分与重新组合的身体图像"
+          - generic:
+            - heading "現代社会によって分解された個体" [level=4]
+            - paragraph: 現代社会では、個人のアイデンティティや役割が絶えず分割・解体される。その結果、全体性と自主性が失われ、人は完全な個体ではなく、解体された部品のように感じるようになる。
+          - figure "身体に刻まれた規律の痕跡 01 ピアノを弾くときは爪を立ててはいけない。 02 長時間の執筆は頸椎の異常を引き起こす。":
+            - generic:
+              - generic: 身体に刻まれた規律の痕跡
+              - generic: 01 ピアノを弾くときは爪を立ててはいけない。
+              - generic: 02 長時間の執筆は頸椎の異常を引き起こす。
+          - figure "03 料理人の手にはしばしば焼け跡が残る。"
+          - figure "04 腕の長さは胴の長さに対して大きな割合を占める。 05 水泳選手の身体は三角形の構造に近づく。":
+            - generic:
+              - generic: 04 腕の長さは胴の長さに対して大きな割合を占める。
+              - generic: 05 水泳選手の身体は三角形の構造に近づく。
+          - generic:
+            - heading "不完全な人間" [level=4]
+            - paragraph: 分割と道具化の結果、個人はもはや完全な存在ではなく、何か本質的なものを失い、不完全なまま、真の自己を実現することが難しくなっている。
+        - generic [ref=e196]:
+          - generic [ref=e197]: 個体
+          - heading "工業文明における人間の分節化" [level=3] [ref=e198]
+          - paragraph [ref=e199]: 工業文明は人間の分割を加速させ、個人を商品化・道具化された構成要素へ変えてきた。身体と労働は社会の運営機構に深く組み込まれ、役割とアイデンティティは分けられていく。
+          - paragraph [ref=e200]: 人は巨大な社会機械に不可欠でありながら、全体としての自主性と一体性を失う。完全な個体ではなく、現代社会によって分解された部品のように感じられる。
+    - region "Insight to form" [ref=e201]:
+      - generic [ref=e202]:
+        - generic [ref=e203]: 洞察 → 霊感 → 造形
+        - generic [ref=e204]: INSIGHT / INSPIRATION / FORM
+      - generic [ref=e206]:
+        - generic [ref=e207]: 洞察
+        - generic [ref=e208]: 霊感
+        - generic [ref=e209]: 造形へ
+        - generic [ref=e210]:
+          - generic [ref=e211]: 社会
+          - generic [ref=e212]: 01 / SOCIETY
+        - article [ref=e213]:
+          - heading "リンクによる社会的規律の影響" [level=4] [ref=e215]
+          - paragraph [ref=e216]: 規律の痕跡は、社会ネットワーク内の「リンク」によって生まれ、ソーシャルネットワーク、社会組織、個人へと影響する。この影響から逃れることは難しく、オンライン上の交流から私たち自身の神経ネットワークにまで広がっている。
+        - generic [ref=e217]:
+          - generic [ref=e218]: 生活
+          - generic [ref=e219]: 02 / LIFE
+        - article [ref=e220]:
+          - heading "予め設定された選択と、自由の見えない枷" [level=4] [ref=e222]
+          - paragraph [ref=e223]: 生活には多くの選択肢があるように見えるが、実際にはすでに設定され、人々は既定の道を辿っているにすぎない。外部の社会規則だけでなく、内面化された自己制約も生活に影響し、自由を追求する過程に見えない枷をつくる。
+        - generic [ref=e224]:
+          - generic [ref=e225]: 個体
+          - generic [ref=e226]: 03 / INDIVIDUAL
+        - article [ref=e227]:
+          - heading "工業文明における人間の分節化" [level=4] [ref=e229]
+          - paragraph [ref=e230]: 工業文明は人間の分割を加速させ、個人を商品化・道具化された構成要素へ変えてきた。身体と労働は社会の運営機構に深く組み込まれ、役割とアイデンティティは分けられていく。
+        - generic [ref=e231]:
+          - generic [ref=e234]: "01"
+          - generic [ref=e235]: 交錯する階層
+        - generic [ref=e236]:
+          - generic [ref=e239]: "02"
+          - generic [ref=e240]: 持続する動的状態
+        - generic [ref=e241]:
+          - generic [ref=e244]: "03"
+          - generic [ref=e245]: 制約された経路
+        - generic [ref=e246]:
+          - generic [ref=e249]: "04"
+          - generic [ref=e250]: 自由に見える選択
+        - generic [ref=e251]:
+          - generic [ref=e254]: "05"
+          - generic [ref=e255]: 現代社会によって分解された個体
+        - generic [ref=e256]:
+          - generic [ref=e259]: "06"
+          - generic [ref=e260]: 不完全な人間
+        - generic [ref=e261]:
+          - generic [ref=e263]: "01"
+          - generic [ref=e264]: 人体の分解
+        - generic [ref=e265]:
+          - generic [ref=e267]: "02"
+          - generic [ref=e268]: 軌道運行
+        - generic [ref=e269]:
+          - generic [ref=e271]: "03"
+          - generic [ref=e272]: 路線の制約
+        - generic [ref=e273]:
+          - generic [ref=e275]: "04"
+          - generic [ref=e276]: 立体構造
+        - generic [ref=e277]:
+          - generic [ref=e279]: "05"
+          - generic [ref=e280]: 循環
+        - generic [ref=e281]:
+          - generic [ref=e283]: "06"
+          - generic [ref=e284]: 多層構造
+    - region [ref=e285]:
+      - generic [ref=e286]:
+        - paragraph [ref=e287]:
+          - generic [ref=e288]: 04 /
+          - generic [ref=e289]: EXPERIMENT / PLAN A · REJECTED
+        - generic [ref=e290]:
+          - figure [ref=e291]:
+            - generic [ref=e292]: × 却下された案
+            - generic [ref=e293]:
+              - img "PLAN A 構想レンダリング" [ref=e294]
+              - img "PLAN A 構想レンダリング" [ref=e295]
+            - generic [ref=e296]:
+              - figure "大脳皮質線維の参照" [ref=e297]:
+                - img "大脳皮質線維の参照" [ref=e298]
+              - figure "人体循環系の参照" [ref=e300]:
+                - img "血管系の参照" [ref=e301]
+          - generic [ref=e303]:
+            - heading "生物のパターンを社会の軌道へ重ねる" [level=2] [ref=e304]
+            - paragraph [ref=e305]: 大腸菌、脳皮質線維、血小板などに見られる個体と集団の移動軌跡を抽出し、複数の路線図として重ねることで、人間社会全体の構造を隠喩しようとした。
+            - generic [ref=e306]:
+              - generic [ref=e307]:
+                - heading "可能性" [level=4] [ref=e308]
+                - list [ref=e312]:
+                  - listitem [ref=e313]: 設計された自由の中に人が閉じ込められる状態を表現できる
+                  - listitem [ref=e314]: 社会が個人に与える規律を、複数の軌道として見せられる
+              - generic [ref=e315]:
+                - heading "限界" [level=4] [ref=e316]
+                - list [ref=e321]:
+                  - listitem [ref=e322]: 関係が複雑になり、制作条件に合わない
+                  - listitem [ref=e323]: 中心となる問いが読み取りにくい
+            - paragraph [ref=e328]: DECISION — 却下：複雑さそのものが前面に出て、自由意志と規律の対立が伝わりにくくなった。
+    - region [ref=e329]:
+      - generic [ref=e330]:
+        - generic [ref=e331]:
+          - generic [ref=e332]: EXPERIMENT
+          - generic [ref=e333]: EXPERIMENT
+        - generic [ref=e334]:
+          - generic [ref=e335]:
+            - heading "図形研究と身体実験から、三つの層を導く" [level=2] [ref=e336]
+            - paragraph [ref=e337]: PLAN Aへの三つのフィードバックを起点に、図形研究では社会形態と生活を分け、実験では分節された個体を検証した。
+          - generic "Iteration logic" [ref=e338]:
+            - generic [ref=e339]:
+              - generic [ref=e340]:
+                - generic [ref=e341]: PLAN A / FEEDBACK 01—03
+                - heading "反復" [level=3] [ref=e342]
+              - list [ref=e343]:
+                - listitem [ref=e344]:
+                  - generic [ref=e345]: "01"
+                  - generic [ref=e346]: よりシンボル化され、より凝縮され簡潔に
+                - listitem [ref=e347]:
+                  - generic [ref=e348]: "02"
+                  - generic [ref=e349]: 実現可能性、生産性
+                - listitem [ref=e350]:
+                  - generic [ref=e351]: "03"
+                  - generic [ref=e352]: 伝達と解釈に優れる
+            - generic [ref=e354]:
+              - article [ref=e355]:
+                - generic [ref=e356]: 01 / GRAPHIC RESEARCH
+                - heading "図形研究 — 社会形態＋生活" [level=3] [ref=e357]
+                - generic [ref=e358]:
+                  - generic [ref=e361]:
+                    - generic [ref=e362]: OUTPUT 01 / CIRCLE
+                    - strong [ref=e363]: 社会形態
+                  - generic [ref=e366]:
+                    - generic [ref=e367]: OUTPUT 02 / ROUTE
+                    - strong [ref=e368]: 生活
+              - article [ref=e369]:
+                - generic [ref=e370]: 02 / BODY EXPERIMENT
+                - heading "実験 — 個体" [level=3] [ref=e371]
+                - generic [ref=e379]:
+                  - generic [ref=e380]: OUTPUT 03 / FRAGMENTS
+                  - strong [ref=e381]: 個体
+      - article [ref=e382]:
+        - generic:
+          - figure "権力の記号を円へ抽出"
+          - figure:
+            - generic: 法律（牢獄）
+          - figure:
+            - generic: 生活（監視）
+          - figure:
+            - generic: 権力（議会）
+          - figure:
+            - generic: 時間
+          - figure:
+            - generic: 経済（鋳貨権）
+          - figure:
+            - generic: 宗教（祭壇）
+        - generic [ref=e383]:
+          - text: GRAPHIC RESEARCH 01 / SOCIETY
+          - generic [ref=e384]: 社会
+          - heading "社会形態を円へ凝縮する" [level=3] [ref=e385]
+          - paragraph [ref=e386]: 法律、監視、議会、時間、貨幣、宗教に現れる形態を観察し、権力と規律を示す共通の輪郭として円を抽出した。
+          - paragraph [ref=e391]: 法律、監視、議会、時間、通貨、宗教 — 権力の記号には、いずれも円が含まれていた。
+          - paragraph [ref=e392]: 図形研究 — 円は社会形態を表す軌道になる
+      - article [ref=e393]:
+        - generic:
+          - figure:
+            - generic: 顕在的な記号
+          - figure:
+            - generic: 隠れた記号
+          - figure "平日の私の生活軌跡の簡略化"
+          - paragraph: 日常生活の明示的なルールと暗黙のルールが、私の日常の動きのルートを共に設計しています。
+        - generic [ref=e394]:
+          - text: GRAPHIC RESEARCH 02 / LIFE
+          - generic [ref=e395]: 生活
+          - heading "生活に変形された経路を取り出す" [level=3] [ref=e396]
+          - paragraph [ref=e397]: 日常空間にある顕在的な記号と潜在的な規則を観察し、自分の移動記録と重ねながら、生活によって変形した閉じた経路へ単純化した。
+          - paragraph [ref=e402]: 自分の移動記録を重ねて単純化し、一本の閉じた変形経路として取り出した。
+          - paragraph [ref=e403]: 図形研究 — 変形した線は個人の生活を表す軌道になる
+      - article [ref=e404]:
+        - generic:
+          - figure "近代化におけるモジュール化"
+          - figure "身体をひとつの全体として捉える"
+          - figure "身体を分解し、モジュール化する"
+          - figure "分解された身体を別の秩序で再構成する"
+          - figure "石膏制作 — 型取りと成形の過程"
+          - figure "石膏制作 — 成形結果"
+          - figure "新聞 — 素材実験"
+          - figure "クレイ — 素材実験"
+          - figure "3Dプリント — 身体スキャンの過程"
+          - figure "3Dプリント — 最終採用":
+            - paragraph: 人間の身体は分節され、分節される過程で自己を超越する。人間という視点から、対象を通して人間を見るならば、人間の身体もまた一種の組織である。人は生まれながらにして歩き方を知らず、訓練や学習を受けてから徐々に自分の身体をコントロールできるようになり、多くの技術は後天的に習得されるもので、その身体は訓練の形の提示である。
+        - generic [ref=e405]:
+          - text: EXPERIMENT 03 / INDIVIDUAL
+          - generic [ref=e406]: 個体
+          - heading "訓練された身体を分解し、再び組み立てる" [level=3] [ref=e407]
+          - paragraph [ref=e408]: 工業化社会における人間の身体は、機械と同じように使用され、分節化されてきた。規範が人間の身体に潜在的に影響を及ぼします。身体部位の改造から脳の思考経路の改造まで、それは一人一人に刻み込まれ、「社会化」の一部となってきた。人間の身体は分節化され、分節化される過程で自らを超越してきた。
+          - paragraph [ref=e409]: 歩行や姿勢を含む身体の使い方は、学習と訓練を通して後天的に獲得される。社会化された身体を石膏と3Dプリントによって部分へ分け、それぞれを独立して移動できる要素として再構成した。
+          - generic [ref=e410]:
+            - heading "素材実験" [level=4] [ref=e411]
+            - generic [ref=e412]:
+              - generic [ref=e413]: 新聞
+              - generic [ref=e414]: クレイ
+              - generic [ref=e415]: 石膏
+              - generic [ref=e416]: 3Dプリント — 採用
+          - paragraph [ref=e417]: EXPERIMENT INSIGHT — 身体は一つの全体ではなく、移動する複数の部位として表現できる
+    - region [ref=e418]:
+      - generic [ref=e419]:
+        - paragraph [ref=e420]:
+          - generic [ref=e421]: 06 /
+          - generic [ref=e422]: DECISION / PLAN B · SELECTED
+        - heading "三つの尺度を、三本の軌道に凝縮する" [level=2] [ref=e423]
+        - paragraph [ref=e425]: 社会、生活、個体を別々の層として構成し、それぞれの軌道上で身体部位を動かす。あらかじめ決められた経路と、その中で動き続ける身体を重ねることで、個人の意志と社会的規律のあいだに真の自由が存在するかを問う。
+        - generic [ref=e426]:
+          - article [ref=e427]:
+            - generic [ref=e428]: LAYER 01 / 第一層
+            - generic [ref=e432]: 社会
+            - heading "社会形態" [level=4] [ref=e433]
+            - paragraph [ref=e434]: 円形の軌道。凝縮され、記号化された社会の運行構造と、その構造の中で動く身体部位を示す。
+          - article [ref=e435]:
+            - generic [ref=e436]: LAYER 02 / 第二層
+            - generic [ref=e440]: 生活
+            - heading "生活" [level=4] [ref=e441]
+            - paragraph [ref=e442]: 変形した軌道。個人の日常に組み込まれた規律の経路と、本人が自由だと考える身体の動きを示す。
+          - article [ref=e443]:
+            - generic [ref=e444]: LAYER 03 / 第三層
+            - generic [ref=e453]: 個体
+            - heading "個体" [level=4] [ref=e454]
+            - paragraph [ref=e455]: 軌道を持たない層。分解された身体の部品が床に散らばり、空を見上げる頭部とともに、社会に形づくられながらもなお自由を求める個人を示す。
+        - generic [ref=e456]:
+          - generic [ref=e457]: DECISION / 採用理由
+          - generic [ref=e461]:
+            - list [ref=e462]:
+              - listitem [ref=e463]: より高度に凝縮された記号であり、解釈と伝達に適している。
+              - listitem [ref=e464]: より制作しやすく、実現可能な目標として達成できる。
+              - listitem [ref=e465]: 伝えたい意味を正確に伝えることができる。
+            - paragraph [ref=e466]: 問いを三つの層へ明確に整理でき、解釈と伝達に適している。さらに、制作可能な構造へ変換しながら、意図を失わずに実現できるため、この案を最終案として採用した。
+    - region [ref=e467]:
+      - generic [ref=e468]:
+        - paragraph [ref=e469]:
+          - generic [ref=e470]: 07 /
+          - generic [ref=e471]: SIMULATION + FABRICATION
+        - heading "構想を、動く構造へ変換する" [level=2] [ref=e472]
+        - generic [ref=e473]:
+          - paragraph [ref=e474]: 3DS MAXで三層の軌道、支持構造、身体部位の位置関係と、展示空間における観者との距離を検証した。その後、全長、高さ、傾斜角度、接合部を定義した施工図へ展開した。
+          - paragraph [ref=e475]: SUS304の曲げ加工と精密溶接でレールフレームを制作し、研磨して鏡面に仕上げた。モーターと駆動基板を組み込んだ自走台車が各身体部位を載せ、決められた軌道上を循環し続ける。
+        - generic [ref=e476]:
+          - generic [ref=e477]:
+            - term [ref=e478]: 円形軌道
+            - definition [ref=e479]: ⌀ 2,000 mm
+          - generic [ref=e480]:
+            - term [ref=e481]: 変形軌道
+            - definition [ref=e482]: 1,996.25 × 1,205.35 mm
+          - generic [ref=e483]:
+            - term [ref=e484]: 材料
+            - definition [ref=e485]: SUS304
+          - generic [ref=e486]:
+            - term [ref=e487]: 仕上げ
+            - definition [ref=e488]: 鏡面研磨
+          - generic [ref=e489]:
+            - term [ref=e490]: 駆動
+            - definition [ref=e491]: モーター駆動台車
+        - paragraph [ref=e492]: シミュレーション
+        - generic [ref=e493]:
+          - figure:
+            - img "三層構造のシミュレーション"
+          - generic [ref=e494]:
+            - img "シミュレーション"
+            - img "俯瞰シミュレーション"
+            - img "シミュレーション"
+            - img "シミュレーション"
+        - paragraph [ref=e495]: 制作
+        - generic "制作" [ref=e496]:
+          - figure [ref=e497]
+          - figure [ref=e498]
+          - figure [ref=e499]
+          - figure [ref=e500]
+          - figure [ref=e501]
+          - figure [ref=e502]
+          - figure [ref=e503]
+          - figure [ref=e504]
+          - figure [ref=e505]
+          - figure [ref=e506]
+          - figure [ref=e507]
+          - figure [ref=e508]
+    - region [ref=e509]:
+      - generic [ref=e510]:
+        - paragraph [ref=e511]:
+          - generic [ref=e512]: 08 /
+          - generic [ref=e513]: EXHIBITION
+        - heading "決められた軌道上で、身体は動き続ける" [level=2] [ref=e514]
+        - paragraph [ref=e516]: 三つの軌道は一つの空間に重なり、分解された身体部位はそれぞれの経路を循環する。観者は、全体を見渡しながら、個々の身体が同じ構造から逃れられない状態に立ち会う。
+        - figure:
+          - img "展示風景"
+        - generic [ref=e517]:
+          - button "展示風景":
+            - img "展示風景"
+          - button "展示風景":
+            - img "展示風景"
+          - button "展示風景":
+            - img "展示風景"
+          - button "展示風景":
+            - img "展示風景"
+          - button "展示風景":
+            - img "展示風景"
+          - button "展示風景":
+            - img "展示風景"
+          - button "展示風景":
+            - img "展示風景"
+          - button "展示風景":
+            - img "展示風景"
+          - button "展示風景":
+            - img "展示風景"
+          - button "展示風景":
+            - img "展示風景"
+          - button "展示風景":
+            - img "展示風景"
+          - button "展示風景":
+            - img "展示風景"
+          - button "展示風景":
+            - img "展示風景"
+          - button "展示風景":
+            - img "展示風景"
+          - button "展示風景":
+            - img "展示風景"
+    - region [ref=e518]:
+      - generic [ref=e519]:
+        - heading "FILM / 記録映像" [level=2] [ref=e520]
+        - generic [ref=e521]: 2024 · 16:9
+      - iframe [ref=e523]
+    - generic [ref=e525]:
+      - link "ホームへ戻る" [ref=e526] [cursor=pointer]:
+        - /url: ../index.html
+        - generic [ref=e527]: ←
+      - generic [ref=e529]: 自分勝手 / SELF-WILL · HE LIANGYU · 2024

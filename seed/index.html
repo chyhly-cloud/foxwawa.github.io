@@ -1,776 +1,1386 @@
 <!DOCTYPE html>
-<html lang="ja" class="lang-ja">
+<html lang="zh-CN" class="lang-zh">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light">
-<title>SeeD — 何梁宇</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Serif+JP:wght@300;400&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#1c1815">
+<meta name="description" content="SeeD 深圳展览项目「深圳风景，于缝隙间，看见山海」：以缝隙为入口，进入由生命与记忆绘成的第二层城市地图，看见深圳本土生物的消失、挣扎与重生。何梁宇，2025，山海艺术节。">
+<title>SeeD 深圳展览项目 — 何梁宇</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;family=Noto+Serif+SC:wght@300;400;500&amp;family=Noto+Sans+SC:wght@300;400;500;700;900&amp;family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&amp;display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:light only}
-html{forced-color-adjust:none}
+/* ═══════════════════════════════════════════════════════════════
+   SeeD 深圳展览项目 —— 页面的逻辑直接来自资料本身。
+
+   资料给的核心句：「城市由两层地图制成，隐性地图的入口就在缝隙之中。」
+   所以：
+   · 地图 01（可见／被规划的城市）＝ 品牌那套冷灰白，整齐、克制。
+   · 地图 02（隐藏／由生命与记忆绘成）＝ 展览实物那套暖土色。
+     过缝隙时页面换的是**色温**，不是装饰——你确实换了一张地图。
+   · 暗底只留给「挣扎／外来入侵」一段。证据不该被气氛包装，
+     所以调研的数字留在能读的亮底上。
+   · 缝隙不是版面家具，是三次事件：切开 hero 照片、落入地图 02、
+     设计策略里那一步被定义。
+   · 酸性绿 #84bd2a 是 SeeD 在说话（看见）。它太浅不能当正文色，
+     按品牌海报的用法当色块、深色字压在上面。
+   · 展签＝展览自己的图形物件（吊挂白板、粗黑标题、中英对照），
+     所以没有照片的两个板块就用展签本身来呈现。
+   共用外壳（导航 / hero / 概念＋灵感来源 / 规格条 / 页脚）对齐 i-think。
+   ═══════════════════════════════════════════════════════════════ */
 :root{
-  --ink:#000;--ink2:#111;--ink3:#aaa;
-  --rule:rgba(0,0,0,.12);
-  --nav-h:50px;--bar-h:44px;
+  color-scheme:light;
+  /* 地图 01 —— 地面／被规划的城市（取自 SeeD 品牌灰 #c0c0c2） */
+  --surface:#ececeb;
+  --surface2:#e3e3e2;
+  --plate:#fff;
+  --ink:#22252a;            /* 品牌版画黑 #383a3c 加深 */
+  --ink2:#585c62;
+  --dim:#6c7076;
+  --line:rgba(34,37,42,.2);
+  --line2:rgba(34,37,42,.1);
+  /* 地图 02 —— 缝隙之下（取自展览实物：水磨石、砖墙、苔藓、深土） */
+  --earth:#f2efe8;
+  --earth2:#e8e4da;
+  --under:#1c1815;
+  --e-ink:#1b1917;
+  --e-ink2:#565049;
+  --e-dim:#736c60;
+  --e-line:rgba(27,25,23,.2);
+  --e-line2:rgba(27,25,23,.1);
+  --rust:#96482c;           /* 砖墙实测 —— 已消失 */
+  --moss:#74893f;           /* 苔藓实测 —— 尚存／重生 */
+  --moss-d:#8ca055;
+  --thread:#b8323f;         /* 红绳 —— 观众的连接 */
+  --thread-d:#ed5274;
+  --dline:rgba(255,252,246,.26);
+  --dline2:rgba(255,252,246,.12);
+  --ddim:#9c9488;
+  /* SeeD 品牌 */
+  --seed:#84bd2a;           /* 海报实测酸性绿 —— 只作色块与暗底文字 */
+  --seed-t:#557d18;         /* 亮底需要文字时的深版（4.1:1） */
   --mono:"Space Mono",monospace;
-  --safe-bottom:0px;
-  --browser-bottom-gap:0px;
-  --bottom-clearance:0px;
-  --app-height:100vh;
+  --disp:"Noto Sans SC","PingFang SC","Helvetica Neue",sans-serif;
+  --serif:"Newsreader","Noto Serif SC","Songti SC",serif;
+  --nav-h:56px;
+  --maxw:1220px;
+  --pad:clamp(1.2rem,5vw,5rem);
+  --type-meta:14px;
+  --type-caption:clamp(15px,.94vw,17px);
+  --type-body:clamp(16px,1.06vw,18px);
+  --type-subhead:clamp(19px,1.42vw,24px);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{
-  height:100%;overflow:hidden;
-  background:#fff !important;color:#000 !important;
-  font-family:var(--mono);-webkit-text-size-adjust:100%;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  text-rendering:optimizeLegibility;
-}
-.lang-ja .bhead,.lang-ja .h-ttl,.lang-ja .nx-t,
-.lang-ja .note-p,.lang-ja .bp,.lang-ja .prow,
-.lang-ja .hcb .bhead{font-family:"Noto Serif JP",serif}
-.lang-zh .bhead,.lang-zh .h-ttl,.lang-zh .nx-t,
-.lang-zh .hcb .bhead{font-family:"Noto Sans SC",sans-serif;font-weight:900}
-.lang-zh .note-p,.lang-zh .bp,.lang-zh .prow{font-family:"Noto Sans SC",sans-serif;font-weight:400}
-.lang-en .bhead,.lang-en .h-ttl,.lang-en .nx-t,
-.lang-en .hcb .bhead{font-family:"Inter","Helvetica Neue",sans-serif;font-weight:900}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;background:var(--surface);overflow-x:clip}
+body{background:var(--surface);color:var(--ink);font-family:var(--mono);overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+body.is-locked{overflow:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0}
+ol,ul{list-style:none}
+::selection{background:var(--seed);color:var(--ink)}
+:focus-visible{outline:2px solid var(--seed-t);outline-offset:4px}
 
-nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;background:#fff !important;flex-shrink:0}
-.nav-l{display:flex;align-items:center;gap:2rem}
-.nav-back{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);text-decoration:none;transition:color .15s}
-.nav-back:hover{color:#000}
-.nav-ttl{font-size:13px;color:#000;letter-spacing:.3px;font-weight:700}
-.lang-ja .nav-ttl{font-family:"Noto Serif JP",serif}
-.lang-zh .nav-ttl{font-family:"Noto Sans SC",sans-serif}
-.lang-globe{background:none;border:none;cursor:pointer;padding:0;color:#000;display:flex;align-items:center;justify-content:center;opacity:.45;transition:opacity .2s;-webkit-tap-highlight-color:transparent}
+/* ── 字体层级（与其他作品页同一套 token）───────────────── */
+.body-t{font-family:var(--disp);font-size:var(--type-body);line-height:1.9;color:var(--ink2);text-wrap:pretty}
+.body-t + .body-t{margin-top:1.05rem}
+.body-t b,.body-t strong{color:var(--ink);font-weight:500}
+.mono-label{font-family:var(--mono);font-size:var(--type-meta);line-height:1.5;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:700;color:var(--seed-t)}
+.mono-note{font-family:var(--mono);font-size:var(--type-meta);line-height:1.6;letter-spacing:.1em;color:var(--dim)}
+/* 酸性绿只作色块，深色字压在上面（＝品牌海报里绿形状＋黑字的用法）。
+   #84bd2a 对亮底只有 1.9:1，绝不能当文字色；压深色字是 6.8:1。 */
+.mark{background:linear-gradient(transparent 10%,var(--seed) 10%,var(--seed) 90%,transparent 90%);
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
+  padding:0 .12em;margin:0 -.04em;color:var(--ink)}
+
+/* ── 地图 02 的色温 ─────────────────────────────────── */
+.earth{background:var(--earth);color:var(--e-ink)}
+.earth .body-t{color:var(--e-ink2)}
+.earth .mono-note{color:var(--e-dim)}
+.earth .mono-label{color:var(--rust)}
+.earth .beat-title{color:var(--e-ink)}
+.earth .section-heading{border-bottom-color:var(--e-line)}
+.dark{background:var(--under);color:#fff}
+.dark .body-t{color:rgba(255,252,246,.68)}
+.dark .mono-note{color:var(--ddim)}
+.dark .mono-label{color:var(--thread-d)}
+
+/* ── 导航 ───────────────────────────────────────────── */
+.site-nav{position:fixed;inset:0 0 auto 0;z-index:500;height:var(--nav-h);
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 var(--pad);
+  color:#fff;border-bottom:1px solid transparent;
+  transition:background .45s,border-color .45s,color .45s,backdrop-filter .45s}
+.site-nav.solid{background:rgba(236,236,235,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom-color:var(--line2);color:var(--ink)}
+.site-nav .nav-back{justify-self:start;display:flex;align-items:center;gap:.55rem;font-family:var(--mono);
+  font-size:var(--type-meta);letter-spacing:1.8px;text-transform:uppercase;opacity:.82;transition:opacity .2s}
+.site-nav .nav-back span:first-child{transition:transform .2s}
+.site-nav .nav-back:hover{opacity:1}
+.site-nav .nav-back:hover span:first-child{transform:translateX(-4px)}
+.nav-tools{grid-column:3;justify-self:end;display:flex;align-items:center}
+.lang-globe{display:flex;align-items:center;justify-content:center;padding:4px;color:inherit;cursor:pointer;
+  opacity:.62;transition:opacity .2s;-webkit-tap-highlight-color:transparent}
 .lang-globe:hover{opacity:1}
 
-#page{height:var(--app-height);overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
-#page::-webkit-scrollbar{display:none}
+/* ── 版心 ───────────────────────────────────────────── */
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+.beat{position:relative;padding:clamp(4.5rem,11vh,10rem) 0;scroll-margin-top:calc(var(--nav-h) + 8px)}
+.duo{display:grid;grid-template-columns:34% minmax(0,1fr);column-gap:clamp(1.5rem,3.6vw,3.4rem);align-items:start}
+.section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem;
+  padding-bottom:1rem;margin-bottom:clamp(2.4rem,5vw,4.5rem);border-bottom:1px solid var(--line)}
+.beat-title{font-family:var(--mono);font-size:var(--type-subhead);line-height:1.35;font-weight:700;
+  letter-spacing:.04em;color:var(--ink)}
+.beat-flow{font-family:var(--mono);font-size:var(--type-meta);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--seed-t);text-align:right;white-space:nowrap}
 
-.sec{height:var(--app-height);scroll-snap-align:start;position:relative;overflow:hidden;background:#fff;display:flex;flex-direction:column}
-.sec>.sec-bar{flex-shrink:0}
+/* ── HERO：缝隙第一次出现 —— 照片被切开 ──────────────── */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;
+  background:var(--under);color:#fff;overflow:hidden}
+.hero-plate{position:absolute;inset:0;z-index:0}
+.hero-plate img{width:100%;height:100%;object-fit:cover;object-position:center 56%;
+  filter:saturate(.8) contrast(1.02) brightness(.84)}
+.hero-plate::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(28,24,21,.6),rgba(28,24,21,.24) 24%,rgba(28,24,21,.64) 56%,rgba(28,24,21,.97))}
+.hero-cut{position:absolute;inset:0;z-index:1;pointer-events:none}
+.hero-cut i{position:absolute;top:0;bottom:0;left:37%;width:13px;background:var(--under);
+  box-shadow:0 0 26px 6px rgba(28,24,21,.72),
+             inset 1px 0 0 rgba(255,252,246,.16), inset -1px 0 0 rgba(255,252,246,.16)}
+.hero-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;
+  padding:calc(var(--nav-h) + 7vh) var(--pad) clamp(4.5rem,11vh,7rem)}
+.hero-tick{width:38px;height:3px;background:var(--seed);margin-bottom:1.4rem}
+.hero-kicker{font-family:var(--mono);font-size:var(--type-meta);letter-spacing:3px;text-transform:uppercase;
+  color:rgba(255,252,246,.72);margin-bottom:1.2rem;font-weight:700}
+.hero-ttl{font-family:var(--serif);font-weight:400;font-size:clamp(4.2rem,16vw,11rem);line-height:.84;
+  letter-spacing:-.045em;color:#fff}
+.hero-sub{margin-top:1.5rem;font-family:var(--mono);font-size:var(--type-meta);letter-spacing:3px;
+  color:rgba(255,252,246,.62);text-transform:uppercase;font-weight:700}
+.hero-show{margin-top:clamp(2rem,5vh,3.2rem);font-family:var(--serif);font-weight:400;
+  font-size:clamp(1.5rem,3.3vw,2.6rem);line-height:1.42;letter-spacing:-.01em;color:#fff}
+.hero-show em{font-style:normal;color:var(--seed)}
+.hero-show small{display:block;margin-top:.7rem;font-family:var(--mono);font-size:var(--type-meta);
+  letter-spacing:.1em;color:rgba(255,252,246,.5)}
+.hero-lede{margin-top:1.5rem;max-width:40em;font-family:var(--disp);font-size:var(--type-caption);
+  line-height:1.9;color:rgba(255,252,246,.62)}
+.hero-scroll{position:absolute;left:50%;bottom:1.4rem;transform:translateX(-50%);z-index:3;
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  font-family:var(--mono);font-size:var(--type-meta);letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,252,246,.5)}
+.hero-scroll .dn{width:1px;height:30px;background:linear-gradient(rgba(255,252,246,.7),transparent);
+  animation:sweep 2.2s ease-in-out infinite}
+@keyframes sweep{0%,100%{opacity:.25;transform:scaleY(.7)}50%{opacity:1;transform:scaleY(1)}}
 
-.sec-bar{display:flex;align-items:center;padding:0 2.5rem;height:var(--bar-h);gap:1rem;background:#fff !important}
-.s-ttl{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#000;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}
-.dots{display:flex;gap:7px;align-items:center;flex-shrink:0}
-.dot{width:5px;height:5px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .2s,transform .18s}
-.dot.on{background:#000;transform:scale(1.4)}
+/* ── 概念（共用外壳）─────────────────────────────────── */
+/* 中文限宽用 em 不用 ch：ch 是「0」的宽度，汉字会被算成两倍字数 */
+.premise-lead{font-family:var(--serif);font-weight:400;font-size:clamp(1.5rem,4.2vw,3.2rem);
+  line-height:1.42;letter-spacing:-.015em;color:var(--ink);max-width:15em}
+.concept-body{margin-top:clamp(2.2rem,4.5vw,3.4rem)}
+.concept-quote{font-family:var(--serif);font-size:clamp(1.05rem,1.7vw,1.45rem);line-height:1.85;
+  color:var(--ink);letter-spacing:.005em}
+.concept-copy{max-width:44em}
+.inspiration-panel{max-width:46em;margin-top:clamp(2.4rem,5vw,3.4rem);border-top:1px solid var(--line)}
+.inspiration-panel summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.7rem;padding:1.2rem 0;
+  font-family:var(--mono);font-size:var(--type-meta);letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--ink2);font-weight:700;transition:color .3s}
+.inspiration-panel summary::-webkit-details-marker{display:none}
+.inspiration-panel summary::before{content:"+";font-size:16px;color:var(--seed-t);line-height:1;
+  transition:transform .45s cubic-bezier(.22,.74,.25,1)}
+.inspiration-panel.is-open summary::before{transform:rotate(45deg)}
+.inspiration-panel.is-open summary,.inspiration-panel summary:hover{color:var(--ink)}
+.inspiration-panel summary:focus{outline:none}
+.inspiration-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.22,.74,.25,1)}
+.inspiration-panel.is-open .inspiration-body{grid-template-rows:1fr}
+.inspiration-copy{overflow:hidden;opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity .35s,transform .45s,visibility 0s .45s,padding .45s}
+.inspiration-panel.is-open .inspiration-copy{padding:.2rem 0 1.8rem;opacity:1;visibility:visible;transform:none;
+  transition-delay:.08s,.04s,0s,0s}
+.inspiration-copy p{font-family:var(--disp);font-size:var(--type-caption);line-height:1.8;color:var(--ink2)}
+.inspiration-copy p + p{margin-top:1rem}
+.insp-lead{font-family:var(--serif);font-size:clamp(1.1rem,1.9vw,1.45rem);line-height:1.6;color:var(--ink);
+  margin-bottom:1.2rem}
+/* 面板里那道缝：两个字分居两侧，三组关系横跨其上 */
+.insp-gap{position:relative;margin:1.6rem 0}
+.insp-gap::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% + .9rem);width:1px;
+  background:var(--line2);pointer-events:none}
+.gap-word{display:grid;grid-template-columns:50% minmax(0,1fr);column-gap:1.8rem;user-select:none}
+.gap-word span{font-family:var(--serif);font-weight:300;font-size:clamp(3.2rem,8vw,5.6rem);line-height:.95;
+  letter-spacing:-.05em;color:var(--ink)}
+.gap-word span:first-child{text-align:right;padding-bottom:.42em}
+.gap-word span:last-child{text-align:left;padding-top:.42em}
+.axes{margin-top:.4rem;border-top:1px solid var(--line2)}
+.axis{display:grid;grid-template-columns:50% minmax(0,1fr);column-gap:1.8rem;align-items:center;
+  padding:.8rem 0;border-bottom:1px solid var(--line2)}
+.axis span{font-family:var(--serif);font-size:clamp(1rem,1.7vw,1.3rem);letter-spacing:.06em}
+.axis span:first-child{text-align:right;color:var(--ink)}
+.axis span:last-child{text-align:left;color:var(--dim)}
+.project-meta{display:flex;flex-wrap:wrap;gap:2.6rem;margin-top:clamp(3rem,7vw,5rem);padding-top:1.6rem;
+  border-top:1px solid var(--line)}
+.project-meta>div{min-width:150px;display:flex;flex-direction:column;gap:.5rem}
+.spec-k{font-family:var(--mono);font-size:var(--type-meta);letter-spacing:2px;text-transform:uppercase;color:var(--dim)}
+.spec-v{font-family:var(--mono);font-size:var(--type-meta);letter-spacing:.06em;color:var(--ink)}
 
-.h-track{flex:1;min-height:0;position:relative;display:flex;overflow-x:scroll;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.h-track::-webkit-scrollbar{display:none}
-.slide{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start;overflow:hidden;background:#fff}
 
-.board{display:grid;height:100%}
-.b-half{grid-template-columns:1fr 1fr}
-.b-half .bcell:first-child{border-right:1px solid var(--rule)}
-.bcell{position:relative;overflow:hidden}
+/* ── 落入地图 02：缝隙第二次出现 ────────────────────── */
+.gate{background:var(--under);color:#fff;padding:clamp(3.4rem,9vh,6.5rem) 0;position:relative;overflow:hidden}
+.gate::before{content:"";position:absolute;left:37%;top:0;bottom:0;width:13px;background:var(--earth);
+  box-shadow:0 0 30px 8px rgba(242,239,232,.16)}
+/* 文字落在缝的另一侧，缝才是通的 */
+.gate .wrap{position:relative}
+.gate .wrap>*{margin-left:42%}
+.gate .k{font-family:var(--mono);font-size:var(--type-meta);font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--moss-d)}
+.gate h2{margin-top:1rem;max-width:17em;font-family:var(--serif);font-weight:300;
+  font-size:clamp(1.6rem,3.4vw,2.6rem);line-height:1.34;letter-spacing:-.025em}
+.gate-note{margin-top:1.5rem;font-family:var(--mono);font-size:var(--type-meta);letter-spacing:.1em;
+  color:rgba(255,252,246,.42)}
+.gate h2 em{font-style:normal;color:var(--moss-d)}
 
-.bimg{background:#f4f4f4;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:2rem}
-.bimg img{width:100%;height:100%;object-fit:contain;display:block}
-.bimg.photo{padding:0;background:#e8e8e8}
-.bimg.photo img{object-fit:cover;object-position:center}
-.bph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:#f4f4f4;text-align:center}
+/* ── 调研 ───────────────────────────────────────────── */
+.sub-head{margin-bottom:clamp(2rem,4vw,3.2rem)}
+.sub-head .n{display:block;font-family:var(--mono);font-size:var(--type-meta);font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--rust)}
+.sub-head h3{margin-top:1rem;font-family:var(--serif);font-weight:400;font-size:clamp(1.6rem,3.4vw,2.5rem);
+  line-height:1.35;letter-spacing:-.02em;max-width:18em}
+.lead-t{font-family:var(--serif);font-weight:400;font-size:clamp(1.15rem,2vw,1.55rem);line-height:1.7;
+  color:var(--e-ink)}
+.block + .block{margin-top:clamp(4.5rem,11vh,8rem);padding-top:clamp(3rem,6vw,4.6rem);
+  border-top:1px solid var(--e-line)}
 
-.btxt{display:flex;flex-direction:column;justify-content:center;overflow-y:auto;padding:3rem;background:#fff}
-.btxt::-webkit-scrollbar{display:none}
-.brow{margin-bottom:2rem;flex-shrink:0}
-.brow:last-child{margin-bottom:0}
+/* 损失图：四项指标同一条 0–100% 标尺；砖锈＝已消失，苔绿＝尚存。
+   两个填充色跑过 dataviz 校验器，亮底六项全过（deutan ΔE 9.6）。 */
+.loss{margin-top:clamp(2.6rem,5vw,4rem)}
+.loss-key{padding-bottom:.9rem;border-bottom:1px solid var(--e-line);display:flex;flex-wrap:wrap;gap:1.6rem}
+.loss-key span{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);
+  font-size:var(--type-meta);letter-spacing:.06em;color:var(--e-dim)}
+.loss-key i{width:14px;height:9px;border-radius:1px;flex:none}
+.sw-gone{background:var(--rust)}
+.sw-left{background:var(--moss)}
+.loss-row{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:clamp(1.2rem,3vw,2.6rem);
+  align-items:baseline;padding:1.3rem 0;border-bottom:1px solid var(--e-line2)}
+.loss-row .nm{font-family:var(--disp);font-size:var(--type-caption);line-height:1.5;color:var(--e-ink);font-weight:500}
+.loss-row .src{display:block;margin-top:.35rem;font-family:var(--mono);font-size:var(--type-meta);
+  letter-spacing:.06em;color:var(--e-dim);line-height:1.6;font-weight:400}
+.loss-row .pc{font-family:var(--mono);font-size:clamp(1.4rem,2.6vw,2rem);line-height:1;letter-spacing:-.04em;
+  color:var(--rust);white-space:nowrap}
+.loss-row .bar{grid-column:1/-1;position:relative;height:9px;margin-top:.9rem;border-radius:1px;
+  background:var(--moss);overflow:hidden}
+.loss-row .bar i{position:absolute;left:0;top:0;bottom:0;width:calc(var(--gone) * 1%);
+  background:var(--rust);box-shadow:2px 0 0 0 var(--earth);
+  transform-origin:left center;transform:scaleX(var(--sx,1));transition:transform 1.1s cubic-bezier(.19,1,.22,1)}
+.js .loss-row .bar i{--sx:0}
+.js .loss-row.in .bar i{--sx:1}
+.loss-foot{margin-top:1.9rem;display:grid;grid-template-columns:34% minmax(0,1fr);
+  column-gap:clamp(1.5rem,3.6vw,3.4rem);align-items:start}
+.big-stat{font-family:var(--mono);font-size:clamp(2.6rem,6vw,4.2rem);line-height:1;letter-spacing:-.06em;
+  color:var(--e-ink)}
+.big-stat sub{font-size:.3em;letter-spacing:.12em;vertical-align:baseline;margin-left:.5em;color:var(--e-dim)}
+.big-stat + p{margin-top:.9rem;font-family:var(--disp);font-size:var(--type-caption);line-height:1.8;
+  color:var(--e-ink2);max-width:22em}
 
-.blbl{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#000;text-transform:uppercase;margin-bottom:.9rem;display:block;font-weight:700}
-.bhead{font-size:clamp(20px,2.5vw,34px);font-weight:900;color:#000;line-height:1.1;margin-bottom:1rem;letter-spacing:-.02em}
-.lang-zh .bhead{letter-spacing:0}
-.lang-ja .bhead{letter-spacing:0;font-weight:400}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(2rem,5vw,4rem);
+  margin-top:clamp(3rem,6vw,4.6rem);padding-top:1.6rem;border-top:1px solid var(--e-line)}
+.pair h4{margin-bottom:1rem;font-family:var(--serif);font-weight:400;font-size:clamp(1.25rem,2.2vw,1.7rem);
+  line-height:1.4;letter-spacing:-.02em}
+.earth .pair .body-t{color:var(--e-ink2)}
+.rows{border-top:1px solid var(--e-line)}
+.rows li{display:grid;grid-template-columns:3.4rem minmax(0,1fr);column-gap:1.2rem;
+  padding:1.25rem 0;border-bottom:1px solid var(--e-line2)}
+.rows .n{font-family:var(--mono);font-size:var(--type-meta);font-weight:700;letter-spacing:.08em;
+  color:var(--rust);padding-top:.3rem}
+.rows h4{font-family:var(--disp);font-weight:500;font-size:var(--type-subhead);letter-spacing:.01em;line-height:1.4}
+.rows p{margin-top:.4rem;font-family:var(--disp);font-size:var(--type-caption);line-height:1.75;color:var(--e-ink2)}
+.zones{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(2rem,5vw,4rem);
+  margin-top:clamp(3rem,6vw,4.6rem)}
+.zone{padding:1.5rem 0;border-top:1px solid var(--e-line)}
+.zone .k{font-family:var(--mono);font-size:var(--type-meta);font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--moss)}
+.zone h4{margin:.8rem 0 .6rem;font-family:var(--serif);font-weight:400;font-size:clamp(1.2rem,2.1vw,1.55rem);
+  line-height:1.35;letter-spacing:-.02em}
+.zone p{font-family:var(--disp);font-size:var(--type-caption);line-height:1.8;color:var(--e-ink2)}
 
-.bp{font-size:12px;line-height:1.9;color:#444;margin-bottom:.5rem}
-.bp:last-child{margin-bottom:0}
+/* 挣扎：唯一的暗段 */
+.figs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;
+  margin:clamp(2.4rem,5vw,3.8rem) 0 clamp(2rem,4vw,3rem);
+  border-top:1px solid var(--dline);border-bottom:1px solid var(--dline)}
+.fig{padding:1.6rem 1.4rem 1.5rem 0}
+.fig strong{display:block;font-family:var(--mono);font-weight:400;font-size:clamp(1.5rem,3.2vw,2.4rem);
+  line-height:1;letter-spacing:-.05em;color:var(--thread-d)}
+.fig.down strong{color:var(--moss-d)}
+.fig span{display:block;margin-top:1rem;font-family:var(--disp);font-size:var(--type-caption);
+  line-height:1.6;color:rgba(255,252,246,.6)}
+.run{font-family:var(--mono);font-size:var(--type-meta);line-height:2.1;letter-spacing:.08em}
+.dark .run{color:rgba(255,252,246,.74)}
+.dark .run i{font-style:normal;color:var(--thread-d);margin:0 .55em;opacity:.75}
+.earth .run{color:var(--e-ink2)}
+.earth .run i{font-style:normal;color:var(--moss);margin:0 .55em}
 
-.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:.6rem}
-.chip{font-family:var(--mono);font-size:8px;letter-spacing:2px;padding:3px 9px;border:1px solid var(--rule);color:#888;text-transform:uppercase}
+/* 重生：手风琴 */
+.cases{margin-top:clamp(2.6rem,5vw,4rem);border-top:1px solid var(--e-line)}
+.case{border-bottom:1px solid var(--e-line2)}
+.case summary{list-style:none;cursor:pointer;display:grid;
+  grid-template-columns:3.4rem minmax(0,1fr) 1.6rem;column-gap:1.2rem;align-items:start;padding:1.4rem 0}
+.case summary::-webkit-details-marker{display:none}
+.case summary:focus{outline:none}
+.case .n{font-family:var(--mono);font-size:var(--type-meta);font-weight:700;letter-spacing:.08em;
+  color:var(--moss);padding-top:.3rem}
+.case h4{font-family:var(--disp);font-weight:500;font-size:var(--type-subhead);letter-spacing:.01em;
+  line-height:1.4;transition:color .3s}
+.case .sum{margin-top:.4rem;font-family:var(--disp);font-size:var(--type-caption);line-height:1.75;color:var(--e-ink2)}
+.case .plus{grid-column:3;grid-row:1;justify-self:end;font-family:var(--mono);font-size:16px;line-height:1;
+  color:var(--moss);padding-top:.35rem;transition:transform .45s cubic-bezier(.22,.74,.25,1)}
+.case.is-open .plus{transform:rotate(45deg)}
+.case summary:hover h4{color:var(--moss)}
+.case-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.22,.74,.25,1)}
+.case.is-open .case-body{grid-template-rows:1fr}
+.case-copy{overflow:hidden;opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity .35s,transform .45s,visibility 0s .45s,padding .45s}
+.case.is-open .case-copy{padding:0 0 1.7rem;opacity:1;visibility:visible;transform:none;
+  transition-delay:.08s,.04s,0s,0s}
+.case-copy p{margin-left:4.6rem;max-width:48em;font-family:var(--disp);font-size:var(--type-caption);
+  line-height:1.9;color:var(--e-ink2)}
 
-#s-hero{background:#fff}
-.hero-g{display:grid;grid-template-columns:58% 42%;height:100%}
-.hero-img{overflow:hidden;border-right:1px solid var(--rule)}
-.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-.hero-nfo{display:flex;flex-direction:column;overflow-y:auto;background:#fff}
-.hero-nfo::-webkit-scrollbar{display:none}
-.hero-nfo::after{content:"";display:block;flex:0 0 0}
+/* ── 设计策略：资料里就是一条带箭头的链 ─────────────── */
+.chain-step{padding-top:clamp(2.6rem,6vw,4.4rem)}
+.arrow{display:flex;align-items:center;gap:1rem;padding-top:clamp(2.2rem,5vw,3.6rem);
+  font-family:var(--mono);font-size:var(--type-meta);letter-spacing:.14em;color:var(--dim)}
+.arrow::before{content:"";width:1px;height:clamp(2.2rem,5vw,3.6rem);background:var(--line);
+  margin-left:1.05rem;margin-right:.6rem}
+.arrow b{color:var(--seed-t);font-weight:700}
+.step-head .n{display:block;font-family:var(--mono);font-size:var(--type-meta);font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--seed-t)}
+.step-head h3{margin-top:1rem;font-family:var(--serif);font-weight:400;font-size:clamp(1.5rem,3vw,2.2rem);
+  line-height:1.35;letter-spacing:-.02em;max-width:17em}
+.kw{font-family:var(--serif);font-size:clamp(1.15rem,2.3vw,1.7rem);line-height:1.9;color:var(--ink);max-width:26em}
+.kw i{font-style:normal;color:var(--seed-t);margin:0 .5em;opacity:.8}
+.flow{border-top:1px solid var(--line2)}
+.flow li{display:grid;grid-template-columns:3.4rem minmax(0,1fr);column-gap:1.2rem;
+  padding:1.25rem 0;border-bottom:1px solid var(--line2)}
+.flow .n{font-family:var(--mono);font-size:var(--type-meta);font-weight:700;letter-spacing:.08em;
+  color:var(--dim);padding-top:.35rem}
+.flow p{font-family:var(--disp);font-size:var(--type-body);line-height:1.85;color:var(--ink2);max-width:44em}
+.flow li:last-child p{color:var(--ink)}
+.think{display:grid;gap:clamp(1.6rem,4vw,2.6rem)}
+.think p{font-family:var(--serif);font-weight:400;font-size:clamp(1.15rem,2.2vw,1.65rem);line-height:1.75;
+  color:var(--ink);max-width:30em}
+/* 缝隙 —— 这一步是全篇的支点 */
+.crack-def{margin-top:clamp(1.6rem,3vw,2.4rem);border-top:1px solid var(--line)}
+.crack-def li{padding:1.15rem 0;border-bottom:1px solid var(--line2);
+  font-family:var(--disp);font-size:var(--type-caption);line-height:1.85;color:var(--ink2)}
+.crack-def li b{color:var(--ink);font-weight:500}
+.crack-def li.see{font-family:var(--serif);font-size:clamp(1.2rem,2.4vw,1.8rem);line-height:1.6;
+  color:var(--ink);padding:1.6rem 0}
+.crack-def li.see b{font-weight:400}
+.plate-img{margin-top:clamp(1.8rem,4vw,2.8rem)}
+.plate-img img{width:100%;height:auto;mix-blend-mode:multiply}
 
-.htb{padding:3.5rem 3rem 2rem;flex-shrink:0}
-.h-cat{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;margin-bottom:1.5rem;font-weight:700}
-.h-ttl{font-size:clamp(48px,6.5vw,88px);font-weight:900;line-height:.95;color:#000;margin-bottom:.6rem;letter-spacing:-.03em;white-space:pre-line}
-.lang-zh .h-ttl{letter-spacing:0;line-height:1}
-.lang-ja .h-ttl{letter-spacing:-.01em;font-weight:300;font-size:clamp(40px,5.5vw,72px)}
-.h-sub{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;color:var(--ink3);text-transform:uppercase;margin-bottom:2rem;font-weight:700}
-.lang-zh .bp,.lang-zh .hcb .bp{text-align:justify}
-.lang-zh .bhead{text-align:justify}
-.specs{display:grid;grid-template-columns:auto 1fr;gap:8px 24px;margin-top:.5rem}
-.sp-l{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:#888;text-transform:uppercase;align-self:center;font-weight:700}
-.sp-v{font-size:13px;color:#000;font-weight:700}
+/* ── 展览板块 ───────────────────────────────────────── */
+.ex + .ex{margin-top:clamp(4rem,10vh,8rem)}
+.shot img{width:100%;height:auto}
+.shot--bleed{width:100vw;margin-left:calc(50% - 50vw)}
+.shot--inset>.wrap>div{max-width:min(100%,780px)}
+.ex-copy{margin-top:clamp(1.8rem,4vw,2.8rem)}
+.ex-copy .k{display:block;font-family:var(--mono);font-size:var(--type-meta);font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--seed-t)}
+/* 板块标题引用现场展签的粗黑体 */
+.ex-ttl{margin-top:.9rem;font-family:var(--disp);font-weight:900;font-size:clamp(1.9rem,4.4vw,3.2rem);
+  line-height:1.1;letter-spacing:-.02em;color:var(--ink)}
+.ex-ttl small{display:block;margin-top:.5rem;font-family:var(--disp);font-weight:700;
+  font-size:clamp(.95rem,1.5vw,1.15rem);letter-spacing:.01em;color:var(--dim)}
+.ex-note{margin-top:.7rem}
+.ex-copy .body-t{max-width:44em}
 
-.hcb{padding:0 3rem 2rem;flex-shrink:0;margin-top:-.5rem}
-.hcb .blbl{margin-bottom:.8rem}
-.hcb .bhead{font-size:clamp(15px,1.6vw,19px);font-weight:900;line-height:1.25;letter-spacing:-.01em}
-.lang-ja .hcb .bhead{font-weight:400}
-.hcb .bp{font-size:12px;line-height:1.85;color:#555;margin-top:.6rem}
+.join{margin-top:clamp(2.4rem,5vw,3.6rem);padding-top:1.6rem;border-top:1px solid var(--line)}
+.join h4{font-family:var(--disp);font-weight:700;font-size:clamp(1.15rem,2vw,1.5rem);line-height:1.35}
+.join h4 small{display:block;margin-top:.35rem;font-weight:400;font-size:var(--type-meta);
+  font-family:var(--mono);letter-spacing:.1em;color:var(--dim)}
+.steps{margin-top:1.3rem;border-top:1px solid var(--line2)}
+.steps li{display:grid;grid-template-columns:3.4rem minmax(0,1fr);column-gap:1.2rem;
+  padding:1rem 0;border-bottom:1px solid var(--line2)}
+.steps .n{font-family:var(--mono);font-size:var(--type-meta);font-weight:700;letter-spacing:.08em;
+  color:var(--thread);padding-top:.2rem}
+.steps p{font-family:var(--disp);font-size:var(--type-caption);line-height:1.8;color:var(--ink2)}
+.steps p em{display:block;margin-top:.3rem;font-style:normal;color:var(--dim)}
 
-.ins-det{flex-shrink:0;border-top:1px solid var(--rule)}
-.ins-sum{display:flex;align-items:center;gap:.6rem;padding:1.1rem 3rem;cursor:pointer;list-style:none;outline:none;font-family:var(--mono);font-size:11px;letter-spacing:3px;color:#888;text-transform:uppercase;transition:color .15s;font-weight:700}
-.ins-sum::-webkit-details-marker{display:none}
-.ins-sum::before{content:"▶";font-size:7px;transition:transform .2s;flex-shrink:0}
-.ins-det[open] .ins-sum::before{transform:rotate(90deg)}
-.ins-sum:hover{color:#000}
-.ins-body{padding:0 3rem 2rem}
-.ins-body .note-p{font-size:12px;line-height:1.9;color:#555;margin-bottom:.8rem;font-style:italic}
-.ins-body .note-p:last-of-type{margin-bottom:0}
+/* ── 收尾 · 页脚 ────────────────────────────────────── */
+.foot{border-top:1px solid var(--line);padding:clamp(2.4rem,6vh,4rem) 0}
+.foot .wrap{display:flex;flex-wrap:wrap;gap:1.4rem;align-items:center;justify-content:space-between}
+.foot-back{display:inline-flex;align-items:center;gap:.8rem;font-family:var(--mono);font-size:var(--type-meta);
+  font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.foot-back span:first-child{transition:transform .2s}
+.foot-back:hover span:first-child{transform:translateX(-4px)}
+.foot-meta{font-family:var(--mono);font-size:var(--type-meta);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
 
-.h-hint{padding:1.5rem 3rem;font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--ink3);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-top:auto;flex-shrink:0;padding-top:0;font-weight:700}
-.h-line{width:28px;height:1px;background:var(--ink3)}
+/* ── 灯箱 ───────────────────────────────────────────── */
+.lightbox{position:fixed;z-index:900;inset:0;display:none;padding:clamp(1rem,4vw,3rem);
+  background:rgba(20,18,16,.96);cursor:zoom-out;overflow:auto;overscroll-behavior:contain}
+.lightbox.is-open{display:flex;align-items:center;justify-content:center}
+.lightbox img{max-width:min(96vw,1700px);max-height:92svh;object-fit:contain;margin:auto}
+.lightbox-close{position:fixed;top:.8rem;right:1.1rem;padding:.6rem;color:rgba(255,252,246,.7);cursor:pointer;
+  font-family:var(--mono);font-size:24px;line-height:1}
+[data-lightbox]{cursor:zoom-in}
 
-.bhead,.bp,.note-p,.sp-v{text-wrap:pretty;-webkit-hyphens:auto;hyphens:auto}
-.hero-nfo,.btxt,.ins-body{-webkit-overflow-scrolling:touch}
+/* ── 入场 ───────────────────────────────────────────── */
+.js .rv{opacity:0;transform:translateY(12px);transition:opacity .8s cubic-bezier(.19,1,.22,1),transform .8s cubic-bezier(.19,1,.22,1)}
+.js .rv.in{opacity:1;transform:none}
+.js .rv-grow{clip-path:inset(100% 0 0 0);transition:clip-path 1.1s cubic-bezier(.19,1,.22,1)}
+.js .rv-grow.in{clip-path:inset(0 0 0 0)}
 
-@supports (height:100svh){:root{--app-height:100svh}}
-@supports (height:100dvh){:root{--app-height:100dvh}}
-
-.cl-line{font-size:clamp(13px,1.3vw,16px);line-height:1.85;color:#222;text-align:center;max-width:36em;padding:2rem 0}
-.lang-ja .cl-line{font-family:"Noto Serif JP",serif;font-weight:300}
-.lang-zh .cl-line{font-family:"Noto Sans SC",sans-serif;font-weight:400}
-.cl-rule{width:1px;height:1.8rem;background:var(--rule);flex-shrink:0}
-
-#s-back{background:#fff;display:flex;align-items:center;justify-content:center}
-.back-btn{display:flex;align-items:center;gap:.8rem;text-decoration:none;font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#000;opacity:.35;transition:opacity .2s;font-weight:700}
-.back-btn:hover{opacity:1}
-.back-btn svg{transition:transform .2s}
-.back-btn:hover svg{transform:translateX(-4px)}
-
-@media(max-width:768px){
-  :root{--safe-bottom:env(safe-area-inset-bottom,20px)}
-  :root{--bottom-clearance:max(var(--safe-bottom),var(--browser-bottom-gap))}
-  .board.b-half{grid-template-columns:1fr;grid-template-rows:45% 55%}
-  .hero-g{grid-template-columns:1fr;grid-template-rows:42% 58%}
-  .hero-img{border-right:none}
-  .b-half .bcell:first-child{border-right:none}
-  .btxt{padding:2.2rem 1.8rem calc(2.8rem + var(--bottom-clearance))}
-  .htb,.hcb{padding-left:1.8rem;padding-right:1.8rem}
-  .ins-sum,.ins-body,.h-hint{padding-left:1.8rem;padding-right:1.8rem}
-  .h-ttl{font-size:clamp(36px,9vw,56px)}
-  .hero-nfo{padding-bottom:0}
-  .hero-nfo::after{flex-basis:calc(4.5rem + var(--bottom-clearance))}
-  .ins-body{padding-bottom:calc(2rem + var(--bottom-clearance))}
-  .h-hint{padding-bottom:calc(.5rem + var(--bottom-clearance))}
-  #s-back{padding-bottom:var(--bottom-clearance)}
-  .bp{font-size:15px;line-height:2.06;color:#222}
-  .hcb .bp{font-size:15px;line-height:2.06;color:#202020}
-  .ins-body .note-p{font-size:15px;line-height:2.08;color:#2d2d2d}
-  .bhead{font-size:clamp(20px,5vw,28px)}
-  .hcb .bhead{font-size:clamp(16px,4vw,20px)}
-  .blbl{font-size:11px}
-  .chip{font-size:9px;padding:4px 10px}
-  .sp-v{font-size:14px}
-  .nav-ttl{font-size:14px}
-  .bhead{line-height:1.22;color:#050505}
-  .hcb .bhead{line-height:1.34}
-  .h-ttl{line-height:1.02}
-  .brow,.htb > *,.hcb > *,.ins-body > *{max-width:31rem}
-  .bp,.ins-body .note-p,.sp-v{letter-spacing:.01em}
+/* ── 响应式 ─────────────────────────────────────────── */
+@media(max-width:900px){
+  .zones,.pair{grid-template-columns:1fr;gap:0}
+  .pair>article+article{margin-top:2rem;padding-top:1.6rem;border-top:1px solid var(--e-line2)}
+  .figs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fig{border-top:1px solid var(--dline2)}
+  .fig:nth-child(-n+2){border-top:0}
 }
-@supports (-webkit-touch-callout:none){
-  @media(max-width:768px){
-    .bp,.hcb .bp,.ins-body .note-p{text-shadow:0 0 .01px rgba(0,0,0,.35)}
-    .btxt,.hero-nfo{transform:translateZ(0)}
-  }
+@media(max-width:860px){
+  .duo,.loss-foot{grid-template-columns:minmax(0,1fr);row-gap:1.1rem}
+  .hero-cut i{left:auto;right:7%;width:9px}
+  .gate::before{left:auto;right:7%;width:9px}
+  .gate .wrap>*{margin-left:0;padding-right:14%}
+}
+@media(max-width:700px){
+  .section-heading{flex-direction:column;align-items:flex-start;gap:.5rem}
+  .beat-flow{text-align:left;white-space:normal}
+  .nav-tools{display:none}
+}
+@media(max-width:640px){
+  :root{--nav-h:52px}
+  .premise-lead,.think p,.gate h2{max-width:100%}
+  .rows li,.flow li,.steps li,.case summary{grid-template-columns:2.6rem minmax(0,1fr);column-gap:.9rem}
+  .case summary{grid-template-columns:2.6rem minmax(0,1fr) 1.4rem}
+  .case-copy p{margin-left:3.5rem}
+  .figs{grid-template-columns:1fr}
+  .fig{border-top:1px solid var(--dline2)}
+  .fig:first-child{border-top:0}
+  .loss-row{grid-template-columns:minmax(0,1fr)}
+  .loss-row .pc{margin-top:.5rem}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+  .js .rv{opacity:1;transform:none}
+  .js .rv-grow{clip-path:none}
+  .js .loss-row .bar i{--sx:1}
 }
 </style>
 </head>
 <body>
 
-<div id="page">
-
-<!-- ══ HERO ══════════════════════════════ -->
-<section class="sec" id="s-hero">
-<nav>
-  <div class="nav-l">
-    <a class="nav-back" href="../index.html">&#8592;</a>
-    <span class="nav-ttl" id="nav-ttl">SeeD</span>
+<nav class="site-nav" id="site-nav" aria-label="项目导航">
+  <a class="nav-back" href="../index.html"><span aria-hidden="true">&#8592;</span><span data-i18n="navBack">返回</span></a>
+  <div class="nav-tools">
+    <button class="lang-globe" id="lang-cycle-btn" type="button" title="切换语言" aria-label="切换语言">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.2"/>
+        <ellipse cx="10" cy="10" rx="4" ry="8.5" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="1.5" y1="7.5" x2="18.5" y2="7.5" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="1.5" y1="12.5" x2="18.5" y2="12.5" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+    </button>
   </div>
-  <button class="lang-globe" id="lang-cycle-btn" title="Switch language" aria-label="Switch language">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.2"/>
-      <ellipse cx="10" cy="10" rx="4" ry="8.5" stroke="currentColor" stroke-width="1.2"/>
-      <line x1="1.5" y1="7.5" x2="18.5" y2="7.5" stroke="currentColor" stroke-width="1.2"/>
-      <line x1="1.5" y1="12.5" x2="18.5" y2="12.5" stroke="currentColor" stroke-width="1.2"/>
-    </svg>
-  </button>
 </nav>
-  <div class="hero-g">
-    <div class="hero-img"><img src="hero.jpg" alt="" onerror="this.style.display='none'"></div>
-    <div class="hero-nfo">
-      <div class="htb">
-        <p class="h-cat" id="h-cat">品牌設計</p>
-        <h1 class="h-ttl" id="h-ttl">于缝隙中，
-看见山海</h1>
-        <p class="h-sub" id="h-sub">SeeD X 深圳海上世界文化艺术中心展览</p>
-        <div class="specs">
-          <span class="sp-l" id="h-yl">年份</span><span class="sp-v">2025</span>
-          <span class="sp-l" id="h-tl">形式</span><span class="sp-v" id="h-type">展覧企画</span>
+
+<main id="page">
+
+<!-- ══════════ HERO —— 缝隙第一次出现：照片被切开 ══════════ -->
+<header class="hero">
+  <div class="hero-plate">
+    <img src="derived/hero.webp" alt="SeeD 展览现场：白色模块化桌子与植物装置在展厅中排开，背景是红砖墙与吊挂的透明展签" fetchpriority="high" width="2400" height="1600">
+  </div>
+  <div class="hero-cut" aria-hidden="true"><i></i></div>
+  <div class="hero-inner">
+    <div class="hero-tick"></div>
+    <p class="hero-kicker" data-i18n="heroKicker">2025 / 品牌设计 · 展览设计</p>
+    <h1 class="hero-ttl">SeeD</h1>
+    <p class="hero-sub" data-i18n="heroSub">深圳展览项目 / 山海艺术节</p>
+    <p class="hero-show" data-i18n="heroShow">深圳风景，于缝隙间，<em>看见山海</em>。</p>
+    <p class="hero-lede" data-i18n="heroLede">本次展览以消失的生物为切入点，以「缝隙之间」为核心视角，窥探深圳在城市发展过程中本土生物的变化。缝隙之间，承载了关于这座城市的人文故事，也生出了人与自然和谐共生的未来展望。</p>
+  </div>
+  <div class="hero-scroll" aria-hidden="true"><span class="dn"></span><span>Scroll</span></div>
+</header>
+
+<!-- ══════════ 概念（共用外壳）══════════ -->
+<section class="beat" id="concept">
+  <div class="wrap">
+    <div class="section-heading rv">
+      <span class="beat-title" data-i18n="conceptTitle">概念</span>
+      <span class="beat-flow">CONCEPT</span>
+    </div>
+
+    <p class="premise-lead rv" data-i18n="premiseLead">每一座城市，<br>都由两层<span class="mark">地图</span>制成。</p>
+
+    <div class="concept-body duo rv">
+      <div>
+        <p class="concept-quote" data-i18n="conceptQuote">一层是标有城市肌理、可以看见的地图；另一层则是由生命与记忆共同绘制的隐藏地图。</p>
+      </div>
+      <div class="concept-copy">
+        <p class="body-t" data-i18n="conceptP1">或许在深圳这座先锋之城中，这层隐性地图的入口就存在于城市的缝隙间。缝隙，是城市最诚实的表情，它袒露了水泥之下的挣扎，也见证了生命的韧性与回响，它提醒我们，自然总会在每一个可能的出口生根发芽。</p>
+        <p class="body-t" data-i18n="conceptP2">从红树林的消退，到黑脸琵鹭变得濒危；从薇甘菊的无声入侵，到水蕨在净化后的土壤中重现，缝隙承载了这些生命的故事。它是城市进化过程的生长纹，也是对生态保护无声的呐喊。</p>
+        <p class="body-t" data-i18n="conceptP3">在山海艺术节，我们不止希望观众看到山与海的壮丽，也希望在一隅墙角、一片砖瓦、一道裂痕中，看见生态系统的破碎、挣扎与重生。</p>
+      </div>
+    </div>
+
+    <details class="inspiration-panel rv" id="insp">
+      <summary data-i18n="inspirationLabel">灵感来源</summary>
+      <div class="inspiration-body"><div class="inspiration-copy">
+        <p class="insp-lead" data-i18n="inspLead">「缝隙」不是空白，而是城市留下的空间痕迹。</p>
+        <p data-i18n="inspP1">「缝隙」不仅是物理裂隙，更是城市生成过程中，不同关系相互碰撞后留下的痕迹。它们微小、沉默，却保留着城市最纤细的温度，也让被日常忽略的生态与记忆重新浮现。</p>
+        <p data-i18n="inspP2">因此，项目把观看的尺度从宏大的城市地标收缩到砖缝、墙角、湿地边缘与被开发挤压后的残余空间。</p>
+        <div class="insp-gap">
+          <div class="gap-word" aria-hidden="true"><span data-i18n="gapA">缝</span><span data-i18n="gapB">隙</span></div>
+          <div class="axes" aria-label="缝隙连接的三组城市关系">
+            <div class="axis"><span data-i18n="ax1a">自然</span><span data-i18n="ax1b">人工</span></div>
+            <div class="axis"><span data-i18n="ax2a">历史</span><span data-i18n="ax2b">现实</span></div>
+            <div class="axis"><span data-i18n="ax3a">边缘</span><span data-i18n="ax3b">中心</span></div>
+          </div>
+        </div>
+        <p class="mono-note" data-i18n="axesNote">缝隙 —— 三组关系相互碰撞后留下的那条线</p>
+      </div></div>
+    </details>
+
+    <div class="project-meta rv">
+      <div><span class="spec-k" data-i18n="specWorkK">作品名称</span><span class="spec-v" data-i18n="specWorkV">SeeD 深圳展览项目</span></div>
+      <div><span class="spec-k" data-i18n="specYearK">时间</span><span class="spec-v">2025</span></div>
+      <div><span class="spec-k" data-i18n="specCtxK">项目语境</span><span class="spec-v" data-i18n="specCtxV">山海艺术节</span></div>
+      <div><span class="spec-k" data-i18n="specCatK">类别</span><span class="spec-v" data-i18n="specCatV">品牌设计 / 展览设计</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ 落入地图 02 —— 缝隙第二次出现。
+     两层地图的定义在概念的引文里已经由原文说完了，这里只负责「进去」。 ══════════ -->
+<section class="gate">
+  <div class="wrap">
+    <p class="k" data-i18n="gateK">地图 02 / 隐藏</p>
+    <h2 data-i18n="gateT">它既是城市的伤痕，<br>也是<em>新生的摇篮</em>。</h2>
+    <p class="gate-note" data-i18n="gateNote">往下的整段调研，就是这层地图。</p>
+  </div>
+</section>
+
+<!-- ══════════ 01 调研 ══════════ -->
+<section class="beat earth" id="research">
+  <div class="wrap">
+    <div class="section-heading rv">
+      <span class="beat-title" data-i18n="researchTitle">调研</span>
+      <span class="beat-flow" style="color:var(--rust)">01 / Research</span>
+    </div>
+
+    <!-- 消失 -->
+    <article class="block">
+      <header class="sub-head rv">
+        <span class="n" data-i18n="r1N">消失 / Disappearance</span>
+        <h3 data-i18n="r1T">深圳原有本土植物在城市化进程中的消失及过程</h3>
+      </header>
+      <div class="duo">
+        <div class="rv"><p class="lead-t" data-i18n="r1Lead">深圳城市化进程中，许多原生植物数量大幅减少，部分已局部消失。</p></div>
+        <div class="rv">
+          <p class="body-t" data-i18n="r1P1">典型例子有沿海红树林植物（如秋茄、白骨壤、桐花树、木榄、海漆、老鼠簕、卤蕨、榄李等），原分布于深圳湾、福田、东涌等潮间带。受填海造地和污染影响，红树林面积大幅缩减。</p>
+          <p class="body-t" data-i18n="r1P2">马尾松等山林植物也几乎绝迹 —— 大鹏七娘山等地因松材线虫入侵，天然马尾松林已被全部砍除，野生松树林不再存在。</p>
         </div>
       </div>
-      <div class="hcb">
-        <span class="blbl" id="c-lbl">概念 / Concept</span>
-        <h2 class="bhead" id="c1-head">都市の隙間に、見過ごされた生態の記憶を見出す</h2>
-        <p class="bp" id="c1-p1">どの都市も二層の地図から成り立っている。一層は目に見える都市の肌理、もう一層は生命・記憶・時間が共に描いた隠された地図だ。深圳においてこの隠された地図は、宏大なランドマークの中ではなく、レンガの隙間、壁の角、湿地の端、開発に押し潰された残余の空間に宿っている。</p>
-        <p class="bp" id="c1-p2" style="margin-top:.5rem">SeeD は「隙間のあわいで」という視点から、消えていった、衰退した、そして蘇りつつある深圳の在来種と生態系を切り口に、観客にこの都市のもう一つの顔を再発見させる。</p>
-      </div>
-      <details class="ins-det">
-        <summary class="ins-sum" id="ins-sum">インスピレーション</summary>
-        <div class="ins-body">
-          <p class="note-p" id="c2-p1">「隙間」とは物理的な亀裂だけではない。それは都市の生成過程において、自然と人工、歴史と現実、周縁と中心が絶えず衝突し交差した後に残された空間の痕跡だ。微小で沈黙に満ちたその場所には、都市の最も繊細な温度が宿り、日常に忘れられた生態と記憶が再び浮かび上がる。</p>
+
+      <figure class="loss rv">
+        <div class="loss-key">
+          <span><i class="sw-gone"></i><span data-i18n="keyGone">已消失 / 已被开发</span></span>
+          <span><i class="sw-left"></i><span data-i18n="keyLeft">尚存</span></span>
         </div>
+        <div class="loss-row" style="--gone:70">
+          <span class="nm" data-i18n="loss1">红树林面积<span class="src" data-i18n="loss1s">8000 余亩 → 2014 年 2500 余亩</span></span>
+          <span class="pc" data-i18n="pc1">约 70%</span>
+          <span class="bar" role="img" aria-label="红树林面积：约 70% 已消失"><i></i></span>
+        </div>
+        <div class="loss-row" style="--gone:75">
+          <span class="nm" data-i18n="loss2">深圳湾原生红树林<span class="src" data-i18n="loss2s">大面积被填海和开发</span></span>
+          <span class="pc" data-i18n="pc2">75% 以上</span>
+          <span class="bar" role="img" aria-label="深圳湾原生红树林：面积曾减少 75% 以上"><i></i></span>
+        </div>
+        <div class="loss-row" style="--gone:72">
+          <span class="nm" data-i18n="loss3">滩涂湿地面积<span class="src" data-i18n="loss3s">1989—2003 年间的下降幅度</span></span>
+          <span class="pc" data-i18n="pc3">72%</span>
+          <span class="bar" role="img" aria-label="滩涂湿地面积：1989 至 2003 年下降 72%"><i></i></span>
+        </div>
+        <div class="loss-row" style="--gone:90">
+          <span class="nm" data-i18n="loss4">天然海岸线<span class="src" data-i18n="loss4s">仅约 10% 湿地尚未被占用</span></span>
+          <span class="pc" data-i18n="pc4">近 90%</span>
+          <span class="bar" role="img" aria-label="天然海岸线：近 90% 已被开发"><i></i></span>
+        </div>
+        <figcaption class="loss-foot">
+          <div>
+            <p class="big-stat" data-i18n="bigStat">35<sub>种</sub></p>
+            <p data-i18n="statNote">深圳现有国家重点保护野生植物，其中不少为濒危小种群。</p>
+          </div>
+          <p class="mono-note" data-i18n="lossCap">图：四项指标按同一条 0–100% 标尺绘制，数据依据原始项目文档。</p>
+        </figcaption>
+      </figure>
+
+      <div class="pair rv">
+        <article>
+          <h4 data-i18n="r1SubA">一度消失，又重新出现</h4>
+          <p class="body-t" data-i18n="r1SubAP">水蕨因水污染和湿地开发几乎绝迹，但在水环境改善后于深圳多地重新发现，数量仍极少，需持续保护。土沉香过去常见，因城市开发和过度采伐几乎灭绝，目前被列为极小种群物种，已纳入国家拯救工程。仙湖苏铁等珍稀植物的原生种群也极为有限。</p>
+        </article>
+        <article>
+          <h4 data-i18n="r1SubB">地方性植物变得罕见</h4>
+          <p class="body-t" data-i18n="r1SubBP">沿海沙滩上的珊瑚菜等海岸沙生植物仅零星分布，未纳入自然保护区的种群正在退化；群山中的茶梨、报春苣苔等乡土乔木和花卉已变得罕见。林业部门制定「深圳小种群野生植物名录」，将紫纹兜兰、深圳秋海棠等列为重点保护对象，并在梧桐山、马峦山设立保护小区，保护黑桫椤、半枫荷等珍稀植物生境。</p>
+        </article>
+      </div>
+
+      <div class="rv">
+        <p class="mono-label" style="margin-top:clamp(3rem,6vw,4.6rem);color:var(--rust)" data-i18n="reasonLabel">植被退化的主要原因</p>
+        <ol class="rows" style="margin-top:1.2rem">
+          <li><span class="n">01</span><div><h4 data-i18n="rea1">城市扩张和填海造地</h4><p data-i18n="rea1p">原生栖息地持续丧失。</p></div></li>
+          <li><span class="n">02</span><div><h4 data-i18n="rea2">工业污染和水体富营养化</h4><p data-i18n="rea2p">河口和红树林沉积物中重金属及营养盐增加，生态质量下降。</p></div></li>
+          <li><span class="n">03</span><div><h4 data-i18n="rea3">建设用地侵占</h4><p data-i18n="rea3p">平原和丘陵林地被开发为工地，低海拔地区植被退化。</p></div></li>
+          <li><span class="n">04</span><div><h4 data-i18n="rea4">景观替代措施</h4><p data-i18n="rea4p">引入无瓣海桑等外来树种整治红树林，带来生态功能单一化。</p></div></li>
+          <li><span class="n">05</span><div><h4 data-i18n="rea5">外来有害生物入侵</h4><p data-i18n="rea5p">薇甘菊扩散，松材线虫导致天然马尾松林被清理。</p></div></li>
+        </ol>
+      </div>
+
+      <div class="zones rv">
+        <article class="zone"><span class="k" data-i18n="z1k">沿海</span><h4 data-i18n="z1t">红树林与潮间带</h4><p data-i18n="z1p">城市化影响最重的一带。深圳湾等地原生红树林大面积被填海和开发，滩涂湿地与天然海岸线同步消失。</p></article>
+        <article class="zone"><span class="k" data-i18n="z2k">城区</span><h4 data-i18n="z2t">农田、森林与果园</h4><p data-i18n="z2p">市区扩张使大量农田和林地转为建设用地，城市内部森林、果园被侵占，局部植被明显退化。</p></article>
+        <article class="zone"><span class="k" data-i18n="z3k">山地</span><h4 data-i18n="z3t">被切割的生态廊道</h4><p data-i18n="z3p">大鹏半岛、梧桐山等山区原始植被相对保存较好，但连续生境被城市建设切割。</p></article>
+        <article class="zone"><span class="k" data-i18n="z4k">水域</span><h4 data-i18n="z4t">河流与湖泊湿地</h4><p data-i18n="z4p">早期工业和生活污水排放导致河口与水库水质恶化、湿地植被退化，近年经治理有所改善。</p></article>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ══════════ 挣扎：唯一的暗段 ══════════ -->
+<section class="beat dark" aria-labelledby="inv-t">
+  <div class="wrap">
+    <div class="duo">
+      <div class="rv">
+        <p class="mono-label" data-i18n="invK">挣扎 / Invasion</p>
+        <p class="lead-t" id="inv-t" style="margin-top:1rem;color:#fff" data-i18n="invT">外来植物入侵</p>
+      </div>
+      <div class="rv">
+        <p class="body-t" data-i18n="invP1">深圳已记录外来入侵植物超过 100 种，在广东省内数量较多。薇甘菊作为代表性入侵杂草，自 20 世纪 80 年代传入后迅速扩散，高峰时覆盖面积约 15 万至 16 万亩，造成本地植被减少；目前分布面积约为 8 万亩，仍难以根除。</p>
+        <p class="body-t" data-i18n="invP2">五爪金龙、南美蟛蜞菊等藤本和地被植物在自然山野及公园绿地持续扩展；马缨丹引种后广泛分布于野外，压缩了本土灌丛生境；水葫芦在部分河流水域滋生，影响水体流通；假臭草、红毛草等在城乡结合部扩散。它们通过争夺生长空间与养分、释放化感物质等机制，抑制本地植物生长。</p>
+      </div>
+    </div>
+    <div class="figs rv">
+      <div class="fig"><strong>100+</strong><span data-i18n="if1">已记录的外来入侵植物种类</span></div>
+      <div class="fig"><strong data-i18n="if2n">15—16 万亩</strong><span data-i18n="if2">薇甘菊扩散高峰时的覆盖面积</span></div>
+      <div class="fig down"><strong data-i18n="if3n">约 8 万亩</strong><span data-i18n="if3">现有分布面积 —— 较高峰时已回落</span></div>
+      <div class="fig"><strong data-i18n="if4n">20—30 种</strong><span data-i18n="if4">对深圳生态影响较大的外来植物</span></div>
+    </div>
+    <p class="run rv" data-i18n="runInv">薇甘菊<i>·</i>五爪金龙<i>·</i>南美蟛蜞菊<i>·</i>马缨丹<i>·</i>水葫芦<i>·</i>假臭草<i>·</i>红毛草</p>
+  </div>
+</section>
+
+<!-- ══════════ 重生 ══════════ -->
+<section class="beat earth" id="recovery">
+  <div class="wrap">
+    <header class="sub-head rv">
+      <span class="n" style="color:var(--moss)" data-i18n="r2N">重生 / Recovery</span>
+      <h3 data-i18n="r2T">深圳本土植物恢复及细节</h3>
+    </header>
+
+    <div class="duo">
+      <div class="rv"><p class="lead-t" data-i18n="r2Lead">深圳原生植物资源较为丰富，但城市绿化长期存在「同质化」现象。</p></div>
+      <div class="rv">
+        <p class="body-t" data-i18n="r2P1">有研究显示，<b>长江流域主要城市行道树种的重合率高达 37%</b>，且多为外来树种或人工培育品种 —— 蓝花楹、粉黛乱子草、百子莲、迷迭香、墨西哥飞蓬、蓬莱松等观赏植物的大量引种，让不同城市的景观趋于雷同。深圳也曾经历本地与外来树种比例失衡，近年本地树种应用比例正在提高。</p>
+        <p class="body-t" data-i18n="r2P2">樟树、榕树、荔枝树、铁冬青、秋枫、台湾相思等乡土树种适应本地气候，被广泛种植于道路和公园，不仅体现城市特色，也为本地生物提供栖息地。</p>
+        <p class="run" data-i18n="runNative">樟树<i>·</i>榕树<i>·</i>荔枝树<i>·</i>铁冬青<i>·</i>秋枫<i>·</i>台湾相思<i>·</i>小叶榕<i>·</i>木棉</p>
+      </div>
+    </div>
+
+    <div class="cases rv">
+      <details class="case is-open" open>
+        <summary><span class="n">01</span><div><h4 data-i18n="c1t">大沙河生态长廊及湿地公园</h4><p class="sum" data-i18n="c1s">清除外来入侵植物、补种本地湿地物种，并持续监测河道生境。</p></div><span class="plus" aria-hidden="true">+</span></summary>
+        <div class="case-body"><div class="case-copy"><p data-i18n="c1b">贯穿南北的带状城市公园和湿地走廊。管理部门以保护河道原生环境为目标，清除外来入侵植物并补种本地湿地物种，同时开展定期外来物种监测和清理。2023 年，南山区在该区域绿地种植宫粉紫荆等本地开花树种，提高本土植物比例并增强生物多样性。</p></div></div>
       </details>
-      <p class="h-hint"><span class="h-line"></span><span id="h-scroll">上下スクロールで移動</span></p>
+      <details class="case">
+        <summary><span class="n">02</span><div><h4 data-i18n="c2t">荔香公园</h4><p class="sum" data-i18n="c2s">「拆围透绿」与近自然管理，让本地稀有植物重新出现。</p></div><span class="plus" aria-hidden="true">+</span></summary>
+        <div class="case-body"><div class="case-copy"><p data-i18n="c2b">公园通过生态优化和近自然管理改善生境，无叶美冠兰等本地稀有兰科植物首次被记录于园内，表明维护本地植被与生境有助于提升稀有物种的栖息与繁衍空间。</p></div></div>
+      </details>
+      <details class="case">
+        <summary><span class="n">03</span><div><h4 data-i18n="c3t">滨水公园、爱榕路与林荫道</h4><p class="sum" data-i18n="c3s">乡土树种回到公园、道路和连续林荫，也重新形成动物通行的廊道。</p></div><span class="plus" aria-hidden="true">+</span></summary>
+        <div class="case-body"><div class="case-copy"><p data-i18n="c3b">中心河公园、人才公园、深圳湾公园等滨水绿地大量种植秋枫、小叶榕、木棉等本地树种，符合 2025 年实施的《深圳经济特区公园条例》要求；深圳湾沿海依托红树林自然保护区开展秋茄、桐花树等物种的保护与复育，规划在 2025 年前修复红树林 51 公顷。爱榕路改造保留原有榕树；南山区林荫道主要采用小叶榕、高山榕、樟树、木棉、羊蹄甲等适应深圳气候的树种，为鸟类提供廊道式栖息空间。</p></div></div>
+      </details>
+      <details class="case">
+        <summary><span class="n">04</span><div><h4 data-i18n="c4t">环西丽湖绿道</h4><p class="sum" data-i18n="c4s">16.2 公里绿道串联水系修复、林相提升和 150 多种乡土植物。</p></div><span class="plus" aria-hidden="true">+</span></summary>
+        <div class="case-body"><div class="case-copy"><p data-i18n="c4b">2025 年初全线贯通。项目完成约 5 公里水系生境修复和约 3 万平方米林相改造，固碳能力估算提高约 10%。荔枝、龙眼、木棉等乔木与九里香、野牡丹、禾雀花等灌木藤本，共同形成具有季相变化的环湖景观带。</p></div></div>
+      </details>
+      <details class="case">
+        <summary><span class="n">05</span><div><h4 data-i18n="c5t">塘朗山—大沙河—深圳湾山海通廊</h4><p class="sum" data-i18n="c5s">13 公里生态廊道以乡土植被连接山地、河流与滨海生境。</p></div><span class="plus" aria-hidden="true">+</span></summary>
+        <div class="case-body"><div class="case-copy"><p data-i18n="c5b">深圳 2022 年贯通的首条「山海连城」生态廊道。塘朗山段维护南亚热带常绿阔叶林原生群落，补种壳斗科、樟科乔木；大沙河段以乡土湿地植物带贯穿河岸；深圳湾滨海段通过红树林修复，种植秋茄、桐花树、水笔仔等本地红树及滨水植物。</p></div></div>
+      </details>
+      <details class="case">
+        <summary><span class="n">06</span><div><h4 data-i18n="c6t">企鹅花园与社区微型生境</h4><p class="sum" data-i18n="c6s">约 600㎡ 的「生境花园」：低干扰、零废弃、居民共建。</p></div><span class="plus" aria-hidden="true">+</span></summary>
+        <div class="case-body"><div class="case-copy"><p data-i18n="c6b">改造前植被杂乱且空间封闭，却为鸟类和两栖动物提供了栖息地。设计采取低干扰方式保留原有生境结构，划定「本土植物保育区」，以本地浆果灌木、蜜源花卉、寄主植物、卵石与枯叶营造鸟类、昆虫和两栖动物的微生境，并保留了几十年树龄的大榕树。建成后黑眶蟾蜍、变色树蜥、红耳鹎、绣眼鸟等依然分布，昆虫物种增加。口袋公园、校园绿地、屋顶花园与共建花园继续把乡土植物带入社区，形成分布广泛的微型生境网络。</p></div></div>
+      </details>
     </div>
   </div>
 </section>
 
-<!-- ══ 研究 ══════════════════════════════ -->
-<section class="sec">
-  <div class="sec-bar">
-    <span class="s-ttl" id="ch-research">研究</span>
-    <div class="dots" id="dots-research"></div>
-  </div>
-  <div class="h-track" id="track-research">
+<!-- ══════════ 02 设计策略 —— 资料里就是一条带箭头的链 ══════════ -->
+<section class="beat" id="strategy">
+  <div class="wrap">
+    <div class="section-heading rv">
+      <span class="beat-title" data-i18n="strategyTitle">设计策略</span>
+      <span class="beat-flow">02 / Strategy</span>
+    </div>
 
-    <div class="slide"><div class="board" style="grid-template-columns:1fr">
-      <div class="bcell btxt" style="padding:3rem 5rem">
-        <div class="brow">
-          <span class="blbl" id="r1-lbl">プロジェクト背景</span>
-          <h3 class="bhead" id="r1-head">都市化が深圳の在来生態をいかに書き換えたか</h3>
-        </div>
-        <div class="brow">
-          <p class="bp" id="r1-p1">高速な都市化の過程で、深圳の大量の在来生息地は建設・埋め立て・汚染によって変貌を遂げた。マングローブ系の秋茄・白骨壌など代表的な種の分布面積は大幅に縮小し、一部の山地樹種も病虫害と開発圧力によりほぼ消滅した。</p>
-          <p class="bp" id="r1-p2" style="margin-top:.5rem">都市の拡張は地表の景観を変えただけでなく、本来連続していた生態的関係を断ち切った。</p>
-        </div>
-        <div class="brow">
-          <span class="blbl" id="r1-il">洞察</span>
-          <div class="chips">
-            <span class="chip" id="r1-i1">マングローブ退化</span>
-            <span class="chip" id="r1-i2">在来植物の減少</span>
-            <span class="chip" id="r1-i3">生息地の分断化</span>
-            <span class="chip" id="r1-i4">都市拡張</span>
-          </div>
+    <div class="duo">
+      <div class="rv"><p class="mono-label" data-i18n="kwLabel">关键词</p></div>
+      <div class="rv"><p class="kw" data-i18n="kwList">模块化（可移动）<i>/</i>可持续<i>/</i>生活方式<i>/</i>深圳<i>/</i>社区<i>/</i>风景<i>/</i>记忆<i>/</i>人文</p></div>
+    </div>
+
+    <p class="arrow rv"><b>→</b> <span data-i18n="ar1">由关键词展开联想</span></p>
+
+    <article class="chain-step">
+      <div class="duo">
+        <header class="rv step-head"><span class="n" data-i18n="s1n">联想 / Association</span><h3 data-i18n="s1t">城市发展、生态代价与重新审视</h3></header>
+        <ol class="rv flow">
+          <li><span class="n">01</span><p data-i18n="s1a">深圳城市以极快的速度发展，曾经的村落与老街逐渐被遗忘，取而代之的是现代建筑与道路。</p></li>
+          <li><span class="n">02</span><p data-i18n="s1b">城市建设中出现了高度重复的同质化绿化现象，大量引入外来植物，只为追求视觉上的统一美感。</p></li>
+          <li><span class="n">03</span><p data-i18n="s1c">同质化绿化破坏了本土生态系统，外来植物挤占本地植物的生存空间，使生态平衡逐渐被打破。</p></li>
+          <li><span class="n">04</span><p data-i18n="s1d">过去那些随处可见、具有深圳特色的乡土植物逐渐变得稀少。</p></li>
+          <li><span class="n">05</span><p data-i18n="s1e">植物的顽强生命力仍然穿梭于城市之中，在建筑的缝隙、砖瓦的裂隙间默默生长，连接起城市的过去与未来。</p></li>
+          <li><span class="n">06</span><p data-i18n="s1f">城市的发展阶段逐渐转变，人们开始反思生活方式，重新审视那些被忽略的土地记忆和本土植物。</p></li>
+        </ol>
+      </div>
+    </article>
+
+    <p class="arrow rv"><b>→</b> <span data-i18n="ar2">由联想得出感想</span></p>
+
+    <article class="chain-step">
+      <div class="duo">
+        <header class="rv step-head"><span class="n" data-i18n="s2n">感想 / Reflection</span><h3 data-i18n="s2t">城市追求美观的同时，必须尊重生命本来的多样与平衡。</h3></header>
+        <div class="rv think">
+          <p data-i18n="s2a">深圳高速发展的同时，城市生态却付出了代价 —— 人和植物的生存空间被迅速挤压。曾经的多样性逐渐被统一的视觉景观取代，大量外来植物引进，不仅导致城市绿化高度同质化，更威胁了本土植物的生存环境。</p>
+          <p data-i18n="s2b">幸运的是，生命力顽强的植物始终存在，它们从未真正离开，只是静静地在被忽略的角落默默生长。这些在砖瓦与水泥缝隙间的植物，正象征着深圳这座城市最真实的记忆。</p>
         </div>
       </div>
-    </div></div>
+    </article>
 
-    <div class="slide"><div class="board" style="grid-template-columns:1fr">
-      <div class="bcell btxt" style="padding:3rem 5rem">
-        <div class="brow">
-          <span class="blbl" id="r2-lbl">生態的危機</span>
-          <h3 class="bhead" id="r2-head">同質化した緑化の背後にある、地域性の消失</h3>
-        </div>
-        <div class="brow">
-          <p class="bp" id="r2-p1">深圳はかつて、都市緑化の「同質化」という問題に長く直面していた。統一的・管理しやすい視覚効果を追い求めるあまり、大量の外来観賞植物が導入され、在来植物の活用は長期にわたって軽視された。</p>
-          <p class="bp" id="r2-p2" style="margin-top:.5rem">結果は景観の画一化にとどまらず、生態系の脆弱化をもたらした。外来種が在来種のスペースを圧迫し、都市と地域生態のつながりは絶えず希薄化されていった。</p>
-        </div>
-        <div class="brow">
-          <span class="blbl" id="r2-il">洞察</span>
-          <div class="chips">
-            <span class="chip" id="r2-i1">同質化した景観</span>
-            <span class="chip" id="r2-i2">外来種</span>
-            <span class="chip" id="r2-i3">地域性の喪失</span>
-            <span class="chip" id="r2-i4">生態的不均衡</span>
-          </div>
+    <p class="arrow rv"><b>→</b> <span data-i18n="ar3">感想收束成一个词</span></p>
+
+    <!-- 支点：资料里这一步只写了「缝隙（图）」四个字加四句话。项目名就落在最后一句。 -->
+    <article class="chain-step">
+      <div class="duo">
+        <header class="rv step-head"><span class="n" data-i18n="s3n">缝隙 / Cracks</span><h3 data-i18n="s3t">缝隙，象征着一种独特的生存状态。</h3></header>
+        <div>
+          <ul class="crack-def rv">
+            <li data-i18n="cd1"><b>缝隙</b>，不仅隐喻着顽强生长的植物，也折射出都市里人的生存姿态。</li>
+            <li data-i18n="cd2"><b>缝隙</b>，是城市生活中那些容易被遗忘却又不可或缺的角落，它们以沉默而微小的方式存在着。</li>
+            <li data-i18n="cd3"><b>缝隙</b>，连接着人与植物的空间关系，让人们在不经意间感受到自然与城市生活之间的微妙交融。</li>
+            <li class="see" data-i18n="cd4"><b><span class="mark">看见缝隙</span></b>，意味着重新审视那些曾经被我们忽略的存在，重新发现城市里那些微小而真实的生命与记忆。</li>
+          </ul>
         </div>
       </div>
-    </div></div>
+      <!-- 图移出 duo，占满版心 -->
+      <figure class="plate-img" data-lightbox="derived/strategy-2-lg.webp">
+        <img src="derived/strategy-2.webp" alt="城市裂缝中生长植物的照片拼贴：砖缝里的三色堇、水泥裂纹中的野草、排水沟盖上的绿丛" loading="lazy" width="1700" height="1306">
+      </figure>
+    </article>
 
-    <div class="slide"><div class="board" style="grid-template-columns:1fr">
-      <div class="bcell btxt" style="padding:3rem 5rem">
-        <div class="brow">
-          <span class="blbl" id="r3-lbl">修復の萌芽</span>
-          <h3 class="bhead" id="r3-head">消失は終点ではない、生態修復は今まさに始まっている</h3>
-        </div>
-        <div class="brow">
-          <p class="bp" id="r3-p1">近年、深圳のいくつかの地域では湿地修復・在来植物の補植・コミュニティガーデンの整備を通じて、多層的な生態拠点を再構築しつつある。</p>
-          <p class="bp" id="r3-p2" style="margin-top:.5rem">大沙河エコロジーコリドーから深圳湾マングローブ修復、さらにはポケットパーク・生息地ガーデンに至るまで、在来植物と小規模な生息地が都市の中に戻り始めている。</p>
-        </div>
-        <div class="brow">
-          <span class="blbl" id="r3-il">洞察</span>
-          <div class="chips">
-            <span class="chip" id="r3-i1">湿地修復</span>
-            <span class="chip" id="r3-i2">コミュニティガーデン</span>
-            <span class="chip" id="r3-i3">在来植物の回帰</span>
-            <span class="chip" id="r3-i4">微型生息地ネットワーク</span>
-          </div>
+    <article class="chain-step">
+      <div class="duo">
+        <header class="rv step-head"><span class="n" data-i18n="s4n">呈现 / Presentation</span><h3 data-i18n="s4t">大桌子被转化成一张可以打开的城市剖面。</h3></header>
+        <div>
+          <ol class="rv flow">
+            <li><span class="n">01</span><p data-i18n="s4a">桌子一旁的缝隙里也有各种各样的植物，或者植物的种子、果实。</p></li>
+            <li><span class="n">02</span><p data-i18n="s4b">桌面则是现在记忆、植物的呈现，每个人都可以找到现在的记忆点。</p></li>
+            <li><span class="n">03</span><p data-i18n="s4c">桌子的横截面可以被视为如同土壤剖面图，象征历史。</p></li>
+            <li><span class="n">04</span><p data-i18n="s4d">模块化桌子向外移动后，可看到曾经深圳的植物、相片、地理面貌。</p></li>
+          </ol>
         </div>
       </div>
-    </div></div>
-
-    <div class="slide"><div class="board" style="grid-template-columns:1fr">
-      <div class="bcell btxt" style="padding:3rem 5rem">
-        <div class="brow">
-          <span class="blbl" id="r4-lbl">核心的隠喩の確立</span>
-          <h3 class="bhead" id="r4-head">生態の事実から展覧の視点へ——なぜ「隙間」なのか</h3>
-        </div>
-        <div class="brow">
-          <p class="bp" id="r4-p1">「隙間」がプロジェクトの核心的な隠喩として浮かびあがった。それは都市の中で見過ごされながらも確かに存在する生態空間を示すと同時に、高密度の都市生活の中でもなお力強く生き続ける植物と記憶に対応している。</p>
-          <p class="bp" id="r4-p2" style="margin-top:.5rem">隙間は廃墟感のレトリックではなく、一つの見方だ。名前を与えられることなく、しかし今もなお持続して起きている生命のプロセスに、改めて目を向けさせるための。</p>
-        </div>
-        <div class="brow">
-          <span class="blbl" id="r4-il">方法論</span>
-          <div class="chips">
-            <span class="chip" id="r4-i1">隙間</span>
-            <span class="chip" id="r4-i2">記憶</span>
-            <span class="chip" id="r4-i3">生長</span>
-            <span class="chip" id="r4-i4">余白</span>
-            <span class="chip" id="r4-i5">都市の縁辺</span>
-          </div>
-        </div>
-      </div>
-    </div></div>
-
+      <figure class="plate-img" data-lightbox="derived/strategy-1-lg.webp">
+        <img src="derived/strategy-1.webp" alt="模块化桌子概念图：轴测视角下，桌面被十字形的缝隙切开，植物从缝隙中生长出来" loading="lazy" width="1700" height="1325">
+      </figure>
+    </article>
   </div>
 </section>
 
-<!-- ══ 設計戦略 ══════════════════════════ -->
-<section class="sec">
-  <div class="sec-bar">
-    <span class="s-ttl" id="ch-strategy">設計戦略</span>
-    <div class="dots" id="dots-strategy"></div>
+<!-- ══════════ 03 展览板块 ══════════ -->
+<section class="beat" id="exhibition">
+  <div class="wrap">
+    <div class="section-heading rv">
+      <span class="beat-title" data-i18n="exhTitle">具体展览板块</span>
+      <span class="beat-flow">03 / Exhibition</span>
+    </div>
   </div>
-  <div class="h-track" id="track-strategy">
 
-    <!-- S1 text only -->
-    <div class="slide"><div class="board" style="grid-template-columns:1fr">
-      <div class="bcell btxt" style="padding:3rem 5rem">
-        <div class="brow">
-          <span class="blbl" id="s1-lbl">設計命題</span>
-          <h3 class="bhead" id="s1-head">「隙間」を、見て、読んで、触れることのできる展覧言語へと転換する</h3>
-        </div>
-        <div class="brow">
-          <p class="bp" id="s1-p1">このプロジェクトは生態的議題を単なる情報の羅列にすることを避け、空間・テーブル面・断面・モジュール構造を通じて、「都市の記憶」「在来植物」「コミュニティの生活様式」「生態修復の想像」を一体化した、近づいて見ることのできる観察システムとして構成する。</p>
-        </div>
-        <div class="brow">
-          <span class="blbl" id="s1-il">キーワード</span>
-          <div class="chips">
-            <span class="chip" id="s1-i1">モジュール式</span>
-            <span class="chip" id="s1-i2">可動式</span>
-            <span class="chip" id="s1-i3">サステナブル</span>
-            <span class="chip" id="s1-i4">コミュニティ</span>
-            <span class="chip" id="s1-i5">記憶</span>
-            <span class="chip" id="s1-i6">風景</span>
-            <span class="chip" id="s1-i7">人文</span>
-            <span class="chip" id="s1-i8">深圳</span>
-          </div>
+  <!-- 01 -->
+  <article class="ex" style="margin-top:clamp(2.6rem,6vw,4.4rem)">
+    <div class="shot rv-grow"><div class="wrap"><img src="derived/exh-1.webp" alt="流变的片段展览现场：模块化桌面上排列着蓝晒植物图像与苔藓带，落地窗外是城市绿地" loading="lazy" width="1900" height="1267" data-lightbox="derived/exh-1-lg.webp"></div></div>
+    <div class="wrap"><div class="ex-copy duo">
+      <header class="rv"><span class="k" data-i18n="exN1">展览板块 01</span><h2 class="ex-ttl" data-i18n="e1t">流变的片段</h2></header>
+      <div class="rv">
+        <p class="body-t" data-i18n="e1a">童年的记忆里，春天的街头，会有奶奶用白兰花串成香气四溢的小花串；每当空气中飘来鸡蛋花的香味，就是盛夏来临的信号。冬日清晨，洋紫荆依旧盛放，花瓣铺满上学的路。</p>
+        <p class="body-t" data-i18n="e1b">这些植物填补在城市日常生活的间隙，也是平凡岁月里的温柔慰藉。它们默默见证着居民的迁徙与停留、离别与重逢，在快节奏的城市中，以微小却坚定的姿态回应着时间的流转。随着城市不断发展，新的物种陆续进入，许多本土植物的空间逐渐缩小。但那些熟悉的绿色，依然坚韧地生长在某个转角、砖缝、或树下，陪伴着这座城市的每一个人。</p>
+      </div>
+    </div></div>
+  </article>
+
+  <!-- 02 —— 这一张就是缝隙本身，给满幅 -->
+  <article class="ex">
+    <div class="shot shot--bleed rv-grow"><img src="derived/exh-2.webp" alt="合并的缝隙展览现场：俯视两组模块化桌子被拉开，一条苔藓与野草带从缝隙中穿过" loading="lazy" width="1900" height="1267" data-lightbox="derived/exh-2-lg.webp"></div>
+    <div class="wrap"><div class="ex-copy duo">
+      <header class="rv"><span class="k" data-i18n="exN2">展览板块 02</span><h2 class="ex-ttl" data-i18n="e2t">合并的缝隙</h2>
+        <p class="mono-note ex-note" data-i18n="e2n">现场标题：时间的褶皱 / The Folds of Time</p></header>
+      <div class="rv">
+        <p class="body-t" data-i18n="e2a">在我们的视野中，「缝隙」并不仅仅是城市砖石之间的罅隙或混凝土的裂纹。它是城市生成过程中自然与人工、历史与现实、边缘与中心不断碰撞交错后留下的微小缝合处。这里没有喧嚣的繁盛，却保留着城市最纤细的温度和气息。每一道缝隙都如同一条时光的细线，连接着被日常遗忘的旧物、零落的记忆、静谧生长的野草，和无声流转的光影。缝隙记录着城市肌理的渗透与变化，见证着空间被分割、缝补、再造的漫长过程。</p>
+        <p class="body-t" data-i18n="e2b">正是在这些微不足道却无处不在的缝隙之中，城市的诗意悄然滋生。被忽略的细微处隐藏着人与空间、物与情感、昨日与今日之间的隐秘联结。对我们而言，缝隙既是现实世界中微观秩序的留白，也是城市文化记忆的渗透点，始终提醒着我们留意那些「未被命名的空间」所承载的丰富可能。</p>
+      </div>
+    </div></div>
+  </article>
+
+
+  <!-- 04 -->
+  <article class="ex">
+    <div class="shot shot--inset rv-grow"><div class="wrap"><div><img src="derived/exh-3.webp" alt="失落的生态线展览现场：一张粉色水磨石桌，桌上立着深色植物图像，桌下是砖砌花池与本土植物" loading="lazy" width="1900" height="1267" data-lightbox="derived/exh-3-lg.webp"></div></div></div>
+    <div class="wrap"><div class="ex-copy duo">
+      <header class="rv"><span class="k" data-i18n="exN3">展览板块 03</span><h2 class="ex-ttl" data-i18n="e4t">失落的生态线</h2></header>
+      <div class="rv">
+        <p class="body-t" data-i18n="e4a">深圳的城市化进程中，建筑用地扩张与填海造地不可避免地影响了本土生态。沿海红树林系统中的秋茄、白骨壤等代表性物种，因填海和污染，分布面积已较高峰时期减少约 70%，如今仅在局部地区残存。</p>
+        <p class="body-t" data-i18n="e4b">马尾松等山地树种因松材线虫入侵和开发压力也基本消失。城市平原与丘陵区域的原生植被持续退化，部分本地乔木与花卉如茶梨、报春苣苔变得愈发罕见。伴随着这些植物的减少和消失，自然也引发一些以此为栖息的动物的减少，生态系统的完整性受到考验。</p>
+      </div>
+    </div></div>
+  </article>
+
+
+  <!-- 06 —— 链接 -->
+  <article class="ex" id="link">
+    <div class="shot rv-grow"><div class="wrap"><img src="derived/exh-4.webp" alt="链接互动装置现场：一家三口俯身在桌前，桌面上红色细绳从中心放射，连起许多叶片形状的便签" loading="lazy" width="1900" height="1267" data-lightbox="derived/exh-4-lg.webp"></div></div>
+    <div class="wrap"><div class="ex-copy duo">
+      <header class="rv"><span class="k" data-i18n="exN4">展览板块 04 / 梦想之树</span><h2 class="ex-ttl" data-i18n="e6t">链接</h2></header>
+      <div class="rv">
+        <p class="body-t" data-i18n="e6a">在这件互动装置中，我们邀请每一位观众用树叶形状的便签纸，写下自己对城市未来的美好期望。每一个愿望都像一片新叶，通过红色细绳与他人的梦想相连 —— 如果你的愿望与别人的相似，可以让它们在同一枝上延续；如果你的想法独特，也可以自成一脉，开出新的分支。随着每个人的加入，这些叶片与绳索交织成一棵不断生长的「梦想之树」，记录着城市的共同愿景，也映射出彼此的联结与多样性。</p>
+
+        <div class="join">
+          <h4 data-i18n="joinT">参与方式</h4>
+          <ol class="steps">
+            <li><span class="n">01</span><p data-i18n="j1">领取一片树叶形状的便签纸和一根红绳。</p></li>
+            <li><span class="n">02</span><p data-i18n="j2">在便签纸上写下你对未来城市的一个愿望或想法。</p></li>
+            <li><span class="n">03</span><p data-i18n="j3">找到与自己愿望相近的叶片，用红绳将你的便签纸与它们连接在一起，成为同一个分支。</p></li>
+            <li><span class="n">04</span><p data-i18n="j4">如果你的愿望独特，也可以自创一个新的分支。</p></li>
+            <li><span class="n">05</span><p data-i18n="j5">将你的叶片贴在桌面上，与他人的愿望一起，见证这棵「梦想之树」的生长。</p></li>
+          </ol>
         </div>
       </div>
     </div></div>
-
-    <!-- S2 image left, text right -->
-    <div class="slide"><div class="board b-half">
-      <div class="bcell bimg"><img src="strategy-1.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">strategy-1.jpg</div></div>
-      <div class="bcell btxt">
-        <div class="brow">
-          <span class="blbl" id="s2-lbl">空間的隠喩</span>
-          <h3 class="bhead" id="s2-head">テーブルはテーブルではない——切り開かれた都市の土壌</h3>
-        </div>
-        <div class="brow">
-          <p class="bp" id="s2-p1">テーブル面が担うのは「現在」——植物、種子、果実、映像と記憶の断片。テーブルの横断面は土壌の断面図として捉えられ、深圳の歴史が幾重にも覆われた姿を象徴する。</p>
-          <p class="bp" id="s2-p2" style="margin-top:.5rem">モジュールを外側に展開すると、観客はかつての植物の様相、地理情報、映像、埋め立てによって変貌した地形の痕跡を見ることができる。</p>
-        </div>
-        <div class="brow">
-          <span class="blbl" id="s2-il">構造の読み方</span>
-          <div class="chips">
-            <span class="chip" id="s2-i1">テーブル面＝現在</span>
-            <span class="chip" id="s2-i2">断面＝歴史</span>
-            <span class="chip" id="s2-i3">展開＝隠された地図の発見</span>
-          </div>
-        </div>
-      </div>
-    </div></div>
-
-    <!-- S3 image left, text right -->
-    <div class="slide"><div class="board b-half">
-      <div class="bcell bimg"><img src="strategy-2.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">strategy-2.jpg</div></div>
-      <div class="bcell btxt">
-        <div class="brow">
-          <span class="blbl" id="s3-lbl">観察の入口</span>
-          <h3 class="bhead" id="s3-head">宏大な語りからではなく、近距離の観察から入る</h3>
-        </div>
-        <div class="brow">
-          <p class="bp" id="s3-p1">このプロジェクトはまず「深圳はいかに偉大か」や「自然はいかに壮大か」を語ろうとしない。観客に先に細部に留まってもらう——一本の亀裂、一株の植物、一つの嗅覚的記憶、一つのコミュニティの角。</p>
-          <p class="bp" id="s3-p2" style="margin-top:.5rem">これらの小さな入口を通じて、観客は徐々に気づいていく——都市と生態の関係は抽象的なものではなく、日常生活の中に常に存在し続けているということを。</p>
-        </div>
-      </div>
-    </div></div>
-
-  </div>
+  </article>
 </section>
 
-<!-- ══ 展覧 ══════════════════════════════ -->
-<section class="sec">
-  <div class="sec-bar">
-    <span class="s-ttl" id="ch-exhibition">展覧</span>
-    <div class="dots" id="dots-exhibition"></div>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <a class="foot-back" href="../index.html"><span aria-hidden="true">&#8592;</span><span data-i18n="footBack">返回主页</span></a>
+    <span class="foot-meta" data-i18n="footMeta">SeeD / 深圳展览项目 · HE LIANGYU · 2025</span>
   </div>
-  <div class="h-track" id="track-exhibition">
+</footer>
 
-    <!-- E1 image left, text right -->
-    <div class="slide"><div class="board b-half">
-      <div class="bcell bimg photo"><img src="exh-1.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">exh-1.jpg</div></div>
-      <div class="bcell btxt">
-        <div class="brow">
-          <span class="blbl" id="e1-lbl">流変する断片</span>
-          <h3 class="bhead" id="e1-head">かつて深圳の日常を満たしていた植物の記憶</h3>
-        </div>
-        <div class="brow">
-          <p class="bp" id="e1-p1">白蘭花、プルメリア、洋紫荊——これらの植物はかつて深圳の住民の日常の隙間を満たし、季節感・街の記憶・生活の情緒を構成していた。宏大な語りの主役ではないが、移住と停留、別れと再会の間で、都市の最も柔らかな背景となっていた。</p>
-        </div>
-      </div>
-    </div></div>
-
-    <!-- E2 text left, image right -->
-    <div class="slide"><div class="board b-half">
-      <div class="bcell btxt">
-        <div class="brow">
-          <span class="blbl" id="e2-lbl">合流する隙間</span>
-          <h3 class="bhead" id="e2-head">見過ごされた角が、実は都市の最も真実な温度を宿している</h3>
-        </div>
-        <div class="brow">
-          <p class="bp" id="e2-p1">隙間は生態的空間であると同時に、文化的空間でもある。それは古いもの、野草、光と影、時間と人間の経験をつなぎ、都市を単に計画可能な幾何学的構造としてではなく、滲み、残留し、自ら生長する複雑な生命体として見せてくれる。</p>
-        </div>
-      </div>
-      <div class="bcell bimg photo" style="border-left:1px solid var(--rule)"><img src="exh-2.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">exh-2.jpg</div></div>
-    </div></div>
-
-    <!-- E3 image left, text right -->
-    <div class="slide"><div class="board b-half">
-      <div class="bcell bimg photo"><img src="exh-3.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">exh-3.jpg</div></div>
-      <div class="bcell btxt">
-        <div class="brow">
-          <span class="blbl" id="e3-lbl">失われた生態の線</span>
-          <h3 class="bhead" id="e3-head">在来植物が退場するとき、都市が失うのは「緑化」だけではない</h3>
-        </div>
-        <div class="brow">
-          <p class="bp" id="e3-p1">マングローブの減少、在来植物の退化、野生動物の生息地の縮小——これらの変化は、都市がある具体的な植物を失うだけでなく、相互に支え合う地域の生態関係全体を失うことを意味している。展覧は消えた種・絶滅危惧種の手がかりを通じて、この「見えない損失」を感知できる語りへと転換する。</p>
-        </div>
-      </div>
-    </div></div>
-
-    <!-- E4 text left, image right -->
-    <div class="slide"><div class="board b-half">
-      <div class="bcell btxt">
-        <div class="brow">
-          <span class="blbl" id="e4-lbl">リンク</span>
-          <h3 class="bhead" id="e4-head">一枚の葉っぱが、都市の未来への一つの願いになる</h3>
-        </div>
-        <div class="brow">
-          <p class="bp" id="e4-p1">この参加型インスタレーションでは、すべての観客が葉っぱ形の付箋に都市の未来への願いを書き込む。それぞれの願いは一枚の新しい葉となり、赤い糸で他の人の夢とつながっていく——似た願いは同じ枝を延ばし、独自の想いは新しい枝を開く。</p>
-          <p class="bp" id="e4-p2" style="margin-top:.5rem">参加方法：① 葉形の付箋と赤い糸を受け取る　② 都市の未来への願いを書く　③ 近い願いの葉を見つけ赤い糸でつなぐ　④ 独自の願いなら新しい枝を作る　⑤ 付箋をテーブルに貼り「夢の木」の成長を共に見届ける</p>
-        </div>
-      </div>
-      <div class="bcell bimg photo" style="border-left:1px solid var(--rule)"><img src="exh-4.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="bph" style="display:none">exh-4.jpg</div></div>
-    </div></div>
-
-  </div>
-</section>
-
-<!-- ══ 結語 ══════════════════════════════ -->
-<section class="sec">
-  <div class="sec-bar">
-    <span class="s-ttl" id="ch-closing">結語</span>
-  </div>
-  <div class="h-track" id="track-closing">
-    <div class="slide"><div class="board" style="grid-template-columns:1fr">
-      <div class="bcell" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 6rem;background:#fff;gap:0">
-        <p class="cl-line" id="cl-p1">缝隙，象征着一种独特的生存状态。它不仅隐喻着顽强生长的植物，也折射出都市里人的生存姿态。</p>
-        <div class="cl-rule"></div>
-        <p class="cl-line" id="cl-p2">缝隙，是城市生活中那些容易被遗忘却又不可或缺的角落，它们以沉默而微小的方式存在着。</p>
-        <div class="cl-rule"></div>
-        <p class="cl-line" id="cl-p3">缝隙，连接着人与植物的空间关系，让人们在不经意间感受到自然与城市生活之间的微妙交融。</p>
-        <div class="cl-rule"></div>
-        <p class="cl-line" id="cl-p4">看见缝隙，意味着重新审视那些曾经被我们忽略的存在，重新发现城市里那些微小而真实的生命与记忆。</p>
-        <span class="blbl" id="cl-lbl" style="margin-top:3rem;color:var(--ink3)">おわりに</span>
-      </div>
-    </div></div>
-  </div>
-</section>
-
-<!-- ══ BACK ══════════════════════════════ -->
-<section class="sec" id="s-back">
-  <a class="back-btn" href="../index.html">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <line x1="14" y1="8" x2="2" y2="8" stroke="currentColor" stroke-width="1.5"/>
-      <polyline points="6,3 1,8 6,13" stroke="currentColor" stroke-width="1.5" fill="none"/>
-    </svg>
-    <span id="back-lbl">ホームへ戻る</span>
-  </a>
-</section>
-
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="查看项目图片">
+  <button class="lightbox-close" id="lightbox-close" type="button" aria-label="关闭">×</button>
+  <img id="lightbox-image" alt="">
 </div>
 
 <script>
-var L={
-ja:{
-  "nav-ttl":"SeeD",
-  "h-cat":"品牌設計","h-ttl":"于缝隙中，\n看见山海","h-sub":"SeeD X 深圳海上世界文化艺术中心展览",
-  "h-yl":"年份","h-tl":"形式",
-  "h-type":"展覧企画","h-scroll":"上下スクロールで移動",
-  "c-lbl":"概念 / Concept","c1-head":"都市の隙間に、見過ごされた生態の記憶を見出す",
-  "c1-p1":"どの都市も二層の地図から成り立っている。一層は目に見える都市の肌理、もう一層は生命・記憶・時間が共に描いた隠された地図だ。深圳においてこの隠された地図は、宏大なランドマークの中ではなく、レンガの隙間、壁の角、湿地の端、開発に押し潰された残余の空間に宿っている。",
-  "c1-p2":"SeeD は\u300c隙間のあわいで\u300dという視点から、消えていった、衰退した、そして蘇りつつある深圳の在来種と生態系を切り口に、観客にこの都市のもう一つの顔を再発見させる。",
-  "ins-sum":"インスピレーション",
-  "c2-p1":"\u300c隙間\u300dとは物理的な亀裂だけではない。それは都市の生成過程において、自然と人工、歴史と現実、周縁と中心が絶えず衝突し交差した後に残された空間の痕跡だ。微小で沈黙に満ちたその場所には、都市の最も繊細な温度が宿り、日常に忘れられた生態と記憶が再び浮かび上がる。",
-  "ch-research":"研究",
-  "r1-lbl":"プロジェクト背景","r1-head":"都市化が深圳の在来生態をいかに書き換えたか",
-  "r1-p1":"高速な都市化の過程で、深圳の大量の在来生息地は建設・埋め立て・汚染によって変貌を遂げた。マングローブ系の秋茄・白骨壌など代表的な種の分布面積は大幅に縮小し、一部の山地樹種も病虫害と開発圧力によりほぼ消滅した。",
-  "r1-p2":"都市の拡張は地表の景観を変えただけでなく、本来連続していた生態的関係を断ち切った。",
-  "r1-il":"洞察","r1-i1":"マングローブ退化","r1-i2":"在来植物の減少","r1-i3":"生息地の分断化","r1-i4":"都市拡張",
-  "r2-lbl":"生態的危機","r2-head":"同質化した緑化の背後にある、地域性の消失",
-  "r2-p1":"深圳はかつて、都市緑化の\u300c同質化\u300dという問題に長く直面していた。統一的・管理しやすい視覚効果を追い求めるあまり、大量の外来観賞植物が導入され、在来植物の活用は長期にわたって軽視された。",
-  "r2-p2":"結果は景観の画一化にとどまらず、生態系の脆弱化をもたらした。外来種が在来種のスペースを圧迫し、都市と地域生態のつながりは絶えず希薄化されていった。",
-  "r2-il":"洞察","r2-i1":"同質化した景観","r2-i2":"外来種","r2-i3":"地域性の喪失","r2-i4":"生態的不均衡",
-  "r3-lbl":"修復の萌芽","r3-head":"消失は終点ではない、生態修復は今まさに始まっている",
-  "r3-p1":"近年、深圳のいくつかの地域では湿地修復・在来植物の補植・コミュニティガーデンの整備を通じて、多層的な生態拠点を再構築しつつある。",
-  "r3-p2":"大沙河エコロジーコリドーから深圳湾マングローブ修復、さらにはポケットパーク・生息地ガーデンに至るまで、在来植物と小規模な生息地が都市の中に戻り始めている。",
-  "r3-il":"洞察","r3-i1":"湿地修復","r3-i2":"コミュニティガーデン","r3-i3":"在来植物の回帰","r3-i4":"微型生息地ネットワーク",
-  "r4-lbl":"核心的隠喩の確立","r4-head":"生態の事実から展覧の視点へ——なぜ\u300c隙間\u300dなのか",
-  "r4-p1":"\u300c隙間\u300dがプロジェクトの核心的な隠喩として浮かびあがった。それは都市の中で見過ごされながらも確かに存在する生態空間を示すと同時に、高密度の都市生活の中でもなお力強く生き続ける植物と記憶に対応している。",
-  "r4-p2":"隙間は廃墟感のレトリックではなく、一つの見方だ。名前を与えられることなく、しかし今もなお持続して起きている生命のプロセスに、改めて目を向けさせるための。",
-  "r4-il":"方法論","r4-i1":"隙間","r4-i2":"記憶","r4-i3":"生長","r4-i4":"余白","r4-i5":"都市の縁辺",
-  "ch-strategy":"設計戦略",
-  "s1-lbl":"設計命題","s1-head":"\u300c隙間\u300dを、見て、読んで、触れることのできる展覧言語へと転換する",
-  "s1-p1":"このプロジェクトは生態的議題を単なる情報の羅列にすることを避け、空間・テーブル面・断面・モジュール構造を通じて、\u300c都市の記憶\u300d\u300c在来植物\u300d\u300cコミュニティの生活様式\u300d\u300c生態修復の想像\u300dを一体化した、近づいて見ることのできる観察システムとして構成する。",
-  "s1-il":"キーワード","s1-i1":"モジュール式","s1-i2":"可動式","s1-i3":"サステナブル","s1-i4":"コミュニティ","s1-i5":"記憶","s1-i6":"風景","s1-i7":"人文","s1-i8":"深圳",
-  "s2-lbl":"空間的隠喩","s2-head":"テーブルはテーブルではない——切り開かれた都市の土壌",
-  "s2-p1":"テーブル面が担うのは\u300c現在\u300d——植物、種子、果実、映像と記憶の断片。テーブルの横断面は土壌の断面図として捉えられ、深圳の歴史が幾重にも覆われた姿を象徴する。",
-  "s2-p2":"モジュールを外側に展開すると、観客はかつての植物の様相、地理情報、映像、埋め立てによって変貌した地形の痕跡を見ることができる。",
-  "s2-il":"構造の読み方","s2-i1":"テーブル面＝現在","s2-i2":"断面＝歴史","s2-i3":"展開＝隠された地図の発見",
-  "s3-lbl":"観察の入口","s3-head":"宏大な語りからではなく、近距離の観察から入る",
-  "s3-p1":"このプロジェクトはまず\u300c深圳はいかに偉大か\u300dや\u300c自然はいかに壮大か\u300dを語ろうとしない。観客に先に細部に留まってもらう——一本の亀裂、一株の植物、一つの嗅覚的記憶、一つのコミュニティの角。",
-  "s3-p2":"これらの小さな入口を通じて、観客は徐々に気づいていく——都市と生態の関係は抽象的なものではなく、日常生活の中に常に存在し続けているということを。",
-  "ch-exhibition":"展覧",
-  "e1-lbl":"流変する断片","e1-head":"かつて深圳の日常を満たしていた植物の記憶",
-  "e1-p1":"白蘭花、プルメリア、洋紫荊——これらの植物はかつて深圳の住民の日常の隙間を満たし、季節感・街の記憶・生活の情緒を構成していた。宏大な語りの主役ではないが、移住と停留、別れと再会の間で、都市の最も柔らかな背景となっていた。",
-  "e2-lbl":"合流する隙間","e2-head":"見過ごされた角が、実は都市の最も真実な温度を宿している",
-  "e2-p1":"隙間は生態的空間であると同時に、文化的空間でもある。それは古いもの、野草、光と影、時間と人間の経験をつなぎ、都市を単に計画可能な幾何学的構造としてではなく、滲み、残留し、自ら生長する複雑な生命体として見せてくれる。",
-  "e3-lbl":"失われた生態の線","e3-head":"在来植物が退場するとき、都市が失うのは\u300c緑化\u300dだけではない",
-  "e3-p1":"マングローブの減少、在来植物の退化、野生動物の生息地の縮小——これらの変化は、都市がある具体的な植物を失うだけでなく、相互に支え合う地域の生態関係全体を失うことを意味している。展覧は消えた種・絶滅危惧種の手がかりを通じて、この\u300c見えない損失\u300dを感知できる語りへと転換する。",
-  "e4-lbl":"リンク","e4-head":"一枚の葉っぱが、都市の未来への一つの願いになる",
-  "e4-p1":"この参加型インスタレーションでは、すべての観客が葉っぱ形の付箋に都市の未来への願いを書き込む。それぞれの願いは一枚の新しい葉となり、赤い糸で他の人の夢とつながっていく——似た願いは同じ枝を延ばし、独自の想いは新しい枝を開く。",
-  "e4-p2":"参加方法：① 葉形の付箋と赤い糸を受け取る　② 都市の未来への願いを書く　③ 近い願いの葉を見つけ赤い糸でつなぐ　④ 独自の願いなら新しい枝を作る　⑤ 付箋をテーブルに貼り\u300c夢の木\u300dの成長を共に見届ける",
-  "ch-closing":"結語",
-  "cl-lbl":"おわりに",
-  "cl-p1":"隙間は、独特の生存様式を象徴している。それは力強く生き続ける植物の隠喩であるとともに、都市に生きる人々の生存の姿勢をも映し出している。",
-  "cl-p2":"隙間は、都市生活の中で忘れられがちでありながら、なくてはならない場所だ。それらは沈黙の中で、微かに存在し続けている。",
-  "cl-p3":"隙間は、人と植物の空間的な関係をつなぎ、人々がふと気づいたとき、自然と都市生活の間に滲む微妙な交わりを感じさせてくれる。",
-  "cl-p4":"隙間を見ることは、かつて見過ごされてきた存在を改めて見つめ直すことであり、都市の中に息づく微小で真実の生命と記憶を再発見することだ。",
-  "back-lbl":"ホームへ戻る"
-},
-zh:{
-  "nav-ttl":"SeeD",
-  "h-cat":"品牌设计","h-ttl":"于缝隙中，\n看见山海","h-sub":"SeeD X 深圳海上世界文化艺术中心展览",
-  "h-yl":"年份","h-tl":"形式",
-  "h-type":"展览策划","h-scroll":"上下滚动切换板块",
-  "c-lbl":"概念 / Concept","c1-head":"在城市的缝隙中，看见被忽略的生态记忆",
-  "c1-p1":"每一座城市都由两层地图构成。一层是可以被看见的城市肌理，另一层则由生命、记忆与时间共同绘制而成。对深圳而言，这张隐藏的地图往往不在宏大的地标之中，而藏在砖缝、墙角、湿地边缘与被开发挤压后的残余空间里。",
-  "c1-p2":"SeeD 以\u201c缝隙之间\u201d为核心视角，从消失、退化与重现的本土植物与生态系统切入，试图让观众重新理解深圳这座城市的另一面——快速发展之外，仍有顽强生长的生命，也仍有尚未被彻底抹去的地方记忆。",
-  "ins-sum":"灵感",
-  "c2-p1":"\u201c缝隙\u201d不仅是物理裂隙，更是城市生成过程中自然与人工、历史与现实、边缘与中心相互碰撞后留下的空间痕迹。它们微小、沉默，却保留着城市最纤细的温度，也让被日常忽略的生态与记忆重新浮现。",
-  "ch-research":"研究",
-  "r1-lbl":"项目背景","r1-head":"深圳的城市化，如何改写本土生态",
-  "r1-p1":"在快速城市化过程中，深圳大量原生栖息地被建设、填海与污染改变。红树林系统中的秋茄、白骨壤等代表物种分布面积大幅缩减，部分山地树种也因病虫害与开发压力基本消失。",
-  "r1-p2":"城市的扩张不仅改变了地表景观，也切断了原本连续的生态关系。",
-  "r1-il":"洞察","r1-i1":"红树林退化","r1-i2":"原生植物减少","r1-i3":"栖息地破碎化","r1-i4":"城市扩张",
-  "r2-lbl":"生态危机","r2-head":"同质化绿化背后，是地方性的消失",
-  "r2-p1":"深圳曾长期面临城市绿化\u201c同质化\u201d问题。为了追求统一、可控的视觉效果，大量外来观赏植物被引入，本地植物的应用长期被忽视。",
-  "r2-p2":"结果不仅是景观趋同，更是生态系统的脆弱化：外来物种挤压本土物种空间，城市对地方生态的辨识度也被不断削弱。",
-  "r2-il":"洞察","r2-i1":"同质化景观","r2-i2":"外来物种","r2-i3":"地方性缺失","r2-i4":"生态失衡",
-  "r3-lbl":"修复线索","r3-head":"消失并不是终点，生态修复正在发生",
-  "r3-p1":"近年来，深圳一些区域开始通过湿地修复、乡土植物补植与社区花园建设，重新建立多层级的生态斑块。",
-  "r3-p2":"从大沙河生态长廊到深圳湾红树林修复，再到社区尺度的口袋公园与生境花园，本土植物和微型栖息地正在重新进入城市。",
-  "r3-il":"洞察","r3-i1":"湿地修复","r3-i2":"社区花园","r3-i3":"本土植物回归","r3-i4":"微型生境网络",
-  "r4-lbl":"核心隐喻确立","r4-head":"从生态事实到展览视角：为什么是\u201c缝隙\u201d",
-  "r4-p1":"\u201c缝隙\u201d最终成为项目的核心隐喻。它既代表城市中被忽略却真实存在的生态空间，也对应那些在高密度都市生活中仍在顽强生长的植物与记忆。",
-  "r4-p2":"缝隙不是废墟感的修辞，而是一种观看方式：让人重新注意那些没有被命名、却仍在持续发生的生命过程。",
-  "r4-il":"方法论","r4-i1":"缝隙","r4-i2":"记忆","r4-i3":"生长","r4-i4":"留白","r4-i5":"城市边缘",
-  "ch-strategy":"设计策略",
-  "s1-lbl":"设计命题","s1-head":"把\u201c缝隙\u201d转化成可被观看、阅读和触摸的展览语言",
-  "s1-p1":"项目希望避免把生态议题做成单纯的信息陈列，而是通过空间、桌面、剖面和模块化结构，把\u201c城市记忆\u201d\u201c本土植物\u201d\u201c社区生活方式\u201d与\u201c生态修复想象\u201d组合成一个可被走近的观看系统。",
-  "s1-il":"关键词","s1-i1":"模块化","s1-i2":"可移动","s1-i3":"可持续","s1-i4":"社区","s1-i5":"记忆","s1-i6":"风景","s1-i7":"人文","s1-i8":"深圳",
-  "s2-lbl":"空间隐喻","s2-head":"桌子不是桌子，而是一块被切开的城市土壤",
-  "s2-p1":"桌面承载的是当下：植物、种子、果实、图像与记忆片段。桌体的横截面则被视为土壤剖面，象征深圳被层层覆盖的历史。",
-  "s2-p2":"模块向外打开后，观众可以看见过去的植物样貌、地理信息、影像与被填海改变的地貌痕迹。",
-  "s2-il":"结构解读","s2-i1":"桌面＝当下","s2-i2":"剖面＝历史","s2-i3":"展开＝发现隐藏地图",
-  "s3-lbl":"观看机制","s3-head":"从近距离观察进入，而不是从宏大叙事进入",
-  "s3-p1":"项目不试图先讲\u201c深圳多伟大\u201d或\u201c自然多壮丽\u201d，而是让观众先在细小处停留：一条裂缝、一株植物、一段嗅觉记忆、一个社区角落。",
-  "s3-p2":"通过这些微小入口，观众逐渐意识到，城市与生态的关系并不抽象，而是一直存在于日常生活之中。",
-  "ch-exhibition":"展览",
-  "e1-lbl":"流变的片段","e1-head":"那些曾属于深圳日常的植物记忆",
-  "e1-p1":"白兰花、鸡蛋花、洋紫荆——这些植物曾经填充在深圳居民的日常缝隙中，构成季节感、街道记忆与生活情绪。它们不是宏大叙事中的主角，却在迁徙、停留、离别与重逢之间，成为城市最柔软的背景。",
-  "e2-lbl":"合并的缝隙","e2-head":"被忽略的角落，保留着城市最真实的温度",
-  "e2-p1":"缝隙既是生态空间，也是文化空间。它连接旧物、野草、光影、时间与人的经验，让城市不只是可被规划的几何结构，也是一种会渗透、会残留、会自行生长的复杂生命体。",
-  "e3-lbl":"失落的生态线","e3-head":"当本土植物退场，城市失去的不只是\u201c绿化\u201d",
-  "e3-p1":"红树林减少、原生植物退化、野生动物栖息地缩小——这些变化说明城市失去的并不只是某些具体植物，而是一整套相互支撑的地方生态关系。展览通过消失与濒危物种的线索，把这种\u201c看不见的损失\u201d转化为可感知的叙事。",
-  "e4-lbl":"链接","e4-head":"每一片叶子，都是一个关于城市未来的愿望",
-  "e4-p1":"在这件互动装置中，观众用树叶形状的便签纸写下对城市未来的美好期望。每一个愿望都像一片新叶，通过红色细绳与他人的梦想相连——相似的愿望在同一枝上延续，独特的想法自成一脉，开出新的分支。",
-  "e4-p2":"参加方法：① 领取树叶形便签纸和红绳　② 写下对未来城市的愿望　③ 找到相近叶片用红绳连接　④ 独特愿望可自创新枝　⑤ 将叶片贴在桌面，共同见证\u201c梦想之树\u201d生长",
-  "ch-closing":"结语",
-  "cl-lbl":"结语",
-  "cl-p1":"缝隙，象征着一种独特的生存状态。它不仅隐喻着顽强生长的植物，也折射出都市里人的生存姿态。",
-  "cl-p2":"缝隙，是城市生活中那些容易被遗忘却又不可或缺的角落，它们以沉默而微小的方式存在着。",
-  "cl-p3":"缝隙，连接着人与植物的空间关系，让人们在不经意间感受到自然与城市生活之间的微妙交融。",
-  "cl-p4":"看见缝隙，意味着重新审视那些曾经被我们忽略的存在，重新发现城市里那些微小而真实的生命与记忆。",
-  "back-lbl":"返回主页"
-},
-en:{
-  "nav-ttl":"SeeD",
-  "h-cat":"Brand Design","h-ttl":"Seeing Mountains\nand Sea Through the Cracks","h-sub":"SeeD X Sea World Culture and Arts Center, Shenzhen",
-  "h-yl":"Year","h-tl":"Type",
-  "h-type":"Exhibition Curation","h-scroll":"Scroll to navigate",
-  "c-lbl":"Concept","c1-head":"In the cracks of the city, discovering forgotten ecological memory",
-  "c1-p1":"Every city is made of two maps. One is the visible urban fabric; the other is drawn together by life, memory, and time. In Shenzhen, this hidden map is rarely found in grand landmarks — it lives in the gaps between bricks, in corners, along wetland edges, in residual spaces compressed by development.",
-  "c1-p2":"SeeD approaches the city through the lens of \"Between the Cracks,\" entering through the disappearance, degradation, and gradual return of native species and ecosystems — inviting audiences to rediscover another side of Shenzhen: beyond rapid development, life still persists, and local memory has not yet been entirely erased.",
-  "ins-sum":"Inspiration",
-  "c2-p1":"\"Cracks\" are not merely physical fissures. They are spatial traces left behind where nature and artifice, history and present, margin and centre have collided and interwoven in the city's formation. Small and silent, they hold the city's most delicate temperature — and allow the ecology and memory ignored in daily life to resurface.",
-  "ch-research":"Research",
-  "r1-lbl":"Project Background","r1-head":"How Shenzhen's urbanisation rewrote its native ecology",
-  "r1-p1":"During rapid urbanisation, vast tracts of Shenzhen's original habitat were transformed by construction, land reclamation, and pollution. Representative mangrove species such as Kandelia obovata and Avicennia marina saw their range sharply reduced; some mountain tree species effectively disappeared.",
-  "r1-p2":"Urban expansion did not merely change the surface landscape — it severed the ecological relationships that had once been continuous.",
-  "r1-il":"Insight","r1-i1":"Mangrove Decline","r1-i2":"Native Plant Loss","r1-i3":"Habitat Fragmentation","r1-i4":"Urban Expansion",
-  "r2-lbl":"Ecological Crisis","r2-head":"Behind the homogenised greenery, local identity disappears",
-  "r2-p1":"For years, Shenzhen faced the \"homogenisation\" of urban greening. Pursuing uniform, manageable visual effects, vast numbers of non-native ornamental plants were introduced, while native species went largely overlooked.",
-  "r2-p2":"The result was not merely a sameness of landscape, but a fragility of ecosystem: introduced species crowded out native ones, and the city's connection to its local ecology was steadily diluted.",
-  "r2-il":"Insight","r2-i1":"Homogenised Landscape","r2-i2":"Introduced Species","r2-i3":"Loss of Local Identity","r2-i4":"Ecological Imbalance",
-  "r3-lbl":"Signs of Recovery","r3-head":"Disappearance is not the end — ecological restoration is underway",
-  "r3-p1":"In recent years, parts of Shenzhen have begun to rebuild multi-layered ecological patches through wetland restoration, replanting of native species, and community garden initiatives.",
-  "r3-p2":"From the Dashahe Ecological Corridor to the Shenzhen Bay mangrove restoration, to pocket parks and habitat gardens at neighbourhood scale, native plants and micro-habitats are re-entering the city.",
-  "r3-il":"Insight","r3-i1":"Wetland Restoration","r3-i2":"Community Gardens","r3-i3":"Native Species Return","r3-i4":"Micro-Habitat Networks",
-  "r4-lbl":"Establishing the Core Metaphor","r4-head":"From ecological fact to exhibition perspective: why \"cracks\"?",
-  "r4-p1":"\"Cracks\" ultimately became the project's core metaphor — representing the ecological spaces that exist within the city yet go unnoticed, and corresponding to the plants and memories that persist even within high-density urban life.",
-  "r4-p2":"Cracks are not a rhetoric of ruin, but a way of seeing: a means of drawing attention back to the life processes that have no name, yet keep happening.",
-  "r4-il":"Methodology","r4-i1":"Cracks","r4-i2":"Memory","r4-i3":"Growth","r4-i4":"Negative Space","r4-i5":"Urban Margins",
-  "ch-strategy":"Design Strategy",
-  "s1-lbl":"Design Proposition","s1-head":"Translating \"cracks\" into an exhibition language that can be seen, read, and touched",
-  "s1-p1":"The project seeks to avoid presenting ecological concerns as a mere information display. Instead, through space, tabletop, cross-section, and modular structure, it assembles \"urban memory,\" \"native plants,\" \"community lifestyles,\" and \"ecological restoration imagination\" into an approachable system of observation.",
-  "s1-il":"Keywords","s1-i1":"Modular","s1-i2":"Mobile","s1-i3":"Sustainable","s1-i4":"Community","s1-i5":"Memory","s1-i6":"Landscape","s1-i7":"Human","s1-i8":"Shenzhen",
-  "s2-lbl":"Spatial Metaphor","s2-head":"The table is not a table — it is a cross-section of urban soil",
-  "s2-p1":"The tabletop holds the present: plants, seeds, fruit, images, and fragments of memory. The cross-section of the table structure is read as a soil profile, symbolising the layers of history beneath Shenzhen's surface.",
-  "s2-p2":"When the modular sections are extended outward, visitors can see the plants of the past, geographic data, footage, and traces of coastlines altered by land reclamation.",
-  "s2-il":"How to Read the Structure","s2-i1":"Tabletop = Present","s2-i2":"Cross-section = History","s2-i3":"Unfolding = Discovering the Hidden Map",
-  "s3-lbl":"Mode of Encounter","s3-head":"Entering through close observation, not through grand narrative",
-  "s3-p1":"The project does not begin by proclaiming Shenzhen's greatness or the sublimity of nature. It asks audiences first to pause at small things: a crack, a single plant, an olfactory memory, a neighbourhood corner.",
-  "s3-p2":"Through these small points of entry, audiences gradually come to realise that the relationship between city and ecology is not abstract — it has always been present in daily life.",
-  "ch-exhibition":"Exhibition",
-  "e1-lbl":"Shifting Fragments","e1-head":"The plant memories that once filled Shenzhen's everyday life",
-  "e1-p1":"White champaca, frangipani, Hong Kong orchid tree — these plants once filled the gaps of daily life for Shenzhen's residents, forming a sense of season, street memory, and lived emotion. They were never the protagonists of grand narratives, yet between migration and arrival, departure and return, they became the softest backdrop of the city.",
-  "e2-lbl":"Converging Cracks","e2-head":"The overlooked corners that hold the city's most honest warmth",
-  "e2-p1":"Cracks are both ecological and cultural space. They connect old objects, weeds, light and shadow, time, and human experience — revealing the city not merely as a geometry to be planned, but as a complex living entity that seeps, lingers, and grows of its own accord.",
-  "e3-lbl":"The Lost Ecological Thread","e3-head":"When native plants retreat, the city loses more than \"greenery\"",
-  "e3-p1":"The reduction of mangroves, the decline of native vegetation, the contraction of wildlife habitat — these changes mean the city has lost not merely specific plants, but an entire web of mutually sustaining local ecological relationships. The exhibition traces disappeared and endangered species to transform this \"invisible loss\" into a narrative that can be felt.",
-  "e4-lbl":"Link","e4-head":"Every leaf is a wish for the city's future",
-  "e4-p1":"In this participatory installation, visitors write their hopes for the city's future on leaf-shaped sticky notes. Each wish becomes a new leaf, connected to others by red string — similar hopes extending along the same branch, unique visions branching out in new directions.",
-  "e4-p2":"How to participate: \u2460 Take a leaf-shaped note and red string. \u2461 Write your hope for the city's future. \u2462 Find a similar leaf and connect with string. \u2463 Unique visions may start new branches. \u2464 Place your leaf on the table and watch the Tree of Dreams grow.",
-  "ch-closing":"Closing",
-  "cl-lbl":"Closing Note",
-  "cl-p1":"Cracks symbolise a unique mode of existence — not only as a metaphor for plants that persist and grow with tenacity, but as a reflection of how people survive within the city.",
-  "cl-p2":"Cracks are the corners of urban life that are easily forgotten yet indispensable, existing in quiet, unassuming ways.",
-  "cl-p3":"Cracks connect the spatial relationship between people and plants, allowing us to feel — in unguarded moments — the subtle intermingling of nature and city life.",
-  "cl-p4":"To see the cracks is to re-examine what we have long overlooked, and to rediscover the small, true lives and memories that still breathe within the city.",
-  "back-lbl":"Back to Home"
-}
-};
+document.documentElement.classList.add("js");
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-var lang="ja";try{lang=localStorage.getItem("hl-lang")||"ja"}catch(e){}
-
-var IDS=[
-  "nav-ttl","h-cat","h-ttl","h-sub","h-yl","h-tl","h-type","h-scroll",
-  "c-lbl","c1-head","c1-p1","c1-p2","ins-sum","c2-p1",
-  "ch-research",
-  "r1-lbl","r1-head","r1-p1","r1-p2","r1-il","r1-i1","r1-i2","r1-i3","r1-i4",
-  "r2-lbl","r2-head","r2-p1","r2-p2","r2-il","r2-i1","r2-i2","r2-i3","r2-i4",
-  "r3-lbl","r3-head","r3-p1","r3-p2","r3-il","r3-i1","r3-i2","r3-i3","r3-i4",
-  "r4-lbl","r4-head","r4-p1","r4-p2","r4-il","r4-i1","r4-i2","r4-i3","r4-i4","r4-i5",
-  "ch-strategy",
-  "s1-lbl","s1-head","s1-p1","s1-il","s1-i1","s1-i2","s1-i3","s1-i4","s1-i5","s1-i6","s1-i7","s1-i8",
-  "s2-lbl","s2-head","s2-p1","s2-p2","s2-il","s2-i1","s2-i2","s2-i3",
-  "s3-lbl","s3-head","s3-p1","s3-p2",
-  "ch-exhibition",
-  "e1-lbl","e1-head","e1-p1",
-  "e2-lbl","e2-head","e2-p1",
-  "e3-lbl","e3-head","e3-p1",
-  "e4-lbl","e4-head","e4-p1","e4-p2",
-  "ch-closing",
-  "cl-lbl","cl-p1","cl-p2","cl-p3","cl-p4",
-  "back-lbl"
-];
-
-function applyLang(l){
-  lang=l;
-  try{localStorage.setItem("hl-lang",l)}catch(e){}
-  document.documentElement.setAttribute("lang",l==="zh"?"zh-CN":l);
-  document.documentElement.className="lang-"+l;
-  var d=L[l]||L.ja;
-  document.title=(d["h-ttl"]||"Work")+" \u2014 \u4f55\u6881\u5b87";
-  for(var i=0;i<IDS.length;i++){
-    var el=document.getElementById(IDS[i]);
-    if(el&&d[IDS[i]]!==undefined)el.textContent=d[IDS[i]];
-  }
-}
-
-var cycleBtn=document.getElementById("lang-cycle-btn");
-var langs=["ja","zh","en"];
-function cycleLang(){var idx=langs.indexOf(lang);applyLang(langs[(idx+1)%langs.length]);}
-if(cycleBtn)cycleBtn.addEventListener("click",cycleLang);
-
-function syncViewportVars(){
-  var root=document.documentElement;
-  var vv=window.visualViewport;
-  var vh=vv?vv.height:window.innerHeight;
-  var vt=vv?vv.offsetTop:0;
-  var lh=Math.max(root.clientHeight,window.innerHeight);
-  var bb=Math.max(0,lh-vh-vt);
-  root.style.setProperty("--app-height",Math.round(vh)+"px");
-  root.style.setProperty("--browser-bottom-gap",Math.round(bb)+"px");
-}
-syncViewportVars();
-window.addEventListener("resize",syncViewportVars,{passive:true});
-window.addEventListener("orientationchange",syncViewportVars,{passive:true});
-if(window.visualViewport){
-  window.visualViewport.addEventListener("resize",syncViewportVars,{passive:true});
-  window.visualViewport.addEventListener("scroll",syncViewportVars,{passive:true});
-}
-
-function initTrack(id){
-  var track=document.getElementById("track-"+id);
-  if(!track)return;
-  var slides=track.querySelectorAll(".slide");
-  var n=slides.length;
-  var dotsEl=document.getElementById("dots-"+id);
-  var dots=[];
-  if(dotsEl){
-    dotsEl.innerHTML="";
-    for(var i=0;i<n;i++){
-      var d=document.createElement("div");
-      d.className="dot"+(i===0?" on":"");
-      (function(idx){d.addEventListener("click",function(){track.scrollTo({left:idx*track.clientWidth,behavior:"smooth"});});})(i);
-      dotsEl.appendChild(d);
-      dots.push(d);
+/* ── 语言切换：zh 词典由 DOM 自动采集，只需写 en / ja ─── */
+(function(){
+  const nodes = $$('[data-i18n]');
+  const zh = Object.fromEntries(nodes.map(node => [node.dataset.i18n, node.innerHTML]));
+  const I18N = {
+    zh,
+    en: {
+      "navBack":"Back",
+      "heroKicker":"2025 / BRAND DESIGN · EXHIBITION DESIGN",
+      "heroSub":"SHENZHEN EXHIBITION PROJECT / MOUNTAIN-SEA ART FESTIVAL",
+      "heroShow":"Shenzhen Scenery, Through Cracks, <em>See Mountains and Seas</em>.",
+      "heroLede":"This exhibition takes vanishing organisms as its point of entry and “between the cracks” as its central perspective, looking into how Shenzhen’s native life has changed through the city’s development. Between the cracks lie the human stories of this city, and from them grows a vision of people and nature living well together.",
+      "conceptTitle":"Concept",
+      "premiseLead":"Every city is made<br>of two <span class=\"mark\">maps</span>.",
+      "conceptQuote":"One is the visible map, marked with the city’s fabric; the other is a hidden map, drawn together by life and memory.",
+      "conceptP1":"Perhaps in Shenzhen, this pioneering city, the entrance to that hidden map lies within the city’s cracks. Cracks are the city’s most honest expression — they lay bare the struggle beneath the concrete and bear witness to the resilience and echo of life. They remind us that nature will always take root and sprout at every possible opening.",
+      "conceptP2":"From the retreat of the mangroves to the black-faced spoonbill becoming endangered; from the silent invasion of mile-a-minute weed to the return of water fern in purified soil — the cracks carry these stories of life. They are the growth marks of the city’s evolution, and a silent cry for ecological protection.",
+      "conceptP3":"At the Mountain-Sea Art Festival, we hope visitors see not only the grandeur of mountains and sea, but also glimpse — in a corner of a wall, a piece of brick, a single fissure — the fragmentation, struggle and rebirth of an ecosystem.",
+      "inspirationLabel":"Point of Departure",
+      "inspLead":"A “crack” is not emptiness; it is a spatial trace the city has left behind.",
+      "inspP1":"A crack is not merely a physical fissure. It is the trace left where different relations collide during the city’s making. Cracks are small and silent, yet they hold the city’s finest warmth, and let the ecology and memory overlooked in daily life surface again.",
+      "inspP2":"So the project shrinks the scale of looking — from grand urban landmarks down to brick joints, wall corners, wetland edges, and the residual space left over after development.",
+      "gapA":"IN",
+      "gapB":"BETWEEN",
+      "ax1a":"Nature",
+      "ax1b":"Artifice",
+      "ax2a":"History",
+      "ax2b":"Present",
+      "ax3a":"Margin",
+      "ax3b":"Centre",
+      "axesNote":"A crack — the line left where three pairs of relations collide",
+      "specWorkK":"Project",
+      "specWorkV":"SeeD Shenzhen Exhibition",
+      "specYearK":"Year",
+      "specCtxK":"Context",
+      "specCtxV":"Mountain-Sea Art Festival",
+      "specCatK":"Category",
+      "specCatV":"Brand Design / Exhibition Design",
+      "gateK":"MAP 02 / HIDDEN",
+      "gateT":"It is the city’s scar,<br>and its <em>cradle of renewal</em>.",
+      "gateNote":"Everything below — the whole research section — is that map.",
+      "researchTitle":"Research",
+      "r1N":"DISAPPEARANCE",
+      "r1T":"How Shenzhen’s native plants vanished through urbanisation",
+      "r1Lead":"Through Shenzhen’s urbanisation, many native plants have declined sharply, and some have disappeared locally.",
+      "r1P1":"A clear case is the coastal mangrove community — Kandelia obovata, Avicennia marina, Aegiceras corniculatum, Bruguiera gymnorhiza, Excoecaria agallocha, Acanthus ilicifolius, Acrostichum aureum, Lumnitzera racemosa — once distributed across the intertidal zones of Shenzhen Bay, Futian and Dongchong. Land reclamation and pollution have sharply reduced the mangrove area.",
+      "r1P2":"Montane species such as Masson pine have all but vanished — at Qiniang Mountain on the Dapeng Peninsula, pine wood nematode infestation led to the natural Masson pine forest being felled entirely; wild pine forest no longer exists there.",
+      "keyGone":"Lost / developed",
+      "keyLeft":"Remaining",
+      "loss1":"Mangrove area<span class=\"src\">8,000+ mu → 2,500+ mu by 2014</span>",
+      "loss1s":"8,000+ mu → 2,500+ mu by 2014",
+      "pc1":"approx. 70%",
+      "loss2":"Native mangrove, Shenzhen Bay<span class=\"src\">Large areas reclaimed and developed</span>",
+      "loss2s":"Large areas reclaimed and developed",
+      "pc2":"over 75%",
+      "loss3":"Tidal-flat wetland area<span class=\"src\">Decline between 1989 and 2003</span>",
+      "loss3s":"Decline between 1989 and 2003",
+      "pc3":"72%",
+      "loss4":"Natural coastline<span class=\"src\">Only about 10% of wetland remains unoccupied</span>",
+      "loss4s":"Only about 10% of wetland remains unoccupied",
+      "pc4":"nearly 90%",
+      "bigStat":"35<sub>species</sub>",
+      "statNote":"nationally protected wild plant species in Shenzhen, many of them endangered small populations.",
+      "lossCap":"Chart: four indicators plotted on one 0–100% scale; data per the original project document.",
+      "r1SubA":"Lost once, then found again",
+      "r1SubAP":"Water fern was nearly wiped out by water pollution and wetland development, but has been rediscovered at several sites in Shenzhen since water quality improved; numbers remain very low and need continued protection. Incense tree, once common, was almost eliminated by development and over-harvesting, and is now listed as an extremely small population species under a national rescue programme. Wild populations of rare plants such as Cycas fairylakea are also extremely limited.",
+      "r1SubB":"Local endemics becoming rare",
+      "r1SubBP":"Coastal sand plants such as Glehnia littoralis survive only in scattered patches, and populations outside nature reserves are degrading; montane natives such as Anneslea fragrans and Primulina tabacum have become rare. The forestry authority has drawn up a “Shenzhen small-population wild plant list”, designating Paphiopedilum purpuratum, Begonia shenzhenensis and others for priority protection, and has set up conservation plots at Wutong Mountain and Maluan Mountain for habitats of Gymnosphaera podophylla, Semiliquidambar cathayensis and other rare species.",
+      "reasonLabel":"Main causes of vegetation decline",
+      "rea1":"Urban expansion and land reclamation",
+      "rea1p":"Continuous loss of native habitat.",
+      "rea2":"Industrial pollution and eutrophication",
+      "rea2p":"Heavy metals and nutrients accumulate in estuary and mangrove sediments; ecological quality falls.",
+      "rea3":"Encroachment by construction land",
+      "rea3p":"Plains and hill woodland developed into building sites; vegetation degrades at low elevations.",
+      "rea4":"Substitute-landscape measures",
+      "rea4p":"Introducing exotics such as Sonneratia apetala to “restore” mangroves flattens ecological function.",
+      "rea5":"Invasive organisms",
+      "rea5p":"Mile-a-minute weed spreads; pine wood nematode leads to natural Masson pine forest being cleared.",
+      "z1k":"COAST",
+      "z1t":"Mangrove and intertidal zone",
+      "z1p":"The belt hit hardest by urbanisation. Native mangrove around Shenzhen Bay was reclaimed and developed at scale; tidal flats and natural coastline disappeared with it.",
+      "z2k":"CITY",
+      "z2t":"Farmland, forest and orchard",
+      "z2p":"Urban expansion converted farmland and woodland into construction land; forests and orchards inside the city were encroached upon and vegetation visibly degraded.",
+      "z3k":"MOUNTAIN",
+      "z3t":"Severed ecological corridors",
+      "z3p":"Original vegetation is relatively well preserved on the Dapeng Peninsula and Wutong Mountain, but continuous habitat has been cut apart by construction.",
+      "z4k":"WATER",
+      "z4t":"River and lake wetland",
+      "z4p":"Early industrial and domestic discharge degraded estuary and reservoir water quality and wetland vegetation; conditions have improved with recent treatment.",
+      "invK":"STRUGGLE / INVASION",
+      "invT":"Invasive plants",
+      "invP1":"Over 100 invasive plant species have been recorded in Shenzhen — a high count within Guangdong. Mile-a-minute weed, the representative invasive, spread rapidly after arriving in the 1980s, covering some 150,000–160,000 mu at its peak and reducing native vegetation; it now covers around 80,000 mu and remains hard to eradicate.",
+      "invP2":"Vines and ground covers such as Ipomoea cairica and Sphagneticola trilobata keep expanding across hills and park greenery; Lantana camara, once introduced, spread widely and squeezed native shrubland; water hyacinth proliferates in some river reaches and impedes flow; Praxelis clematidea and Melinis repens spread through peri-urban areas. They suppress native plants by competing for space and nutrients and by releasing allelopathic compounds.",
+      "if1":"invasive plant species recorded",
+      "if2n":"150,000–160,000 mu",
+      "if2":"peak coverage of mile-a-minute weed",
+      "if3n":"approx. 80,000 mu",
+      "if3":"current extent — down from the peak",
+      "if4n":"20–30 species",
+      "if4":"exotics with major impact on Shenzhen’s ecology",
+      "runInv":"Mikania micrantha<i>·</i>Ipomoea cairica<i>·</i>Sphagneticola trilobata<i>·</i>Lantana camara<i>·</i>Water hyacinth<i>·</i>Praxelis clematidea<i>·</i>Melinis repens",
+      "r2N":"RECOVERY",
+      "r2T":"Bringing Shenzhen’s native plants back",
+      "r2Lead":"Shenzhen’s native plant resources are rich, yet its urban greening has long suffered from “homogenisation”.",
+      "r2P1":"One study found that <b>street tree species overlap by as much as 37% across major cities of the Yangtze basin</b>, mostly exotics or cultivated varieties — jacaranda, pink muhly grass, agapanthus, rosemary, Mexican fleabane, Japanese club moss and other ornamentals were introduced in bulk, making city landscapes look alike. Shenzhen also went through an imbalance between native and exotic trees; the share of native species has been rising in recent years.",
+      "r2P2":"Camphor, banyan, lychee, Ilex rotunda, Bischofia javanica and Acacia confusa suit the local climate and are widely planted along roads and in parks — giving the city its character while providing habitat for local wildlife.",
+      "runNative":"Camphor<i>·</i>Banyan<i>·</i>Lychee<i>·</i>Ilex rotunda<i>·</i>Bischofia javanica<i>·</i>Acacia confusa<i>·</i>Ficus microcarpa<i>·</i>Kapok",
+      "c1t":"Dasha River Ecological Corridor and Wetland Park",
+      "c1s":"Invasive plants removed, native wetland species replanted, river habitat monitored.",
+      "c1b":"A linear urban park and wetland corridor running north–south. Management set out to protect the river’s native environment, removing invasive plants and replanting native wetland species while monitoring and clearing exotics regularly. In 2023 Nanshan District planted Bauhinia variegata and other native flowering trees in the area’s green space, raising the proportion of native plants and strengthening biodiversity.",
+      "c2t":"Lixiang Park",
+      "c2s":"Opening up the fences and near-natural management let a rare local plant reappear.",
+      "c2b":"The park improved its habitat through ecological optimisation and near-natural management. Eulophia zollingeri, a rare local orchid, was recorded inside the park for the first time — evidence that maintaining native vegetation and habitat expands room for rare species to live and reproduce.",
+      "c3t":"Waterfront parks, Airong Road and tree-lined streets",
+      "c3s":"Native trees return to parks, roads and continuous canopy, re-forming corridors for animals.",
+      "c3b":"Waterfront green spaces including Zhongxin River Park, Talent Park and Shenzhen Bay Park are planted extensively with native trees such as Bischofia javanica, Ficus microcarpa and kapok, meeting the Shenzhen Special Economic Zone Park Regulations that took effect in 2025; along the Shenzhen Bay coast, conservation and restoration of Kandelia obovata and Aegiceras corniculatum proceeds within the mangrove nature reserve, with 51 hectares of mangrove planned for restoration by 2025. The Airong Road rebuild kept its existing banyans; Nanshan District’s tree-lined streets rely mainly on Ficus microcarpa, Ficus altissima, camphor, kapok and Bauhinia — species suited to Shenzhen’s climate that also give birds corridor habitat.",
+      "c4t":"Xili Reservoir Greenway",
+      "c4s":"A 16.2 km greenway threading water-system restoration, forest upgrading and 150+ native species.",
+      "c4b":"Fully connected in early 2025. The project completed about 5 km of water-system habitat restoration and some 30,000 m² of forest-structure upgrading, with carbon sequestration estimated to rise by around 10%. Lychee, longan and kapok trees together with Murraya, Melastoma and Mucuna birdwoodiana form a lakeside belt that changes with the seasons.",
+      "c5t":"Tanglang Mountain – Dasha River – Shenzhen Bay corridor",
+      "c5s":"A 13 km ecological corridor linking mountain, river and coastal habitats with native vegetation.",
+      "c5b":"Shenzhen’s first “mountain-to-sea” ecological corridor, connected in 2022. The Tanglang Mountain section maintains the native south-subtropical evergreen broadleaf community and replants Fagaceae and Lauraceae trees; the Dasha River section runs native wetland planting along both banks; the Shenzhen Bay coastal section restores mangrove, planting Kandelia obovata, Aegiceras corniculatum, Kandelia candel and other native mangrove and waterside plants.",
+      "c6t":"Penguin Garden and community micro-habitats",
+      "c6s":"A roughly 600 m² “habitat garden”: low disturbance, zero waste, built with residents.",
+      "c6b":"Before the rebuild the planting was tangled and the space enclosed, yet it gave habitat to birds and amphibians. The design took a low-disturbance approach that kept the existing habitat structure, marked out a “native plant conservation zone”, and used native berry shrubs, nectar flowers, host plants, pebbles and leaf litter to build micro-habitats for birds, insects and amphibians, keeping a banyan several decades old. After completion, Asian common toads, changeable lizards, light-vented bulbuls and white-eyes remained, and insect species increased. Pocket parks, campus greenery, roof gardens and co-built gardens continue to bring native plants into neighbourhoods, forming a wide network of micro-habitats.",
+      "strategyTitle":"Design Strategy",
+      "kwLabel":"Keywords",
+      "kwList":"Modular (movable)<i>/</i>Sustainable<i>/</i>Way of life<i>/</i>Shenzhen<i>/</i>Community<i>/</i>Landscape<i>/</i>Memory<i>/</i>Culture",
+      "ar1":"from keywords, association",
+      "s1n":"ASSOCIATION",
+      "s1t":"Growth, its ecological cost, and looking again",
+      "s1a":"Shenzhen developed at extraordinary speed; former villages and old streets were gradually forgotten, replaced by modern buildings and roads.",
+      "s1b":"Highly repetitive, homogenised greening appeared throughout construction, importing exotic plants in bulk purely for a unified visual effect.",
+      "s1c":"That homogenisation damaged the native ecosystem — exotics crowded out the living space of local plants and the ecological balance was steadily broken.",
+      "s1d":"Native plants that were once everywhere, and particular to Shenzhen, gradually became scarce.",
+      "s1e":"The tenacity of plants still moves through the city, growing quietly in the cracks of buildings and the fissures between bricks, linking the city’s past to its future.",
+      "s1f":"As the city enters a new phase, people are beginning to reconsider how they live, and to look again at the land memory and native plants they had overlooked.",
+      "ar2":"from association, reflection",
+      "s2n":"REFLECTION",
+      "s2t":"In pursuing beauty, a city must respect the diversity and balance life already has.",
+      "s2a":"Shenzhen’s rapid growth came at an ecological cost — living space for both people and plants was squeezed fast. Diversity was gradually replaced by a unified visual landscape, and the bulk introduction of exotic plants not only homogenised urban greening but threatened the survival of native plants.",
+      "s2b":"Fortunately, tenacious plants have always been here. They never really left; they simply grew quietly in the corners we overlooked. These plants in the cracks between brick and concrete are Shenzhen’s truest memory.",
+      "ar3":"reflection condenses into one word",
+      "s3n":"CRACKS",
+      "s3t":"A crack stands for a particular state of existence.",
+      "cd1":"<b>Cracks</b> are a metaphor not only for tenacious plants, but for how people hold their ground in the city.",
+      "cd2":"<b>Cracks</b> are the corners of city life that are easily forgotten yet indispensable, existing in a silent and minute way.",
+      "cd3":"<b>Cracks</b> connect the spatial relationship between people and plants, letting us feel, almost unnoticed, the subtle merging of nature and urban life.",
+      "cd4":"<b><span class=\"mark\">To see the cracks</span></b> is to look again at what we once overlooked, and to rediscover the small, real lives and memories within the city.",
+      "s4n":"PRESENTATION",
+      "s4t":"The big table becomes a section through the city that can be opened.",
+      "s4a":"In the cracks beside the table there are plants too — or their seeds and fruit.",
+      "s4b":"The tabletop presents present-day memory and plants; everyone can find a point of recognition.",
+      "s4c":"The table’s cross-section reads like a soil profile, standing for history.",
+      "s4d":"When the modular tables are moved apart, the plants, photographs and geography of a former Shenzhen appear.",
+      "exhTitle":"Exhibition Sections",
+      "exN1":"SECTION 01",
+      "e1t":"Shifting Fragments",
+      "e1a":"In childhood memory, on spring streets, grandmothers strung white champaca into small fragrant garlands; whenever frangipani drifted through the air, it signalled high summer. On winter mornings the Hong Kong orchid tree was still in bloom, its petals covering the way to school.",
+      "e1b":"These plants fill the interstices of everyday city life, a gentle solace in ordinary years. They quietly witness residents arriving and staying, parting and meeting again, answering the passage of time with a small but steady presence. As the city keeps developing and new species arrive, the space for many native plants shrinks. Yet that familiar green still grows stubbornly at some corner, some brick joint, or under some tree, keeping company with everyone in this city.",
+      "exN2":"SECTION 02",
+      "e2t":"Merged Cracks",
+      "e2n":"Title on site: The Folds of Time",
+      "e2a":"In our view, a “crack” is not merely the gap between the city’s bricks and stones, or a fissure in concrete. It is the minute seam left behind as nature and artifice, history and reality, margin and centre collide and interweave through the city’s making. There is no clamorous abundance here, yet it holds the city’s finest warmth and breath. Every crack is like a thin thread of time, connecting objects forgotten in daily life, scattered memories, quietly growing weeds, and the silent passage of light and shadow. Cracks record the seepage and change of the urban fabric, witnessing the long process by which space is divided, mended and remade.",
+      "e2b":"It is precisely within these negligible yet ubiquitous cracks that the city’s poetry quietly grows. The overlooked details hide secret links between people and space, objects and feeling, yesterday and today. For us, a crack is both a blank in the micro-order of the real world and a point where the city’s cultural memory seeps through, always reminding us to notice the rich possibility carried by those “unnamed spaces”.",
+      "exN3":"SECTION 03",
+      "e4t":"The Lost Ecological Line",
+      "e4a":"Through Shenzhen’s urbanisation, expanding construction land and land reclamation inevitably affected native ecology. Representative species of the coastal mangrove system, such as Kandelia obovata and Avicennia marina, have seen their distribution fall by around 70% from its peak because of reclamation and pollution, surviving now only in patches.",
+      "e4b":"Montane species such as Masson pine have largely disappeared under pine wood nematode infestation and development pressure. Native vegetation on the city’s plains and hills continues to degrade, and local trees and flowers such as Anneslea fragrans and Primulina tabacum have grown ever rarer. As these plants decline and vanish, the animals that depend on them decline too, and the integrity of the ecosystem is put to the test.",
+      "exN4":"SECTION 04 / TREE OF DREAMS",
+      "e6t":"Link",
+      "e6a":"In this interactive installation, we invite every visitor to write down their hopes for the future of the city on a leaf-shaped sticky note. Each wish becomes a new leaf, connected to others by a red string. If your dream is similar to someone else’s, you can join your leaf to the same branch, extending the idea together. If your vision is unique, you can start a new branch of your own. As more people participate, these leaves and strings will gradually form a growing “Tree of Dreams,” recording our shared visions and reflecting the diversity and connections within the city.",
+      "joinT":"How to Participate",
+      "j1":"Take a leaf-shaped sticky note and a piece of red string.",
+      "j2":"Write your hope or idea for the future of the city on the note.",
+      "j3":"Find other leaves with similar wishes and use the red string to connect your note to theirs, forming a shared branch.",
+      "j4":"If your dream is unique, feel free to start a new branch.",
+      "j5":"Place your leaf on the table. Together, let’s watch as the “Tree of Dreams” grows, branch by branch.",
+      "footBack":"Back to index",
+      "footMeta":"SeeD / Shenzhen Exhibition · HE LIANGYU · 2025",
+    },
+    ja: {
+      "navBack":"戻る",
+      "heroKicker":"2025 / ブランドデザイン · 展示デザイン",
+      "heroSub":"深セン展示プロジェクト / 山海芸術祭",
+      "heroShow":"深センの風景、隙間から、<em>山と海を見る</em>。",
+      "heroLede":"本展は失われゆく生きものを切り口に、「隙間のあいだ」を中心的な視点として、都市の発展のなかで深センの在来の生きものがどう変わってきたかを覗き込む。隙間のあいだには、この都市の人文的な物語が積み重なり、人と自然が共に生きる未来への展望が芽生えている。",
+      "conceptTitle":"コンセプト",
+      "premiseLead":"どの都市も、<br>二枚の<span class=\"mark\">地図</span>でできている。",
+      "conceptQuote":"一枚は都市の肌理が記された、目に見える地図。もう一枚は、生命と記憶が共に描いた、隠された地図。",
+      "conceptP1":"おそらく深センという先鋒の都市では、その隠れた地図への入口が、街の隙間のなかにある。隙間は都市のもっとも正直な表情であり、コンクリートの下のもがきをさらけ出し、生命の強さとその反響を証している。それは、自然がいつでも、あらゆる出口から根を張り芽を出すことを思い出させる。",
+      "conceptP2":"マングローブの後退から、クロツラヘラサギが絶滅危惧となるまで。ツルヒヨドリの静かな侵入から、浄化された土壌にミズワラビが再び現れるまで——隙間はこれらの生命の物語を担っている。それは都市が進化する過程の成長線であり、生態保護への声なき叫びでもある。",
+      "conceptP3":"山海芸術祭で私たちが願うのは、来場者が山と海の壮麗さを見るだけでなく、壁の一隅、一片の煉瓦、一筋の亀裂のなかに、生態系の破碎ともがき、そして再生を見てとることだ。",
+      "inspirationLabel":"着想のもと",
+      "inspLead":"「隙間」は空白ではなく、都市が残した空間の痕跡である。",
+      "inspP1":"隙間は物理的な裂け目にとどまらない。都市が生成される過程で、異なる関係どうしがぶつかり合った後に残る痕跡である。それらは微小で沈黙しているが、都市のもっとも繊細な温度を保ち、日常に見過ごされてきた生態と記憶を再び浮かび上がらせる。",
+      "inspP2":"そこで本プロジェクトは、見る尺度を壮大な都市のランドマークから、煉瓦の目地、壁の角、湿地の縁、開発に押し出された残余の空間へと縮めていった。",
+      "gapA":"隙",
+      "gapB":"間",
+      "ax1a":"自然",
+      "ax1b":"人工",
+      "ax2a":"歴史",
+      "ax2b":"現実",
+      "ax3a":"周縁",
+      "ax3b":"中心",
+      "axesNote":"隙間 —— 三組の関係がぶつかり合った後に残る、あの一本の線",
+      "specWorkK":"作品名",
+      "specWorkV":"SeeD 深セン展示プロジェクト",
+      "specYearK":"制作年",
+      "specCtxK":"文脈",
+      "specCtxV":"山海芸術祭",
+      "specCatK":"カテゴリー",
+      "specCatV":"ブランドデザイン / 展示デザイン",
+      "gateK":"地図 02 / 隠された層",
+      "gateT":"それは都市の傷痕であり、<br>同時に<em>再生のゆりかご</em>でもある。",
+      "gateNote":"ここから先のリサーチ全体が、この一枚の地図にあたる。",
+      "researchTitle":"リサーチ",
+      "r1N":"消失 / DISAPPEARANCE",
+      "r1T":"都市化の過程で深センの在来植物が消えていった経緯",
+      "r1Lead":"深センの都市化の過程で、多くの在来植物が大きく数を減らし、一部は局所的に姿を消した。",
+      "r1P1":"代表的なのは沿岸のマングローブ群落——メヒルギ、ヒルギダマシ、ヒルギモドキ、オオバヒルギ、シマシラキ、ハマアザミモドキ、ヒルギシダ、コヒルギなど——で、かつては深セン湾、福田、東涌の潮間帯に分布していた。埋め立てと汚染により、マングローブの面積は大きく縮小した。",
+      "r1P2":"バショウマツなど山地の樹種もほぼ絶滅した。大鵬半島の七娘山などではマツノザイセンチュウの侵入により天然のバショウマツ林がすべて伐採され、野生のマツ林はもう存在しない。",
+      "keyGone":"消失・開発済み",
+      "keyLeft":"現存",
+      "loss1":"マングローブ面積<span class=\"src\">8,000 余ムー → 2014 年 2,500 余ムー</span>",
+      "loss1s":"8,000 余ムー → 2014 年 2,500 余ムー",
+      "pc1":"約 70%",
+      "loss2":"深セン湾の在来マングローブ<span class=\"src\">広範囲が埋め立て・開発された</span>",
+      "loss2s":"広範囲が埋め立て・開発された",
+      "pc2":"75% 以上",
+      "loss3":"干潟・湿地面積<span class=\"src\">1989—2003 年の減少幅</span>",
+      "loss3s":"1989—2003 年の減少幅",
+      "pc3":"72%",
+      "loss4":"自然海岸線<span class=\"src\">未占有の湿地は約 10% のみ</span>",
+      "loss4s":"未占有の湿地は約 10% のみ",
+      "pc4":"90% 近く",
+      "bigStat":"35<sub>種</sub>",
+      "statNote":"深センに現存する国家重点保護野生植物。その多くが絶滅の危機にある小個体群である。",
+      "lossCap":"図：四つの指標を同一の 0–100% スケールで作図。数値は原プロジェクト資料による。",
+      "r1SubA":"一度消え、再び現れたもの",
+      "r1SubAP":"ミズワラビは水質汚染と湿地開発でほぼ絶滅したが、水環境の改善後、深セン各地で再発見された。個体数はなお極めて少なく、継続的な保護を要する。ジンコウは かつては普通に見られたが、都市開発と過度の伐採でほぼ絶滅し、現在は極小個体群種として国家の救済事業に組み込まれている。センコソテツなど希少植物の原生個体群もきわめて限られている。",
+      "r1SubB":"地域固有の植物が稀になる",
+      "r1SubBP":"海岸の砂地に育つハマボウフウなどは点在するのみで、自然保護区に含まれない個体群は劣化しつつある。山中のチャリやホウライシャジンなど在来の樹木や草花も稀になった。林業部門は「深セン小個体群野生植物リスト」を定め、ムラサキフウランやシンセンシュウカイドウなどを重点保護対象とし、梧桐山・馬巒山に保護区を設けてクロヘゴやハンプウカなど希少植物の生育環境を守っている。",
+      "reasonLabel":"植生劣化の主な原因",
+      "rea1":"都市の拡張と埋め立て",
+      "rea1p":"在来の生育地が失われ続けている。",
+      "rea2":"産業汚染と水域の富栄養化",
+      "rea2p":"河口やマングローブの堆積物に重金属・栄養塩が蓄積し、生態の質が低下する。",
+      "rea3":"建設用地による侵食",
+      "rea3p":"平野や丘陵の林地が工事用地に転用され、低標高域の植生が劣化する。",
+      "rea4":"景観の代替措置",
+      "rea4p":"マングローブ整備にムシャリンドウなど外来樹種を導入し、生態機能が単一化する。",
+      "rea5":"外来有害生物の侵入",
+      "rea5p":"ツルヒヨドリが拡散し、マツノザイセンチュウにより天然バショウマツ林が伐採される。",
+      "z1k":"沿岸",
+      "z1t":"マングローブと潮間帯",
+      "z1p":"都市化の影響が最も重い一帯。深セン湾などの在来マングローブが大規模に埋め立て・開発され、干潟と自然海岸線も同時に失われた。",
+      "z2k":"市街",
+      "z2t":"農地・森林・果樹園",
+      "z2p":"市街の拡張で農地や林地が建設用地に転じ、都市内部の森林や果樹園が侵食されて植生が明らかに劣化した。",
+      "z3k":"山地",
+      "z3t":"分断された生態回廊",
+      "z3p":"大鵬半島や梧桐山では原生植生が比較的よく残るが、連続した生育環境が都市建設によって切り分けられている。",
+      "z4k":"水域",
+      "z4t":"河川と湖沼の湿地",
+      "z4p":"初期の産業排水・生活排水で河口や貯水池の水質と湿地植生が悪化した。近年の治水で改善しつつある。",
+      "invK":"もがき / INVASION",
+      "invT":"外来植物の侵入",
+      "invP1":"深センで記録された外来侵入植物は 100 種を超え、広東省内でも多い。代表的な侵入雑草ツルヒヨドリは 1980 年代に伝来した後に急速に拡散し、ピーク時には約 15〜16 万ムーを覆って在来植生を減らした。現在の分布面積は約 8 万ムーだが、なお根絶は難しい。",
+      "invP2":"ノアサガオやアメリカハマグルマなどのつる性・地被性植物は山野や公園の緑地で広がり続け、ランタナは導入後に野外へ広く分布して在来低木林の生育環境を圧迫した。ホテイアオイは一部の河川で繁茂して水の流れを妨げ、ヒメムカシヨモギモドキやベニチガヤなどは都市と農村の境で拡散している。これらは生育空間と養分の奪い合い、アレロパシー物質の放出などを通じて在来植物の生育を抑制する。",
+      "if1":"記録された外来侵入植物の種類",
+      "if2n":"15〜16 万ムー",
+      "if2":"ツルヒヨドリ拡散ピーク時の被覆面積",
+      "if3n":"約 8 万ムー",
+      "if3":"現在の分布面積 —— ピーク時より後退",
+      "if4n":"20〜30 種",
+      "if4":"深センの生態への影響が大きい外来植物",
+      "runInv":"ツルヒヨドリ<i>·</i>ノアサガオ<i>·</i>アメリカハマグルマ<i>·</i>ランタナ<i>·</i>ホテイアオイ<i>·</i>ヒメムカシヨモギモドキ<i>·</i>ベニチガヤ",
+      "r2N":"再生 / RECOVERY",
+      "r2T":"深センの在来植物の回復とその細部",
+      "r2Lead":"深センの在来植物資源は豊かだが、都市緑化には長く「同質化」の問題があった。",
+      "r2P1":"ある研究によれば、<b>長江流域の主要都市では街路樹の樹種重複率が 37% に達し</b>、その多くが外来種か人工的な栽培品種である——ジャカランダ、ピンクミューリー、アガパンサス、ローズマリー、メキシコヒナギク、ホウライショウなど観賞用植物の大量導入が、都市の景観を似通ったものにした。深センも在来種と外来種の比率が崩れた時期を経たが、近年は在来種の採用比率が高まりつつある。",
+      "r2P2":"クスノキ、ガジュマル、レイシ、クロガネモチ、アカギ、ソウシジュなどの郷土樹種は現地の気候に適し、道路や公園に広く植えられている。都市の個性を示すと同時に、在来の生きものに生息場所を与えている。",
+      "runNative":"クスノキ<i>·</i>ガジュマル<i>·</i>レイシ<i>·</i>クロガネモチ<i>·</i>アカギ<i>·</i>ソウシジュ<i>·</i>ショウヨウガジュマル<i>·</i>キワタ",
+      "c1t":"大沙河 生態回廊と湿地公園",
+      "c1s":"外来侵入植物を除去し在来湿地種を補植、河道の生育環境を継続監視。",
+      "c1b":"南北を貫く帯状の都市公園かつ湿地回廊。管理部門は河道の在来環境を守ることを目標に、外来侵入植物を除去して在来の湿地種を補植し、あわせて外来種の定期的な監視と除去を進めている。2023 年には南山区がこの区域の緑地にヨウテイボクなど在来の花木を植え、在来植物の比率を高めて生物多様性を強化した。",
+      "c2t":"茘香公園",
+      "c2s":"「囲いを外して緑を通す」と近自然管理により、在来の希少植物が再び現れた。",
+      "c2b":"公園は生態の最適化と近自然管理によって生育環境を改善した。園内で在来の希少ラン科植物ムヨウビカンランが初めて記録され、在来植生と生育環境を維持することが希少種の生息と繁殖の余地を広げると示された。",
+      "c3t":"水辺の公園、愛榕路と並木道",
+      "c3s":"郷土樹種が公園・道路・連続した並木に戻り、動物の回廊も再び形づくられた。",
+      "c3b":"中心河公園、人材公園、深セン湾公園などの水辺緑地には、アカギ、ショウヨウガジュマル、キワタといった在来樹種が数多く植えられ、2025 年施行の《深セン経済特区公園条例》の要件に沿っている。深セン湾沿岸ではマングローブ自然保護区を基盤にメヒルギやヒルギモドキの保護・復育が進み、2025 年までにマングローブ 51 ヘクタールの修復が計画されている。愛榕路の改修では既存のガジュマルを残し、南山区の並木道は主にショウヨウガジュマル、コウザンガジュマル、クスノキ、キワタ、ヨウテイボクなど深センの気候に適した樹種を用い、鳥類に回廊状の生息空間を与えている。",
+      "c4t":"環西麗湖グリーンウェイ",
+      "c4s":"全長 16.2 km。水系修復・林相改善・150 種超の郷土植物をつなぐ。",
+      "c4b":"2025 年初に全線開通。約 5 km の水系生育環境修復と約 3 万平方メートルの林相改善を完了し、炭素固定能力は約 10% 向上したと試算される。レイシ、リュウガン、キワタなどの高木と、ゲッキツ、ノボタン、トキワカズラなどの低木・つる植物が、季節の移ろいをもつ湖畔の景観帯を形づくっている。",
+      "c5t":"塘朗山—大沙河—深セン湾 山海回廊",
+      "c5s":"全長 13 km の生態回廊が、郷土植生で山地・河川・沿岸の生育環境をつなぐ。",
+      "c5b":"深センが 2022 年に開通させた最初の「山海連城」生態回廊。塘朗山区間では南亜熱帯常緑広葉樹林の原生群落を維持しブナ科・クスノキ科の高木を補植、大沙河区間では郷土の湿地植物帯を両岸に通し、深セン湾の沿岸区間ではマングローブ修復によりメヒルギ、ヒルギモドキ、スイヒツシなど在来のマングローブと水辺植物を植えている。",
+      "c6t":"ペンギン花園と地域の微小生息地",
+      "c6s":"約 600 ㎡ の「生息地ガーデン」——低干渉、ゼロ廃棄、住民との共同づくり。",
+      "c6b":"改修前は植生が乱れ空間も閉じていたが、鳥類や両生類の生息地にはなっていた。設計は低干渉の方針で既存の生息構造を残し、「在来植物保育区」を定め、在来の液果低木、蜜源植物、寄主植物、玉石や落ち葉によって鳥・昆虫・両生類の微小生息地をつくり、樹齢数十年のガジュマルを残した。完成後もヘリグロヒキガエル、キノボリトカゲ、シロガシラ、メジロなどが分布し続け、昆虫の種類は増えた。ポケットパーク、校庭の緑地、屋上庭園、共同づくりの庭が郷土植物を地域に運び込み、広く分布する微小生息地のネットワークを形づくっている。",
+      "strategyTitle":"デザイン戦略",
+      "kwLabel":"キーワード",
+      "kwList":"モジュール式（可動）<i>/</i>サステナブル<i>/</i>暮らし方<i>/</i>深セン<i>/</i>コミュニティ<i>/</i>風景<i>/</i>記憶<i>/</i>人文",
+      "ar1":"キーワードから連想へ",
+      "s1n":"連想 / ASSOCIATION",
+      "s1t":"都市の発展、その生態的な代償、そして見直し",
+      "s1a":"深センは極めて速い速度で発展し、かつての村落や古い街並みは次第に忘れられ、現代的な建築と道路に取って代わられた。",
+      "s1b":"都市建設のなかで高度に反復的な同質化した緑化が現れ、視覚的な統一の美しさだけを求めて外来植物が大量に導入された。",
+      "s1c":"同質化した緑化は在来の生態系を壊し、外来植物が在来植物の生存空間を占め、生態の均衡は次第に破られていった。",
+      "s1d":"かつてはどこにでもあった、深センらしい郷土の植物が、少しずつ稀になっていった。",
+      "s1e":"それでも植物のしぶとい生命力は都市のなかを行き交い、建物の隙間や煉瓦の裂け目で黙々と育ち、都市の過去と未来をつないでいる。",
+      "s1f":"都市の発展段階が移り変わるにつれ、人々は暮らし方を省み、見過ごしてきた土地の記憶と在来の植物を見直しはじめている。",
+      "ar2":"連想から所感へ",
+      "s2n":"所感 / REFLECTION",
+      "s2t":"都市は美しさを求めると同時に、生命がもともと持つ多様さと均衡を尊重しなければならない。",
+      "s2a":"深センが高速に発展する一方で、都市の生態は代償を払ってきた——人と植物の生存空間が急速に圧迫されたのである。かつての多様性は統一された視覚的景観に置き換えられ、外来植物の大量導入は都市緑化を高度に同質化させただけでなく、在来植物の生育環境をも脅かした。",
+      "s2b":"幸いなことに、生命力の強い植物はいつもそこにあった。本当に去ったわけではなく、見過ごされた片隅で静かに育っていただけだ。煉瓦とコンクリートの隙間に生きるこれらの植物こそ、深センという都市のもっとも真実な記憶である。",
+      "ar3":"所感がひとつの言葉に収束する",
+      "s3n":"隙間 / CRACKS",
+      "s3t":"隙間は、ひとつの独特な生存のかたちを象徴している。",
+      "cd1":"<b>隙間</b>は、しぶとく育つ植物の隠喩であるだけでなく、都市に生きる人の姿勢をも映し出している。",
+      "cd2":"<b>隙間</b>は、都市生活のなかで忘れられやすく、しかし欠かせない片隅であり、沈黙した微小なかたちで存在している。",
+      "cd3":"<b>隙間</b>は人と植物の空間的な関係をつなぎ、自然と都市生活のあいだの微妙な交わりを、ふとした瞬間に感じさせる。",
+      "cd4":"<b><span class=\"mark\">隙間を見る</span></b>ことは、かつて見過ごしてきた存在を見直し、都市のなかの小さく確かな生命と記憶を再発見することを意味する。",
+      "s4n":"提示 / PRESENTATION",
+      "s4t":"大きなテーブルは、開くことのできる都市の断面へと変換される。",
+      "s4a":"テーブルの脇の隙間にも、さまざまな植物、あるいは植物の種子や果実がある。",
+      "s4b":"天板は現在の記憶と植物の提示であり、誰もが自分の記憶の手がかりを見つけられる。",
+      "s4c":"テーブルの断面は土壌断面図のように見なすことができ、歴史を象徴する。",
+      "s4d":"モジュール式のテーブルを外へ動かすと、かつての深センの植物、写真、地理的な姿が現れる。",
+      "exhTitle":"展示セクション",
+      "exN1":"セクション 01",
+      "e1t":"移ろう断片",
+      "e1a":"子どもの頃の記憶では、春の街角で、祖母がハクモクレンを繋いで香りたつ小さな花輪をつくっていた。空気にプルメリアの香りが漂えば、それは真夏の合図だった。冬の朝にはヨウテイボクがなお咲きほこり、花びらが通学路を敷きつめた。",
+      "e1b":"これらの植物は都市の日常の隙間を埋め、平凡な歳月のなかのやさしい慰めでもあった。住民の移り住みと留まり、別れと再会を黙って見届け、速い都市のなかで、小さくとも確かな姿勢で時の移ろいに応えてきた。都市の発展とともに新しい種が次々と入り、多くの在来植物の居場所は次第に狭まった。それでもあの見慣れた緑は、どこかの曲がり角や煉瓦の目地、木の下でしぶとく育ち、この都市のひとりひとりに寄り添っている。",
+      "exN2":"セクション 02",
+      "e2t":"合わさった隙間",
+      "e2n":"会場での題：時間の褶曲 / The Folds of Time",
+      "e2a":"私たちの視野において、「隙間」とは都市の煉瓦や石のあいだの割れ目、コンクリートの亀裂にとどまらない。それは都市が生成される過程で、自然と人工、歴史と現実、周縁と中心が絶えずぶつかり交錯した後に残る、微小な縫い目である。ここに喧噪の繁栄はないが、都市のもっとも繊細な温度と気配が保たれている。一つひとつの隙間は時のかぼそい糸のようで、日常に忘れられた古物、こぼれ落ちた記憶、静かに育つ野草、そして音もなく移ろう光と影をつないでいる。隙間は都市の肌理の浸透と変化を記録し、空間が分割され、縫い直され、再びつくられていく長い過程を証している。",
+      "e2b":"まさにこの取るに足らない、しかし至るところにある隙間のなかで、都市の詩情はひそかに生まれる。見過ごされた細部には、人と空間、物と感情、昨日と今日のあいだの秘めやかなつながりが隠れている。私たちにとって隙間とは、現実世界の微視的な秩序における余白であり、同時に都市の文化的記憶が滲み出す点でもあって、「名づけられていない空間」が担う豊かな可能性に目を向けるよう、つねに促してくる。",
+      "exN3":"セクション 03",
+      "e4t":"失われた生態の線",
+      "e4a":"深センの都市化の過程で、建設用地の拡張と埋め立ては在来の生態に否応なく影響した。沿岸マングローブ系のメヒルギやヒルギダマシといった代表的な種は、埋め立てと汚染により分布面積がピーク時から約 70% 減り、いまは局所的に残るのみである。",
+      "e4b":"バショウマツなど山地の樹種も、マツノザイセンチュウの侵入と開発圧によってほぼ姿を消した。都市の平野部・丘陵部の原生植生は劣化が続き、チャリやホウライシャジンなど一部の在来の高木や草花はいっそう稀になった。これらの植物の減少と消失にともない、それを生息の場とする動物も減り、生態系の完全さが試されている。",
+      "exN4":"セクション 04 / 夢の樹",
+      "e6t":"つながり",
+      "e6a":"このインタラクティブなインスタレーションでは、来場者一人ひとりに葉のかたちの付箋で、都市の未来への願いを書いてもらう。ひとつの願いは新しい葉のようで、赤い細い糸で他の人の夢とつながる——あなたの願いが誰かのものと似ていれば、同じ枝の上に続けてよい。あなたの考えが独自のものなら、自分の脈をつくり、新しい枝を伸ばしてもよい。参加者が増えるにつれ、葉と糸は絡み合って育ちつづける「夢の樹」となり、都市の共有された展望を記録し、互いのつながりと多様さを映し出していく。",
+      "joinT":"参加方法",
+      "j1":"葉のかたちの付箋を一枚と、赤い糸を一本受け取る。",
+      "j2":"付箋に、未来の都市への願いやアイデアをひとつ書く。",
+      "j3":"自分の願いに近い葉を見つけ、赤い糸で自分の付箋をそれらとつなぎ、同じ枝にする。",
+      "j4":"願いが独自のものなら、新しい枝を自分でつくってもよい。",
+      "j5":"葉を天板に貼り、他の人の願いとともに、この「夢の樹」が育つのを見届ける。",
+      "footBack":"トップへ戻る",
+      "footMeta":"SeeD / 深セン展示プロジェクト · HE LIANGYU · 2025",
     }
-  }
-  function upd(){
-    var cur=Math.round(track.scrollLeft/track.clientWidth);
-    for(var j=0;j<dots.length;j++)dots[j].classList.toggle("on",j===cur);
-  }
-  track.addEventListener("scroll",upd,{passive:true});
-  upd();
-}
-["research","strategy","exhibition","closing"].forEach(initTrack);
+  };
+  const LANGS = ["zh", "en", "ja"];
+  const labels = {zh:"切换语言", en:"Switch language", ja:"言語を切り替える"};
+  const titles = {
+    zh:"SeeD 深圳展览项目 — 何梁宇",
+    en:"SeeD Shenzhen Exhibition — He Liangyu",
+    ja:"SeeD 深セン展示プロジェクト — 何梁宇"
+  };
+  let lang = "zh";
+  try { const saved = localStorage.getItem("hl-lang"); if (LANGS.includes(saved)) lang = saved; } catch(e) {}
+  const applyLang = next => {
+    lang = LANGS.includes(next) ? next : "zh";
+    const dict = I18N[lang];
+    nodes.forEach(node => {
+      const value = dict[node.dataset.i18n];
+      if (value !== undefined) node.innerHTML = value;
+    });
+    document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+    document.documentElement.classList.remove("lang-zh", "lang-en", "lang-ja");
+    document.documentElement.classList.add("lang-" + lang);
+    document.title = titles[lang];
+    const button = $("#lang-cycle-btn");
+    if (button){ button.title = labels[lang]; button.setAttribute("aria-label", labels[lang]); }
+    try { localStorage.setItem("hl-lang", lang); } catch(e) {}
+  };
+  $("#lang-cycle-btn")?.addEventListener("click", () => {
+    applyLang(LANGS[(LANGS.indexOf(lang) + 1) % LANGS.length]);
+  });
+  applyLang(lang);
+})();
 
-applyLang(lang);
+/* ── 导航底色 ───────────────────────────────────────── */
+(function(){
+  const nav = $("#site-nav");
+  let ticking = false;
+  function paint(){
+    ticking = false;
+    nav.classList.toggle("solid", scrollY > Math.min(140, innerHeight * .14));
+  }
+  addEventListener("scroll", () => { if (!ticking){ ticking = true; requestAnimationFrame(paint); } }, {passive:true});
+  addEventListener("resize", paint);
+  paint();
+})();
+
+
+/* ── 入场 ───────────────────────────────────────────── */
+(function(){
+  const items = $$(".rv, .rv-grow, .loss-row");
+  if (!("IntersectionObserver" in window) || reduced){ items.forEach(n => n.classList.add("in")); return; }
+  const io = new IntersectionObserver((es, o) => {
+    es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("in"); o.unobserve(e.target); } });
+  }, {rootMargin:"0px 0px -8% 0px", threshold:.05});
+  items.forEach(n => io.observe(n));
+  requestAnimationFrame(() => items.forEach(n => {
+    if (n.getBoundingClientRect().top < innerHeight) n.classList.add("in");
+  }));
+  /* 兜底：IO 失效时页面绝不留白 */
+  setTimeout(() => items.forEach(n => n.classList.add("in")), 2500);
+})();
+
+/* ── 灵感来源 / 恢复案例：平滑展开（0fr → 1fr）───────── */
+(function(){
+  $$(".inspiration-panel, .case").forEach(p => {
+    const s = p.querySelector("summary");
+    s.addEventListener("click", e => {
+      e.preventDefault();
+      if (p.open){
+        p.classList.remove("is-open");
+        setTimeout(() => { if (!p.classList.contains("is-open")) p.open = false; }, 480);
+      } else {
+        p.open = true;
+        requestAnimationFrame(() => p.classList.add("is-open"));
+      }
+    });
+  });
+})();
+
+/* ── 灵感来源：滚到跟前自动展开（只自动开一次，之后交回给用户）── */
+(function(){
+  const p = $("#insp");
+  if (!p) return;
+  let done = false;
+  p.querySelector("summary").addEventListener("click", () => { done = true; }, {once:true});
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { ticking = false; check(); });
+  };
+  const check = () => {
+    if (done){ removeEventListener("scroll", onScroll); return; }
+    const r = p.getBoundingClientRect();
+    if (r.top < innerHeight * .78 && r.bottom > 0){
+      done = true;
+      removeEventListener("scroll", onScroll);
+      if (p.open) return;
+      p.open = true;
+      requestAnimationFrame(() => p.classList.add("is-open"));
+    }
+  };
+  addEventListener("scroll", onScroll, {passive:true});
+  check();
+})();
+
+/* ── 灯箱 ───────────────────────────────────────────── */
+(function(){
+  const box = $("#lightbox"), img = $("#lightbox-image");
+  const open = t => {
+    img.src = t.dataset.lightbox;
+    img.alt = (t.tagName === "IMG" ? t.alt : $("img", t)?.alt) || "项目图片";
+    box.classList.add("is-open");
+    box.scrollTop = 0;
+    document.body.classList.add("is-locked");
+  };
+  const close = () => {
+    box.classList.remove("is-open");
+    document.body.classList.remove("is-locked");
+    img.removeAttribute("src");
+  };
+  $$("[data-lightbox]").forEach(t => {
+    t.addEventListener("click", () => open(t));
+    t.setAttribute("tabindex", "0");
+    t.setAttribute("role", "button");
+    t.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " "){ e.preventDefault(); open(t); }
+    });
+  });
+  $("#lightbox-close").addEventListener("click", close);
+  box.addEventListener("click", e => { if (e.target !== img) close(); });
+  addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+})();
 </script>
 </body>
 </html>
