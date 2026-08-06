@@ -904,8 +904,8 @@ figcaption .fc-k{color:var(--blue);font-weight:700;letter-spacing:.14em;text-tra
       <article class="outcome">
         <div class="oc-cap rv">
           <p class="mono-label">Outcome 01</p>
-          <h4>品牌标志</h4>
-          <p>Logo 作为品牌印记出现，保持识别，但不承担全部品牌信息。</p>
+          <h4 data-i18n="oc1Title">品牌标志</h4>
+          <p data-i18n="oc1Desc">Logo 作为品牌印记出现，保持识别，但不承担全部品牌信息。</p>
         </div>
         <div class="rv-wipe">
           <div class="plate" data-lightbox="output-1.jpg">
@@ -933,15 +933,15 @@ figcaption .fc-k{color:var(--blue);font-weight:700;letter-spacing:.14em;text-tra
                 <div class="oc-head">
                   <div class="oc-cap">
                     <p class="mono-label">Outcome 02</p>
-                    <h4>视觉语言组合</h4>
+                    <h4 data-i18n="oc2Title">视觉语言组合</h4>
                   </div>
-                  <p class="oc-desc">大尺度字形、克制蓝色与拉伸图像共同建立统一的视觉识别。</p>
+                  <p class="oc-desc" data-i18n="oc2Desc">大尺度字形、克制蓝色与拉伸图像共同建立统一的视觉识别。</p>
                 </div>
               </div>
               <div class="strip" id="strip">
                 <img src="derived/wordmark.jpg" alt="GMANSIRE 视觉系统组合：巨大字形与嵌入其中的拉伸图像" loading="lazy" decoding="async" width="4000" height="808">
               </div>
-              <div class="wrap"><div class="strip-hint"><span>横向拖动查看完整字标 →</span></div></div>
+              <div class="wrap"><div class="strip-hint"><span data-i18n="stripHint">横向拖动查看完整字标 →</span></div></div>
             </article>
 
             <article class="deck-slide">
@@ -949,12 +949,12 @@ figcaption .fc-k{color:var(--blue);font-weight:700;letter-spacing:.14em;text-tra
                 <div class="oc-head">
                   <div class="oc-cap">
                     <p class="mono-label">Outcome 03</p>
-                    <h4>品牌物料</h4>
+                    <h4 data-i18n="oc3Title">品牌物料</h4>
                   </div>
                   <div class="quiet-body">
-                    <p>将品牌语言应用到公司介绍、招募信息与版式系统中。</p>
+                    <p data-i18n="oc3Desc">将品牌语言应用到公司介绍、招募信息与版式系统中。</p>
                     <button class="view-link" type="button" data-lightbox="derived/poster-lg.jpg" data-tall="1"
-                            data-alt="GMANSIRE 品牌介绍与招募物料">查看完整物料</button>
+                            data-alt="GMANSIRE 品牌介绍与招募物料" data-i18n="viewMaterial">查看完整物料</button>
                   </div>
                 </div>
               </div>
@@ -1084,6 +1084,14 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       p5SubB:"Design outcomes",
       p5SubBDesc:"The following images appear only after the process, verifying whether the preceding principles have genuinely entered the logo, typography, imagery and material system.",
       closingQ:"Everything ultimately presented<br>is our <em>concept.</em>",
+      oc1Title:"Brand mark",
+      oc1Desc:"The logo appears only as a brand imprint — it keeps recognition without carrying the whole brand message.",
+      oc2Title:"Visual language",
+      oc2Desc:"Oversized letterforms, restrained blue and stretched imagery together build one visual identity.",
+      oc3Title:"Brand materials",
+      oc3Desc:"The brand language applied to the company introduction, recruitment copy and typographic system.",
+      viewMaterial:"View full material",
+      stripHint:"Drag sideways for the full wordmark →",
       footBack:"Back to home"
     },
     ja: {
@@ -1158,6 +1166,14 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       p5SubB:"デザイン成果",
       p5SubBDesc:"以下の画像はプロセスの後に配置し、前段の原則がロゴ、タイポグラフィ、画像、マテリアルのシステムに本当に反映されたかを検証する。",
       closingQ:"最後に提示されるものは、<br>すべて私たちの<em>コンセプト。</em>",
+      oc1Title:"ブランドマーク",
+      oc1Desc:"ロゴはブランドの印としてのみ現れる。識別性は保ちながら、ブランド情報のすべてを担うことはない。",
+      oc2Title:"ビジュアル言語の組み合わせ",
+      oc2Desc:"大きな字形、抑制されたブルー、ストレッチした画像が、ひとつのビジュアルアイデンティティを形づくる。",
+      oc3Title:"ブランドマテリアル",
+      oc3Desc:"ブランド言語を、会社紹介・募集要項・タイポグラフィのシステムへ適用する。",
+      viewMaterial:"マテリアル全体を見る",
+      stripHint:"横にドラッグしてロゴタイプ全体を見る →",
       footBack:"ホームへ戻る"
     }
   };
