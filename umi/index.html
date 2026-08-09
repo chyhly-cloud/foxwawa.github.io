@@ -46,6 +46,7 @@ a{color:inherit;text-decoration:none}
 .lang-ja .body-t{font-family:"Noto Serif JP",serif;font-size:15px;line-height:1.95}
 .lang-zh .body-t{font-family:"Noto Serif SC",serif;font-size:15px;line-height:1.95}
 .body-t + .body-t{margin-top:1rem}
+.body-t,.insp-body p,.concept-lead,.yellow-head,.travel-head,.visual-head,.insight .q{text-align:justify}
 
 /* ── NAV ── */
 #nav{position:fixed;top:0;left:0;right:0;z-index:80;height:58px;display:flex;align-items:center;justify-content:space-between;
@@ -173,9 +174,10 @@ section{position:relative}
 .mat-lbl{font-family:var(--mono);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);font-weight:700;margin-top:1.8rem;margin-bottom:.9rem}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 12px;border:1px solid var(--rule);color:var(--ink2);background:var(--sand)}
-.concept-diagram{margin:clamp(2.5rem,5vw,4rem) 0 0;border:1px solid var(--rule);background:#fff;overflow:hidden;box-shadow:0 28px 66px -30px rgba(42,37,31,.42)}
-.concept-diagram img{width:100%;height:auto;display:block;padding:clamp(1.4rem,3.5vw,2.6rem)}
-.concept-diagram figcaption{font-family:var(--mono);font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);padding:.9rem 1.2rem;border-top:1px solid var(--rule);line-height:1.5}
+.concept-diagram{margin:clamp(2.5rem,5vw,4rem) 0 0;overflow:hidden;background:transparent}
+.concept-diagram img{width:100%;height:auto;display:block;padding:clamp(1.4rem,3.5vw,2.6rem);mix-blend-mode:multiply}
+.concept-diagram img.has-alpha-cutout{mix-blend-mode:normal}
+.concept-diagram figcaption{font-family:var(--mono);font-size:clamp(13px,1.25vw,16px);letter-spacing:.8px;text-transform:uppercase;color:var(--ink2);padding:.9rem 0 0;line-height:1.6;background:transparent}
 .evo{display:grid;grid-template-columns:1fr;gap:16px;margin-top:clamp(2rem,4vw,3rem)}
 @media(min-width:680px){.evo{grid-template-columns:1fr 1fr}}
 .evo figure{border:1px solid var(--rule);background:var(--sand);overflow:hidden;box-shadow:0 20px 48px -24px rgba(42,37,31,.45)}
@@ -353,7 +355,7 @@ section{position:relative}
   </div>
   <figure class="concept-diagram">
     <img class="plate-img" src="visual-concept.jpg" alt="" loading="lazy" onerror="this.closest('.concept-diagram').style.display='none'">
-    <figcaption>Abstraction &amp; material derivation — voyage · compass · rhombus / waves · gradient · copper scales</figcaption>
+    <figcaption id="v1-cap">抽象化と素材の展開 — 航海・コンパス・菱形／波・グラデーション・銅片</figcaption>
   </figure>
   <div class="evo">
     <figure><img src="visual-evo-1.jpg" alt="" loading="lazy"></figure>
@@ -421,6 +423,7 @@ ja:{
   "v1-head":"記憶を映す、移ろう海と光",
   "v1-p1":"波にきらめく光と絶えず移ろう天候によって、記憶の中の海を空間として表現しました。スクリーン上では、単色からゆるやかに変化する色彩によって、一日の天候と時間の移ろいを抽象化しています。",
   "v1-p2":"スクリーンの上下には反射する金属板を配置し、下部には立体的な菱形の銅片を鱗状に組み合わせました。全体の形態はコンパスから着想を得ています。大海原で進む方向を示すコンパスは、かつて航海に欠かせない道具でした。",
+  "v1-cap":"抽象化と素材の展開 — 航海・コンパス・菱形／波・グラデーション・銅片",
   "v1-ml":"素材・構成","v1-t1":"スクリーン","v1-t2":"金属反射板","v1-t3":"菱形の銅片","v1-t4":"コンパス",
   "ch-exh":"展示","ch-film":"映像","film-lbl":"映像 · Documentary Film",
   "back-lbl":"ホームへ戻る"
@@ -449,6 +452,7 @@ zh:{
   "v1-head":"映照记忆的流动海洋与光",
   "v1-p1":"作品通过波面闪烁的光与不断流转的天气，将记忆中的海转化为一个空间。屏幕上的色彩从纯色缓慢过渡，以抽象的方式表现一天之中天气与时间的变化。",
   "v1-p2":"屏幕上下设置反光金属板，下方则以立体菱形铜片组合成鳞片般的结构。整体形态的灵感来自指南针——它曾是航行于大海时不可或缺的方向工具。",
+  "v1-cap":"抽象化与材料推导 — 航行・指南针・菱形／波浪・渐变・铜片",
   "v1-ml":"材料与构成","v1-t1":"屏幕","v1-t2":"反光金属板","v1-t3":"菱形铜片","v1-t4":"指南针",
   "ch-exh":"展示","ch-film":"影像","film-lbl":"影像作品 · Documentary Film",
   "back-lbl":"返回主页"
@@ -477,6 +481,7 @@ en:{
   "v1-head":"A Shifting Sea and Light That Reflect Memory",
   "v1-p1":"The work transforms the sea of memory into a spatial experience through light shimmering on the waves and continually changing weather. On the screen, colors move gradually from solid tones into transitions, abstracting the shifts in weather and time over the course of a day.",
   "v1-p2":"Reflective metal panels are placed above and below the screen, while three-dimensional diamond-shaped copper pieces form a scale-like structure at the base. The overall form is inspired by the compass, once an indispensable tool for finding direction at sea.",
+  "v1-cap":"Abstraction & material derivation — voyage · compass · rhombus / waves · gradient · copper scales",
   "v1-ml":"Materials & Composition","v1-t1":"Screen","v1-t2":"Reflective Metal","v1-t3":"Copper Rhomboids","v1-t4":"Compass",
   "ch-exh":"Exhibition","ch-film":"Film","film-lbl":"Film \u00b7 Documentary Film",
   "back-lbl":"Back to Home"
@@ -491,7 +496,7 @@ const IDS = [
   "c-lbl","c1-head","c1-p1","c1-p2","ins-sum","c2-p1","c2-p2",
   "ch-research","r1-lbl","r1-head","r1-p1","r1-p2",
   "r2-lbl","r2-head","r2-p1","r2-p2","r2-il","r2-i1","r2-i2","r2-i3",
-  "ch-visual","v1-head","v1-p1","v1-p2","v1-ml","v1-t1","v1-t2","v1-t3","v1-t4",
+  "ch-visual","v1-head","v1-p1","v1-p2","v1-cap","v1-ml","v1-t1","v1-t2","v1-t3","v1-t4",
   "ch-exh","ch-film","film-lbl","back-lbl"
 ];
 
@@ -563,6 +568,30 @@ if (cycleBtn) cycleBtn.addEventListener("click", () => applyLang(langs[(langs.in
         finishClose(motionToken);
       }
     });
+
+    if ("IntersectionObserver" in window) {
+      const autoOpenObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting || details.dataset.autoOpened === "true") return;
+          details.dataset.autoOpened = "true";
+          autoOpenObserver.unobserve(details);
+          if (details.classList.contains("is-open")) return;
+
+          const token = ++motionToken;
+          details.open = true;
+          details.classList.remove("is-closing");
+          setExpanded(true);
+          if (reduce) {
+            details.classList.add("is-open");
+            return;
+          }
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            if (token === motionToken) details.classList.add("is-open");
+          }));
+        });
+      }, { rootMargin: "0px 0px -20% 0px", threshold: .3 });
+      autoOpenObserver.observe(details);
+    }
   });
 })();
 
@@ -582,6 +611,41 @@ document.querySelectorAll(".exh-c img, .evo img, .concept-diagram img").forEach(
   img.style.cursor = "zoom-in";
   img.addEventListener("click", () => { lbi.src = img.src; lb.classList.add("open"); document.body.style.overflow = "hidden"; });
 });
+
+/* visual concept — remove white negative space while preserving the colored/ink forms */
+(function cutConceptBackground(){
+  const img = document.querySelector(".concept-diagram .plate-img");
+  if (!img) return;
+
+  const cutout = () => {
+    if (img.dataset.cutout === "true" || !img.naturalWidth || !img.naturalHeight) return;
+    const w = img.naturalWidth, h = img.naturalHeight;
+    const canvas = document.createElement("canvas");
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext("2d", { willReadFrequently:true });
+    if (!ctx) return;
+    ctx.drawImage(img, 0, 0);
+    const imageData = ctx.getImageData(0, 0, w, h);
+    const pixels = imageData.data;
+    let removed = false;
+    for (let index = 0; index < w * h; index++) {
+      const i = index * 4;
+      if (pixels[i] > 244 && pixels[i + 1] > 244 && pixels[i + 2] > 244 && pixels[i + 3] > 0) {
+        pixels[i + 3] = 0;
+        removed = true;
+      }
+    }
+    if (!removed) return;
+    ctx.putImageData(imageData, 0, 0);
+    img.dataset.cutout = "true";
+    img.classList.add("has-alpha-cutout");
+    img.src = canvas.toDataURL("image/png");
+  };
+
+  const safeCutout = () => { try { cutout(); } catch (error) {} };
+  img.addEventListener("load", safeCutout, { once:true });
+  if (img.complete && img.naturalWidth) safeCutout();
+})();
 
 /* travel — continuous iTunes-style Cover Flow */
 (function initCoverflow(){

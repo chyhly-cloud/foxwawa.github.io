@@ -97,7 +97,7 @@ button,input{font:inherit;color:inherit;background:none;border:0}
 
 /* ── HERO ───────────────────────────────────────────── */
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;background:var(--void);color:#fff;overflow:hidden}
-.hero-band{position:absolute;left:0;right:0;top:13%;height:min(32svh,285px);z-index:0}
+.hero-band{position:absolute;inset:0;z-index:0}
 .hero-band img{width:100%;height:100%;object-fit:cover;object-position:center 50%;filter:grayscale(1) contrast(1.04)}
 .hero-band::after{content:"";position:absolute;inset:0;
   background:linear-gradient(90deg,rgba(38,38,38,.55),transparent 18%,transparent 82%,rgba(38,38,38,.55)),
@@ -248,7 +248,7 @@ button,input{font:inherit;color:inherit;background:none;border:0}
   margin-bottom:.75rem}
 .dnode p{font-family:var(--disp);font-size:var(--type-caption);line-height:1.8;color:rgba(255,255,255,.55)}
 .dnode.is-end h5{color:var(--blue)}
-.quote{margin-top:clamp(3rem,6vw,4.6rem);padding-top:1.8rem;border-top:1px solid var(--dline2);
+.quote{margin:clamp(3rem,6vw,4.6rem) 0 0;padding-top:1.8rem;border-top:1px solid var(--dline2);
   font-family:var(--serif);font-weight:300;font-size:clamp(1.6rem,3.8vw,3.1rem);line-height:1.35;letter-spacing:-.02em}
 .quote cite{display:block;margin-top:1.1rem;font-family:var(--mono);font-style:normal;font-size:var(--type-meta);
   font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45)}

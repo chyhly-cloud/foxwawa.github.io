@@ -1107,13 +1107,15 @@ if(bioViewer){
   function getViewportProfile(){
     const {minDim,aspect}=getViewportBox();
     const compactRatio=clampNum((720-minDim)/320,0,1);
+    const isPhone=minDim<600;
     return{
       frameXAdjust:aspect<.72?-.02:aspect>1.65?.1:.06,
       frameYAdjust:aspect<.72?.12:aspect>1.65?.04:.08,
       heightFill:aspect<.72?4.0:3.1,
       widthFill:aspect<.72?2.2:1.8,
       fov:11.9+compactRatio*.28+(aspect<.72?.08:0),
-      distanceAdjust:compactRatio*.01
+      distanceAdjust:compactRatio*.01,
+      distanceMultiplier:isPhone?48:1
     };
   }
 
@@ -1186,7 +1188,7 @@ if(bioViewer){
     const fitWidth=bounds.halfSpan/(Math.tan(fovX*.5)*viewport.widthFill);
     const rawFitDistance=Math.max(fitHeight,fitWidth);
     const safeDistance=rawFitDistance*(aspect<.72?.052:.040);
-    const distance=Math.max(rawFitDistance*pose.compose.distanceScale*(1+viewport.distanceAdjust),safeDistance);
+    const distance=Math.max(rawFitDistance*pose.compose.distanceScale*(1+viewport.distanceAdjust),safeDistance)*viewport.distanceMultiplier;
     return{
       orbit:[pose.orbit[0],pose.orbit[1],distance],
       target:[

@@ -52,6 +52,7 @@ button{font:inherit;color:inherit;background:none;border:0}
 .lang-ja .body-t{font-family:"Noto Sans SC","Noto Serif JP",sans-serif;line-height:1.9}
 .lang-zh .body-t{font-family:"Noto Sans SC",sans-serif;line-height:1.9}
 .body-t + .body-t{margin-top:1.05rem}
+.body-t,.premise-lead,.inspiration-copy p,.pull,.step p,.legend-v,.cap,figcaption,.absurd-item .t{text-align:justify}
 .mono-label{font-family:var(--mono);font-size:var(--type-meta);line-height:1.5;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--cool)}
 .cap{font-family:var(--mono);font-size:var(--type-meta);line-height:1.55;letter-spacing:.1em;color:var(--dim)}
 .lang-ja .cap,.lang-zh .cap{letter-spacing:.05em}
@@ -102,11 +103,11 @@ button{font:inherit;color:inherit;background:none;border:0}
 
 /* ── concept (shared shell) ───────────────────────────── */
 .premise{background:var(--paper)}
-.premise-lead{font-family:"Newsreader",serif;font-weight:300;font-size:clamp(1.75rem,4.2vw,3.5rem);line-height:1.22;letter-spacing:-.015em;color:var(--ink);max-width:20ch}
-.lang-ja .premise-lead{font-family:"Noto Serif JP",serif;font-weight:300;line-height:1.45;max-width:21ch}
-.lang-zh .premise-lead{font-family:"Noto Serif SC",serif;font-weight:400;line-height:1.42;max-width:21ch}
-.concept-copy{margin-top:clamp(2rem,4vw,3.2rem);max-width:44em;columns:1}
-.inspiration-panel{max-width:46em;margin-top:clamp(2.4rem,5vw,3.4rem);border-top:1px solid var(--line)}
+.premise-lead{font-family:"Newsreader",serif;font-weight:300;font-size:clamp(1.75rem,4.2vw,3.5rem);line-height:1.22;letter-spacing:-.015em;color:var(--ink)}
+.lang-ja .premise-lead{font-family:"Noto Serif JP",serif;font-weight:300;line-height:1.45}
+.lang-zh .premise-lead{font-family:"Noto Serif SC",serif;font-weight:400;line-height:1.42}
+.concept-copy{margin-top:clamp(2rem,4vw,3.2rem);columns:1}
+.inspiration-panel{margin-top:clamp(2.4rem,5vw,3.4rem);border-top:1px solid var(--line)}
 .inspiration-panel summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.7rem;padding:1.2rem 0;
   font-family:var(--mono);font-size:var(--type-meta);letter-spacing:2.5px;text-transform:uppercase;color:var(--ink2);font-weight:700;transition:color .3s}
 .inspiration-panel summary::-webkit-details-marker{display:none}
@@ -254,7 +255,7 @@ figcaption{margin-top:.75rem;font-family:var(--mono);font-size:var(--type-meta);
 .voice-k{font-family:var(--mono);font-size:var(--type-meta);font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#2b343a;display:block;margin-bottom:clamp(1.4rem,3vw,2.4rem)}
 .lang-ja .voice-k,.lang-zh .voice-k{letter-spacing:.08em;text-transform:none}
 .voice-t{white-space:pre-line;font-family:"Newsreader",serif;font-weight:300;
-  font-size:clamp(1.4rem,3.2vw,2.75rem);line-height:1.65;letter-spacing:-.01em;color:var(--ink);text-wrap:balance}
+  font-size:clamp(1.4rem,3.2vw,2.75rem);line-height:1.65;letter-spacing:-.01em;color:var(--ink);text-wrap:balance;text-align:center}
 .lang-ja .voice-t{font-family:"Noto Serif JP",serif;font-weight:200}
 .lang-zh .voice-t{font-family:"Noto Serif SC",serif;font-weight:300}
 
@@ -341,6 +342,7 @@ figcaption{margin-top:.75rem;font-family:var(--mono);font-size:var(--type-meta);
   .absurd-item{grid-template-columns:2.2rem minmax(0,1fr);gap:.9rem}
   /* keep the photos pinned up in pairs rather than six full-width scrolls */
   .tea-grid{gap:1.2rem .7rem}
+  .t3{grid-column:1/7}
   .t2{margin-top:1.6rem}.t6{margin-top:1.2rem}
 }
 @media(prefers-reduced-motion:reduce){
@@ -1031,13 +1033,29 @@ $("#lang-cycle-btn").addEventListener("click", () => {
 /* ── inspiration panel: smooth 0fr → 1fr ── */
 (function(){
   const p = $("#insp"), s = p.querySelector("summary");
+  let autoOpened = false;
   s.addEventListener("click", e => {
     e.preventDefault();
     if (p.open) {
       p.classList.remove("is-open");
       setTimeout(() => { if (!p.classList.contains("is-open")) p.open = false; }, 480);
-    } else { p.open = true; requestAnimationFrame(() => p.classList.add("is-open")); }
+    } else {
+      autoOpened = true;
+      p.open = true;
+      requestAnimationFrame(() => p.classList.add("is-open"));
+    }
   });
+  const autoOpen = () => {
+    if (autoOpened || p.classList.contains("is-open") || window.scrollY <= 40) return;
+    const rect = p.getBoundingClientRect();
+    if (rect.top < innerHeight * .9 && rect.bottom > 0) {
+      autoOpened = true;
+      p.open = true;
+      requestAnimationFrame(() => p.classList.add("is-open"));
+    }
+  };
+  addEventListener("scroll", autoOpen, {passive:true});
+  autoOpen();
 })();
 
 /* ── nav solidity ── */
