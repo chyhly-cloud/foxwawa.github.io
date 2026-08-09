@@ -636,6 +636,15 @@ function seededRandom(seed){
     return((value^value>>>14)>>>0)/4294967296;
   };
 }
+function createScatterRunSeed(){
+  if(window.crypto?.getRandomValues){
+    const values=new Uint32Array(2);
+    window.crypto.getRandomValues(values);
+    return`${values[0].toString(36)}-${values[1].toString(36)}`;
+  }
+  return`${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+}
+const scatterRunSeed=createScatterRunSeed();
 
 const swEl=document.getElementById('sw'),toggleEl=document.getElementById('toggle');
 const bio=document.getElementById('bio'),bioClose=document.getElementById('bio-close'),bioBtnEl=document.getElementById('bio-btn');
@@ -736,7 +745,7 @@ function scatterAll(){
   if(isMobile){
     const baseScale=mobileScatterScale(),margin=18;
     const configs=WORKS.map((w,i)=>{
-      const scaleRandom=seededRandom(hashSeed(`${w.t}|mobile-scale-v5`));
+      const scaleRandom=seededRandom(hashSeed(`${scatterRunSeed}|${w.t}|mobile-scale-v6`));
       return{w,i,scale:Math.max(.52,Math.min(.74,baseScale*(.84+scaleRandom()*.3)))};
     });
     function makeCandidate(w,sc,random,layoutHeight){
@@ -759,7 +768,7 @@ function scatterAll(){
       });
       const result=new Array(WORKS.length);
       for(const {w,i,scale} of configs){
-        const random=seededRandom(hashSeed(`${w.t}|mobile-organic-v5|${pass}`));
+        const random=seededRandom(hashSeed(`${scatterRunSeed}|${w.t}|mobile-organic-v6|${pass}`));
         let placement=null;
         for(const pad of [14,8,2,0]){
           for(let tries=0;tries<1600;tries++){
