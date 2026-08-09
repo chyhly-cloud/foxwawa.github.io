@@ -274,7 +274,7 @@ color:rgba(255,241,236,.64);white-space:nowrap
   #topbar{padding:16px 18px}
   .logo-btn{font-size:24px}
   .pile-lbl{font-size:16px;letter-spacing:1.9px}
-  #toggle{bottom:calc(env(safe-area-inset-bottom,0px) + 18px);padding:16px 30px 16px 20px;gap:14px}
+  #toggle{bottom:calc(env(safe-area-inset-bottom,0px) + 10px);padding:16px 30px 16px 20px;gap:14px}
   .sw{width:46px;height:28px;border-radius:14px}
   .sw-knob{top:3px;left:3px;width:22px;height:22px}
   .sw.on .sw-knob{left:21px}
@@ -305,7 +305,7 @@ color:rgba(255,241,236,.64);white-space:nowrap
   .d-desc{font-size:16px;line-height:1.9}
 }
 @media (hover:none) and (pointer:coarse) and (min-width:761px){
-  #toggle{bottom:calc(env(safe-area-inset-bottom,0px) + 46px)}
+  #toggle{bottom:calc(env(safe-area-inset-bottom,0px) + 38px)}
 }
 </style>
 
@@ -489,7 +489,7 @@ function applyLang(){
   document.getElementById('b-social-label').textContent=L.bio_social_label;
   document.getElementById('b-instagram').textContent=L.bio_instagram;
   document.getElementById('b-wechat').textContent=L.bio_wechat;
-  document.getElementById('sw-lbl').textContent=sorted?L.sort:L.scatter;
+  document.getElementById('sw-lbl').textContent=sorted?L.scatter:L.sort;
   CATS.forEach((c,i)=>{
     const el=document.getElementById(`lbl-${i}`);
     if(el) el.textContent=(I18N[lang].cats&&I18N[lang].cats[c])||c;
@@ -909,7 +909,7 @@ function setSorted(nextSorted,{animate=true}={}){
   if(!animate)states.forEach(s=>{s.el.classList.add('nd');s.shEl.classList.add('nd');});
   swEl.classList.toggle('on',sorted);
   toggleEl.classList.toggle('active',sorted);
-  document.getElementById('sw-lbl').textContent=sorted?t('sort'):t('scatter');
+  document.getElementById('sw-lbl').textContent=sorted?t('scatter'):t('sort');
   vp.classList.remove('dark-mode');
   updateHits();
   if(sorted){
