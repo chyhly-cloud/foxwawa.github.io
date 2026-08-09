@@ -78,7 +78,7 @@ a{color:inherit;text-decoration:none}
 }
 .sec-kicker b,.sec-kicker span{color:var(--green);font-weight:700}
 .sec-kicker .sep{color:var(--faint)}
-.body-t{font-size:15px;line-height:2.0;color:var(--ink2)}
+.body-t{font-size:15px;line-height:2.0;color:var(--ink2);text-align:justify;text-justify:inter-character}
 .body-t + .body-t{margin-top:1.1rem}
 section{position:relative}
 
@@ -103,7 +103,7 @@ section{position:relative}
 
 /* ─ STATEMENT ─ */
 .statement{padding:clamp(4.5rem,12vh,9rem) 0}
-.stmt-lead{font-size:clamp(1.5rem,3.4vw,2.8rem);line-height:1.45;letter-spacing:-.01em;color:var(--ink);max-width:20em;margin:1.6rem 0 0}
+.stmt-lead{font-size:clamp(1.5rem,3.4vw,2.8rem);line-height:1.45;letter-spacing:-.01em;color:var(--ink);max-width:none;margin:1.6rem 0 0;text-align:justify;text-justify:inter-character}
 .lang-en .stmt-lead{font-weight:600}
 .spec-row{display:flex;flex-wrap:wrap;gap:2.6rem;margin-top:3rem;padding-top:1.8rem;border-top:1px solid var(--rule)}
 .spec-k{display:block;font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:.5rem;font-weight:700}
@@ -115,16 +115,16 @@ section{position:relative}
 .insp.is-open summary::before{transform:rotate(45deg)}
 .insp.is-open summary{color:var(--ink)}
 .insp summary:hover{color:var(--ink)}
-.insp-body{display:grid;grid-template-rows:0fr;overflow:hidden;max-width:44em;transition:grid-template-rows .52s cubic-bezier(.22,.74,.25,1)}
+.insp-body{display:grid;grid-template-rows:0fr;overflow:hidden;max-width:none;transition:grid-template-rows .52s cubic-bezier(.22,.74,.25,1)}
 .insp-copy{min-height:0;overflow:hidden;padding:0;display:flex;flex-direction:column;gap:1.1rem;opacity:0;visibility:hidden;transform:translateY(-10px);transition:opacity .28s ease,transform .46s cubic-bezier(.22,.74,.25,1),padding .46s cubic-bezier(.22,.74,.25,1),visibility 0s linear .52s}
 .insp.is-open .insp-body{grid-template-rows:1fr}
 .insp.is-open .insp-copy{padding:.4rem 0 1.4rem;opacity:1;visibility:visible;transform:translateY(0);transition-delay:.08s,.04s,0s,0s}
-.insp-body p{font-size:16.5px;line-height:1.95;color:var(--ink2);font-style:italic}
+.insp-body p{font-size:16.5px;line-height:1.95;color:var(--ink2);font-style:italic;text-align:justify;text-justify:inter-character}
 
 /* ─ RESEARCH / DATA ─ */
 .research{padding:clamp(3.5rem,9vh,7rem) 0;border-top:1px solid var(--rule2);background:linear-gradient(180deg,var(--bg),#0b0e0d 50%,var(--bg))}
-.r-lead{max-width:46em}
-.source-note{max-width:58em;margin:1.2rem 0 0;font-size:11px;line-height:1.85;color:var(--dim)}
+.r-lead{max-width:none}
+.source-note{max-width:none;margin:1.2rem 0 0;font-size:11px;line-height:1.85;color:var(--dim);text-align:justify;text-justify:inter-character}
 .source-note a{color:var(--green-soft);text-decoration:underline;text-decoration-color:rgba(143,242,172,.35);text-underline-offset:3px}
 .source-note a:hover{color:var(--green)}
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;margin:3rem 0 0;background:var(--rule);border:1px solid var(--rule)}
@@ -136,9 +136,9 @@ section{position:relative}
 .punch{margin:3.4rem 0 0;padding:clamp(2.2rem,5vw,3.4rem);background:radial-gradient(120% 140% at 100% 0,rgba(94,240,138,.08),transparent 55%),#0c100e;border:1px solid var(--rule);display:flex;flex-wrap:wrap;align-items:center;gap:1.8rem 3rem}
 .punch-n{font-family:var(--mono);font-weight:700;font-size:clamp(5rem,16vw,11rem);line-height:.8;color:var(--green);letter-spacing:-.04em;text-shadow:0 0 60px rgba(94,240,138,.25)}
 .punch-u{font-size:.28em;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-left:.15em;vertical-align:baseline}
-.punch-c{flex:1;min-width:230px;font-size:16px;line-height:1.85;color:var(--ink2);max-width:22em}
+.punch-c{flex:1;min-width:230px;font-size:16px;line-height:1.85;color:var(--ink2);max-width:22em;text-align:justify;text-justify:inter-character}
 .punch-c strong{color:var(--ink);font-weight:700}
-.r-back{margin:4rem 0 0;max-width:44em}
+.r-back{margin:4rem 0 0;max-width:none}
 .r-back h3{font-size:clamp(1.15rem,2.4vw,1.6rem);line-height:1.4;margin:.8rem 0 1.4rem;color:var(--ink)}
 
 /* ─ DEVICE / dot grid ─ */
@@ -152,12 +152,14 @@ section{position:relative}
 .dev-stats span{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);font-weight:700}
 .dev-stats b{font-family:var(--mono);font-size:clamp(1.1rem,2vw,1.4rem);color:var(--ink);font-weight:700}
 .dev-stats b.grn{color:var(--green)}
-.dev-text{margin:3rem 0 0;column-gap:3rem;max-width:52em}
-.dev-text p{font-size:14px;line-height:1.95;color:var(--ink2)}
+.dev-text{margin:3rem 0 0;column-gap:3rem;max-width:none}
+.dev-text p{font-size:14px;line-height:1.95;color:var(--ink2);text-align:justify;text-justify:inter-character}
 .dev-text p+p{margin-top:1.1rem}
 .fullfig{margin:3.4rem 0 0;background:transparent}
 .plate-img{width:100%;height:auto;display:block;filter:brightness(.97)}
 .plate-wrap{position:relative;border:1px solid rgba(255,255,255,.16);box-shadow:0 28px 72px -20px rgba(0,0,0,.8);overflow:hidden}
+.plate-wrap.cutout-wrap{border:0;box-shadow:none;overflow:visible;background:transparent}
+.plate-img.cutout-img{filter:none}
 .fullfig figcaption{font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--faint);padding:1rem 0 0}
 
 /* ─ SOUND & LIGHT ─ */
@@ -165,12 +167,12 @@ section{position:relative}
 .sl-grid{display:grid;grid-template-columns:1fr;gap:clamp(2rem,4vw,3.5rem);align-items:start}
 @media(min-width:820px){.sl-grid{grid-template-columns:1.05fr .95fr}}
 .sl-txt h2{font-size:clamp(1.4rem,3vw,2.1rem);line-height:1.32;margin:.8rem 0 1.6rem;color:var(--ink)}
-.sl-txt p{font-size:14px;line-height:1.95;color:var(--ink2)}
+.sl-txt p{font-size:14px;line-height:1.95;color:var(--ink2);text-align:justify;text-justify:inter-character}
 .sl-txt p+p{margin-top:1.1rem}
 .sl-img{position:sticky;top:80px;background:transparent}
-.project-conclusion{max-width:44em;margin:clamp(3rem,6vw,4.5rem) 0 0;padding-top:clamp(2rem,4vw,3rem);border-top:1px solid var(--rule)}
+.project-conclusion{width:100%;max-width:none;margin:clamp(3rem,6vw,4.5rem) 0 0;padding-top:clamp(2rem,4vw,3rem);border-top:1px solid var(--rule)}
 .project-conclusion .sec-kicker{margin-bottom:1.2rem}
-.project-conclusion .conclusion-lead{font-size:clamp(1.05rem,2vw,1.35rem);line-height:1.9;color:var(--ink)}
+.project-conclusion .conclusion-lead{font-size:clamp(1.05rem,2vw,1.35rem);line-height:1.9;color:var(--ink);text-align:justify;text-justify:inter-character}
 
 /* ─ EXHIBITION masonry ─ */
 .exhibition{padding:clamp(3.5rem,9vh,7rem) 0;border-top:1px solid var(--rule2)}
@@ -308,7 +310,7 @@ section{position:relative}
     <p id="c1-p2"></p>
   </div>
   <figure class="fullfig">
-    <div class="plate-wrap"><img class="plate-img" src="concept-diagram.jpg" alt="" onerror="this.closest('.fullfig').style.display='none'"></div>
+    <div class="plate-wrap cutout-wrap"><img class="plate-img cutout-img" src="concept-diagram-cutout.png" alt="" onerror="this.closest('.fullfig').style.display='none'"></div>
     <figcaption>Concept diagram — steel plate structure</figcaption>
   </figure>
 </div></section>
@@ -323,7 +325,7 @@ section{position:relative}
       <p id="c2-p2"></p>
       <p id="c2-p3"></p>
     </div>
-    <figure class="sl-img"><div class="plate-wrap"><img class="plate-img" src="concept-light.jpg" alt="" onerror="this.closest('.sl-img').style.display='none'"></div></figure>
+    <figure class="sl-img"><div class="plate-wrap cutout-wrap"><img class="plate-img cutout-img" src="concept-light-cutout.png" alt="" onerror="this.closest('.sl-img').style.display='none'"></div></figure>
   </div>
   <div class="project-conclusion">
     <p class="sec-kicker"><span id="concl-lbl">結論</span></p>
@@ -593,35 +595,32 @@ document.getElementById("lang-btn").addEventListener("click", () => {
 
     let closeTimer = 0;
     let motionToken = 0;
+    let autoExpanded = false;
+    let previousScrollY = window.scrollY;
     const setExpanded = value => summary.setAttribute("aria-expanded", String(value));
     const finishClose = token => {
       if (token !== motionToken || details.classList.contains("is-open")) return;
       details.open = false;
       details.classList.remove("is-closing");
     };
-
-    if (details.open) details.classList.add("is-open");
-    setExpanded(details.open);
-
-    summary.addEventListener("click", event => {
-      event.preventDefault();
+    const openInspiration = () => {
+      if (details.classList.contains("is-open")) return;
       const token = ++motionToken;
       window.clearTimeout(closeTimer);
-
-      if (!details.classList.contains("is-open")) {
-        details.open = true;
-        details.classList.remove("is-closing");
-        setExpanded(true);
-        if (reduce) {
-          details.classList.add("is-open");
-          return;
-        }
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          if (token === motionToken) details.classList.add("is-open");
-        }));
+      details.open = true;
+      details.classList.remove("is-closing");
+      setExpanded(true);
+      if (reduce) {
+        details.classList.add("is-open");
         return;
       }
-
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (token === motionToken) details.classList.add("is-open");
+      }));
+    };
+    const closeInspiration = () => {
+      if (!details.classList.contains("is-open")) return;
+      const token = ++motionToken;
       details.classList.remove("is-open");
       details.classList.add("is-closing");
       setExpanded(false);
@@ -630,7 +629,35 @@ document.getElementById("lang-btn").addEventListener("click", () => {
         return;
       }
       closeTimer = window.setTimeout(() => finishClose(token), 580);
+    };
+
+    if (details.open) details.classList.add("is-open");
+    setExpanded(details.open);
+
+    summary.addEventListener("click", event => {
+      event.preventDefault();
+      if (!details.classList.contains("is-open")) {
+        openInspiration();
+        return;
+      }
+      closeInspiration();
     });
+
+    // Reveal the inspiration text once, when the user scrolls down to it.
+    const autoOpenOnScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollingDown = currentScrollY > previousScrollY;
+      previousScrollY = currentScrollY;
+      if (!scrollingDown || autoExpanded || details.classList.contains("is-open")) return;
+
+      const rect = details.getBoundingClientRect();
+      const triggerLine = window.innerHeight * .88;
+      if (rect.top < triggerLine && rect.bottom > -window.innerHeight * .08) {
+        autoExpanded = true;
+        openInspiration();
+      }
+    };
+    window.addEventListener("scroll", autoOpenOnScroll, { passive:true });
 
     body.addEventListener("transitionend", event => {
       if (event.propertyName === "grid-template-rows" && details.classList.contains("is-closing")) {

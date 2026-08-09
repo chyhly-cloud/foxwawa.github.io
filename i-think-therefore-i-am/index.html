@@ -965,22 +965,22 @@ button{font:inherit;color:inherit}
   .grammar-scroll .zoomable{display:inline-block!important;vertical-align:top;width:1120px!important;min-width:1120px!important;background:transparent!important}
 }
 
-/* Compact screens rotate the complete condensation scene by ninety degrees:
-   three image rows travel from left to right into a vertical virtual-to-real axis. */
+/* Compact screens rotate the matrix: three linked rows travel through the
+   three photograph columns, then converge on a vertical virtual-to-real axis. */
 @media(max-width:1280px){
-  .medium-refined .spectrum-morph{height:175vh!important;margin-top:0!important}
+  .medium-refined .spectrum-morph{height:250vh!important;margin-top:0!important}
   .medium-refined .spectrum-morph-sticky{position:sticky!important;top:var(--nav-h)!important;display:grid!important;place-items:center;width:100vw!important;height:calc(100svh - var(--nav-h))!important;min-height:0!important;margin-left:calc(50% - 50vw)!important;overflow:hidden!important}
-  .medium-refined .spectrum-morph-canvas{position:relative!important;left:auto!important;top:auto!important;width:calc(100vw - clamp(1.25rem,4vw,3rem))!important;height:min(calc(100svh - var(--nav-h) - 1.25rem),760px)!important;min-height:0!important;max-height:none!important;transform:none!important}
-  .medium-refined .morph-instruction{display:block!important;left:0!important;top:0!important;width:calc(100% - clamp(68px,15vw,96px))!important;max-width:34rem!important;transform:none!important;text-align:justify!important}
+  .medium-refined .spectrum-morph-canvas{position:relative!important;left:auto!important;top:auto!important;display:block!important;width:calc(100vw - clamp(1.25rem,3vw,2.5rem))!important;height:calc(100svh - var(--nav-h) - .75rem)!important;min-height:0!important;max-height:none!important;margin:0!important;padding:0!important;transform:none!important;overflow:visible!important}
+  .medium-refined .morph-instruction{display:none!important}
   .medium-refined .morph-group,.medium-refined .morph-group-cards{display:contents!important}
-  .medium-refined .morph-column-label{position:absolute!important;left:0;right:auto!important;top:auto;bottom:auto!important;display:block!important;width:auto!important;margin:0!important;transform:none!important;z-index:25;text-align:justify!important;pointer-events:none}
-  .medium-refined .morph-column-label b{font-size:clamp(1.25rem,3vw,1.7rem)!important;line-height:1.15}
-  .medium-refined .morph-card{position:absolute!important;margin:0!important;transform:translate(-50%,-50%)!important;opacity:1;z-index:3;background:transparent!important;border:0!important;box-shadow:0 12px 32px rgba(0,0,0,.32)!important;overflow:hidden!important}
+  .medium-refined .morph-column-label{position:absolute!important;left:0;right:auto!important;top:auto;bottom:auto!important;display:block!important;width:auto!important;margin:0!important;transform:translate(-50%,-50%)!important;opacity:1;z-index:25;text-align:justify!important;pointer-events:none}
+  .medium-refined .morph-column-label b{font-size:clamp(1.6rem,4vw,2.4rem)!important;line-height:1.15;white-space:nowrap}
+  .medium-refined .morph-card{position:absolute!important;margin:0!important;transform:translate(-50%,-50%)!important;opacity:1;z-index:3;background:transparent!important;border:0!important;box-shadow:0 14px 34px rgba(0,0,0,.34)!important;overflow:hidden!important}
   .medium-refined .morph-card img{display:block;width:100%;height:100%;object-fit:contain!important;background:transparent!important}
 
-  .medium-refined .material-spectrum{position:absolute!important;left:auto!important;right:0!important;top:50%!important;display:flex!important;flex-direction:column!important;align-items:center!important;width:clamp(58px,14vw,88px)!important;height:88%!important;margin:0!important;padding:.25rem 0!important;transform:translateY(-50%)!important;opacity:0;border:0!important;z-index:24}
+  .medium-refined .material-spectrum{position:absolute!important;left:auto!important;right:0!important;top:50%!important;display:flex!important;flex-direction:column!important;align-items:center!important;width:clamp(62px,14vw,94px)!important;height:88%!important;margin:0!important;padding:.25rem 0!important;transform:translateY(-50%)!important;opacity:0;border:0!important;z-index:24}
   .medium-refined .spectrum-end{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:.12rem;width:100%!important;text-align:justify!important}
-  .medium-refined .spectrum-end b{font-size:clamp(1.7rem,4vw,2.25rem)!important;line-height:1;white-space:nowrap}
+  .medium-refined .spectrum-end b{font-size:clamp(1.7rem,4vw,2.3rem)!important;line-height:1;white-space:nowrap}
   .medium-refined .spectrum-end span{display:none!important}
   .medium-refined .spectrum-track{position:relative!important;flex:1 1 auto!important;width:3px!important;height:auto!important;margin:.6rem 0!important;background:var(--line)}
   .medium-refined .spectrum-fill{position:absolute;inset:0;transform-origin:center top!important;transform:scaleY(0);background:linear-gradient(180deg,rgba(159,176,214,.38),var(--violet) 50%,rgba(208,118,91,.42))}
@@ -993,11 +993,10 @@ button{font:inherit;color:inherit}
 }
 
 @media(max-width:680px){
-  .medium-refined .spectrum-morph{height:185vh!important}
-  .medium-refined .spectrum-morph-canvas{width:calc(100vw - 1.25rem)!important;height:calc(100svh - var(--nav-h) - .75rem)!important;max-height:760px!important}
-  .medium-refined .morph-instruction{width:calc(100% - 64px)!important;font-size:14px!important;line-height:1.5}
-  .medium-refined .morph-column-label b{font-size:1.25rem!important}
-  .medium-refined .material-spectrum{width:60px!important;height:86%!important}
+  .medium-refined .spectrum-morph{height:280vh!important}
+  .medium-refined .spectrum-morph-canvas{width:calc(100vw - 1rem)!important;height:calc(100svh - var(--nav-h) - .35rem)!important}
+  .medium-refined .morph-column-label b{font-size:1.55rem!important}
+  .medium-refined .material-spectrum{width:60px!important;height:88%!important}
   .medium-refined .medium-point b,.medium-refined .point-air b{right:.85rem!important;font-size:1rem!important}
   .medium-refined .axis-conclusion{max-width:34ch;margin:2rem auto 0;font-size:16px!important;line-height:1.75;text-align:justify}
 }
@@ -1318,7 +1317,6 @@ button{font:inherit;color:inherit}
       </div>
     </div>
   </div>
-  <p class="axis-conclusion" data-i18n="axis-conclusion"></p>
 </div></section>
 
 <!-- MEDIUM DECISION -->
@@ -1534,7 +1532,6 @@ ja:{...COMMON,
   "spectrum-virtual":"虚","spectrum-real":"実","spectrum-intangible":"無形／触れられない","spectrum-tangible":"有形／触れられる",
   "light-property":"光と影を物体から分離","air-property":"有形の画像を無形の空気に重ねる","water-property":"透明・実在・触れられる",
   "morph-instruction":"スクロールして、三つの実験を虚と実のあいだに配置する",
-  "axis-conclusion":"光・空気・水の実験を虚から実へ連続する関係として整理すると、空気は光と水のあいだに位置します。次の段階では、気球を用いて像の重なりを展開します。",
   "method-title":"実験の洞察と媒体決定","method-head":"空気／風船",
   "finding-light":"プロジェクターを用い、異なる光と影の環境下でテストし、光と影を物体から分離する。","finding-air":"有形の画像を無形の空気の上に重ねる。気球へのコラージュは、多重の現実の重ね合わせを表す。","finding-water":"撮影後の画像を水に溶解し、実際に存在して触れられる水を用いて再構築する。","finding-selected":"選択した媒体",
   "method-p1":"空気は目に見えませんが、風船の膜によって一時的な輪郭を持ちます。その不安定な身体に、家、車、記憶、そして私自身の像をコラージュします。",
@@ -1613,7 +1610,6 @@ zh:{...COMMON,
   "spectrum-virtual":"虚","spectrum-real":"实","spectrum-intangible":"无形／不可触","spectrum-tangible":"有形／可触",
   "light-property":"光影与物体分离","air-property":"有形图像叠于无形空气","water-property":"透明・真实可触",
   "morph-instruction":"继续下滑，将三种实验归入虚与实之间",
-  "axis-conclusion":"把光、空气与水的实验置于从“虚”到“实”的连续关系中，空气位于光与水之间；下一阶段以气球承载图像的叠合。",
   "method-title":"实验洞察与媒介决定","method-head":"空气／气球",
   "finding-light":"用投影仪在不同光影环境下测试，使光与影从物体上分离。","finding-air":"把有形图像叠加在无形空气之上；气球表面的拼贴对应多重现实的叠合。","finding-water":"让拍摄后的图像在水中溶解，再借助真实可触的水重新构成。","finding-selected":"最终选择",
   "method-p1":"空气无法被直接看见，却能借助气球的薄膜获得暂时的轮廓。我把房屋、汽车、记忆以及自己的影像拼贴在这具不稳定的身体上。",
@@ -1692,7 +1688,6 @@ en:{...COMMON,
   "spectrum-virtual":"VIRTUAL","spectrum-real":"REAL","spectrum-intangible":"Intangible / Untouchable","spectrum-tangible":"Tangible / Touchable",
   "light-property":"Light and shadow detach from the object","air-property":"A tangible image rests on intangible air","water-property":"Transparent · present · touchable",
   "morph-instruction":"Keep scrolling to place the three experiments between virtual and real",
-  "axis-conclusion":"Arranged as a continuum from the virtual to the real, the light, air, and water experiments place air between light and water. The next stage uses a balloon to carry the overlapping images.",
   "method-title":"Experiment Insight and Medium Decision","method-head":"Air / Balloon",
   "finding-light":"A projector tests different light-and-shadow conditions, separating light and shadow from the object.","finding-air":"A tangible image is placed on intangible air; collage on the balloon represents overlapping realities.","finding-water":"The photographed image dissolves in water and is reconstructed through this physically present, touchable medium.","finding-selected":"SELECTED",
   "method-p1":"Air cannot be seen directly, but a balloon’s membrane gives it a temporary contour. Onto this unstable body I collage houses, cars, memories, and images of myself.",
@@ -1895,40 +1890,47 @@ function renderSpectrumMorph(){
   while(targets.length<3)targets.push(fallbackTargets[targets.length]);
 
   if(compactMorph){
-    const railX=Math.min(...targets.map(target=>target.x));
-    const workRight=Math.max(width*.58,railX-Math.max(18,width*.035));
-    const cardGap=Math.max(8,Math.min(18,width*.018));
-    const widthFit=(workRight-cardGap*2)/3;
-    const compactLimit=window.innerWidth<=680?width*.27:190;
-    const cardSize=Math.max(54,Math.min(widthFit,height*.19,compactLimit));
-    const rowCenters=[height*.23,height*.5,height*.77];
-    const rowWidth=cardSize*3+cardGap*2;
-    const rowLeft=Math.max(0,(workRight-rowWidth)/2);
-    const startX=[0,1,2].map(column=>rowLeft+cardSize/2+column*(cardSize+cardGap));
+    /* One shared horizontal camera keeps the light, air and water rows locked
+       while it passes photograph columns one, two and three. */
+    const cardSize=Math.max(120,Math.min(width*.78,height*.29,400));
+    const cardGap=Math.max(28,Math.min(92,width*.11));
+    const step=cardSize+cardGap;
+    const rowCenters=[height*.19,height*.5,height*.81];
+    const stageCenter=width*.44;
+    const cameraStart=-.58;
+    const journey=clamp01(progress/.68);
+    const camera=lerp(cameraStart,2,journey);
+    const settleProgress=clamp01((progress-.68)/.24);
+    const settle=smoothstep(settleProgress);
+    const labelMotion=smoothstep(clamp01(progress/.18));
 
     morphColumnLabels.forEach((label,index)=>{
-      label.style.left=rowLeft+"px";
-      label.style.top=Math.max(38,rowCenters[index]-cardSize/2-28)+"px";
+      label.style.left=lerp(width*.1,-width*.12,labelMotion)+"px";
+      label.style.top=rowCenters[index]+"px";
+      label.style.opacity=String(1-labelMotion);
     });
 
     morphCards.forEach((card,index)=>{
       const group=Math.max(0,Math.min(2,Number(card.dataset.medium)||0));
       const column=index%3;
       const target=targets[group]||fallbackTargets[group];
-      /* Rotate the desktop funnel: the rightmost image reaches the vertical
-         spectrum first, followed by the middle and left images. */
-      const columnDelay=(2-column)*.055;
-      const localProgress=clamp01((progress-.035-columnDelay)/.76);
-      const move=smoothstep(localProgress);
-      const x=lerp(startX[column],target.x,move);
-      const y=lerp(rowCenters[group],target.y,move);
-      const funnel=smoothstep(clamp01((move-.08)/.92));
-      const endScale=[.34,.25,.16][column];
-      const cardScale=lerp(1,endScale,funnel);
+      const distance=Math.abs(column-camera);
+      const trackVisibility=1-smoothstep(clamp01((distance-.9)/.62));
+      const focusScale=1-clamp01(distance)*.07;
+      const trackX=stageCenter+(column-camera)*step;
+      /* Once the third photograph has been reached, all three photographs in
+         each row are pulled into that row's point on the spectrum together. */
+      const x=lerp(trackX,target.x,settle);
+      const y=lerp(rowCenters[group],target.y,settle);
+      const cardScale=lerp(focusScale,.12,settle);
       const cardWidth=cardSize*cardScale;
       const cardHeight=cardSize*cardScale;
-      const rightInset=lerp(0,18+column*4,funnel);
-      const fade=1-smoothstep(clamp01((progress-.84-column*.006)/.1));
+      const rightInset=lerp(0,32,settle);
+      /* Earlier columns may sit just outside the viewport when the final image
+         is centred. Bring them back visibly as the shared suction begins. */
+      const suctionVisibility=smoothstep(clamp01((settleProgress-.02)/.34));
+      const finalFade=1-smoothstep(clamp01((settleProgress-.74)/.26));
+      const fade=Math.max(trackVisibility,suctionVisibility)*finalFade;
 
       card.style.left=x+"px";
       card.style.top=y+"px";
@@ -1938,15 +1940,14 @@ function renderSpectrumMorph(){
       card.style.clipPath=`polygon(0 0, 100% ${rightInset}%, 100% ${100-rightInset}%, 0 100%)`;
       card.style.transform="translate(-50%,-50%)";
       card.style.opacity=String(fade);
-      card.style.zIndex=String(20-column);
+      card.style.zIndex=String(20+column);
     });
 
-    const spectrumOpacity=smoothstep(clamp01((progress-.73)/.12));
-    const lineProgress=smoothstep(clamp01((progress-.76)/.18));
+    const spectrumOpacity=smoothstep(clamp01((progress-.7)/.13));
+    const lineProgress=smoothstep(clamp01((progress-.73)/.2));
     spectrumLine.style.opacity=String(spectrumOpacity);
     spectrumFill.style.transform="scaleY("+lineProgress+")";
-    if(morphInstruction)morphInstruction.style.opacity=String(1-smoothstep(clamp01(progress/.22)));
-    morphColumnLabels.forEach(label=>label.style.opacity=String(1-smoothstep(clamp01((progress-.2)/.34))));
+    if(morphInstruction)morphInstruction.style.opacity="0";
     return;
   }
 

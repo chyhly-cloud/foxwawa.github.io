@@ -865,12 +865,11 @@ p{margin:0}
 .layer-no{font-family:var(--mono);font-size:14px;font-weight:700;letter-spacing:2px;color:var(--muted);margin-bottom:1.2rem}
 .contour{width:100%;height:auto;aspect-ratio:200/118;color:var(--ink);margin-bottom:1.4rem}
 .contour path,.contour ellipse,.contour line{fill:none;stroke:currentColor;stroke-width:2.4;vector-effect:non-scaling-stroke}
-/* a carriage circulating its closed track — never arriving */
-.contour .runner{stroke:var(--ink);stroke-width:9;stroke-linecap:round;fill:none;
-  stroke-dasharray:34 246 20 300 26 374;animation:travel 26s linear infinite}
-.layer.s2 .contour .runner{animation-duration:34s}
+/* Each layer uses a fixed number of independent carriages.  The first track
+   carries three bodies; the second carries two. */
+.contour .motion-path{stroke:none;fill:none}
+.contour .orbit-node{fill:var(--ink);stroke:none}
 .contour .floor{stroke:currentColor;stroke-width:1.5;opacity:.3}
-@keyframes travel{from{stroke-dashoffset:0}to{stroke-dashoffset:-1000}}
 .contour rect{fill:currentColor;stroke:none}
 .contour circle.dot{fill:currentColor;stroke:none}
 .layer h4{font-size:1.15rem;margin-bottom:.85rem}
@@ -953,7 +952,12 @@ p{margin:0}
 /* the construction drawing is line art on paper — no photo treatment */
 .ff-item.is-plan img{filter:none;background:#fff;box-shadow:0 12px 30px -14px rgba(13,15,17,.42)}
 .ff-hint{position:absolute;z-index:5;left:50%;bottom:1.2rem;transform:translateX(-50%);
-  font-size:13px;letter-spacing:2px;color:var(--muted);pointer-events:none;background:var(--paper);padding:.35rem .7rem}
+  display:flex;align-items:center;justify-content:center;min-width:126px;height:34px;
+  pointer-events:none;transition:opacity .25s ease}
+.flowfield.is-dragging .ff-hint{opacity:.28}
+.ff-drag-trail{display:flex;align-items:center;gap:clamp(8px,.7vw,11px)}
+.ff-drag-trail>span{width:5px;height:5px;flex:0 0 5px;border-radius:50%;background:var(--s3);opacity:0;
+  box-shadow:0 0 0 rgba(73,167,216,0);will-change:opacity,box-shadow}
 @media(max-width:760px){
   .coverflow{height:320px}.cf-item{top:44%;width:clamp(230px,74vw,320px)}
   .chapter-story{height:auto!important;margin-top:clamp(1.5rem,6vw,2.2rem)}
@@ -1295,32 +1299,44 @@ p{margin:0}
   .coverflow{width:100%;margin-left:0;height:300px}
   .cf-item{top:44%;width:min(76vw,300px)}
   .flowfield{width:100%;margin-left:0;height:420px;--ffk:.48}
-  .ff-hint{font-size:12px;letter-spacing:1px;white-space:nowrap}
+  .ff-hint{bottom:.8rem;min-width:108px;height:30px}
+  .ff-drag-trail{gap:8px}
+  .ff-drag-trail>span{width:4px;height:4px;flex-basis:4px}
 
-  /* Exhibition is a clean swipeable strip.  The counter sits below it instead
-     of becoming an oversized overlay when the sticky desktop stage collapses. */
+  /* Exhibition: on a phone this becomes a focused horizontal viewer.  The
+     following frame remains visible at the edge, echoing the image browser in
+     我思故我在 without importing the desktop stack into a narrow viewport. */
   .chapter-story{height:auto!important;margin-top:1.75rem}
   .chapter-sticky{position:relative;top:auto;height:auto;overflow:visible}
   .chapter-stage{
-    position:relative;inset:auto;display:flex;gap:.75rem;width:100%;overflow-x:auto;
-    padding:0 0 2.7rem;scroll-snap-type:x mandatory;scroll-padding-inline:0;
-    overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none
+    position:relative;inset:auto;display:flex;align-items:stretch;
+    gap:clamp(.7rem,3vw,1rem);width:100%;overflow-x:auto;overflow-y:hidden;
+    padding:0 0 3.2rem;
+    scroll-snap-type:x mandatory;scroll-padding-inline:0;
+    overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none;touch-action:pan-x pan-y
   }
   .chapter-stage::-webkit-scrollbar{display:none}
   .chapter-frame,.chapter-frame.is-active{
-    position:relative;left:auto;top:auto;flex:0 0 calc(100% - .75rem);width:auto;
+    position:relative;left:auto;top:auto;
+    flex:0 0 calc(100% - clamp(1.75rem,7vw,2.5rem));width:auto;
+    height:clamp(28rem,64vh,46rem);
+    height:clamp(28rem,64svh,46rem);
+    display:grid;place-items:center;overflow:hidden;
     visibility:visible!important;opacity:1!important;transform:none!important;
-    pointer-events:auto!important;scroll-snap-align:start;scroll-snap-stop:always
+    pointer-events:auto!important;scroll-snap-align:start;scroll-snap-stop:always;
+    background:rgba(255,255,255,.34)
   }
   .chapter-frame img{
-    width:100%;height:min(68vw,330px);object-fit:contain;
-    background:rgba(255,255,255,.18);box-shadow:0 12px 28px -22px rgba(13,15,17,.48)
+    display:block;width:100%;height:100%;object-fit:contain;background:transparent;
+    box-shadow:0 16px 34px -26px rgba(13,15,17,.48)
   }
   .frame-counter{
-    position:relative!important;left:auto!important;right:auto!important;
-    bottom:auto!important;transform:none!important;display:block!important;
-    width:max-content;margin:-2.05rem .45rem 0 auto;padding:.22rem .42rem;
-    background:rgba(233,236,238,.92);font-size:12px;letter-spacing:1.2px
+    position:absolute!important;z-index:650;left:auto!important;right:0!important;
+    bottom:.25rem!important;transform:none!important;display:block!important;
+    width:max-content;margin:0;padding:.5rem .65rem;
+    background:rgba(239,242,244,.94);backdrop-filter:blur(7px);
+    font-size:13px;letter-spacing:1.5px
   }
 
   .gal{columns:2 130px;column-gap:.75rem}
@@ -2170,14 +2186,24 @@ p{margin:0}
       <div class="layers">
         <article class="layer s1">
           <span class="layer-no">LAYER 01 / 第一層</span>
-          <svg class="contour" viewBox="0 0 200 118" aria-hidden="true"><ellipse cx="100" cy="59" rx="88" ry="40"/><path class="runner" pathLength="1000" d="M12 59a88 40 0 1 0 176 0a88 40 0 1 0 -176 0"/></svg>
+          <svg class="contour" viewBox="0 0 200 118" aria-hidden="true">
+            <ellipse cx="100" cy="59" rx="88" ry="40"/>
+            <path id="layer-1-motion" class="motion-path" d="M12 59a88 40 0 1 0 176 0a88 40 0 1 0 -176 0"/>
+            <rect class="orbit-node" x="-4" y="-2" width="8" height="4" rx="2"><animateMotion dur="26s" begin="0s" repeatCount="indefinite" rotate="auto"><mpath href="#layer-1-motion"/></animateMotion></rect>
+            <rect class="orbit-node" x="-4" y="-2" width="8" height="4" rx="2"><animateMotion dur="26s" begin="-8.667s" repeatCount="indefinite" rotate="auto"><mpath href="#layer-1-motion"/></animateMotion></rect>
+            <rect class="orbit-node" x="-4" y="-2" width="8" height="4" rx="2"><animateMotion dur="26s" begin="-17.333s" repeatCount="indefinite" rotate="auto"><mpath href="#layer-1-motion"/></animateMotion></rect>
+          </svg>
           <span class="tab" data-i18n="tabSociety">社会</span>
           <h4 data-i18n="layerOneTitle">社会形態</h4>
           <p data-i18n="layerOneCopy">円形の軌道。記号化された社会の運行構造と、その中で動く身体部位を示す。</p>
         </article>
         <article class="layer s2">
           <span class="layer-no">LAYER 02 / 第二層</span>
-          <svg class="contour" viewBox="0 0 200 118" aria-hidden="true"><path d="M22 60C22 29 52 16 76 30c14 8 22 8 36 0 24-14 48 0 46 30-2 30-30 44-52 30-12-8-20-8-32 0-24 14-52 0-52-30z"/><path class="runner" pathLength="1000" d="M22 60C22 29 52 16 76 30c14 8 22 8 36 0 24-14 48 0 46 30-2 30-30 44-52 30-12-8-20-8-32 0-24 14-52 0-52-30z"/></svg>
+          <svg class="contour" viewBox="0 0 200 118" aria-hidden="true">
+            <path id="layer-2-motion" d="M22 60C22 29 52 16 76 30c14 8 22 8 36 0 24-14 48 0 46 30-2 30-30 44-52 30-12-8-20-8-32 0-24 14-52 0-52-30z"/>
+            <rect class="orbit-node" x="-4" y="-2" width="8" height="4" rx="2"><animateMotion dur="34s" begin="0s" repeatCount="indefinite" rotate="auto"><mpath href="#layer-2-motion"/></animateMotion></rect>
+            <rect class="orbit-node" x="-4" y="-2" width="8" height="4" rx="2"><animateMotion dur="34s" begin="-17s" repeatCount="indefinite" rotate="auto"><mpath href="#layer-2-motion"/></animateMotion></rect>
+          </svg>
           <span class="tab" data-i18n="tabLife">生活</span>
           <h4 data-i18n="layerTwoTitle">生活</h4>
           <p data-i18n="layerTwoCopy">変形した軌道。日常に組み込まれた規律の経路と、本人が自由だと考える動きを示す。</p>
@@ -2251,7 +2277,13 @@ p{margin:0}
           <button class="ff-item" type="button" style="--x:6270px;--y:220px;--w:350px"><img src="process-7.jpg" alt="" loading="lazy"></button>
           </div>
         </div>
-        <p class="ff-hint mono" data-i18n="ffHint">左右にドラッグして見る</p>
+        <div class="ff-hint" data-drag-dots>
+          <span class="visually-hidden" data-i18n="ffHint">左右にドラッグして見る</span>
+          <span class="ff-drag-trail" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </span>
+        </div>
       </div>
     </div>
   </section>
@@ -2764,6 +2796,69 @@ const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)");
   });
   window.addEventListener("resize",()=>{fit();paint()},{passive:true});
   fit(); paint();
+})();
+
+/* The fixed dots stay put while a small glow travels in both directions,
+   quietly suggesting the horizontal drag without turning the hint into UI. */
+(function(){
+  document.querySelectorAll("[data-drag-dots]").forEach(track=>{
+    const dots=Array.from(track.querySelectorAll(".ff-drag-trail>span"));
+    if(dots.length<3)return;
+    const last=dots.length-1, travel=1500, pause=400, cycle=travel*2+pause*2;
+    const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let started=0;
+
+    function smoothStep(value){
+      const v=Math.max(0,Math.min(1,value));
+      return v*v*(3-2*v);
+    }
+    function addLight(values,position,level){
+      if(level<=0||position<0||position>last)return;
+      const base=Math.floor(position), fraction=position-base;
+      const blend=.5-.5*Math.cos(Math.PI*fraction);
+      values[base]+=level*(1-blend);
+      if(base<last)values[base+1]+=level*blend;
+    }
+    function paintDot(dot,level){
+      if(level<.12){
+        dot.style.opacity="0";
+        dot.style.boxShadow="0 0 0 rgba(73,167,216,0)";
+        return;
+      }
+      const glow=2+level*8, alpha=.08+level*.4;
+      dot.style.opacity=level.toFixed(3);
+      dot.style.boxShadow=`0 0 ${glow.toFixed(2)}px rgba(73,167,216,${alpha.toFixed(3)})`;
+    }
+    function renderTrail(head,direction,distance){
+      const values=dots.map(()=>0);
+      addLight(values,head,1);
+      addLight(values,head-direction,.46*smoothStep((distance-.6)/.65));
+      addLight(values,head-direction*2,.14*smoothStep((distance-1.6)/.65));
+      dots.forEach((dot,index)=>paintDot(dot,Math.min(1,values[index])));
+    }
+    if(reduced){renderTrail(Math.floor(last/2),1,last);return}
+    function animate(time){
+      if(!started)started=time;
+      const phase=(time-started)%cycle;
+      let position,direction,distance;
+      if(phase<travel){
+        const progress=phase/travel;
+        position=(.5-.5*Math.cos(Math.PI*progress))*last;
+        direction=1;distance=position;
+      }else if(phase<travel+pause){
+        position=last;direction=1;distance=0;
+      }else if(phase<travel*2+pause){
+        const progress=(phase-travel-pause)/travel;
+        position=(.5+.5*Math.cos(Math.PI*progress))*last;
+        direction=-1;distance=last-position;
+      }else{
+        position=0;direction=-1;distance=0;
+      }
+      renderTrail(position,direction,distance);
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  });
 })();
 
 /* ---- the track ---- */
