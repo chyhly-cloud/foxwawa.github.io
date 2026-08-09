@@ -1,0 +1,12 @@
+The bundled font files are subsetted webfont derivatives of the following
+open-source typefaces:
+
+Source Han Sans CN and Source Han Serif CN
+Copyright Adobe. Licensed under the SIL Open Font License, Version 1.1.
+https://github.com/adobe-fonts/source-han-sans/blob/release/LICENSE.txt
+https://github.com/adobe-fonts/source-han-serif/blob/release/LICENSE.txt
+
+Space Mono
+Copyright 2016 The Space Mono Project Authors. Licensed under the SIL Open
+Font License, Version 1.1.
+https://github.com/google/fonts/blob/main/ofl/spacemono/OFL.txt

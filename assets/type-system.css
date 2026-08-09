@@ -1,0 +1,245 @@
+/* Foxwawa shared type system
+   All project pages use local, subsetted Source Han fonts. */
+@font-face {
+  font-family: "Foxwawa Source Han Sans";
+  src: url("./fonts/source-han-sans-regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Foxwawa Source Han Sans";
+  src: url("./fonts/source-han-sans-medium.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Foxwawa Source Han Serif";
+  src: url("./fonts/source-han-serif-regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Foxwawa Source Han Serif";
+  src: url("./fonts/source-han-serif-medium.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Foxwawa Space Mono";
+  src: url("./fonts/space-mono-regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Foxwawa Space Mono";
+  src: url("./fonts/space-mono-bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+body[data-type-project] {
+  --fox-sans: "Foxwawa Source Han Sans";
+  --fox-serif: "Foxwawa Source Han Serif";
+  --fox-mono: "Foxwawa Space Mono";
+  --sans: var(--fox-sans), sans-serif;
+  --serif: var(--fox-serif), serif;
+  --disp: var(--fox-sans), sans-serif;
+  --mono: var(--fox-mono), monospace;
+  --type-hero-desktop: 136px;
+  --type-hero-mobile: 60px;
+  --type-section-desktop: 48px;
+  --type-section-mobile: 28px;
+  --type-body: 16px;
+  --type-meta: 12px;
+  font-family: var(--fox-sans), sans-serif !important;
+  font-synthesis: none;
+}
+
+/* Inline SVG labels are part of the page typography too; keep them on the
+   self-hosted sans face unless a component explicitly assigns the mono role. */
+body[data-type-project] svg text,
+body[data-type-project] svg tspan {
+  font-family: var(--fox-sans) !important;
+}
+body[data-type-project] svg,
+body[data-type-project] button,
+body[data-type-project] input,
+body[data-type-project] textarea,
+body[data-type-project] select {
+  font-family: var(--fox-sans) !important;
+}
+
+/* The four shared roles. The project-specific rules below choose serif/sans
+   for the display roles while this block keeps their scale and weight fixed. */
+body[data-type-project] .hero-ttl {
+  font-size: var(--type-hero-desktop) !important;
+  font-weight: 500 !important;
+  line-height: 1.02 !important;
+  letter-spacing: -.02em;
+}
+body[data-type-project] .premise-lead {
+  font-family: var(--fox-serif) !important;
+  font-size: var(--type-section-desktop) !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: 1.22 !important;
+}
+body[data-type-project] .body-t,
+body[data-type-project] .inspiration-copy p,
+body[data-type-project] .inspiration-body p,
+body[data-type-project] .section-intro,
+body[data-type-project] .section-lead,
+body[data-type-project] .hero-lede,
+body[data-type-project] .ph-intro,
+body[data-type-project] .project-intro,
+body[data-type-project] .chain-body,
+body[data-type-project] .trait-body,
+body[data-type-project] .design-step-body,
+body[data-type-project] .process-note-body,
+body[data-type-project] .case-copy p,
+body[data-type-project] .concept-body,
+body[data-type-project] .inspiration-body {
+  font-family: var(--fox-sans) !important;
+  font-size: var(--type-body) !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1.85 !important;
+}
+body[data-type-project] .body-t strong,
+body[data-type-project] .body-t b {
+  font-weight: 500 !important;
+}
+
+/* Meta and navigation labels share one compact mono role. */
+body[data-type-project] .hero-kicker,
+body[data-type-project] .hero-sub,
+body[data-type-project] .hero-scroll,
+body[data-type-project] .hero-spec,
+body[data-type-project] .project-meta,
+body[data-type-project] .section-kicker,
+body[data-type-project] .section-marker,
+body[data-type-project] .mono,
+body[data-type-project] .mono-label,
+body[data-type-project] .mono-note,
+body[data-type-project] .beat-flow,
+body[data-type-project] .spec-k,
+body[data-type-project] .spec-v,
+body[data-type-project] .foot-meta,
+body[data-type-project] .footer-meta,
+body[data-type-project] .inspiration-panel summary,
+body[data-type-project] .insp summary {
+  font-family: var(--fox-mono) !important;
+  font-size: var(--type-meta) !important;
+  font-weight: 400 !important;
+}
+
+/* Serif display projects. */
+body[data-type-project="jibunkatte"] .hero-ttl,
+body[data-type-project="jibunkatte"] .h-sec,
+body[data-type-project="jibunkatte"] .h-sub,
+body[data-type-project="think"] .hero-ttl,
+body[data-type-project="think"] h2.serif,
+body[data-type-project="think"] h3.serif,
+body[data-type-project="kieru"] .hero-ttl,
+body[data-type-project="kieru"] h2.serif,
+body[data-type-project="kieru"] h3.serif,
+body[data-type-project="umi"] .hero-ttl,
+body[data-type-project="umi"] .concept-lead,
+body[data-type-project="umi"] .yellow-head,
+body[data-type-project="umi"] .travel-head,
+body[data-type-project="umi"] .visual-head,
+body[data-type-project="dialogue"] .hero-ttl,
+body[data-type-project="oppo"] .hero-ttl,
+body[data-type-project="oppo"] .section-title,
+body[data-type-project="oppo"] .project-title,
+body[data-type-project="seed"] .hero-ttl,
+body[data-type-project="seed"] .premise-lead,
+body[data-type-project="seed"] .ex-ttl {
+  font-family: var(--fox-serif) !important;
+  font-weight: 500 !important;
+}
+
+/* GMANSIRE remains the non-serif display exception. */
+body[data-type-project="gm"] .hero-ttl,
+body[data-type-project="gm"] .ph-ttl,
+body[data-type-project="gm"] .sub-head h3 {
+  font-family: var(--fox-sans) !important;
+  font-weight: 500 !important;
+}
+
+/* Section-scale display headings. */
+body[data-type-project="jibunkatte"] .h-sec,
+body[data-type-project="jibunkatte"] .h-sub,
+body[data-type-project="think"] h2.serif,
+body[data-type-project="think"] h3.serif,
+body[data-type-project="kieru"] h2.serif,
+body[data-type-project="kieru"] h3.serif,
+body[data-type-project="umi"] .concept-lead,
+body[data-type-project="umi"] .yellow-head,
+body[data-type-project="umi"] .travel-head,
+body[data-type-project="umi"] .visual-head,
+body[data-type-project="oppo"] .section-title,
+body[data-type-project="oppo"] .project-title,
+body[data-type-project="gm"] .ph-ttl,
+body[data-type-project="seed"] .premise-lead,
+body[data-type-project="seed"] .ex-ttl {
+  font-size: var(--type-section-desktop) !important;
+  line-height: 1.22 !important;
+}
+
+/* Umi intentionally keeps its serif body texture; the size/weight still join
+   the shared body role. */
+body[data-type-project="umi"] .body-t,
+body[data-type-project="umi"] .inspiration-copy p,
+body[data-type-project="umi"] .inspiration-body p {
+  font-family: var(--fox-serif) !important;
+}
+
+/* The requested Kieru treatment: serif title, sans regular body. */
+body[data-type-project="kieru"] .body-t,
+body[data-type-project="kieru"] .inspiration-copy p,
+body[data-type-project="kieru"] .inspiration-body p,
+body[data-type-project="kieru"] .source-note,
+body[data-type-project="kieru"] .punch-c,
+body[data-type-project="kieru"] .dev-text p,
+body[data-type-project="kieru"] .sl-txt p {
+  font-family: var(--fox-sans) !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+}
+body[data-type-project="kieru"] .body-t strong,
+body[data-type-project="kieru"] .body-t b {
+  font-weight: 400 !important;
+}
+
+@media (max-width: 720px) {
+  body[data-type-project] .hero-ttl {
+    font-size: var(--type-hero-mobile) !important;
+  }
+  body[data-type-project] .premise-lead {
+    font-size: var(--type-section-mobile) !important;
+  }
+  body[data-type-project="jibunkatte"] .h-sec,
+  body[data-type-project="jibunkatte"] .h-sub,
+  body[data-type-project="think"] h2.serif,
+  body[data-type-project="think"] h3.serif,
+  body[data-type-project="kieru"] h2.serif,
+  body[data-type-project="kieru"] h3.serif,
+  body[data-type-project="umi"] .concept-lead,
+  body[data-type-project="umi"] .yellow-head,
+  body[data-type-project="umi"] .travel-head,
+  body[data-type-project="umi"] .visual-head,
+  body[data-type-project="oppo"] .section-title,
+  body[data-type-project="oppo"] .project-title,
+  body[data-type-project="gm"] .ph-ttl,
+  body[data-type-project="seed"] .premise-lead,
+  body[data-type-project="seed"] .ex-ttl {
+    font-size: var(--type-section-mobile) !important;
+  }
+}

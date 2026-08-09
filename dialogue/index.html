@@ -6,9 +6,6 @@
 <meta name="color-scheme" content="light">
 <meta name="description" content="対話 / Dialogue — 茶館の対話を物体同士の関係へ移し替え、ARで五つの卓をつくる何梁宇の作品。">
 <title>対話 — 何梁宇</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;family=Noto+Serif+JP:wght@200;300;400;500&amp;family=Noto+Serif+SC:wght@300;400;500;600&amp;family=Noto+Sans+SC:wght@300;400;500&amp;family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <style>
 :root{
   color-scheme:light;
@@ -25,7 +22,7 @@
   --dline:rgba(255,255,255,.22);
   --dline2:rgba(255,255,255,.10);
   --cool:#46545e;
-  --mono:"Space Mono",monospace;
+  --mono:"Foxwawa Space Mono",monospace;
   --nav-h:56px;
   --maxw:1220px;
   --pad:clamp(1.2rem,5vw,5rem);
@@ -45,12 +42,12 @@ button{font:inherit;color:inherit;background:none;border:0}
 :focus-visible{outline:2px solid var(--cool);outline-offset:3px}
 
 /* ── type ─────────────────────────────────────────────── */
-.serif{font-family:"Newsreader",serif;font-weight:400}
-.lang-ja .serif{font-family:"Noto Serif JP",serif;font-weight:300}
-.lang-zh .serif{font-family:"Noto Serif SC",serif;font-weight:400}
-.body-t{font-family:"Inter","Helvetica Neue",sans-serif;font-size:var(--type-body);line-height:1.75;color:var(--ink2);text-wrap:pretty}
-.lang-ja .body-t{font-family:"Noto Sans SC","Noto Serif JP",sans-serif;line-height:1.9}
-.lang-zh .body-t{font-family:"Noto Sans SC",sans-serif;line-height:1.9}
+.serif{font-family:"Foxwawa Source Han Serif",serif;font-weight:400}
+.lang-ja .serif{font-family:"Foxwawa Source Han Serif",serif;font-weight:300}
+.lang-zh .serif{font-family:"Foxwawa Source Han Serif",serif;font-weight:400}
+.body-t{font-family:"Foxwawa Source Han Sans",sans-serif;font-size:var(--type-body);line-height:1.75;color:var(--ink2);text-wrap:pretty}
+.lang-ja .body-t{font-family:"Foxwawa Source Han Sans","Foxwawa Source Han Serif",sans-serif;line-height:1.9}
+.lang-zh .body-t{font-family:"Foxwawa Source Han Sans",sans-serif;line-height:1.9}
 .body-t + .body-t{margin-top:1.05rem}
 .body-t,.premise-lead,.inspiration-copy p,.pull,.step p,.legend-v,.cap,figcaption,.absurd-item .t{text-align:justify}
 .mono-label{font-family:var(--mono);font-size:var(--type-meta);line-height:1.5;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--cool)}
@@ -65,7 +62,7 @@ button{font:inherit;color:inherit;background:none;border:0}
 .site-nav .nav-back{justify-self:start;display:flex;align-items:center;gap:.55rem;font-family:var(--mono);font-size:14px;letter-spacing:1.8px;text-transform:uppercase;opacity:.88;transition:opacity .2s}
 .site-nav .nav-back:hover{opacity:1}
 .site-nav .nav-ttl{justify-self:center;font-size:14px;letter-spacing:.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:52vw}
-.lang-ja .nav-ttl{font-family:"Noto Serif JP",serif}.lang-zh .nav-ttl{font-family:"Noto Serif SC",serif}
+.lang-ja .nav-ttl{font-family:"Foxwawa Source Han Serif",serif}.lang-zh .nav-ttl{font-family:"Foxwawa Source Han Serif",serif}
 .nav-tools{justify-self:end}
 .lang-globe{cursor:pointer;padding:6px;opacity:.5;display:flex;transition:opacity .2s}
 .lang-globe:hover{opacity:1}
@@ -77,7 +74,7 @@ button{font:inherit;color:inherit;background:none;border:0}
 .section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem;
   margin-bottom:clamp(2.4rem,5vw,4.5rem);padding-bottom:1rem;border-bottom:1px solid var(--line2)}
 .beat-title{font-size:var(--type-subhead);line-height:1.35;font-weight:600;letter-spacing:.04em;color:var(--ink);font-family:var(--mono)}
-.lang-ja .beat-title,.lang-zh .beat-title{font-family:"Noto Sans SC",sans-serif;letter-spacing:.02em}
+.lang-ja .beat-title,.lang-zh .beat-title{font-family:"Foxwawa Source Han Sans",sans-serif;letter-spacing:.02em}
 .beat-flow{font-family:var(--mono);font-size:var(--type-meta);letter-spacing:.12em;text-transform:uppercase;color:var(--cool);text-align:right;white-space:nowrap}
 
 /* ── hero (shared shell) ──────────────────────────────── */
@@ -90,9 +87,9 @@ button{font:inherit;color:inherit;background:none;border:0}
 .hero-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;
   padding:0 var(--pad) clamp(5.5rem,14vh,9rem)}
 .hero-kicker{font-family:var(--mono);font-size:var(--type-meta);letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.68);margin-bottom:1.4rem;font-weight:700}
-.hero-ttl{font-family:"Newsreader",serif;font-weight:400;font-size:clamp(3.2rem,11vw,8.5rem);line-height:.88;letter-spacing:-.02em;color:#fff;text-shadow:0 6px 50px rgba(0,0,0,.5)}
-.lang-ja .hero-ttl{font-family:"Noto Serif JP",serif;font-weight:200;white-space:nowrap}
-.lang-zh .hero-ttl{font-family:"Noto Serif SC",serif;font-weight:500;white-space:nowrap}
+.hero-ttl{font-family:"Foxwawa Source Han Serif",serif;font-weight:400;font-size:clamp(3.2rem,11vw,8.5rem);line-height:.88;letter-spacing:-.02em;color:#fff;text-shadow:0 6px 50px rgba(0,0,0,.5)}
+.lang-ja .hero-ttl{font-family:"Foxwawa Source Han Serif",serif;font-weight:200;white-space:nowrap}
+.lang-zh .hero-ttl{font-family:"Foxwawa Source Han Serif",serif;font-weight:500;white-space:nowrap}
 .lang-en .hero-ttl{font-size:clamp(3rem,9vw,7.4rem)}
 .hero-sub{margin-top:1.3rem;font-family:var(--mono);font-size:var(--type-meta);letter-spacing:3px;color:rgba(255,255,255,.62);text-transform:uppercase;font-weight:700}
 .hero-scroll{position:absolute;left:50%;bottom:1.4rem;transform:translateX(-50%);z-index:3;
@@ -103,9 +100,9 @@ button{font:inherit;color:inherit;background:none;border:0}
 
 /* ── concept (shared shell) ───────────────────────────── */
 .premise{background:var(--paper)}
-.premise-lead{font-family:"Newsreader",serif;font-weight:300;font-size:clamp(1.75rem,4.2vw,3.5rem);line-height:1.22;letter-spacing:-.015em;color:var(--ink)}
-.lang-ja .premise-lead{font-family:"Noto Serif JP",serif;font-weight:300;line-height:1.45}
-.lang-zh .premise-lead{font-family:"Noto Serif SC",serif;font-weight:400;line-height:1.42}
+.premise-lead{font-family:"Foxwawa Source Han Serif",serif;font-weight:300;font-size:clamp(1.75rem,4.2vw,3.5rem);line-height:1.22;letter-spacing:-.015em;color:var(--ink)}
+.lang-ja .premise-lead{font-family:"Foxwawa Source Han Serif",serif;font-weight:300;line-height:1.45}
+.lang-zh .premise-lead{font-family:"Foxwawa Source Han Serif",serif;font-weight:400;line-height:1.42}
 .concept-copy{margin-top:clamp(2rem,4vw,3.2rem);columns:1}
 .inspiration-panel{margin-top:clamp(2.4rem,5vw,3.4rem);border-top:1px solid var(--line)}
 .inspiration-panel summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.7rem;padding:1.2rem 0;
@@ -121,8 +118,8 @@ button{font:inherit;color:inherit;background:none;border:0}
 .inspiration-copy{overflow:hidden;opacity:0;visibility:hidden;transform:translateY(-6px);
   transition:opacity .35s,transform .45s,visibility 0s .45s,padding .45s}
 .inspiration-panel.is-open .inspiration-copy{padding:.2rem 0 1.6rem;opacity:1;visibility:visible;transform:translateY(0);transition-delay:.08s,.04s,0s,0s}
-.inspiration-copy p{font-family:"Inter","Helvetica Neue",sans-serif;font-size:var(--type-caption);line-height:1.8;color:var(--ink2)}
-.lang-ja .inspiration-copy p,.lang-zh .inspiration-copy p{font-family:"Noto Sans SC",sans-serif}
+.inspiration-copy p{font-family:"Foxwawa Source Han Sans",sans-serif;font-size:var(--type-caption);line-height:1.8;color:var(--ink2)}
+.lang-ja .inspiration-copy p,.lang-zh .inspiration-copy p{font-family:"Foxwawa Source Han Sans",sans-serif}
 .inspiration-copy p+p{margin-top:1rem}
 .project-meta{display:flex;flex-wrap:wrap;gap:2.6rem;margin-top:clamp(3rem,7vw,5rem);padding-top:1.6rem;border-top:1px solid var(--line)}
 .project-meta>div{min-width:160px;display:flex;flex-direction:column;gap:.5rem}
@@ -145,9 +142,9 @@ button{font:inherit;color:inherit;background:none;border:0}
 .q2{grid-column:1/5;  grid-row:3; --t:clamp(2rem,6vw,5rem)}
 .t5{grid-column:5/9;  grid-row:3; --t:clamp(0rem,2vw,1.5rem)}
 .t6{grid-column:9/13; grid-row:3; --t:clamp(4rem,11vw,9rem)}
-.pull{font-family:"Newsreader",serif;font-weight:300;font-size:clamp(1.25rem,2.3vw,1.95rem);line-height:1.5;color:var(--ink);text-wrap:pretty}
-.lang-ja .pull{font-family:"Noto Serif JP",serif;line-height:1.75}
-.lang-zh .pull{font-family:"Noto Serif SC",serif;line-height:1.7}
+.pull{font-family:"Foxwawa Source Han Serif",serif;font-weight:300;font-size:clamp(1.25rem,2.3vw,1.95rem);line-height:1.5;color:var(--ink);text-wrap:pretty}
+.lang-ja .pull{font-family:"Foxwawa Source Han Serif",serif;line-height:1.75}
+.lang-zh .pull{font-family:"Foxwawa Source Han Serif",serif;line-height:1.7}
 figure{margin:0}
 figcaption{margin-top:.75rem;font-family:var(--mono);font-size:var(--type-meta);letter-spacing:.1em;color:var(--dim)}
 .lang-ja figcaption,.lang-zh figcaption{letter-spacing:.04em}
@@ -162,10 +159,10 @@ figcaption{margin-top:.75rem;font-family:var(--mono);font-size:var(--type-meta);
 .step-fig{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .step-fig img{width:100%;height:100%;object-fit:cover;object-position:center 72%}
 .step-fig.contain img{object-fit:contain;mix-blend-mode:multiply;padding:clamp(.2rem,1vw,1rem)}
-.step-ttl{font-size:var(--type-subhead);line-height:1.35;color:var(--ink);font-family:"Inter",sans-serif;font-weight:600}
-.lang-ja .step-ttl,.lang-zh .step-ttl{font-family:"Noto Sans SC",sans-serif}
-.step p{font-family:"Inter","Helvetica Neue",sans-serif;font-size:var(--type-caption);line-height:1.7;color:var(--ink2)}
-.lang-ja .step p,.lang-zh .step p{font-family:"Noto Sans SC",sans-serif}
+.step-ttl{font-size:var(--type-subhead);line-height:1.35;color:var(--ink);font-family:"Foxwawa Source Han Sans",sans-serif;font-weight:600}
+.lang-ja .step-ttl,.lang-zh .step-ttl{font-family:"Foxwawa Source Han Sans",sans-serif}
+.step p{font-family:"Foxwawa Source Han Sans",sans-serif;font-size:var(--type-caption);line-height:1.7;color:var(--ink2)}
+.lang-ja .step p,.lang-zh .step p{font-family:"Foxwawa Source Han Sans",sans-serif}
 .transfer{margin-top:clamp(3rem,7vw,5.5rem);padding-top:clamp(1.6rem,3vw,2.4rem);border-top:1px solid var(--line);
   display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(1.5rem,4vw,4rem);align-items:start}
 .transfer .pull{font-size:clamp(1.35rem,2.6vw,2.3rem)}
@@ -184,8 +181,8 @@ figcaption{margin-top:.75rem;font-family:var(--mono);font-size:var(--type-meta);
 .legend-row{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1rem;align-items:baseline;
   padding:.85rem 0;border-bottom:1px solid rgba(17,17,16,.18)}
 .legend-k{font-family:var(--mono);font-size:var(--type-meta);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);min-width:6.5em}
-.legend-v{font-family:"Inter",sans-serif;font-size:var(--type-caption);line-height:1.6;color:#33343a}
-.lang-ja .legend-v,.lang-zh .legend-v{font-family:"Noto Sans SC",sans-serif}
+.legend-v{font-family:"Foxwawa Source Han Sans",sans-serif;font-size:var(--type-caption);line-height:1.6;color:#33343a}
+.lang-ja .legend-v,.lang-zh .legend-v{font-family:"Foxwawa Source Han Sans",sans-serif}
 .verbs{margin-top:clamp(1.6rem,3vw,2.4rem)}
 .verb-chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem}
 .chip{font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;
@@ -203,9 +200,9 @@ figcaption{margin-top:.75rem;font-family:var(--mono);font-size:var(--type-meta);
   align-items:baseline;padding:clamp(1.3rem,3vw,2.3rem) 0;border-top:1px solid var(--dline2)}
 .absurd-item:last-child{border-bottom:1px solid var(--dline2)}
 .absurd-item .n{font-family:var(--mono);font-size:var(--type-meta);font-weight:700;letter-spacing:.14em;color:#7f8b93}
-.absurd-item .t{font-family:"Newsreader",serif;font-weight:300;font-size:clamp(1.4rem,3.4vw,3rem);line-height:1.3;color:#f3f2f0}
-.lang-ja .absurd-item .t{font-family:"Noto Serif JP",serif;font-weight:200;line-height:1.45}
-.lang-zh .absurd-item .t{font-family:"Noto Serif SC",serif;font-weight:300;line-height:1.4}
+.absurd-item .t{font-family:"Foxwawa Source Han Serif",serif;font-weight:300;font-size:clamp(1.4rem,3.4vw,3rem);line-height:1.3;color:#f3f2f0}
+.lang-ja .absurd-item .t{font-family:"Foxwawa Source Han Serif",serif;font-weight:200;line-height:1.45}
+.lang-zh .absurd-item .t{font-family:"Foxwawa Source Han Serif",serif;font-weight:300;line-height:1.4}
 .absurd-out{margin-top:clamp(3rem,7vw,5.5rem);max-width:44em}
 
 /* ── 06 five tables ───────────────────────────────────── */
@@ -235,9 +232,9 @@ figcaption{margin-top:.75rem;font-family:var(--mono);font-size:var(--type-meta);
   padding-bottom:1rem;border-bottom:1px solid rgba(17,17,16,.28)}
 .tbl-id{display:flex;align-items:baseline;gap:1.1rem;min-width:0;flex-wrap:wrap}
 .tbl-no{font-family:var(--mono);font-size:var(--type-meta);font-weight:700;letter-spacing:.16em;color:var(--cool)}
-.tbl-name{font-family:"Newsreader",serif;font-weight:400;font-size:clamp(1.4rem,3vw,2.6rem);line-height:1.2;color:var(--ink)}
-.lang-ja .tbl-name{font-family:"Noto Serif JP",serif;font-weight:300}
-.lang-zh .tbl-name{font-family:"Noto Serif SC",serif;font-weight:400}
+.tbl-name{font-family:"Foxwawa Source Han Serif",serif;font-weight:400;font-size:clamp(1.4rem,3vw,2.6rem);line-height:1.2;color:var(--ink)}
+.lang-ja .tbl-name{font-family:"Foxwawa Source Han Serif",serif;font-weight:300}
+.lang-zh .tbl-name{font-family:"Foxwawa Source Han Serif",serif;font-weight:400}
 .tbl-int{font-family:var(--mono);font-size:var(--type-meta);letter-spacing:.1em;text-transform:uppercase;color:#33343a}
 .lang-ja .tbl-int,.lang-zh .tbl-int{letter-spacing:.04em;text-transform:none}
 
@@ -247,17 +244,17 @@ figcaption{margin-top:.75rem;font-family:var(--mono);font-size:var(--type-meta);
 .tbl-stage img{width:100%;height:auto}
 .seatchart{display:flex;flex-direction:column;justify-content:center;gap:1.2rem}
 .seatchart svg{width:100%;height:auto;max-width:340px;margin:0 auto}
-.seat-label{fill:#1b1c1e;font-family:"Space Mono",monospace;font-size:13px;letter-spacing:.02em}
-.lang-ja .seat-label,.lang-zh .seat-label{font-family:"Noto Sans SC",sans-serif;font-size:14px}
-.seat-mid{fill:#33343a;font-family:"Space Mono",monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+.seat-label{fill:#1b1c1e;font-family:"Foxwawa Space Mono",monospace;font-size:13px;letter-spacing:.02em}
+.lang-ja .seat-label,.lang-zh .seat-label{font-family:"Foxwawa Source Han Sans",sans-serif;font-size:14px}
+.seat-mid{fill:#33343a;font-family:"Foxwawa Space Mono",monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
 
 .tbl-voice{margin-top:clamp(3rem,8vw,6rem);text-align:center;padding:0 var(--pad)}
 .voice-k{font-family:var(--mono);font-size:var(--type-meta);font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#2b343a;display:block;margin-bottom:clamp(1.4rem,3vw,2.4rem)}
 .lang-ja .voice-k,.lang-zh .voice-k{letter-spacing:.08em;text-transform:none}
-.voice-t{white-space:pre-line;font-family:"Newsreader",serif;font-weight:300;
+.voice-t{white-space:pre-line;font-family:"Foxwawa Source Han Serif",serif;font-weight:300;
   font-size:clamp(1.4rem,3.2vw,2.75rem);line-height:1.65;letter-spacing:-.01em;color:var(--ink);text-wrap:balance;text-align:center}
-.lang-ja .voice-t{font-family:"Noto Serif JP",serif;font-weight:200}
-.lang-zh .voice-t{font-family:"Noto Serif SC",serif;font-weight:300}
+.lang-ja .voice-t{font-family:"Foxwawa Source Han Serif",serif;font-weight:200}
+.lang-zh .voice-t{font-family:"Foxwawa Source Han Serif",serif;font-weight:300}
 
 .tbl-read{margin-top:clamp(3rem,8vw,6rem);display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);
   gap:clamp(1.5rem,4vw,4rem);align-items:start}
@@ -351,8 +348,9 @@ figcaption{margin-top:.75rem;font-family:var(--mono);font-size:var(--type-meta);
   .js .rv{opacity:1;transform:none}
 }
 </style>
+<link rel="stylesheet" href="../assets/type-system.css">
 </head>
-<body>
+<body data-type-project="dialogue">
 
 <nav class="site-nav" id="site-nav" aria-label="Project navigation">
   <a class="nav-back" href="../index.html"><span aria-hidden="true">&#8592;</span><span data-i18n="navBack">戻る</span></a>

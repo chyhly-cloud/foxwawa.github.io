@@ -6,7 +6,6 @@
 <meta name="color-scheme" content="light">
 <title>海 — 何梁宇</title>
 <meta name="description" content="海 / Sea — 何梁宇。故郷の黄色い海の記憶をめぐる新メディア作品。美とは記憶と感情の重なりである。">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Serif+JP:wght@300;400;500&family=Noto+Serif+SC:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
 <style>
 :root{color-scheme:light}
 :root{
@@ -22,7 +21,7 @@
   --amber-soft:#efb457;
   --rule:rgba(42,37,31,.14);
   --rule2:rgba(42,37,31,.08);
-  --mono:"Space Mono",monospace;
+  --mono:"Foxwawa Space Mono",monospace;
   --maxw:1160px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -38,13 +37,13 @@ a{color:inherit;text-decoration:none}
 ::selection{background:var(--amber);color:#2a251f}
 
 /* ── serif display per lang ── */
-.serif{font-family:"Newsreader",serif}
-.lang-ja .serif{font-family:"Noto Serif JP",serif;font-weight:400}
-.lang-zh .serif{font-family:"Noto Serif SC",serif;font-weight:500}
+.serif{font-family:"Foxwawa Source Han Serif",serif}
+.lang-ja .serif{font-family:"Foxwawa Source Han Serif",serif;font-weight:400}
+.lang-zh .serif{font-family:"Foxwawa Source Han Serif",serif;font-weight:500}
 /* body text */
-.body-t{font-family:"Newsreader",serif;font-size:15px;line-height:1.95;color:var(--ink2)}
-.lang-ja .body-t{font-family:"Noto Serif JP",serif;font-size:15px;line-height:1.95}
-.lang-zh .body-t{font-family:"Noto Serif SC",serif;font-size:15px;line-height:1.95}
+.body-t{font-family:"Foxwawa Source Han Serif",serif;font-size:15px;line-height:1.95;color:var(--ink2)}
+.lang-ja .body-t{font-family:"Foxwawa Source Han Serif",serif;font-size:15px;line-height:1.95}
+.lang-zh .body-t{font-family:"Foxwawa Source Han Serif",serif;font-size:15px;line-height:1.95}
 .body-t + .body-t{margin-top:1rem}
 .body-t,.insp-body p,.concept-lead,.yellow-head,.travel-head,.visual-head,.insight .q{text-align:justify}
 
@@ -56,8 +55,8 @@ a{color:inherit;text-decoration:none}
 .nav-back{font-size:15px;color:var(--ink2);transition:color .2s,transform .2s;flex-shrink:0}
 .nav-back:hover{color:var(--amber);transform:translateX(-3px)}
 .nav-ttl{font-size:12px;letter-spacing:.5px;color:var(--ink);font-weight:700}
-.lang-ja .nav-ttl{font-family:"Noto Serif JP",serif}
-.lang-zh .nav-ttl{font-family:"Noto Serif SC",serif}
+.lang-ja .nav-ttl{font-family:"Foxwawa Source Han Serif",serif}
+.lang-zh .nav-ttl{font-family:"Foxwawa Source Han Serif",serif}
 .lang-globe{background:none;border:none;cursor:pointer;padding:6px;color:var(--ink);opacity:.5;display:flex;transition:opacity .2s,color .2s;-webkit-tap-highlight-color:transparent}
 .lang-globe:hover{opacity:1;color:var(--amber)}
 
@@ -76,9 +75,9 @@ section{position:relative}
 .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 42%}
 .hero-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(244,238,227,0) 40%,rgba(244,238,227,.5) 72%,rgba(244,238,227,.94) 100%)}
 .hero-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;padding:0 clamp(1.1rem,4vw,2.8rem) clamp(3rem,7vh,5rem)}
-.hero-ttl{font-family:"Newsreader",serif;font-weight:400;font-size:clamp(3.2rem,11vw,8.5rem);line-height:.88;letter-spacing:-.01em;color:var(--ink)}
-.lang-ja .hero-ttl{font-family:"Noto Serif JP",serif;font-weight:300}
-.lang-zh .hero-ttl{font-family:"Noto Serif SC",serif;font-weight:500}
+.hero-ttl{font-family:"Foxwawa Source Han Serif",serif;font-weight:400;font-size:clamp(3.2rem,11vw,8.5rem);line-height:.88;letter-spacing:-.01em;color:var(--ink)}
+.lang-ja .hero-ttl{font-family:"Foxwawa Source Han Serif",serif;font-weight:300}
+.lang-zh .hero-ttl{font-family:"Foxwawa Source Han Serif",serif;font-weight:500}
 .hero-kick{margin-bottom:1.6rem}
 .hero-sub{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--ink2);margin-top:1.2rem;font-weight:700}
 .hero-scroll{position:absolute;left:50%;bottom:1.4rem;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:.55rem;font-family:var(--mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--ink2)}
@@ -108,9 +107,9 @@ section{position:relative}
 .insp-copy{min-height:0;overflow:hidden;padding:0;opacity:0;visibility:hidden;transform:translateY(-10px);transition:opacity .28s ease,transform .46s cubic-bezier(.22,.74,.25,1),padding .46s cubic-bezier(.22,.74,.25,1),visibility 0s linear .52s}
 .insp.is-open .insp-body{grid-template-rows:1fr}
 .insp.is-open .insp-copy{padding:.2rem 0 1.4rem;opacity:1;visibility:visible;transform:translateY(0);transition-delay:.08s,.04s,0s,0s}
-.insp-body p{font-family:"Newsreader",serif;font-style:italic;font-size:16.5px;line-height:1.9;color:var(--ink2)}
-.lang-ja .insp-body p{font-family:"Noto Serif JP",serif;font-style:normal}
-.lang-zh .insp-body p{font-family:"Noto Serif SC",serif;font-style:normal}
+.insp-body p{font-family:"Foxwawa Source Han Serif",serif;font-style:italic;font-size:16.5px;line-height:1.9;color:var(--ink2)}
+.lang-ja .insp-body p{font-family:"Foxwawa Source Han Serif",serif;font-style:normal}
+.lang-zh .insp-body p{font-family:"Foxwawa Source Han Serif",serif;font-style:normal}
 .insp-body p+p{margin-top:.9rem}
 
 /* ── YELLOW SEA (background) ── */
@@ -158,9 +157,9 @@ section{position:relative}
 @media(min-width:760px){.insights{grid-template-columns:repeat(3,1fr)}}
 .insight{background:var(--sand);padding:2rem 1.8rem;display:flex;flex-direction:column;gap:1rem}
 .insight .no{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--amber);font-weight:700}
-.insight .q{font-family:"Newsreader",serif;font-size:clamp(1.15rem,1.8vw,1.5rem);line-height:1.4;color:var(--ink)}
-.lang-ja .insight .q{font-family:"Noto Serif JP",serif}
-.lang-zh .insight .q{font-family:"Noto Serif SC",serif}
+.insight .q{font-family:"Foxwawa Source Han Serif",serif;font-size:clamp(1.15rem,1.8vw,1.5rem);line-height:1.4;color:var(--ink)}
+.lang-ja .insight .q{font-family:"Foxwawa Source Han Serif",serif}
+.lang-zh .insight .q{font-family:"Foxwawa Source Han Serif",serif}
 
 /* ── VISUAL CONCEPT ── */
 .visual{position:relative;overflow:hidden;padding:clamp(4rem,10vh,7rem) 0;border-top:1px solid var(--rule2)}
@@ -226,8 +225,9 @@ section{position:relative}
   .cf-status{bottom:2%}
 }
 </style>
+<link rel="stylesheet" href="../assets/type-system.css">
 </head>
-<body>
+<body data-type-project="umi">
 
 <div id="lb"><span id="lb-x">&#10005;</span><img id="lb-img" src="" alt=""></div>
 

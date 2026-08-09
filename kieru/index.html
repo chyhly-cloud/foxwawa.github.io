@@ -6,7 +6,6 @@
 <meta name="color-scheme" content="dark">
 <title>消失 — 何梁宇</title>
 <meta name="description" content="消失 / Disappearance — 何梁宇。鋼板の上で緑色表示灯が一つずつ消えていく、植物種の絶滅を可視化する装置。">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Serif+JP:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 <style>
 :root{color-scheme:dark}
 :root{
@@ -22,8 +21,8 @@
   --green-deep:#2b7d4c;
   --rule:rgba(255,255,255,.10);
   --rule2:rgba(255,255,255,.06);
-  --mono:"Space Mono",monospace;
-  --serif:"Noto Serif JP",serif;
+  --mono:"Foxwawa Space Mono",monospace;
+  --serif:"Foxwawa Source Han Serif",serif;
   --maxw:1120px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -41,11 +40,11 @@ a{color:inherit;text-decoration:none}
 
 /* ─ lang fonts ─ */
 .lang-ja .serif,.lang-ja h1,.lang-ja h2,.lang-ja h3{font-family:var(--serif);font-weight:400}
-.lang-zh .serif,.lang-zh h1,.lang-zh h2,.lang-zh h3{font-family:"Noto Sans SC",sans-serif;font-weight:900}
-.lang-en .serif,.lang-en h1,.lang-en h2,.lang-en h3{font-family:"Inter",sans-serif;font-weight:800}
+.lang-zh .serif,.lang-zh h1,.lang-zh h2,.lang-zh h3{font-family:"Foxwawa Source Han Sans",sans-serif;font-weight:900}
+.lang-en .serif,.lang-en h1,.lang-en h2,.lang-en h3{font-family:"Foxwawa Source Han Sans",sans-serif;font-weight:800}
 .lang-ja .body-t{font-family:var(--serif);font-weight:400}
-.lang-zh .body-t{font-family:"Noto Sans SC",sans-serif;font-weight:400}
-.lang-en .body-t{font-family:"Inter",sans-serif;font-weight:400}
+.lang-zh .body-t{font-family:"Foxwawa Source Han Sans",sans-serif;font-weight:400}
+.lang-en .body-t{font-family:"Foxwawa Source Han Sans",sans-serif;font-weight:400}
 
 /* ─ NAV ─ */
 #nav{
@@ -61,7 +60,7 @@ a{color:inherit;text-decoration:none}
 .nav-back:hover{color:var(--green);transform:translateX(-3px)}
 .nav-ttl{font-size:12px;letter-spacing:.5px;color:var(--ink);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lang-ja .nav-ttl{font-family:var(--serif)}
-.lang-zh .nav-ttl{font-family:"Noto Sans SC",sans-serif}
+.lang-zh .nav-ttl{font-family:"Foxwawa Source Han Sans",sans-serif}
 .lang-globe{background:none;border:none;cursor:pointer;padding:6px;color:var(--ink);opacity:.5;display:flex;transition:opacity .2s,color .2s;-webkit-tap-highlight-color:transparent}
 .lang-globe:hover{opacity:1;color:var(--green)}
 
@@ -216,8 +215,9 @@ section{position:relative}
   .body-t,.dev-text p,.sl-txt p{font-size:15px}
 }
 </style>
+<link rel="stylesheet" href="../assets/type-system.css">
 </head>
-<body>
+<body data-type-project="kieru">
 
 <div id="lb"><span id="lb-x">&#10005;</span><img id="lb-img" src="" alt=""></div>
 
