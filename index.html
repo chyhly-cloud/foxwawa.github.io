@@ -199,9 +199,8 @@ display:block;width:100%;height:auto;background:#fff;
 }
 #bio-model-stage{
 position:absolute;inset:0;
-display:none;align-items:center;justify-content:center;overflow:hidden;
+display:flex;align-items:center;justify-content:center;overflow:hidden;
 }
-#bio.open #bio-model-stage{display:flex}
 #bio-model-viewer{
 width:100%;height:100%;display:block;pointer-events:none;
 background:transparent;opacity:0;transform:translate3d(0,0,0) scale(1);
@@ -341,7 +340,7 @@ color:rgba(255,241,236,.64);white-space:nowrap
           data-model-src="bio-model/199245-web-draco.glb?v=2"
           alt="HE LIANGYU portrait model"
           reveal="auto"
-          loading="lazy"
+          loading="eager"
           rotation-per-second="1.48deg"
           auto-rotate-delay="0"
           orientation="-34deg 0deg -88deg"
@@ -1002,7 +1001,6 @@ if(bioViewer){
   let modelBounds=null;
   let modelRequested=false;
   let preloadScheduled=false;
-  let releaseTimer=0;
   let motionStartTime=0;
   let motionWanted=false;
   const VIEWER_SHOTS=[
@@ -1129,20 +1127,18 @@ if(bioViewer){
     if(modelRequested) return;
     const src=bioViewer.dataset.modelSrc;
     if(!src) return;
+    if(!activePose){
+      activePose=randomizePose(VIEWER_SHOTS[Math.floor(Math.random()*VIEWER_SHOTS.length)]);
+    }
+    applyViewerOrientation(activePose.orientation);
     modelRequested=true;
     bioViewer.setAttribute('src',src);
   }
 
   function scheduleModelPreload(){
-    if(USES_FILE_PROTOCOL||preloadScheduled)return;
+    if(USES_FILE_PROTOCOL||preloadScheduled||modelRequested)return;
     preloadScheduled=true;
-    const kick=()=>{
-      const src=bioViewer.dataset.modelSrc;
-      if(!src)return;
-      fetch(src,{cache:'force-cache',credentials:'same-origin'})
-        .then(response=>response.ok?response.blob():Promise.reject())
-        .catch(()=>{});
-    };
+    const kick=()=>ensureModelRequested();
     if('requestIdleCallback' in window){
       window.requestIdleCallback(kick,{timeout:1400});
     }else{
@@ -1210,7 +1206,10 @@ if(bioViewer){
   }
 
   function applyViewerOrientation(values){
-    bioViewer.setAttribute('orientation',values.map(formatDeg).join(' '));
+    const orientation=values.map(formatDeg).join(' ');
+    if(bioViewer.getAttribute('orientation')!==orientation){
+      bioViewer.setAttribute('orientation',orientation);
+    }
   }
 
   function applyViewerOrbit(values){
@@ -1343,10 +1342,6 @@ if(bioViewer){
   });
 
   window.openBioPanel3D=()=>{
-    if(releaseTimer){
-      clearTimeout(releaseTimer);
-      releaseTimer=0;
-    }
     motionWanted=true;
     if(USES_FILE_PROTOCOL){
       setStatus('3D Model Needs Localhost Preview');
@@ -1356,7 +1351,7 @@ if(bioViewer){
       setStatus('Loading 3D Portrait...');
     }
     ensureModelRequested();
-    applyViewerPose(true);
+    applyViewerPose(false);
     stabilizeViewerPose();
     motionStartTime=performance.now();
     startViewerMotion();
@@ -1364,17 +1359,6 @@ if(bioViewer){
 
   window.closeBioPanel3D=()=>{
     stopViewerMotion();
-    if(releaseTimer)clearTimeout(releaseTimer);
-    releaseTimer=window.setTimeout(()=>{
-      releaseTimer=0;
-      if(bioPanel.classList.contains('open'))return;
-      bioViewer.classList.remove('ready');
-      bioViewer.removeAttribute('src');
-      modelRequested=false;
-      modelBounds=null;
-      activePose=null;
-      setStatus('3D OBJ Portrait');
-    },80);
   };
   document.addEventListener('visibilitychange',()=>{
     if(document.hidden){

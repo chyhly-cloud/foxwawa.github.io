@@ -1548,6 +1548,10 @@
       box-shadow: 0 0 0 rgba(0, 168, 99, 0);
       will-change: opacity, box-shadow;
     }
+    .store .chapter-media { margin-bottom: 0; }
+    .store .chapter-media + .store-scroll-link {
+      margin-bottom: clamp(52px, 6.4vw, 96px);
+    }
     .store-detail-wide:has(> .strip)::after,
     .store-gallery .result-wide:has(> .strip)::after { display: none; }
 
@@ -2288,7 +2292,13 @@
               <button class="media-zoom strip" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom">
                 <img src="store-overview.jpg" alt="旗舰店城市公园概念，绿色半透明曲面散布在开放空间中" data-i18n-alt="alt.conceptStore" loading="lazy" decoding="async">
               </button>
-            </figure>
+        </figure>
+        <div class="store-scroll-link" aria-hidden="true" data-scroll-dots>
+          <div class="store-scroll-trail">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
 
         <div class="project-opening">
           <div class="project-copy reveal">
@@ -3427,16 +3437,14 @@
       if (dots.length < 3) return;
 
       const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const maxStart = dots.length - 3;
-      const travelDuration = 1700;
+      const lastIndex = dots.length - 1;
+      const travelDuration = 1500;
       const pauseDuration = 400;
       const cycleDuration = travelDuration * 2 + pauseDuration * 2;
-      const rightLevels = [.14, .46, 1];
-      const leftLevels = [1, .46, .14];
       let startedAt = 0;
 
       function paintDot(dot, level) {
-        if (level < .008) {
+        if (level < .12) {
           dot.style.opacity = "0";
           dot.style.boxShadow = "0 0 0 rgba(0, 168, 99, 0)";
           return;
@@ -3448,20 +3456,24 @@
         dot.style.boxShadow = "0 0 " + glow.toFixed(2) + "px rgba(0, 168, 99, " + alpha.toFixed(3) + ")";
       }
 
-      function renderTrail(position, movingRight) {
+      function addLight(values, position, level) {
+        if (level <= 0 || position < 0 || position > lastIndex) return;
         const base = Math.floor(position);
         const fraction = position - base;
         const blend = .5 - .5 * Math.cos(Math.PI * fraction);
-        const levels = rightLevels.map(function (rightLevel, index) {
-          return leftLevels[index] * (1 - movingRight) + rightLevel * movingRight;
-        });
-        const values = dots.map(function () { return 0; });
+        values[base] += level * (1 - blend);
+        if (base < lastIndex) values[base + 1] += level * blend;
+      }
 
-        levels.forEach(function (level, index) {
-          const current = base + index;
-          values[current] += level * (1 - blend);
-          if (base < maxStart) values[current + 1] += level * blend;
-        });
+      function renderTrail(headPosition, direction, distance) {
+        const values = dots.map(function () { return 0; });
+        const middleReveal = smoothStep((distance - .6) / .65);
+        const tailReveal = smoothStep((distance - 1.6) / .65);
+
+        /* 先出现头灯；移动约一、两格后，中灯和尾灯才依次加入 */
+        addLight(values, headPosition, 1);
+        addLight(values, headPosition - direction, .46 * middleReveal);
+        addLight(values, headPosition - direction * 2, .14 * tailReveal);
 
         dots.forEach(function (dot, index) {
           paintDot(dot, Math.min(1, values[index]));
@@ -3474,7 +3486,7 @@
       }
 
       if (reducedMotion) {
-        renderTrail(Math.floor(maxStart / 2), 1);
+        renderTrail(Math.floor(lastIndex / 2), 1, lastIndex);
         return;
       }
 
@@ -3482,25 +3494,30 @@
         if (!startedAt) startedAt = time;
         const phase = (time - startedAt) % cycleDuration;
         let position;
-        let movingRight;
+        let direction;
+        let distance;
 
         if (phase < travelDuration) {
           const progress = phase / travelDuration;
-          position = (.5 - .5 * Math.cos(Math.PI * progress)) * maxStart;
-          movingRight = smoothStep(progress / .15);
+          position = (.5 - .5 * Math.cos(Math.PI * progress)) * lastIndex;
+          direction = 1;
+          distance = position;
         } else if (phase < travelDuration + pauseDuration) {
-          position = maxStart;
-          movingRight = 1;
+          position = lastIndex;
+          direction = 1;
+          distance = 0;
         } else if (phase < travelDuration * 2 + pauseDuration) {
           const progress = (phase - travelDuration - pauseDuration) / travelDuration;
-          position = (.5 + .5 * Math.cos(Math.PI * progress)) * maxStart;
-          movingRight = 1 - smoothStep(progress / .15);
+          position = (.5 + .5 * Math.cos(Math.PI * progress)) * lastIndex;
+          direction = -1;
+          distance = lastIndex - position;
         } else {
           position = 0;
-          movingRight = 0;
+          direction = -1;
+          distance = 0;
         }
 
-        renderTrail(position, movingRight);
+        renderTrail(position, direction, distance);
         requestAnimationFrame(animateTrail);
       }
 
