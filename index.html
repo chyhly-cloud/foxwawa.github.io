@@ -56,7 +56,7 @@ display:flex;align-items:center;justify-content:space-between;
 padding:14px 18px;pointer-events:all;
 }
 .logo-btn{
-font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2.2px;
+font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2.4px;
 color:#1a1a1a;cursor:pointer;transition:color .4s;background:none;border:none;
 pointer-events:all;
 }
@@ -272,8 +272,8 @@ color:rgba(255,241,236,.64);white-space:nowrap
 .d-btn:hover{background:rgba(0,0,0,.03)}
 @media (max-width:760px){
   #topbar{padding:16px 18px}
-  .logo-btn{font-size:24px}
-  .pile-lbl{font-size:16px;letter-spacing:1.9px}
+  .logo-btn{font-size:27px}
+  .pile-lbl{font-size:15px;letter-spacing:2.3px}
   #toggle{bottom:calc(env(safe-area-inset-bottom,0px) + 10px);padding:16px 30px 16px 20px;gap:14px}
   .sw{width:46px;height:28px;border-radius:14px}
   .sw-knob{top:3px;left:3px;width:22px;height:22px}
@@ -419,7 +419,7 @@ const I18N={
     bio_model_file:'199245_9cm_x1.obj',
     dl:'下载图册',share:'分享',inquiry:'联系',ar_launch:'启动 AR 互动体验',
     img:'图像', comingSoon:'即将推出',
-    cats:{'装置':'装置','新媒体艺术':'新媒体艺术','品牌设计':'品牌设计'},
+    cats:{'装置':'装置','新媒体艺术':'新媒体艺术','品牌设计':'品牌&设计'},
   },
   en:{
     sort:'Sort', scatter:'Scatter',
@@ -437,7 +437,7 @@ const I18N={
     bio_model_file:'199245_9cm_x1.obj',
     dl:'Download',share:'Share',inquiry:'Enquire',ar_launch:'Launch AR Experience',
     img:'Image', comingSoon:'Coming Soon',
-    cats:{'装置':'Installation','新媒体艺术':'New Media Art','品牌设计':'Branding'},
+    cats:{'装置':'Installation','新媒体艺术':'New Media Art','品牌设计':'Brand & Design'},
   },
   ja:{
     sort:'整理', scatter:'散らす',
@@ -455,7 +455,7 @@ const I18N={
     bio_model_file:'199245_9cm_x1.obj',
     dl:'DL',share:'共有',inquiry:'問い合わせ',ar_launch:'AR体験を起動',
     img:'画像', comingSoon:'近日公開',
-    cats:{'装置':'インスタレーション','新媒体艺术':'ニューメディアアート','品牌设计':'ブランドデザイン'},
+    cats:{'装置':'インスタレーション','新媒体艺术':'ニューメディアアート','品牌设计':'ブランド＆デザイン'},
   }
 };
 let lang='zh';
@@ -559,11 +559,14 @@ function getWH(){
   return Math.max(vh+130,760,contentHeight,mobileWorldHeightOverride);
 }
 function sizeWorld(){ world.style.width=getWW()+'px'; world.style.height=getWH()+'px'; }
-function mobileScatterScale(){ return Math.max(.58,Math.min(.66,vp.offsetWidth/590)); }
+function mobileScatterScale(){ return Math.max(.52,Math.min(.59,vp.offsetWidth/650)); }
+function desktopScaleProgress(){ return Math.max(0,Math.min(1,(vp.offsetWidth-768)/360)); }
+function desktopScatterScale(){ return .94+desktopScaleProgress()*.16; }
 function mobilePileScale(){
   const widest=Math.max(...WORKS.map(w=>w.w));
-  return Math.max(.58,Math.min(.68,(vp.offsetWidth-96)/widest));
+  return Math.max(.52,Math.min(.61,(vp.offsetWidth-96)/widest));
 }
+function desktopPileScale(){ return .96+desktopScaleProgress()*.1; }
 function pileOffset(index,count,mobile=isMobileLayout()){
   const center=index-(count-1)/2;
   const spreadBoost=mobile&&count>3?Math.max(.72,4.8/count):1;
@@ -587,7 +590,7 @@ function mobilePileGeometry(ci){
   return{minLeft,maxRight,minTop,maxBottom,labelTop,blockTop:minTop,blockBottom:labelTop+labelHeight};
 }
 function mobilePilePositions(){
-  const geometries=CATS.map((_,ci)=>mobilePileGeometry(ci)),gap=24;
+  const geometries=CATS.map((_,ci)=>mobilePileGeometry(ci)),gap=34;
   const totalHeight=geometries.reduce((sum,g)=>sum+g.blockBottom-g.blockTop,0)+gap*(geometries.length-1);
   let cursor=getWH()/2-totalHeight/2;
   return geometries.map(g=>{
@@ -746,7 +749,7 @@ function scatterAll(){
     const baseScale=mobileScatterScale(),margin=18;
     const configs=WORKS.map((w,i)=>{
       const scaleRandom=seededRandom(hashSeed(`${scatterRunSeed}|${w.t}|mobile-scale-v6`));
-      return{w,i,scale:Math.max(.52,Math.min(.74,baseScale*(.84+scaleRandom()*.3)))};
+      return{w,i,scale:Math.max(.46,Math.min(.66,baseScale*(.84+scaleRandom()*.3)))};
     });
     function makeCandidate(w,sc,random,layoutHeight){
       const rot=(random()-.5)*20,rad=rot*Math.PI/180;
@@ -798,16 +801,14 @@ function scatterAll(){
     }
   }
   function canPlace(x,y,w,h,pad){
-    return placed.every(p=>
-      x+w+pad<p.x||
-      x>p.x+p.w+pad||
-      y+h+pad<p.y||
-      y>p.y+p.h+pad
-    );
+    return placed.every(p=>{
+      const gap=Math.max(p.safePad||0,pad);
+      return x+w+gap<p.x||x>p.x+p.w+gap||y+h+gap<p.y||y>p.y+p.h+gap;
+    });
   }
   function boundsFor(expand=0){
-    const spreadW=Math.min(WW*(isMobile ? .96+expand : .74+expand*.4),isMobile?1080:920);
-    const spreadH=Math.min(WH*(isMobile ? .98+expand : .7+expand*.35),isMobile?1180:720);
+    const spreadW=Math.min(WW*(isMobile ? .96+expand : .88+expand*.4),isMobile?1080:1120);
+    const spreadH=Math.min(WH*(isMobile ? .98+expand : .84+expand*.35),isMobile?1180:820);
     const minX=Math.max(isMobile?8:20,(WW-spreadW)/2);
     const minY=Math.max(isMobile?12:24,(WH-spreadH)/2);
     return{
@@ -817,22 +818,31 @@ function scatterAll(){
       maxY:WH-minY
     };
   }
+  [document.getElementById('bio-btn'),document.querySelector('.lang-switcher'),toggleEl].forEach(control=>{
+    const rect=control.getBoundingClientRect();
+    placed.push({x:camX+rect.left,y:camY+rect.top,w:rect.width,h:rect.height,safePad:18});
+  });
   const items=WORKS.map((w,i)=>({w,i})).sort((a,b)=>(b.w.w*b.w.h)-(a.w.w*a.w.h));
   const result=new Array(WORKS.length);
   items.forEach(({w,i})=>{
-    const triesMax=isMobile?900:240;
+    const sc=isMobile?mobileScatterScale():desktopScatterScale();
+    const triesMax=isMobile?900:1200;
     let placedItem=null;
     const pads=isMobile?[42,34,26,18,10,0]:[24,12,0];
     for(let expandStep=0;expandStep<(isMobile?5:3)&&!placedItem;expandStep++){
       const b=boundsFor(expandStep*.08);
       for(const pad of pads){
         for(let tries=0;tries<triesMax;tries++){
-          const x=b.minX+Math.random()*Math.max(1,b.maxX-b.minX-w.w);
-          const y=b.minY+Math.random()*Math.max(1,b.maxY-b.minY-w.h);
           const rot=(Math.random()-.5)*(isMobile?9:12);
-          if(canPlace(x,y,w.w,w.h,pad)){
-            placed.push({x,y,w:w.w,h:w.h});
-            placedItem={x,y,rot};
+          const rad=rot*Math.PI/180;
+          const boxW=Math.abs(w.w*sc*Math.cos(rad))+Math.abs(w.h*sc*Math.sin(rad));
+          const boxH=Math.abs(w.w*sc*Math.sin(rad))+Math.abs(w.h*sc*Math.cos(rad));
+          const cx=b.minX+boxW/2+Math.random()*Math.max(1,b.maxX-b.minX-boxW);
+          const cy=b.minY+boxH/2+Math.random()*Math.max(1,b.maxY-b.minY-boxH);
+          const boxX=cx-boxW/2,boxY=cy-boxH/2;
+          if(canPlace(boxX,boxY,boxW,boxH,pad)){
+            placed.push({x:boxX,y:boxY,w:boxW,h:boxH});
+            placedItem={x:cx-w.w/2,y:cy-w.h/2,rot,scale:sc};
             break;
           }
         }
@@ -841,10 +851,13 @@ function scatterAll(){
     }
     if(!placedItem){
       const b=boundsFor(isMobile ? .4 : .2);
-      const x=b.minX+Math.random()*Math.max(1,b.maxX-b.minX-w.w);
-      const y=b.minY+Math.random()*Math.max(1,b.maxY-b.minY-w.h);
-      placed.push({x,y,w:w.w,h:w.h});
-      placedItem={x,y,rot:(Math.random()-.5)*(isMobile?8:12)};
+      const rot=(Math.random()-.5)*(isMobile?8:12),rad=rot*Math.PI/180;
+      const boxW=Math.abs(w.w*sc*Math.cos(rad))+Math.abs(w.h*sc*Math.sin(rad));
+      const boxH=Math.abs(w.w*sc*Math.sin(rad))+Math.abs(w.h*sc*Math.cos(rad));
+      const cx=b.minX+boxW/2+Math.random()*Math.max(1,b.maxX-b.minX-boxW);
+      const cy=b.minY+boxH/2+Math.random()*Math.max(1,b.maxY-b.minY-boxH);
+      placed.push({x:cx-boxW/2,y:cy-boxH/2,w:boxW,h:boxH});
+      placedItem={x:cx-w.w/2,y:cy-w.h/2,rot,scale:sc};
     }
     result[i]=placedItem;
   });
@@ -871,7 +884,7 @@ const states=WORKS.map((w,i)=>{
 });
 
 function itemScale(s){
-  if(!isMobileLayout())return 1;
+  if(!isMobileLayout())return s.mode==='pile'?desktopPileScale():s.scatterScale;
   return s.mode==='pile'?mobilePileScale():s.scatterScale;
 }
 function setT(s,sc=itemScale(s)){s.el.style.transform=`rotate(${s.rot}deg) scale(${sc}) perspective(600px) rotateX(${s.lx}deg) rotateY(${s.ly}deg)`;}
