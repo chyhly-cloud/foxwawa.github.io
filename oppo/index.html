@@ -289,6 +289,7 @@
         linear-gradient(180deg, #0a1015 0%, #0b1217 46%, #070c10 100%);
     }
     .hero::after {
+      display: none;
       content: "\2194";
       position: absolute;
       top: calc(var(--band-top) + var(--band-h) - 48px);
@@ -1768,7 +1769,20 @@
       :root { --nav-h: 52px; }
 
       .hero-media { top: calc(var(--nav-h) + 5vh); max-height: 26vh; }
-      .hero-inner { padding-top: calc(var(--nav-h) + clamp(150px, 26vh, 300px)); }
+      .hero-inner {
+        padding-top: calc(var(--nav-h) + clamp(150px, 26vh, 300px));
+        padding-bottom: clamp(72px, 10vh, 112px);
+      }
+      .hero-kicker {
+        max-width: 25em;
+        font-family: var(--sans);
+        font-weight: 600;
+        font-size: clamp(12px, 3vw, 14px);
+        line-height: 1.6;
+        letter-spacing: .1em;
+        word-spacing: 0;
+        text-wrap: balance;
+      }
       .hero-ttl { font-size: clamp(50px, 15vw, 82px); }
       .hero-sub { font-size: clamp(17px, 4.6vw, 24px); }
 
@@ -1923,6 +1937,13 @@
       text-align: justify;
       text-justify: inter-ideograph;
       text-wrap: pretty;
+    }
+
+    .lang-zh .hero-kicker,
+    .lang-en .hero-kicker,
+    .lang-ja .hero-kicker {
+      text-align: left;
+      text-justify: auto;
     }
 
     .lang-zh .insp-pair p,

@@ -937,6 +937,7 @@ p{margin:0}
 .frame-counter{position:absolute;z-index:600;left:50%;bottom:2.5%;transform:translateX(-50%);
   font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--muted)}
 .frame-counter b{color:var(--ink);font-weight:700}
+.chapter-swipe-hint{display:none}
 
 /* ── FABRICATION — a field you drag through, endless in both axes ── */
 /* horizontal only — a vertical swipe still scrolls the page */
@@ -960,19 +961,6 @@ p{margin:0}
   box-shadow:0 0 0 rgba(73,167,216,0);will-change:opacity,box-shadow}
 @media(max-width:760px){
   .coverflow{height:320px}.cf-item{top:44%;width:clamp(230px,74vw,320px)}
-  .chapter-story{height:auto!important;margin-top:clamp(1.5rem,6vw,2.2rem)}
-  .chapter-sticky{position:relative;top:auto;height:auto;overflow:visible}
-  .chapter-stage{position:relative;inset:auto;display:flex;gap:.75rem;width:100%;overflow-x:auto;
-    padding:0 0 2.7rem;scroll-snap-type:x mandatory;scroll-padding-inline:0;overscroll-behavior-x:contain;
-    -webkit-overflow-scrolling:touch;scrollbar-width:none}
-  .chapter-stage::-webkit-scrollbar{display:none}
-  .chapter-frame,.chapter-frame.is-active{position:relative;left:auto;top:auto;flex:0 0 calc(100% - 1.25rem);
-    width:auto;visibility:visible!important;opacity:1!important;transform:none!important;pointer-events:auto!important;
-    scroll-snap-align:start;scroll-snap-stop:always}
-  .chapter-frame img{width:100%;height:clamp(250px,72vw,390px);object-fit:contain;background:rgba(255,255,255,.22);
-    box-shadow:0 14px 34px -22px rgba(13,15,17,.55)}
-  .frame-counter{display:block;left:auto;right:.55rem;bottom:.55rem;transform:none;padding:.28rem .5rem;
-    background:rgba(233,236,238,.9);backdrop-filter:blur(6px);font-size:12px}
   /* the run is authored at desktop scale — shrink it so a phone sees a
      handful of pictures at once instead of one cropped one */
   .flowfield{height:440px;--ffk:.52}
@@ -1303,41 +1291,35 @@ p{margin:0}
   .ff-drag-trail{gap:8px}
   .ff-drag-trail>span{width:4px;height:4px;flex-basis:4px}
 
-  /* Exhibition: on a phone this becomes a focused horizontal viewer.  The
-     following frame remains visible at the edge, echoing the image browser in
-     我思故我在 without importing the desktop stack into a narrow viewport. */
-  .chapter-story{height:auto!important;margin-top:1.75rem}
-  .chapter-sticky{position:relative;top:auto;height:auto;overflow:visible}
-  .chapter-stage{
-    position:relative;inset:auto;display:flex;align-items:stretch;
-    gap:clamp(.7rem,3vw,1rem);width:100%;overflow-x:auto;overflow-y:hidden;
-    padding:0 0 3.2rem;
-    scroll-snap-type:x mandatory;scroll-padding-inline:0;
-    overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;
-    scrollbar-width:none;touch-action:pan-x pan-y
+  /* Exhibition: mobile keeps the desktop's scroll-driven, sticky stack.
+     Only the frame scale changes; it is not a separate horizontal gallery. */
+  .chapter-story{height:var(--chapter-height,210vh)!important;margin-top:1.6rem}
+  .chapter-sticky{
+    position:sticky;top:var(--nav-h,56px);height:calc(100svh - var(--nav-h,56px));
+    overflow:hidden;padding-bottom:0
   }
-  .chapter-stage::-webkit-scrollbar{display:none}
-  .chapter-frame,.chapter-frame.is-active{
-    position:relative;left:auto;top:auto;
-    flex:0 0 calc(100% - clamp(1.75rem,7vw,2.5rem));width:auto;
-    height:clamp(28rem,64vh,46rem);
-    height:clamp(28rem,64svh,46rem);
-    display:grid;place-items:center;overflow:hidden;
-    visibility:visible!important;opacity:1!important;transform:none!important;
-    pointer-events:auto!important;scroll-snap-align:start;scroll-snap-stop:always;
-    background:rgba(255,255,255,.34)
+  .chapter-stage{
+    position:absolute;inset:0;display:block;width:100%;height:100%;overflow:hidden;
+    touch-action:pan-y;cursor:default;outline:none
+  }
+  .chapter-frame,.chapter-frame.is-active,.chapter-frame.is-next-1,.chapter-frame.is-next-2{
+    position:absolute;left:50%;top:47%;
+    width:min(94vw,calc((100svh - var(--nav-h,56px) - 2.5rem)*var(--frame-ratio,1.55)));
+    max-width:calc(100% - 2rem);height:auto;display:block;padding:0;border:0;
+    visibility:hidden;opacity:0;pointer-events:none;background:none;transition:none
   }
   .chapter-frame img{
-    display:block;width:100%;height:100%;object-fit:contain;background:transparent;
-    box-shadow:0 16px 34px -26px rgba(13,15,17,.48)
+    display:block;width:100%;height:auto;max-height:calc(100svh - var(--nav-h,56px) - 3.5rem);
+    object-fit:contain;background:transparent;
+    box-shadow:0 16px 34px -26px rgba(13,15,17,.42)
   }
   .frame-counter{
-    position:absolute!important;z-index:650;left:auto!important;right:0!important;
-    bottom:.25rem!important;transform:none!important;display:block!important;
-    width:max-content;margin:0;padding:.5rem .65rem;
-    background:rgba(239,242,244,.94);backdrop-filter:blur(7px);
+    position:absolute!important;z-index:650;left:50%!important;right:auto!important;
+    bottom:1rem!important;transform:translateX(-50%)!important;display:block!important;
+    width:max-content;margin:0;padding:0;background:none;backdrop-filter:none;
     font-size:13px;letter-spacing:1.5px
   }
+  .chapter-swipe-hint{display:none!important}
 
   .gal{columns:2 130px;column-gap:.75rem}
   .film-bar{padding-inline:var(--gutter);align-items:flex-start;flex-wrap:wrap}
@@ -2295,7 +2277,7 @@ p{margin:0}
       <h2 class="h-sec" id="eh-title" data-i18n="exhibitionTitle">決められた軌道上で、身体は動き続ける</h2>
       <div class="q-concept"><p class="lead" data-i18n="exhibitionIntro">三つの軌道は一つの空間に重なり、分解された身体部位はそれぞれの経路を循環する。</p></div>
       <div class="chapter-story" style="--frame-count:16" data-chapter>
-        <div class="chapter-sticky"><div class="chapter-stage">
+        <div class="chapter-sticky"><div class="chapter-stage" tabindex="0" aria-label="展览图片浏览">
           <button class="chapter-frame is-active" data-frame type="button"><img src="exhibition-1.jpg" alt="" loading="lazy"></button>
           <button class="chapter-frame is-next-1" data-frame type="button"><img src="exhibition-6.jpg" alt="" loading="lazy"></button>
           <button class="chapter-frame is-next-2" data-frame type="button"><img src="exhibition-3.jpg" alt="" loading="lazy"></button>
@@ -2311,9 +2293,10 @@ p{margin:0}
           <button class="chapter-frame" data-frame type="button"><img src="exhibition-15.jpg" alt="" loading="lazy"></button>
           <button class="chapter-frame" data-frame type="button"><img src="exhibition-12.jpg" alt="" loading="lazy"></button>
           <button class="chapter-frame" data-frame type="button"><img src="exhibition-16.jpg" alt="" loading="lazy"></button>
-          <button class="chapter-frame" data-frame type="button"><img src="exhibition-13.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame" data-frame data-mobile-first type="button"><img src="exhibition-13.jpg" alt="" loading="lazy"></button>
         </div>
           <span class="frame-counter" translate="no"><b data-frame-current>01</b> / 16</span>
+          <span class="chapter-swipe-hint" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
         </div>
       </div>
     </div>
@@ -2647,76 +2630,95 @@ const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)");
   window.addEventListener("load",layout,{once:true});
 })();
 
-/* ═══ EXHIBITION — scroll-driven stacked frames (ported from 我思故我在) ═══ */
+/* ═══ EXHIBITION — one scroll-driven stacked-frame system at every viewport ═══ */
 (function(){
   const stories=[...document.querySelectorAll("[data-chapter]")].map(story=>({
     story, frames:[...story.querySelectorAll("[data-frame]")],
+    mobileFirst:story.querySelector("[data-mobile-first]"),
     stage:story.querySelector(".chapter-stage"),
     counter:story.querySelector("[data-frame-current]")
   }));
   if(!stories.length)return;
-  const mobileChapter=window.matchMedia("(max-width:760px)");
+  const mobileFirstQuery=window.matchMedia("(max-width:760px)");
   let rq=0;
   const req=()=>{if(!rq)rq=requestAnimationFrame(render)};
-  stories.forEach(({story,frames,stage})=>{
-    story.style.setProperty("--chapter-height",Math.max(200,130+frames.length*13)+"vh");
-    frames.forEach(f=>{
-      const im=f.querySelector("img");
+  stories.forEach(({story,frames})=>{
+    story.style.setProperty("--chapter-height",Math.max(210,136+frames.length*14)+"vh");
+    frames.forEach(frame=>{
+      const im=frame.querySelector("img");
       const syncRatio=()=>{
         if(im&&im.naturalWidth&&im.naturalHeight)
-          f.style.setProperty("--frame-ratio",(im.naturalWidth/im.naturalHeight).toFixed(4));
+          frame.style.setProperty("--frame-ratio",(im.naturalWidth/im.naturalHeight).toFixed(4));
       };
-      if(im){ if(im.complete)syncRatio(); else im.addEventListener("load",syncRatio,{once:true}); }
-      f.addEventListener("click",()=>{ if(im)openZoom(im.currentSrc||im.src) });
+      if(im){if(im.complete)syncRatio();else im.addEventListener("load",syncRatio,{once:true});}
+      frame.addEventListener("click",()=>{
+        if(frame.classList.contains("is-active")&&im)openZoom(im.currentSrc||im.src);
+      });
     });
-    stage?.addEventListener("scroll",req,{passive:true});
   });
-  function renderMobile(frames,stage,counter){
-    const centre=(stage?.scrollLeft||0)+(stage?.clientWidth||1)/2;
-    let index=0,best=Infinity;
-    frames.forEach((frame,i)=>{
-      frame.style.removeProperty("visibility");
-      frame.style.removeProperty("opacity");
-      frame.style.removeProperty("transform");
-      frame.style.removeProperty("z-index");
-      frame.style.removeProperty("pointer-events");
-      frame.tabIndex=0;
-      const d=Math.abs(frame.offsetLeft+frame.offsetWidth/2-centre);
-      if(d<best){best=d;index=i}
-    });
-    frames.forEach((frame,i)=>frame.classList.toggle("is-active",i===index));
-    if(counter)counter.textContent=String(index+1).padStart(2,"0");
-  }
   function render(){
     rq=0;
     const navH=document.getElementById("site-nav")?.offsetHeight||56;
     const viewport=Math.max(1,window.innerHeight-navH);
-    stories.forEach(({story,frames,stage,counter})=>{
+    stories.forEach(({story,frames,mobileFirst,stage,counter})=>{
       if(!frames.length)return;
-      if(mobileChapter.matches){renderMobile(frames,stage,counter);return}
-      if(reducedMotion.matches){frames.forEach(f=>{f.style.cssText="";f.classList.add("is-active")});return}
+      // The mobile sequence can begin with a more legible establishing image,
+      // while desktop keeps the original editorial order. Both still use the
+      // same scroll-driven stacked-frame renderer.
+      const orderedFrames=mobileFirstQuery.matches&&mobileFirst
+        ? [mobileFirst,...frames.filter(frame=>frame!==mobileFirst)]
+        : frames;
+      if(reducedMotion.matches){
+        orderedFrames.forEach((frame,i)=>{
+          frame.style.removeProperty("transform");
+          frame.style.removeProperty("opacity");
+          frame.style.removeProperty("visibility");
+          frame.style.removeProperty("z-index");
+          frame.style.removeProperty("pointer-events");
+          frame.style.removeProperty("filter");
+          frame.classList.toggle("is-active",i===0);
+          frame.classList.remove("is-next-1","is-next-2");
+          frame.removeAttribute("tabindex");
+        });
+        if(counter)counter.textContent="01";
+        return;
+      }
       const rect=story.getBoundingClientRect();
       if(rect.bottom<-viewport*.5||rect.top>window.innerHeight+viewport*.5)return;
       const travel=Math.max(1,rect.height-viewport);
       const raw=Math.min(1,Math.max(0,(navH-rect.top)/travel));
-      const pos=raw*(frames.length-1);
-      const index=Math.min(frames.length-1,Math.round(pos));
-      const sw=stage?.clientWidth||1280, sh=stage?.clientHeight||660;
-      const stepX=Math.max(72,Math.min(142,sw*.105)), stepY=Math.max(42,Math.min(88,sh*.11));
-      frames.forEach((frame,i)=>{
-        const rel=i-pos, dist=Math.abs(rel), ring=Math.abs(i-index), focused=i===index;
-        const visible=i>=index-4&&i<=index+5;
+      const position=raw*(orderedFrames.length-1);
+      const index=Math.min(orderedFrames.length-1,Math.round(position));
+      const stageWidth=stage?.clientWidth||1280;
+      const stageHeight=stage?.clientHeight||660;
+      const stepX=Math.max(72,Math.min(142,stageWidth*.105));
+      const stepY=Math.max(42,Math.min(88,stageHeight*.11));
+      const baseX=stageWidth>760?stageWidth*.025:0;
+      orderedFrames.forEach((frame,frameIndex)=>{
+        const relative=frameIndex-position;
+        const distance=Math.abs(relative);
+        const ring=Math.abs(frameIndex-index);
+        const focused=frameIndex===index;
+        const visible=frameIndex>=index-4&&frameIndex<=index+5;
         frame.classList.toggle("is-active",focused);
+        frame.classList.toggle("is-next-1",frameIndex===index+1);
+        frame.classList.toggle("is-next-2",frameIndex===index+2);
         frame.style.pointerEvents=focused?"auto":"none";
         frame.tabIndex=focused?0:-1;
-        if(!visible){frame.style.visibility="hidden";frame.style.opacity="0";return}
-        const sep=Math.sign(rel)*Math.min(1,dist/.8)*Math.max(28,sw*.045);
-        const x=rel*stepX+sep, y=rel*-stepY;
-        const scale=focused?1:Math.max(.78,1-dist*.045);
-        const op=focused?1:Math.max(.05,.22-dist*.03);
+        if(!visible){
+          frame.style.visibility="hidden";
+          frame.style.opacity="0";
+          return;
+        }
+        const separation=Math.sign(relative)*Math.min(1,distance/.8)*Math.max(28,stageWidth*.045);
+        const x=baseX+relative*stepX+separation;
+        const y=relative*-stepY;
+        const scale=focused?1:Math.max(.78,1-distance*.045);
+        const opacity=focused?1:Math.max(.035,.18-distance*.025);
         frame.style.visibility="visible";
         frame.style.transform=`translate(-50%,-50%) translate(${x}px,${y}px) scale(${scale})`;
-        frame.style.opacity=String(op);
+        frame.style.opacity=String(opacity);
+        frame.style.removeProperty("filter");
         frame.style.zIndex=focused?"500":String(190-ring);
       });
       if(counter)counter.textContent=String(index+1).padStart(2,"0");

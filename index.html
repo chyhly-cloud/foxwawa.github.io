@@ -1008,31 +1008,31 @@ if(bioViewer){
       orient:[-8,4,-84],
       orbit:[-18,94],
       compose:{targetOffsetX:-0.08,targetOffsetY:0.06,targetOffsetZ:0,frameX:0.08,frameY:0.52,distanceScale:0.042},
-      scan:{scanDirection:-1,start:0.58,end:-0.62}
+      scan:{scanDirection:-1,start:0.12,end:-0.62}
     },
     {
       orient:[8,-2,-92],
       orbit:[12,95],
       compose:{targetOffsetX:-0.06,targetOffsetY:0.05,targetOffsetZ:0,frameX:0.04,frameY:0.46,distanceScale:0.038},
-      scan:{scanDirection:-1,start:0.62,end:-0.58}
+      scan:{scanDirection:1,start:-0.12,end:0.58}
     },
     {
       orient:[-12,4,-72],
       orbit:[-6,93],
       compose:{targetOffsetX:-0.09,targetOffsetY:0.08,targetOffsetZ:0,frameX:0.1,frameY:0.58,distanceScale:0.044},
-      scan:{scanDirection:-1,start:0.60,end:-0.64}
+      scan:{scanDirection:-1,start:0.14,end:-0.64}
     },
     {
       orient:[14,5,-98],
       orbit:[24,95],
       compose:{targetOffsetX:-0.05,targetOffsetY:0.07,targetOffsetZ:0,frameX:0.02,frameY:0.42,distanceScale:0.036},
-      scan:{scanDirection:-1,start:0.64,end:-0.60}
+      scan:{scanDirection:1,start:-0.14,end:0.60}
     },
     {
       orient:[-10,-2,-82],
       orbit:[-24,94],
       compose:{targetOffsetX:-0.07,targetOffsetY:0.06,targetOffsetZ:0,frameX:0.06,frameY:0.5,distanceScale:0.040},
-      scan:{scanDirection:-1,start:0.59,end:-0.63}
+      scan:{scanDirection:-1,start:0.10,end:-0.63}
     }
   ];
 
@@ -1220,6 +1220,17 @@ if(bioViewer){
     bioViewer.setAttribute('camera-target',`${formatM(values[0])} ${formatM(values[1])} ${formatM(values[2])}`);
   }
 
+  function applyViewerScanStart(){
+    const bounds=getModelBounds();
+    if(!activePose||!bounds)return;
+    const baseTarget=composeViewerPose(activePose).target;
+    applyViewerTarget([
+      baseTarget[0],
+      bounds.center.y+bounds.dimensions.y*activePose.scan.start,
+      baseTarget[2]
+    ]);
+  }
+
   function applyViewerFieldOfView(value){
     bioViewer.setAttribute('field-of-view',formatDeg(value));
   }
@@ -1237,7 +1248,7 @@ if(bioViewer){
     applyViewerTransform(composedPose.frame);
   }
 
-  function stabilizeViewerPose(){
+  function stabilizeViewerPose(useScanStart=false){
     requestAnimationFrame(()=>{
       if(!activePose) return;
       const composedPose=composeViewerPose(activePose);
@@ -1245,6 +1256,7 @@ if(bioViewer){
       applyViewerOrientation(activePose.orientation);
       applyViewerOrbit(composedPose.orbit);
       applyViewerTarget(composedPose.target);
+      if(useScanStart)applyViewerScanStart();
       bioViewer.jumpCameraToGoal?.();
       applyViewerTransform(composedPose.frame);
     });
@@ -1269,14 +1281,14 @@ if(bioViewer){
     const elapsed=Math.max(0,time-motionStartTime);
     const settle=Math.min(1,elapsed/900);
     if(motion&&bounds){
-      const scanUnit=(Math.sin(elapsed*motion.scanSpeed-Math.PI/2)+1)*.5;
+      const scanProgress=elapsed*motion.scanSpeed*.45;
       const crossWave=Math.sin(elapsed*(motion.scanSpeed*.62)+motion.lookPhase);
       const microX=Math.sin(time*motion.driftSpeed[0]+motion.driftPhase[0])*motion.driftXRange;
       const microY=Math.cos(time*motion.driftSpeed[1]+motion.driftPhase[1])*motion.driftYRange;
-      const verticalRun=activePose.scan.start+(activePose.scan.end-activePose.scan.start)*scanUnit;
+      const verticalRun=activePose.scan.start+(activePose.scan.end-activePose.scan.start)*scanProgress;
       applyViewerTarget([
         baseTarget[0]+bounds.dimensions.x*(crossWave*motion.lookXRange+microX)*settle,
-        bounds.center.y+bounds.dimensions.y*(verticalRun+microY*activePose.scan.scanDirection)*settle,
+        bounds.center.y+bounds.dimensions.y*(verticalRun+microY*activePose.scan.scanDirection),
         baseTarget[2]
       ]);
     }
@@ -1324,10 +1336,12 @@ if(bioViewer){
   bioViewer.addEventListener('load',()=>{
     modelBounds=null;
     tuneViewerMaterial();
-    bioViewer.classList.add('ready');
     setStatus('');
     applyViewerPose(false);
-    stabilizeViewerPose();
+    applyViewerScanStart();
+    bioViewer.jumpCameraToGoal?.();
+    stabilizeViewerPose(true);
+    bioViewer.classList.add('ready');
     if(bio.classList.contains('open')||motionWanted){
       startViewerMotion();
     }
@@ -1352,7 +1366,9 @@ if(bioViewer){
     }
     ensureModelRequested();
     applyViewerPose(false);
-    stabilizeViewerPose();
+    applyViewerScanStart();
+    bioViewer.jumpCameraToGoal?.();
+    stabilizeViewerPose(true);
     motionStartTime=performance.now();
     startViewerMotion();
   };
