@@ -21,8 +21,7 @@
      过缝隙时页面换的是**色温**，不是装饰——你确实换了一张地图。
    · 暗底只留给「挣扎／外来入侵」一段。证据不该被气氛包装，
      所以调研的数字留在能读的亮底上。
-   · 缝隙不是版面家具，是三次事件：切开 hero 照片、落入地图 02、
-     设计策略里那一步被定义。
+   · 缝隙不是版面家具，是两次事件：落入地图 02、在设计策略里被定义。
    · 酸性绿 #84bd2a 是 SeeD 在说话（看见）。它太浅不能当正文色，
      按品牌海报的用法当色块、深色字压在上面。
    · 展签＝展览自己的图形物件（吊挂白板、粗黑标题、中英对照），
@@ -87,6 +86,25 @@ ol,ul{list-style:none}
 .body-t{font-family:var(--disp);font-size:var(--type-body);line-height:1.9;color:var(--ink2);text-wrap:pretty}
 .body-t + .body-t{margin-top:1.05rem}
 .body-t b,.body-t strong{color:var(--ink);font-weight:500}
+/* 正文统一两端对齐；标题、导航和编号保留原有排版节奏。 */
+.body-t,
+.lead-t,
+.concept-quote,
+.inspiration-copy p:not(.insp-lead),
+.gate-note,
+.big-stat + p,
+.rows p,
+.zone p,
+.fig span,
+.case .sum,
+.case-copy p,
+.flow p,
+.think p,
+.crack-def li:not(.see),
+.steps p,
+.ex-copy .body-t{
+  text-align:justify;
+}
 .mono-label{font-family:var(--mono);font-size:var(--type-meta);line-height:1.5;letter-spacing:.14em;
   text-transform:uppercase;font-weight:700;color:var(--seed-t)}
 .mono-note{font-family:var(--mono);font-size:var(--type-meta);line-height:1.6;letter-spacing:.1em;color:var(--dim)}
@@ -136,7 +154,7 @@ ol,ul{list-style:none}
 .beat-flow{font-family:var(--mono);font-size:var(--type-meta);letter-spacing:.12em;text-transform:uppercase;
   color:var(--seed-t);text-align:right;white-space:nowrap}
 
-/* ── HERO：缝隙第一次出现 —— 照片被切开 ──────────────── */
+/* ── HERO ───────────────────────────────────────────── */
 .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;
   background:var(--under);color:#fff;overflow:hidden}
 .hero-plate{position:absolute;inset:0;z-index:0}
@@ -144,10 +162,6 @@ ol,ul{list-style:none}
   filter:saturate(.8) contrast(1.02) brightness(.84)}
 .hero-plate::after{content:"";position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(28,24,21,.6),rgba(28,24,21,.24) 24%,rgba(28,24,21,.64) 56%,rgba(28,24,21,.97))}
-.hero-cut{position:absolute;inset:0;z-index:1;pointer-events:none}
-.hero-cut i{position:absolute;top:0;bottom:0;left:37%;width:13px;background:var(--under);
-  box-shadow:0 0 26px 6px rgba(28,24,21,.72),
-             inset 1px 0 0 rgba(255,252,246,.16), inset -1px 0 0 rgba(255,252,246,.16)}
 .hero-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;
   padding:calc(var(--nav-h) + 7vh) var(--pad) clamp(4.5rem,11vh,7rem)}
 .hero-tick{width:38px;height:3px;background:var(--seed);margin-bottom:1.4rem}
@@ -162,8 +176,6 @@ ol,ul{list-style:none}
 .hero-show em{font-style:normal;color:var(--seed)}
 .hero-show small{display:block;margin-top:.7rem;font-family:var(--mono);font-size:var(--type-meta);
   letter-spacing:.1em;color:rgba(255,252,246,.5)}
-.hero-lede{margin-top:1.5rem;max-width:40em;font-family:var(--disp);font-size:var(--type-caption);
-  line-height:1.9;color:rgba(255,252,246,.62)}
 .hero-scroll{position:absolute;left:50%;bottom:1.4rem;transform:translateX(-50%);z-index:3;
   display:flex;flex-direction:column;align-items:center;gap:.5rem;
   font-family:var(--mono);font-size:var(--type-meta);letter-spacing:2px;text-transform:uppercase;
@@ -176,6 +188,7 @@ ol,ul{list-style:none}
 /* 中文限宽用 em 不用 ch：ch 是「0」的宽度，汉字会被算成两倍字数 */
 .premise-lead{font-family:var(--serif);font-weight:400;font-size:clamp(1.5rem,4.2vw,3.2rem);
   line-height:1.42;letter-spacing:-.015em;color:var(--ink);max-width:15em}
+.concept-intro{max-width:44em;margin-bottom:clamp(2.8rem,6vw,5rem)}
 .concept-body{margin-top:clamp(2.2rem,4.5vw,3.4rem)}
 .concept-quote{font-family:var(--serif);font-size:clamp(1.05rem,1.7vw,1.45rem);line-height:1.85;
   color:var(--ink);letter-spacing:.005em}
@@ -222,7 +235,7 @@ ol,ul{list-style:none}
 .spec-v{font-family:var(--mono);font-size:var(--type-meta);letter-spacing:.06em;color:var(--ink)}
 
 
-/* ── 落入地图 02：缝隙第二次出现 ────────────────────── */
+/* ── 落入地图 02：缝隙第一次出现 ────────────────────── */
 .gate{background:var(--under);color:#fff;padding:clamp(3.4rem,9vh,6.5rem) 0;position:relative;overflow:hidden}
 .gate::before{content:"";position:absolute;left:37%;top:0;bottom:0;width:13px;background:var(--earth);
   box-shadow:0 0 30px 8px rgba(242,239,232,.16)}
@@ -437,7 +450,6 @@ ol,ul{list-style:none}
 }
 @media(max-width:860px){
   .duo,.loss-foot{grid-template-columns:minmax(0,1fr);row-gap:1.1rem}
-  .hero-cut i{left:auto;right:7%;width:9px}
   .gate::before{left:auto;right:7%;width:9px}
   .gate .wrap>*{margin-left:0;padding-right:14%}
 }
@@ -485,19 +497,17 @@ ol,ul{list-style:none}
 
 <main id="page">
 
-<!-- ══════════ HERO —— 缝隙第一次出现：照片被切开 ══════════ -->
+<!-- ══════════ HERO ══════════ -->
 <header class="hero">
   <div class="hero-plate">
     <img src="derived/hero.webp" alt="SeeD 展览现场：白色模块化桌子与植物装置在展厅中排开，背景是红砖墙与吊挂的透明展签" fetchpriority="high" width="2400" height="1600">
   </div>
-  <div class="hero-cut" aria-hidden="true"><i></i></div>
   <div class="hero-inner">
     <div class="hero-tick"></div>
     <p class="hero-kicker" data-i18n="heroKicker">2025 / 品牌设计 · 展览设计</p>
     <h1 class="hero-ttl">SeeD</h1>
     <p class="hero-sub" data-i18n="heroSub">深圳展览项目 / 山海艺术节</p>
-    <p class="hero-show" data-i18n="heroShow">深圳风景，于缝隙间，<em>看见山海</em>。</p>
-    <p class="hero-lede" data-i18n="heroLede">本次展览以消失的生物为切入点，以「缝隙之间」为核心视角，窥探深圳在城市发展过程中本土生物的变化。缝隙之间，承载了关于这座城市的人文故事，也生出了人与自然和谐共生的未来展望。</p>
+    <p class="hero-show" data-i18n="heroShow">深圳风景，<em>看见山海</em>。</p>
   </div>
   <div class="hero-scroll" aria-hidden="true"><span class="dn"></span><span>Scroll</span></div>
 </header>
@@ -509,6 +519,8 @@ ol,ul{list-style:none}
       <span class="beat-title" data-i18n="conceptTitle">概念</span>
       <span class="beat-flow">CONCEPT</span>
     </div>
+
+    <p class="concept-intro body-t rv" data-i18n="heroLede">本次展览以消失的生物为切入点，以「缝隙之间」为核心视角，窥探深圳在城市发展过程中本土生物的变化。缝隙之间，承载了关于这座城市的人文故事，也生出了人与自然和谐共生的未来展望。</p>
 
     <p class="premise-lead rv" data-i18n="premiseLead">每一座城市，<br>都由两层<span class="mark">地图</span>制成。</p>
 
@@ -551,7 +563,7 @@ ol,ul{list-style:none}
   </div>
 </section>
 
-<!-- ══════════ 落入地图 02 —— 缝隙第二次出现。
+<!-- ══════════ 落入地图 02 —— 缝隙第一次出现。
      两层地图的定义在概念的引文里已经由原文说完了，这里只负责「进去」。 ══════════ -->
 <section class="gate">
   <div class="wrap">
@@ -900,7 +912,7 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       "navBack":"Back",
       "heroKicker":"2025 / BRAND DESIGN · EXHIBITION DESIGN",
       "heroSub":"SHENZHEN EXHIBITION PROJECT / MOUNTAIN-SEA ART FESTIVAL",
-      "heroShow":"Shenzhen Scenery, Through Cracks, <em>See Mountains and Seas</em>.",
+      "heroShow":"Shenzhen Scenery, <em>See Mountains and Seas</em>.",
       "heroLede":"This exhibition takes vanishing organisms as its point of entry and “between the cracks” as its central perspective, looking into how Shenzhen’s native life has changed through the city’s development. Between the cracks lie the human stories of this city, and from them grows a vision of people and nature living well together.",
       "conceptTitle":"Concept",
       "premiseLead":"Every city is made<br>of two <span class=\"mark\">maps</span>.",
@@ -1077,7 +1089,7 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       "navBack":"戻る",
       "heroKicker":"2025 / ブランドデザイン · 展示デザイン",
       "heroSub":"深セン展示プロジェクト / 山海芸術祭",
-      "heroShow":"深センの風景、隙間から、<em>山と海を見る</em>。",
+      "heroShow":"深センの風景、<em>山と海を見る</em>。",
       "heroLede":"本展は失われゆく生きものを切り口に、「隙間のあいだ」を中心的な視点として、都市の発展のなかで深センの在来の生きものがどう変わってきたかを覗き込む。隙間のあいだには、この都市の人文的な物語が積み重なり、人と自然が共に生きる未来への展望が芽生えている。",
       "conceptTitle":"コンセプト",
       "premiseLead":"どの都市も、<br>二枚の<span class=\"mark\">地図</span>でできている。",

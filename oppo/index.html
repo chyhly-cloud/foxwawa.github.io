@@ -42,12 +42,16 @@
       --hair-ink: rgba(255, 255, 255, .13);
       --hair-ink-strong: rgba(255, 255, 255, .26);
 
-      --header-h: 66px;
+      --nav-h: 56px;
       --page-pad: clamp(22px, 5vw, 78px);
       --max: 1420px;
       --sec-y: clamp(104px, 13vw, 200px);
+      --type-meta: 14px;
+      --type-subhead: clamp(19px, 1.42vw, 24px);
       /* 满幅区块内的文字回到内容列左缘 */
       --edge: max(var(--page-pad), calc((100vw - var(--max)) / 2));
+      --band-top: calc(var(--nav-h) + 5vh);
+      --band-h: clamp(210px, 40vh, 440px);
       --gap: clamp(18px, 2.4vw, 40px);
 
       --sans: "Helvetica Neue", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
@@ -83,6 +87,43 @@
     :focus-visible { outline: 1px solid var(--jade); outline-offset: 5px; }
     ::selection { background: var(--jade); color: #03130b; }
 
+    /* ---------- 正文两端对齐 ----------
+       只作用于成段的正文；标题保持右侧自然参差，
+       否则两行标题会被强行拉满，出现大字距。
+       西文开启断词，避免窄栏出现「河流」空白。 */
+    .hero-lede,
+    .section-intro,
+    .concept-lead-paragraph,
+    .concept-body,
+    .inspiration-body,
+    .philosophy-body,
+    .chain-body,
+    .trait-body,
+    .project-intro,
+    .design-step-body,
+    .process-note-body,
+    .comparison td {
+      text-align: justify;
+      text-justify: inter-ideograph;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+    }
+    /* 中日文不断词 */
+    .lang-zh .hero-lede, .lang-ja .hero-lede,
+    .lang-zh .section-intro, .lang-ja .section-intro,
+    .lang-zh .concept-lead-paragraph, .lang-ja .concept-lead-paragraph,
+    .lang-zh .concept-body, .lang-ja .concept-body,
+    .lang-zh .inspiration-body, .lang-ja .inspiration-body,
+    .lang-zh .philosophy-body, .lang-ja .philosophy-body,
+    .lang-zh .chain-body, .lang-ja .chain-body,
+    .lang-zh .trait-body, .lang-ja .trait-body,
+    .lang-zh .project-intro, .lang-ja .project-intro,
+    .lang-zh .design-step-body, .lang-ja .design-step-body,
+    .lang-zh .process-note-body, .lang-ja .process-note-body,
+    .lang-zh .comparison td, .lang-ja .comparison td {
+      hyphens: manual; -webkit-hyphens: manual;
+    }
+
     /* ---------- 排印基元 ---------- */
     .section-kicker,
     .concept-label,
@@ -105,8 +146,7 @@
     .map-node small,
     .map-center small,
     .footer-meta,
-    .table-hint,
-    figcaption {
+    .table-hint {
       font-family: var(--mono);
       font-weight: 650;
       font-size: 10px;
@@ -117,7 +157,6 @@
 
     /* 等宽字体不含汉字：中日文标签改用无衬线并放大，
        避免 10px 的汉字在宽轨距下失去可读性 */
-    .lang-zh .hero-meta dt, .lang-ja .hero-meta dt,
     .lang-zh .concept-point small, .lang-ja .concept-point small,
     .lang-zh .chain-label, .lang-ja .chain-label,
     .lang-zh .equation-sub, .lang-ja .equation-sub,
@@ -163,133 +202,69 @@
     /* ============================================================
        页眉
        ============================================================ */
-    .site-header {
+    /* ---------- 顶栏（与 dialogue / gm / seed 等页一致：只有返回与语言） ---------- */
+    .site-nav {
       position: fixed;
-      z-index: 1000;
-      inset: 0 0 auto;
-      height: var(--header-h);
+      inset: 0 0 auto 0;
+      z-index: 500;
+      height: var(--nav-h);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      padding: 0 var(--edge);
       color: #fff;
-      transition: color .5s ease, background-color .5s ease, backdrop-filter .5s ease;
+      border-bottom: 1px solid transparent;
+      transition: background .45s, border-color .45s, color .45s, backdrop-filter .45s;
     }
-    .site-header::after {
-      content: "";
-      position: absolute;
-      inset: auto 0 0;
-      height: 1px;
-      background: currentColor;
-      opacity: .16;
-      transition: opacity .5s ease;
-    }
-    .site-header.is-solid {
+    .site-nav.solid {
       background: rgba(242, 240, 234, .86);
-      backdrop-filter: blur(20px) saturate(1.4);
-      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border-bottom-color: var(--hair);
       color: var(--text);
     }
-    .site-header.is-solid[data-ground="dark"] {
+    /* 本页明暗场交替，暗场章节下顶栏跟着翻色 */
+    .site-nav.solid[data-ground="dark"] {
       background: rgba(10, 16, 19, .78);
+      border-bottom-color: var(--hair-ink);
       color: var(--on-ink);
     }
 
-    .header-inner {
-      width: min(100%, var(--max));
-      height: 100%;
-      margin: 0 auto;
-      padding: 0 var(--page-pad);
-      display: grid;
-      grid-template-columns: minmax(200px, auto) 1fr auto;
-      align-items: center;
-      gap: clamp(16px, 3vw, 50px);
-    }
-
-    .brand-link {
+    .nav-back {
+      justify-self: start;
       display: flex;
       align-items: center;
-      gap: 13px;
-      width: max-content;
-      font: 700 11px/1 var(--mono);
-      letter-spacing: .12em;
+      gap: .55rem;
+      font-family: var(--mono);
+      font-size: var(--type-meta);
+      letter-spacing: 1.8px;
       text-transform: uppercase;
+      opacity: .82;
+      transition: opacity .2s;
     }
-    .brand-arrow {
-      display: grid;
-      place-items: center;
-      width: 27px;
-      height: 27px;
-      border: 1px solid currentColor;
-      border-radius: 50%;
-      opacity: .6;
-      transition: transform .3s var(--ease), opacity .3s ease;
-    }
-    .brand-link:hover .brand-arrow { transform: translateX(-4px); opacity: 1; }
-    .brand-year { opacity: .4; font-weight: 500; }
+    .nav-back span:first-child { transition: transform .2s }
+    .nav-back:hover { opacity: 1 }
+    .nav-back:hover span:first-child { transform: translateX(-4px) }
 
-    .primary-nav {
+    .nav-tools { justify-self: end; display: flex; align-items: center }
+    .lang-globe {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: clamp(12px, 2.2vw, 36px);
-    }
-    .primary-nav a {
-      position: relative;
-      padding: 8px 0;
-      font: 650 10px/1 var(--mono);
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      opacity: .45;
-      transition: opacity .25s ease;
-    }
-    .primary-nav a::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: -11px;
-      width: 3px;
-      height: 3px;
-      margin-top: -1.5px;
-      border-radius: 50%;
-      background: var(--jade);
-      opacity: 0;
-      transform: scale(.4);
-      transition: opacity .3s ease, transform .3s var(--ease);
-    }
-    .primary-nav a:hover { opacity: .85; }
-    .primary-nav a.is-active { opacity: 1; }
-    .primary-nav a.is-active::before { opacity: 1; transform: scale(1); }
-
-    .lang-toggle {
-      min-width: 80px;
-      height: 32px;
-      padding: 0 12px;
-      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      border: 1px solid currentColor;
-      border-radius: 999px;
+      padding: 4px;
+      color: inherit;
       cursor: pointer;
-      font: 700 10px/1 var(--mono);
-      letter-spacing: .12em;
-      opacity: .55;
-      transition: opacity .25s ease;
+      opacity: .62;
+      transition: opacity .2s;
+      -webkit-tap-highlight-color: transparent;
     }
-    .lang-toggle:hover { opacity: 1; }
-
-    .progress-track {
+    .lang-globe:hover { opacity: 1 }
+    .visually-hidden {
       position: absolute;
-      inset: auto 0 0;
-      z-index: 2;
-      height: 1px;
-      overflow: hidden;
-    }
-    .progress-track span {
-      display: block;
-      width: 100%;
-      height: 100%;
-      background: var(--jade);
-      transform: scaleX(0);
-      transform-origin: left;
-      will-change: transform;
+      width: 1px; height: 1px;
+      margin: -1px; padding: 0;
+      overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%);
+      white-space: nowrap;
     }
 
     /* ============================================================
@@ -313,38 +288,31 @@
         radial-gradient(70vw 60vh at 50% 34%, rgba(0, 168, 99, .07), transparent 62%),
         linear-gradient(180deg, #0a1015 0%, #0b1217 46%, #070c10 100%);
     }
+    .hero::after {
+      content: "\2194";
+      position: absolute;
+      top: calc(var(--band-top) + var(--band-h) - 48px);
+      right: var(--edge);
+      z-index: 0;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(6, 11, 9, .55);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      color: rgba(255, 255, 255, .82);
+      font: 12px/1 var(--mono); letter-spacing: .1em;
+      pointer-events: none;
+      transition: opacity .5s ease;
+    }
+    .hero:has(.hero-media.touched)::after { opacity: 0; }
 
-    /* 光带：把渲染图里的室内条带精确裁出，四边溶入虚空
-       2500 / 388 正是原图中室内的裁切比例，可去掉图内自带的黑边 */
+    /* 光带：使用已经去净黑边的室内长景，并可左右拖动浏览 */
     .hero-media {
       position: absolute;
       z-index: -2;
-      top: calc(var(--header-h) + 8vh);
+      top: var(--band-top);
       right: 0;
       left: 0;
-      height: auto;
-      aspect-ratio: 2500 / 386;
-      max-height: 34vh;
-      -webkit-mask-image:
-        linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent),
-        linear-gradient(180deg, transparent, #000 7%, #000 93%, transparent);
-      -webkit-mask-composite: source-in;
-      mask-image:
-        linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent),
-        linear-gradient(180deg, transparent, #000 7%, #000 93%, transparent);
-      mask-composite: intersect;
-    }
-    .hero-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: 50% 41%;
-      filter: saturate(.72) contrast(1.05) brightness(1.02);
-      animation: band-in 1.8s var(--ease) both;
-    }
-    @keyframes band-in {
-      from { opacity: 0; transform: scaleY(.6); }
-      to { opacity: 1; transform: none; }
+      height: var(--band-h);
     }
 
     .hero-shade {
@@ -356,127 +324,76 @@
     }
 
     .hero-inner {
-      width: min(100%, var(--max));
-      margin: 0 auto;
-      padding: calc(var(--header-h) + clamp(190px, 34vh, 400px)) var(--page-pad) clamp(38px, 6vh, 74px);
+      width: 100%;
+      padding: calc(var(--band-top) + var(--band-h) + clamp(34px, 5vh, 84px)) var(--edge) clamp(84px, 12vh, 140px);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       flex: 1;
     }
 
-    .hero-kicker {
-      margin-bottom: clamp(20px, 3.4vh, 36px);
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      font: 650 10px/1 var(--mono);
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, .55);
-    }
-    .hero-kicker::before {
-      content: "";
-      width: 38px;
-      height: 1px;
+    /* 品牌色短线 —— 与 gm / seed 同一处细节 */
+    .hero-tick {
+      width: 34px;
+      height: 2px;
+      margin-bottom: clamp(18px, 2.6vh, 30px);
       background: var(--jade-bright);
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.6fr) minmax(250px, .62fr);
-      align-items: end;
-      gap: clamp(34px, 6vw, 104px);
+    .hero-kicker {
+      margin-bottom: clamp(14px, 2vh, 24px);
+      font-family: var(--mono);
+      font-size: var(--type-meta);
+      font-weight: 650;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .58);
     }
 
-    .hero-title {
-      max-width: 1000px;
+    .hero-ttl {
+      max-width: 12em;
       font-family: var(--serif);
-      font-size: clamp(52px, 8.4vw, 132px);
+      font-size: clamp(58px, 9vw, 142px);
       font-weight: 400;
-      line-height: .88;
+      line-height: .9;
       letter-spacing: -.05em;
-    }
-    .hero-title .hero-main {
-      display: block;
       color: #fff;
-      font: inherit;
-      line-height: .88;
     }
-    .hero-title .hero-subtitle {
-      display: block;
-      margin-top: .3em;
-      color: var(--jade-bright);
-      font-family: var(--sans);
-      font-size: .29em;
+
+    .hero-sub {
+      margin-top: clamp(16px, 2.4vh, 30px);
+      font-size: clamp(19px, 2.1vw, 34px);
       font-weight: 500;
       line-height: 1.35;
       letter-spacing: .01em;
+      color: var(--jade-bright);
     }
 
-    .hero-side { padding-bottom: 6px; }
-    .hero-lead {
-      max-width: 480px;
-      margin-bottom: 30px;
-      color: rgba(255, 255, 255, .74);
+    .hero-lede {
+      max-width: 34em;
+      margin-top: clamp(20px, 3vh, 36px);
+      color: rgba(255, 255, 255, .68);
       font-size: clamp(14.5px, 1.15vw, 17px);
-      line-height: 1.85;
+      line-height: 1.95;
     }
-    .hero-meta {
-      padding-top: 20px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      border-top: 1px solid rgba(255, 255, 255, .22);
-    }
-    .hero-meta dt {
-      margin-bottom: 8px;
-      color: rgba(255, 255, 255, .38);
-      font: 650 9px/1 var(--mono);
-      letter-spacing: .18em;
-      text-transform: uppercase;
-    }
-    .hero-meta dd { font-size: 13px; line-height: 1.5; }
 
-    .hero-jumps {
-      margin-top: clamp(30px, 5vh, 58px);
+    /* 底部居中的 Scroll —— 与其余各页一致 */
+    .hero-scroll {
+      position: absolute;
+      inset: auto 0 clamp(26px, 4vh, 46px);
+      z-index: 1;
       display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .hero-jump {
-      min-height: 40px;
-      padding: 0 18px 0 16px;
-      display: inline-flex;
-      align-items: center;
-      gap: 18px;
-      border: 1px solid rgba(255, 255, 255, .2);
-      border-radius: 999px;
-      color: rgba(255, 255, 255, .74);
-      font: 650 10px/1 var(--mono);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      transition: border-color .3s ease, background-color .3s ease, color .3s ease;
-    }
-    .hero-jump span:first-child { color: var(--jade-bright); }
-    .hero-jump:hover {
-      border-color: transparent;
-      background: rgba(255, 255, 255, .1);
-      color: #fff;
-    }
-
-    .scroll-note {
-      margin-left: auto;
-      display: inline-flex;
+      flex-direction: column;
       align-items: center;
       gap: 12px;
-      color: rgba(255, 255, 255, .4);
-      font: 650 9px/1 var(--mono);
-      letter-spacing: .16em;
+      color: rgba(255, 255, 255, .42);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .28em;
       text-transform: uppercase;
+      pointer-events: none;
     }
-    .scroll-note::before {
-      content: "";
+    .hero-scroll .dn {
       width: 1px;
       height: 34px;
       background: linear-gradient(var(--jade-bright), transparent);
@@ -491,7 +408,7 @@
        章节骨架
        ============================================================ */
     main { display: block; }
-    section[id] { scroll-margin-top: calc(var(--header-h) - 1px); }
+    section[id] { scroll-margin-top: calc(var(--nav-h) - 1px); }
 
     .section {
       position: relative;
@@ -557,99 +474,6 @@
     /* ============================================================
        01 概念 — 两条命题各自占满一屏宽的场
        ============================================================ */
-    .concept-duo {
-      display: block;
-      width: 100vw;
-      margin-inline: calc(50% - 50vw);
-    }
-
-    .concept-card {
-      display: block;
-      padding-bottom: clamp(58px, 7vw, 106px);
-      background: var(--white);
-    }
-
-    /* 影像：一道满幅长带（旗舰店渲染图的室内净比例 2500 / 905） */
-    .concept-media { overflow: hidden; background: #050806; }
-    .concept-media .media-zoom { height: auto; background: #050806; }
-    /* 旗舰店：横向长带（净室内 rows .257–.612），与店内其余成果图同一比例语言 */
-    .concept-card:not(.is-hq) .concept-media .media-zoom { aspect-ratio: 2500 / 500; }
-    .concept-card:not(.is-hq) .concept-media img { object-position: 50% 40%; }
-    /* 总部：整幅不裁，让双塔完整扎根 */
-    .concept-card.is-hq .concept-media .media-zoom { aspect-ratio: 16 / 9; max-height: 88vh; }
-    .concept-card.is-hq .concept-media img { object-position: 50% 52%; }
-
-    /* 文字：左为题、右为文 */
-    .concept-copy {
-      display: grid;
-      grid-template-columns: minmax(0, .88fr) minmax(0, 1.12fr);
-      column-gap: clamp(34px, 6vw, 110px);
-      row-gap: clamp(22px, 2.6vw, 38px);
-      align-items: start;
-      padding: clamp(44px, 5.6vw, 90px) var(--edge) 0;
-    }
-    .concept-label { grid-column: 1; grid-row: 1; color: var(--jade); }
-    .concept-title {
-      grid-column: 1;
-      grid-row: 2;
-      margin: 0;
-      max-width: 8em;
-      font-family: var(--serif);
-      font-size: clamp(32px, 4.2vw, 64px);
-      font-weight: 400;
-      line-height: 1.1;
-      letter-spacing: -.03em;
-    }
-    .concept-body {
-      grid-column: 2;
-      grid-row: 2;
-      max-width: 32em;
-      color: var(--muted);
-      font-size: clamp(15px, 1.1vw, 16.5px);
-      line-height: 1.95;
-    }
-    .concept-points {
-      grid-column: 1 / -1;
-      grid-row: 3;
-      margin-top: clamp(16px, 2.4vw, 40px);
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: clamp(34px, 6vw, 110px);
-    }
-    .concept-point { padding-top: 16px; border-top: 1px solid var(--hair); }
-    .concept-point small,
-    .concept-point strong { display: block; }
-    .concept-point small {
-      margin-bottom: 10px;
-      color: var(--faint);
-      font: 650 9px/1.5 var(--mono);
-      letter-spacing: .15em;
-      text-transform: uppercase;
-    }
-    .concept-point strong { font-size: 14px; font-weight: 600; line-height: 1.6; }
-
-    /* 总部命题：暗场，图右文左 */
-    .concept-card.is-hq {
-      background: var(--ink);
-      color: var(--on-ink);
-    }
-    .concept-card.is-hq .concept-label { color: var(--jade-bright); }
-    .concept-card.is-hq .concept-body { color: var(--on-ink-muted); }
-    .concept-card.is-hq .concept-point { border-top-color: var(--hair-ink); }
-    .concept-card.is-hq .concept-point small { color: var(--on-ink-faint); }
-
-    /* ============================================================
-       02 灵感 — 三条线索
-       ============================================================ */
-    .inspiration { background: var(--white); }
-
-    .inspiration-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(30px, 4.4vw, 78px);
-      border-top: 1px solid var(--hair-strong);
-      padding-top: clamp(34px, 4vw, 58px);
-    }
     .inspiration-source { display: flex; flex-direction: column; min-width: 0; }
     .inspiration-index {
       font: 650 10px/1 var(--mono);
@@ -864,6 +688,7 @@
       font: 200 clamp(24px, 3vw, 46px)/1 var(--sans);
       opacity: .55;
     }
+    .equation-multiply { color: var(--jade); opacity: 1; }
     .equation-term.is-result .equation-name { color: var(--jade); }
     .equation-term.is-result .equation-sub { color: var(--jade); opacity: .7; }
 
@@ -890,8 +715,7 @@
 
     .system-statement {
       margin-bottom: clamp(88px, 12vw, 160px);
-      padding: clamp(48px, 7vw, 100px) 0 clamp(56px, 8vw, 118px);
-      border-top: 1px solid var(--hair-ink-strong);
+      padding: clamp(6px, 1vw, 14px) 0 clamp(56px, 8vw, 118px);
       border-bottom: 1px solid var(--hair-ink-strong);
     }
     .system-statement-label { margin-bottom: clamp(34px, 4.5vw, 60px); color: var(--jade-bright); }
@@ -1016,6 +840,374 @@
       letter-spacing: .1em;
     }
 
+
+
+    /* ---------- 章节头（仅开头的概念章用房屋格式） ---------- */
+    .section-heading {
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem;
+      padding-bottom: 1rem; margin-bottom: clamp(38px, 5vw, 72px);
+      border-bottom: 1px solid var(--hair);
+    }
+    .beat-title {
+      font-family: var(--sans); font-size: var(--type-subhead);
+      font-weight: 600; line-height: 1.35; letter-spacing: .04em; color: var(--text);
+    }
+    .beat-flow {
+      font-family: var(--mono); font-size: var(--type-meta); font-weight: 650;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--jade);
+      text-align: right; white-space: nowrap;
+    }
+
+    /* ---------- 概念章 ---------- */
+    .concept-lead { max-width: 960px; }
+    .concept-lead-paragraph {
+      max-width: 62em;
+      margin: 0;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: clamp(15px, 1.2vw, 16px);
+      font-weight: 400;
+      line-height: 1.95;
+      letter-spacing: 0;
+      text-align: justify;
+      text-justify: inter-ideograph;
+      text-wrap: pretty;
+    }
+    .concept-copy {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: clamp(36px, 5vw, 96px);
+      row-gap: clamp(30px, 3.6vw, 52px);
+      align-items: start;
+    }
+    .body-t {
+      color: var(--muted); font-size: clamp(15px, 1.1vw, 16.5px);
+      line-height: 1.95; text-align: justify; hyphens: auto;
+    }
+    .body-t strong {
+      display: block; margin-bottom: 8px; color: var(--text);
+      font-family: var(--serif); font-size: clamp(19px, 1.9vw, 26px);
+      font-weight: 400; letter-spacing: -.01em;
+    }
+
+    /* ---------- ＋ 灵感来源 ---------- */
+    .inspiration-panel { margin-top: clamp(44px, 5.4vw, 76px); border-top: 1px solid var(--hair) }
+    .inspiration-panel summary {
+      display: flex; align-items: center; gap: 14px; padding: 22px 0;
+      cursor: pointer; list-style: none;
+      font-family: var(--sans); font-size: 13px; font-weight: 500;
+      letter-spacing: .18em; color: var(--text); transition: color .25s;
+    }
+    .inspiration-panel summary::-webkit-details-marker { display: none }
+    .inspiration-panel summary::before { content: "+"; color: var(--jade); font-family: var(--mono); font-size: 14px }
+    .inspiration-panel[open] summary::before { content: "\2212" }
+    .inspiration-panel summary:hover { color: var(--jade) }
+    .inspiration-body { padding: 4px 0 clamp(30px, 4vw, 50px) }
+    .inspiration-panel[open] .inspiration-body { animation: inspIn .7s var(--ease) both }
+    @keyframes inspIn { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: none } }
+    .inspiration-body p {
+      max-width: 46em;
+      color: var(--muted); font-size: clamp(14.5px, 1.05vw, 16px);
+      line-height: 1.95; text-align: justify; hyphens: auto;
+    }
+    .insp-pair p, .insp-resonance p { max-width: none }
+    .insp-lead {
+      margin-bottom: 18px; color: var(--text) !important;
+      font-family: var(--serif); font-size: clamp(19px, 2vw, 27px) !important;
+      line-height: 1.5 !important; text-align: left !important;
+    }
+    .insp-pair {
+      margin: clamp(34px, 4vw, 56px) 0; display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: clamp(36px, 5vw, 96px); row-gap: clamp(28px, 3.4vw, 46px);
+    }
+    .insp-pair > div > p { max-width: none }
+    .insp-pair h4 {
+      margin-bottom: 12px; color: var(--text);
+      font-family: var(--serif); font-size: clamp(26px, 3vw, 40px);
+      font-weight: 400; letter-spacing: .06em;
+    }
+    .insp-resonance {
+      padding-top: clamp(22px, 2.6vw, 34px); border-top: 1px solid var(--hair);
+      display: grid; grid-template-columns: minmax(96px, .22fr) minmax(0, 1fr);
+      gap: clamp(18px, 2.6vw, 40px);
+    }
+    .insp-resonance > span:first-child {
+      font-family: var(--sans); font-size: 12px; font-weight: 500;
+      letter-spacing: .16em; color: var(--jade);
+    }
+
+    /* ---------- 作品信息表 ---------- */
+    .project-meta {
+      margin-top: clamp(52px, 6.4vw, 92px); padding-top: clamp(22px, 2.6vw, 34px);
+      display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
+      gap: clamp(20px, 3vw, 48px); border-top: 1px solid var(--hair-strong);
+    }
+    .spec-k, .spec-v { display: block }
+    .spec-k {
+      margin-bottom: 10px; font-family: var(--sans); font-size: 11.5px;
+      font-weight: 500; letter-spacing: .18em; color: var(--faint);
+    }
+    .spec-v { font-size: 14px; line-height: 1.6; color: var(--text) }
+
+    /* ---------- 项目章开头的满幅长带 ---------- */
+    .chapter-media {
+      width: 100vw; margin: 0 calc(50% - 50vw) clamp(52px, 6.4vw, 96px);
+      overflow: hidden; background: #050806;
+    }
+    .chapter-media .media-zoom { height: clamp(260px, 46vh, 540px); background: #050806 }
+    .hq .chapter-media, .hq .chapter-media .media-zoom { background: var(--ink-blue-2) }
+
+    @media (max-width: 900px) {
+      .section-heading { flex-direction: column; align-items: flex-start; gap: .6rem }
+      .beat-flow { text-align: left }
+      .insp-pair { grid-template-columns: 1fr }
+      .insp-resonance { grid-template-columns: 1fr; gap: 10px }
+      .project-meta { grid-template-columns: 1fr 1fr }
+      .project-meta > div:first-child { grid-column: 1 / -1 }
+    }
+
+
+
+    /* ---------- 从至美到诗意：一个岔路口 ---------- */
+    .fork { margin-bottom: clamp(78px, 10vw, 140px) }
+    .fork-label {
+      font-family: var(--mono); font-weight: 650; font-size: 10px;
+      letter-spacing: .17em; text-transform: uppercase; color: var(--jade-bright);
+    }
+    .lang-zh .fork-label, .lang-ja .fork-label,
+    .lang-zh .lineage-label, .lang-ja .lineage-label {
+      font-family: var(--sans); font-size: 12px; font-weight: 500;
+      letter-spacing: .16em; text-transform: none;
+    }
+    .fork-q {
+      margin: clamp(20px, 2.4vw, 32px) 0 clamp(44px, 5.4vw, 76px);
+      font-family: var(--serif); font-size: clamp(26px, 3.4vw, 48px);
+      line-height: 1.25; letter-spacing: -.02em; color: var(--on-ink);
+    }
+
+    .fork-tracks {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(36px, 5vw, 96px);
+      position: relative;
+    }
+    /* 岔路口那一横一竖 */
+    .fork-tracks::before {
+      content: ""; position: absolute; top: -34px; left: 25%; right: 25%;
+      height: 1px; background: var(--hair-ink-strong);
+    }
+
+    .track { position: relative; padding-top: 34px }
+    .track::before {
+      content: ""; position: absolute; top: 0; left: 0;
+      width: 1px; height: 34px; background: var(--hair-ink-strong);
+    }
+    .track-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: .16em;
+    }
+    .track-tag::before { font-family: var(--mono); font-size: 13px }
+    .track-dead .track-tag { color: var(--on-ink-faint) }
+    .track-dead .track-tag::before { content: "\2715" }
+    .track-live .track-tag { color: var(--jade-bright) }
+    .track-live .track-tag::before { content: "\2713" }
+
+    .track-title {
+      margin: clamp(14px, 1.8vw, 22px) 0 clamp(26px, 3vw, 40px);
+      font-family: var(--serif); font-size: clamp(26px, 3vw, 42px);
+      font-weight: 400; line-height: 1.15; letter-spacing: -.02em;
+    }
+    .track-dead .track-title { color: var(--on-ink-faint); text-decoration: line-through;
+      text-decoration-thickness: 1px; text-decoration-color: rgba(238,244,240,.28) }
+    .track-live .track-title { color: var(--on-ink) }
+
+    .track-steps { list-style: none; position: relative; padding-left: 26px }
+    .track-steps::before {
+      content: ""; position: absolute; left: 3px; top: 8px; bottom: 8px; width: 1px;
+    }
+    .track-dead .track-steps::before { background: repeating-linear-gradient(
+      180deg, var(--hair-ink) 0 3px, transparent 3px 7px) }
+    .track-live .track-steps::before { background: linear-gradient(
+      180deg, rgba(53,221,147,.15), rgba(53,221,147,.65)) }
+    .track-steps li {
+      position: relative; padding: 9px 0;
+      font-size: clamp(14px, 1.1vw, 16px); line-height: 1.7;
+    }
+    .track-steps li::before {
+      content: ""; position: absolute; left: -26px; top: 1.05em;
+      width: 7px; height: 7px; border-radius: 50%;
+    }
+    .track-dead .track-steps li { color: var(--on-ink-faint) }
+    .track-dead .track-steps li::before { background: rgba(238,244,240,.22) }
+    .track-live .track-steps li { color: var(--on-ink-muted) }
+    .track-live .track-steps li::before { background: var(--jade-bright); opacity: .75 }
+
+    .track-end {
+      margin-top: clamp(20px, 2.4vw, 32px); padding-top: clamp(16px, 2vw, 24px);
+      border-top: 1px solid var(--hair-ink);
+      font-family: var(--serif); font-size: clamp(16px, 1.7vw, 23px); line-height: 1.6;
+    }
+    .track-dead .track-end { color: var(--on-ink-faint) }
+    .track-live .track-end { color: var(--jade-bright) }
+
+    .fork-out {
+      position: relative; max-width: 24em;
+      margin: clamp(56px, 7vw, 100px) 0 0 auto;
+      padding-top: clamp(34px, 4vw, 54px);
+      font-family: var(--serif); font-size: clamp(21px, 2.6vw, 38px);
+      line-height: 1.5; letter-spacing: -.02em; color: var(--jade-bright);
+    }
+    .fork-out::before {
+      content: ""; position: absolute; top: 0; left: 0; width: 1px;
+      height: clamp(22px, 2.6vw, 34px); background: var(--jade-bright); opacity: .6;
+    }
+
+    /* ---------- 手法的来处：两源收敛 ---------- */
+    .lineage { margin-bottom: clamp(34px, 4vw, 56px) }
+    .lineage-label { font-family: var(--mono); font-weight: 650; font-size: 10px;
+      letter-spacing: .17em; text-transform: uppercase; color: var(--jade-bright); }
+    .lineage-src {
+      margin-top: clamp(30px, 3.6vw, 50px);
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(36px, 5vw, 96px);
+      padding-top: clamp(24px, 3vw, 38px); border-top: 1px solid var(--hair-ink);
+    }
+    .src-k {
+      display: block; margin-bottom: 16px;
+      font-family: var(--sans); font-size: 12px; font-weight: 500;
+      letter-spacing: .18em; color: var(--on-ink-faint);
+    }
+    .src-cite {
+      white-space: pre-line;
+      font-family: var(--serif); font-size: clamp(17px, 1.9vw, 26px);
+      line-height: 1.55; color: var(--on-ink); margin-bottom: 14px;
+    }
+    .src-do { font-size: 14px; line-height: 1.9; color: var(--on-ink-muted) }
+
+
+    @media (max-width: 900px) {
+      .fork-tracks, .lineage-src { grid-template-columns: 1fr; gap: 52px }
+      .fork-tracks::before { display: none }
+      .fork-out { margin-left: 0 }
+    }
+
+   .track-dead .track-steps li::before { background: rgba(238,244,240,.22) }
+    .track-live .track-steps li { color: var(--on-ink-muted) }
+    .track-live .track-steps li::before { background: var(--jade-bright); opacity: .75 }
+
+    .track-end {
+      margin-top: clamp(20px, 2.4vw, 32px); padding-top: clamp(16px, 2vw, 24px);
+      border-top: 1px solid var(--hair-ink);
+      font-family: var(--serif); font-size: clamp(16px, 1.7vw, 23px); line-height: 1.6;
+    }
+    .track-dead .track-end { color: var(--on-ink-faint) }
+    .track-live .track-end { color: var(--jade-bright) }
+
+    .fork-out {
+      position: relative; max-width: 24em;
+      margin: clamp(56px, 7vw, 100px) 0 0 auto;
+      padding-top: clamp(34px, 4vw, 54px);
+      font-family: var(--serif); font-size: clamp(21px, 2.6vw, 38px);
+      line-height: 1.5; letter-spacing: -.02em; color: var(--jade-bright);
+    }
+    .fork-out::before {
+      content: ""; position: absolute; top: 0; left: 0; width: 1px;
+      height: clamp(22px, 2.6vw, 34px); background: var(--jade-bright); opacity: .6;
+    }
+
+    /* ---------- 手法的来处：两源收敛 ---------- */
+    .lineage { margin-bottom: clamp(34px, 4vw, 56px) }
+    .lineage-label { font-family: var(--mono); font-weight: 650; font-size: 10px;
+      letter-spacing: .17em; text-transform: uppercase; color: var(--jade-bright); }
+    .lineage-src {
+      margin-top: clamp(30px, 3.6vw, 50px);
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(36px, 5vw, 96px);
+      padding-top: clamp(24px, 3vw, 38px); border-top: 1px solid var(--hair-ink);
+    }
+    .src-k {
+      display: block; margin-bottom: 16px;
+      font-family: var(--sans); font-size: 12px; font-weight: 500;
+      letter-spacing: .18em; color: var(--on-ink-faint);
+    }
+    .src-cite {
+      font-family: var(--serif); font-size: clamp(17px, 1.9vw, 26px);
+      line-height: 1.55; color: var(--on-ink); margin-bottom: 14px;
+    }
+    .src-do { font-size: 14px; line-height: 1.9; color: var(--on-ink-muted) }
+
+
+    @media (max-width: 900px) {
+      .fork-tracks, .lineage-src { grid-template-columns: 1fr; gap: 52px }
+      .fork-tracks::before { display: none }
+      .fork-out { margin-left: 0 }
+    }
+
+    /* ---------- 三大特征的由来：一行来路 + 推导并入卡片 ---------- */
+    .origin { margin-bottom: clamp(44px, 5.4vw, 76px) }
+    .origin-label {
+      margin-bottom: clamp(22px, 2.6vw, 34px);
+      font-family: var(--sans); font-size: 12px; font-weight: 500;
+      letter-spacing: .16em; color: var(--jade-bright);
+    }
+    .origin-path {
+      list-style: none; display: flex; flex-wrap: wrap; align-items: center;
+      gap: clamp(12px, 1.6vw, 24px);
+      padding-bottom: clamp(26px, 3vw, 40px);
+      border-bottom: 1px solid var(--hair-ink-strong);
+    }
+    .origin-path li {
+      font-family: var(--serif); font-size: clamp(17px, 1.9vw, 26px);
+      color: var(--on-ink-muted); letter-spacing: .02em;
+    }
+    .origin-path li:last-child { color: var(--on-ink) }
+    .origin-path li + li::before {
+      content: "\2192"; margin-right: clamp(12px, 1.6vw, 24px);
+      color: var(--jade-bright); font-family: var(--mono); font-size: .7em;
+    }
+
+    /* 每张特征卡自带来路 */
+    .trait-from {
+      display: flex; align-items: baseline; gap: 12px;
+      padding-bottom: 16px; margin-bottom: 22px;
+      border-bottom: 1px solid var(--hair-ink);
+    }
+    .trait-from b {
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(20px, 2.2vw, 30px); color: var(--on-ink);
+      letter-spacing: .04em; white-space: nowrap;
+    }
+    .trait-from q {
+      quotes: "\300c" "\300d"; white-space: nowrap;
+      font-family: var(--serif); font-size: clamp(13px, 1.2vw, 17px);
+      color: var(--on-ink-faint);
+    }
+    .trait-from::after {
+      content: "\2193"; margin-left: auto;
+      color: var(--jade-bright); font-family: var(--mono); font-size: 14px;
+    }
+    .trait { padding-top: 0; border-top: 0 }
+    .trait-index { color: var(--on-ink-faint) }
+    .trait-name { margin: clamp(26px, 3vw, 44px) 0 10px }
+    .trait-why {
+      margin-bottom: clamp(22px, 2.6vw, 34px);
+      font-size: clamp(13.5px, 1.1vw, 15.5px); line-height: 1.7;
+      color: var(--jade-bright);
+    }
+
+    .traits-note {
+      max-width: 40em;
+      margin-top: clamp(44px, 5.6vw, 78px);
+      padding-top: clamp(26px, 3vw, 40px);
+      border-top: 1px solid var(--hair-ink);
+      color: var(--on-ink-muted);
+      font-size: clamp(14.5px, 1.15vw, 17px);
+      line-height: 1.95;
+    }
+
+    @media (max-width: 900px) {
+    }
+
     /* ============================================================
        05 / 06 项目
        ============================================================ */
@@ -1092,7 +1284,7 @@
       grid-template-columns: minmax(230px, .66fr) minmax(0, 1.34fr);
       gap: clamp(44px, 8vw, 130px);
     }
-    .derivation-key { position: sticky; top: calc(var(--header-h) + 44px); align-self: start; }
+    .derivation-key { position: sticky; top: calc(var(--nav-h) + 44px); align-self: start; }
     .derivation-label { margin-bottom: 22px; color: var(--jade); }
     .derivation-value {
       max-width: 9em;
@@ -1117,6 +1309,35 @@
       font-weight: 400;
       line-height: 1.3;
       letter-spacing: -.02em;
+    }
+    .design-step-head { min-width: 0 }
+    .design-step-note {
+      margin-top: 12px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .14em;
+      color: var(--faint);
+      line-height: 1.6;
+    }
+    .design-step-cols { display: grid; gap: clamp(22px, 2.6vw, 38px); min-width: 0 }
+    .design-step-body small {
+      display: block;
+      margin-bottom: 9px;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      font-weight: 650;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--jade);
+    }
+    .hq .design-step-body small { color: var(--jade-bright) }
+    .lang-zh .design-step-body small, .lang-ja .design-step-body small,
+    .lang-zh .design-step-note, .lang-ja .design-step-note {
+      font-family: var(--sans);
+      font-size: 11.5px;
+      font-weight: 500;
+      letter-spacing: .16em;
+      text-transform: none;
     }
     .design-step-body {
       max-width: 30em;
@@ -1206,34 +1427,57 @@
     }
     .media-zoom:hover img { transform: scale(1.024); }
 
-    figcaption {
-      margin-top: 14px;
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      color: var(--faint);
-      font-size: 9.5px;
+    /* ---------- 横向长带：不再压缩成细条，改为按住左右拖动 ---------- */
+    .strip {
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      cursor: grab;
     }
-    figcaption span:first-child {
-      position: relative;
-      padding-left: 14px;
-      font-family: var(--sans);
-      font-size: 12.5px;
-      font-weight: 400;
-      letter-spacing: .02em;
-      text-transform: none;
-      color: var(--muted);
+    .strip::-webkit-scrollbar { display: none }
+    .strip.dragging { cursor: grabbing }
+    .strip img {
+      height: 100%;
+      width: auto;
+      max-width: none;
+      object-fit: contain;
+      transition: none;
     }
-    figcaption span:first-child::before {
-      content: "";
+    .strip:hover img { transform: none }
+    .strip::after { display: none }
+
+    /* 首屏使用净画面原始比例，图片高度撑满光带，宽度自然形成横向浏览距离 */
+    .hero-media img            {
+      width: auto;
+      max-width: none;
+      aspect-ratio: 2424 / 384;
+      object-fit: contain;
+      object-position: center;
+    }
+    .store .chapter-media img  { aspect-ratio: 2500 / 447;  object-fit: cover; object-position: 50% 37.6%; }
+    .store-gallery .result-wide img { aspect-ratio: 2500 / 384; object-fit: cover; object-position: 50% 40.6%; }
+    .hq .chapter-media img     { aspect-ratio: 16 / 9;      object-fit: cover; object-position: 50% 52%; }
+
+    /* 长带的拖动提示：浮在图上，拖过一次即隐去 */
+    figure:has(> .strip), .chapter-media:has(> .strip) { position: relative }
+    figure:has(> .strip)::after,
+    .chapter-media:has(> .strip)::after {
+      content: "\2194";
       position: absolute;
-      top: .68em;
-      left: 0;
-      width: 7px;
-      height: 1px;
-      background: var(--jade);
+      right: 16px; bottom: 14px; z-index: 2;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(6, 11, 9, .55);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      color: rgba(255, 255, 255, .82);
+      font: 12px/1 var(--mono); letter-spacing: .1em;
+      pointer-events: none; transition: opacity .5s ease;
     }
-    figcaption span:last-child { flex: none; opacity: .7; }
+    figure:has(> .strip.touched)::after,
+    .chapter-media:has(> .strip.touched)::after { opacity: 0 }
 
     .full-media {
       width: 100vw;
@@ -1241,27 +1485,75 @@
     }
     .full-media .media-zoom { height: min(62vw, 860px); max-height: 84vh; }
     /* 临街全景本身即长带 */
-    .store .full-media .media-zoom { height: auto; max-height: none; aspect-ratio: 1548 / 308; }
+    .store .full-media .media-zoom { height: auto; max-height: none; aspect-ratio: 16 / 9; }
     /* 平面推导图是图纸，须完整呈现 */
     .store .process-evidence .media-zoom { background: var(--white); }
-    .store .process-evidence img { object-fit: contain; }
+    .store .process-evidence img { aspect-ratio: auto; object-fit: contain; object-position: center; }
     .store .process-evidence .media-zoom:hover img { transform: none; }
-    .full-media figcaption {
-      width: 100%;
-      padding-inline: var(--edge);
-    }
 
-    /* 旗舰店的三张成果图都是横向长带，按各自净比例依次陈列 */
+    /* 成果：一条可拖长带 + 三张 16:9 近景 */
     .store-gallery {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: clamp(34px, 4.4vw, 72px);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(20px, 2.4vw, 38px);
+      width: 100vw;
+      margin-inline: calc(50% - 50vw);
+      padding-inline: var(--edge);
     }
-    .store-gallery .media-zoom { height: auto; background: #060b09; }
-    .store-gallery .result-wide .media-zoom { aspect-ratio: 2500 / 386; }
-    .store-gallery .result-wide img { object-position: 50% 41%; }
-    .store-gallery .render .media-zoom { aspect-ratio: 1563 / 305; }
-    .store-gallery .panorama .media-zoom { aspect-ratio: 1609 / 276; }
+    .store-gallery .media-zoom { background: #060b09 }
+    .store-gallery .result-wide { grid-column: 1 / -1 }
+    .store-gallery .render { grid-column: 1 / -1 }
+    .store-gallery .panorama { grid-column: 1 / -1 }
+    .store-gallery .result-wide .media-zoom { height: clamp(230px, 40vh, 470px) }
+    .store-gallery .render .media-zoom,
+    .store-gallery .panorama .media-zoom { height: auto; aspect-ratio: 16 / 9 }
+
+    .store-detail-wide {
+      width: 100vw;
+      margin: clamp(24px, 3.5vw, 52px) calc(50% - 50vw) 0;
+    }
+    .store-detail-wide .media-zoom {
+      height: clamp(230px, 40vh, 470px);
+      aspect-ratio: auto;
+      background: #050806;
+    }
+    .store-detail-wide .media-zoom img {
+      object-position: 50% 50%;
+    }
+
+    /* 两张联动长图共享一个居中的三点呼吸光迹 */
+    .store-scroll-link {
+      width: 100vw;
+      height: clamp(48px, 5vw, 66px);
+      margin: 0 calc(50% - 50vw);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--paper);
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .store-scroll-trail {
+      display: flex;
+      align-items: center;
+      gap: clamp(10px, 1.4vw, 15px);
+    }
+    .store-scroll-trail span {
+      width: 5px;
+      height: 5px;
+      flex: 0 0 5px;
+      border-radius: 50%;
+      background: var(--jade);
+      opacity: 0;
+      box-shadow: 0 0 0 rgba(0, 168, 99, 0);
+      will-change: opacity, box-shadow;
+    }
+    .store-detail-wide:has(> .strip)::after,
+    .store-gallery .result-wide:has(> .strip)::after { display: none; }
+
+    .store .full-media {
+      margin-top: clamp(32px, 4.5vw, 64px);
+    }
 
     .project-conclusion {
       max-width: 20em;
@@ -1293,10 +1585,6 @@
     .hq .project-conclusion { border-top-color: var(--hair-ink-strong); }
     .hq .route-step,
     .hq .design-step { border-bottom-color: var(--hair-ink); }
-    .hq .route-key,
-    .hq figcaption { color: var(--on-ink-faint); }
-    .hq figcaption span:first-child { color: var(--on-ink-muted); }
-    .hq figcaption span:first-child::before { background: var(--jade-bright); }
     .hq .media-zoom,
     .hq .process-evidence .media-zoom { background: var(--ink-blue-2); }
 
@@ -1304,7 +1592,7 @@
       display: grid;
       grid-template-columns: 1.22fr .78fr;
       grid-template-rows: repeat(2, minmax(300px, 42vw));
-      gap: clamp(18px, 2.2vw, 34px);
+      gap: clamp(24px, 3vw, 48px);
     }
     .hq-gallery figure { min-height: 0; display: flex; flex-direction: column; }
     .hq-gallery .media-zoom { min-height: 0; flex: 1; }
@@ -1312,6 +1600,7 @@
     .hq-gallery .hq-night img { object-position: center; }
     .hq-gallery .hq-detail img { object-position: center; }
     .hq-gallery .hq-aerial img { object-position: 55% center; }
+    .process-evidence + .hq-gallery { margin-top: clamp(72px, 9vw, 126px); }
 
     /* ============================================================
        07 综合 — 对照
@@ -1390,13 +1679,12 @@
        页脚
        ============================================================ */
     .site-footer {
-      padding: clamp(58px, 8vw, 104px) var(--page-pad);
+      padding: clamp(58px, 8vw, 104px) var(--edge);
       background: var(--ink);
       color: var(--on-ink-muted);
     }
     .footer-inner {
-      width: min(100%, var(--max));
-      margin: 0 auto;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -1434,19 +1722,10 @@
       height: 100%;
       padding: clamp(30px, 5vw, 74px);
       display: grid;
-      grid-template-rows: minmax(0, 1fr) auto;
-      gap: 20px;
+      grid-template-rows: 1fr;
       place-items: center;
     }
     .lightbox img { max-width: 100%; max-height: calc(100vh - 140px); object-fit: contain; }
-    .lightbox-caption {
-      max-width: min(900px, 82vw);
-      color: rgba(255, 255, 255, .5);
-      font: 650 10px/1.6 var(--mono);
-      letter-spacing: .13em;
-      text-align: center;
-      text-transform: uppercase;
-    }
     .lightbox-close {
       position: fixed;
       z-index: 2;
@@ -1478,26 +1757,16 @@
        响应
        ============================================================ */
     @media (max-width: 1180px) {
-      .header-inner { grid-template-columns: minmax(170px, auto) 1fr auto; }
-      .primary-nav { gap: 15px; }
-      .primary-nav a:nth-last-child(-n + 2) { display: none; }
-      .hero-grid { grid-template-columns: minmax(0, 1.3fr) minmax(240px, .7fr); gap: 46px; }
       .project-opening { grid-template-columns: minmax(0, 1.05fr) minmax(280px, .95fr); }
-      .concept-copy { padding: clamp(40px, 5.4vw, 76px); }
     }
 
     @media (max-width: 900px) {
-      :root { --header-h: 58px; }
+      :root { --nav-h: 52px; }
 
-      .header-inner { grid-template-columns: 1fr auto; }
-      .primary-nav, .brand-year { display: none; }
-
-      .hero-media { top: calc(var(--header-h) + 5vh); max-height: 26vh; }
-      .hero-inner { padding-top: calc(var(--header-h) + clamp(150px, 26vh, 300px)); }
-      .hero-grid { grid-template-columns: 1fr; gap: 34px; }
-      .hero-title { max-width: 760px; }
-      .hero-side { max-width: 640px; }
-      .hero-lead { margin-bottom: 22px; }
+      .hero-media { top: calc(var(--nav-h) + 5vh); max-height: 26vh; }
+      .hero-inner { padding-top: calc(var(--nav-h) + clamp(150px, 26vh, 300px)); }
+      .hero-ttl { font-size: clamp(50px, 15vw, 82px); }
+      .hero-sub { font-size: clamp(17px, 4.6vw, 24px); }
 
       .section-head,
       .outcome-heading,
@@ -1512,17 +1781,6 @@
       .section-marker { display: flex; align-items: center; gap: 16px; font-size: 30px; }
       .section-marker::after { width: 40px; margin: 0; }
 
-      .concept-copy {
-        grid-template-columns: 1fr;
-        padding: clamp(34px, 6vw, 56px) var(--page-pad) 0;
-        row-gap: 20px;
-      }
-      .concept-label,
-      .concept-title,
-      .concept-body,
-      .concept-points { grid-column: 1; grid-row: auto; }
-      .concept-title { max-width: none; }
-      .concept-points { margin-top: 12px; }
 
       .inspiration-grid,
       .research-chain,
@@ -1564,22 +1822,31 @@
     @media (max-width: 640px) {
       :root { --page-pad: 20px; }
 
-      .brand-link { font-size: 10px; }
-      .lang-toggle { min-width: 68px; padding: 0 10px; }
-
-      .hero-title { font-size: clamp(46px, 15vw, 76px); }
-      .hero-title .hero-subtitle { font-size: .3em; line-height: 1.35; }
-      .hero-meta { grid-template-columns: 1fr 1fr; }
-      .hero-meta > div:last-child { grid-column: 1 / -1; }
-      .hero-jumps { flex-wrap: wrap; }
-      .scroll-note { display: none; }
 
       .section { padding-top: 84px; padding-bottom: 84px; }
       .section-head { margin-bottom: 52px; }
       .section-title { font-size: clamp(28px, 8.6vw, 42px); }
 
       .concept-points { grid-template-columns: 1fr; gap: 20px; }
-      .system-statement-text { font-size: clamp(34px, 11vw, 58px); }
+      .system-statement {
+        margin-bottom: 72px;
+        padding: 0 0 56px;
+      }
+      .system-statement-label { margin-bottom: 28px; }
+      .system-statement-text {
+        font-size: clamp(28px, 7.5vw, 40px);
+        line-height: 1.2;
+        letter-spacing: 0;
+      }
+      .lang-zh .system-statement-text,
+      .lang-ja .system-statement-text {
+        white-space: nowrap;
+        word-break: keep-all;
+      }
+      .lang-en .system-statement-text {
+        max-width: 12em;
+        text-wrap: balance;
+      }
       .philosophy-title { font-size: clamp(54px, 20vw, 86px); }
 
       .map-inputs, .map-outcomes, .map-traits { grid-template-columns: 1fr; }
@@ -1590,9 +1857,21 @@
       .route-step { grid-template-columns: 26px 1fr; }
       .route-value { grid-column: 2; }
       .design-step { grid-template-columns: 32px 1fr; gap: 14px 12px; }
-      .design-step-body { grid-column: 2; }
+      .design-step-cols {
+        grid-column: 2;
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      .design-step-body {
+        grid-column: auto;
+        max-width: none;
+      }
 
       .full-media .media-zoom { height: 64vh; }
+      .hq .full-media .media-zoom {
+        height: clamp(280px, 82vw, 440px);
+        max-height: none;
+      }
       .hq-gallery { grid-template-columns: 1fr; grid-template-rows: none; }
       .hq-gallery .hq-night { grid-column: auto; }
       .hq-gallery .media-zoom { height: 106vw; flex: none; max-height: 580px; }
@@ -1603,31 +1882,167 @@
       .final-copy { font-size: clamp(28px, 9vw, 44px); }
     }
 
-    /* 三张 16:9 渲染图内嵌黑边。object-view-box 先把净画面裁出来，
-       之后任何容器都能按常规 cover 使用；不支持时退回上面的精确比例，
-       同样没有黑边，只是窄屏会更细。 */
-    @supports (object-view-box: inset(0)) {
-      .hero-media img,
-      .store-gallery .result-wide img {
-        object-view-box: inset(29.37% 0 43.17% 0);
-        object-position: 50% 50%;
+
+    /* ---------- 两源收敛到结论 ---------- */
+    .lineage-funnel {
+      position: relative;
+      height: clamp(58px, 7vw, 92px);
+      margin-top: clamp(26px, 3vw, 42px);
+    }
+    .lineage-funnel::before {          /* 连起两列中心 */
+      content: ""; position: absolute; top: 0; left: 25%; right: 25%; height: 1px;
+      background: var(--hair-ink-strong);
+    }
+    .lineage-funnel::after {           /* 从中间落下 */
+      content: ""; position: absolute; top: 0; left: 50%; width: 1px; height: 100%;
+      background: linear-gradient(180deg, rgba(53, 221, 147, .18), var(--jade-bright));
+    }
+    .lineage-funnel i {                /* 落点箭头 */
+      position: absolute; bottom: 0; left: 50%;
+      width: 7px; height: 7px; margin-left: -4px;
+      border-right: 1px solid var(--jade-bright);
+      border-bottom: 1px solid var(--jade-bright);
+      transform: rotate(45deg);
+    }
+    .lineage-funnel i + i { display: none }
+
+    @media (max-width: 900px) {
+      .lineage-funnel::before { left: 0; right: 50%; }
+      .lineage-funnel::after { left: 0; }
+      .lineage-funnel i { left: 0; }
+    }
+
+    /* ---------- 批注收敛：少解释，强关系，中文不留孤字 ---------- */
+    .lang-zh p,
+    .lang-en p,
+    .lang-ja p {
+      text-align: justify;
+      text-justify: inter-ideograph;
+      text-wrap: pretty;
+    }
+
+    .lang-zh .insp-pair p,
+    .lang-en .insp-pair p,
+    .lang-ja .insp-pair p,
+    .lang-zh .process-note-body,
+    .lang-en .process-note-body,
+    .lang-ja .process-note-body,
+    .lang-zh .project-conclusion,
+    .lang-en .project-conclusion,
+    .lang-ja .project-conclusion {
+      text-align: justify;
+      text-justify: inter-ideograph;
+      text-wrap: pretty;
+    }
+
+    .insp-lead {
+      margin-bottom: 18px;
+      color: var(--muted) !important;
+      font-family: var(--sans) !important;
+      font-size: clamp(14.5px, 1.05vw, 16px) !important;
+      font-weight: 400;
+      line-height: 1.95 !important;
+      letter-spacing: 0 !important;
+      text-align: justify !important;
+    }
+
+    .fork-tracks {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .fork-tracks::before,
+    .track-live::before { display: none; }
+    .track-live {
+      max-width: 44em;
+      padding-top: 0;
+    }
+    .track-live .track-title {
+      margin-top: 18px;
+      font-size: clamp(38px, 4.4vw, 66px);
+      text-wrap: balance;
+    }
+    .track-live .track-end {
+      max-width: 22em;
+      margin-top: 28px;
+      padding-top: 0;
+      border-top: 0;
+      font-size: clamp(22px, 2.6vw, 38px);
+      line-height: 1.4;
+      text-wrap: balance;
+    }
+
+    .traits-note {
+      max-width: 34em;
+      margin-top: clamp(64px, 8vw, 118px);
+      padding-top: clamp(30px, 4vw, 54px);
+      color: var(--on-ink);
+      font-family: var(--serif);
+      font-size: clamp(24px, 3.1vw, 48px);
+      line-height: 1.38;
+      letter-spacing: -.025em;
+      text-wrap: balance;
+    }
+
+    @media (min-width: 901px) {
+      .equation {
+        grid-template-columns: minmax(0, 1fr) clamp(36px, 4vw, 72px) minmax(0, 1fr) clamp(36px, 4vw, 72px) minmax(0, 1.16fr);
       }
-      .concept-card:not(.is-hq) .concept-media img {
-        object-view-box: inset(25.68% 0 38.76% 0);
-        object-position: 50% 50%;
+      .equation > .equation-multiply {
+        grid-column: 2;
+        transform: translateX(calc(-1 * clamp(40px, 5vw, 96px)));
       }
-      @media (max-width: 760px) {
-        .hero-media { aspect-ratio: 3 / 1; }
-        .concept-card:not(.is-hq) .concept-media .media-zoom,
-        .store-gallery .result-wide .media-zoom { aspect-ratio: 5 / 2; }
+      .equation > .equation-equals {
+        grid-column: 4;
       }
     }
 
-    /* 本身已是净长带的图，窄屏直接裁两侧换取高度 */
-    @media (max-width: 760px) {
-      .store-gallery .render .media-zoom,
-      .store-gallery .panorama .media-zoom { aspect-ratio: 5 / 2; }
-      .store .full-media .media-zoom { aspect-ratio: 12 / 5; }
+    .derivation-block {
+      grid-template-columns: 1fr;
+      gap: clamp(34px, 4vw, 58px);
+    }
+    .derivation-key {
+      position: static;
+    }
+    .derivation-value {
+      max-width: none;
+      font-size: clamp(28px, 3.5vw, 52px);
+      line-height: 1.2;
+      text-wrap: balance;
+    }
+    @media (min-width: 901px) {
+      .design-step {
+        grid-template-columns: 48px minmax(230px, .46fr) minmax(0, 1.54fr);
+      }
+    }
+    .design-step-title,
+    .design-step-note {
+      text-wrap: balance;
+    }
+
+    .store .process-evidence .media-zoom {
+      min-height: 0;
+      aspect-ratio: 1764 / 1262;
+    }
+    .store .process-evidence img {
+      aspect-ratio: auto;
+      object-fit: contain;
+      transform: none;
+    }
+    .store .process-evidence .media-zoom:hover img {
+      transform: none;
+    }
+
+    .store-gallery .result-wide,
+    .store-gallery .render,
+    .store-gallery .panorama {
+      width: calc(100% + 2 * var(--edge));
+      margin-inline: calc(-1 * var(--edge));
+    }
+
+    .project-conclusion {
+      width: 100%;
+      max-width: none;
+      text-align: left;
+      text-wrap: balance;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1645,223 +2060,116 @@
 <body>
   <a class="skip-link" href="#concept" data-i18n="ui.skip">跳到项目内容</a>
 
-  <header class="site-header" id="site-header">
-    <div class="header-inner">
-      <a class="brand-link" href="../index.html" aria-label="返回何梁宇个人主页" data-i18n-aria="nav.backAria">
-        <span class="brand-arrow" aria-hidden="true">←</span>
-        <span data-i18n="nav.back">何梁宇 / OPPO</span>
-        <span class="brand-year">2019</span>
-      </a>
-
-      <nav class="primary-nav" aria-label="项目章节" data-i18n-aria="nav.aria">
-        <a href="#concept" data-section="concept" data-i18n="nav.overview">概念</a>
-        <a href="#inspiration" data-section="inspiration" data-i18n="nav.inspiration">灵感</a>
-        <a href="#research" data-section="research" data-i18n="nav.research">调研</a>
-        <a href="#system" data-section="system" data-i18n="nav.system">美学系统</a>
-        <a href="#store" data-section="store" data-i18n="nav.store">设计推导</a>
-      </nav>
-
-      <button class="lang-toggle" id="lang-toggle" type="button" aria-label="切换语言">
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <circle cx="8" cy="8" r="6.8" stroke="currentColor"/>
-          <ellipse cx="8" cy="8" rx="3.1" ry="6.8" stroke="currentColor"/>
-          <path d="M1.5 6h13M1.5 10h13" stroke="currentColor"/>
+  <nav class="site-nav" id="site-nav" aria-label="项目导航" data-i18n-aria="nav.aria">
+    <a class="nav-back" href="../index.html" aria-label="返回何梁宇个人主页" data-i18n-aria="nav.backAria">
+      <span aria-hidden="true">&#8592;</span><span data-i18n="nav.back">返回</span>
+    </a>
+    <div class="nav-tools">
+      <button class="lang-globe" id="lang-cycle-btn" type="button" title="切换语言" aria-label="切换语言">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.2"/>
+          <ellipse cx="10" cy="10" rx="4" ry="8.5" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="1.5" y1="7.5" x2="18.5" y2="7.5" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="1.5" y1="12.5" x2="18.5" y2="12.5" stroke="currentColor" stroke-width="1.2"/>
         </svg>
-        <span id="lang-code">中文</span>
+        <span class="visually-hidden" id="lang-code">中文</span>
       </button>
     </div>
-    <div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
-  </header>
+  </nav>
 
   <main id="main-content">
     <section class="hero" id="top" aria-labelledby="hero-title">
-      <div class="hero-media" aria-hidden="true">
-        <img src="hero.jpg" alt="" fetchpriority="high">
+      <div class="hero-media strip" aria-hidden="true" data-auto-pan="hero">
+        <img src="hero-cropped-v2.jpg" alt="" fetchpriority="high">
       </div>
       <div class="hero-shade" aria-hidden="true"></div>
 
       <div class="hero-inner">
+        <div class="hero-tick" aria-hidden="true"></div>
         <p class="hero-kicker" data-i18n="hero.kicker">Brand design / Spatial &amp; architectural concept / 2019</p>
-        <div class="hero-grid">
-          <div>
-            <h1 class="hero-title" id="hero-title">
-              <span class="hero-main" data-i18n="hero.titleTop">OPPO</span>
-              <span class="hero-subtitle" data-i18n="hero.titleBottom">诗意美学：从品牌基因到空间与建筑</span>
-            </h1>
-          </div>
-          <div class="hero-side">
-            <p class="hero-lead" data-i18n="hero.lead">同一套品牌基因，在零售空间中成为轻盈、开放的城市公园；在总部建筑中成为宁静、内敛的璞玉。</p>
-            <dl class="hero-meta">
-              <div>
-                <dt data-i18n="hero.yearLabel">年份</dt>
-                <dd>2019</dd>
-              </div>
-              <div>
-                <dt data-i18n="hero.typeLabel">类别</dt>
-                <dd data-i18n="hero.type">品牌设计</dd>
-              </div>
-              <div>
-                <dt data-i18n="hero.scopeLabel">范围</dt>
-                <dd data-i18n="hero.scope">空间 / 建筑概念</dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-
-        <div class="hero-jumps">
-          <a class="hero-jump" href="#concept"><span>01</span><span data-i18n="hero.storeLink">从两个概念开始</span></a>
-          <a class="hero-jump" href="#inspiration"><span>02</span><span data-i18n="hero.hqLink">追溯灵感来源</span></a>
-          <p class="scroll-note" data-i18n="hero.scroll">向下阅读项目推导</p>
-        </div>
+        <h1 class="hero-ttl" id="hero-title" data-i18n="hero.titleTop">OPPO</h1>
       </div>
+
+      <div class="hero-scroll" aria-hidden="true"><span class="dn"></span><span data-i18n="hero.scroll">Scroll</span></div>
     </section>
 
     <section class="section concept" id="concept" aria-labelledby="concept-title">
       <div class="section-inner">
+        <div class="section-heading reveal">
+          <h2 class="beat-title" id="concept-title" data-i18n="overview.heading">概念</h2>
+          <span class="beat-flow" data-i18n="overview.kicker">CONCEPT</span>
+        </div>
+
+        <div class="concept-lead reveal">
+          <p class="concept-lead-paragraph" data-i18n="overview.conceptLead">诗意美学：从品牌基因到空间与建筑。同一套品牌基因，在零售空间中成为轻盈、开放的城市公园；在总部建筑中成为宁静、内敛的璞玉。两项设计均从品牌基因出发，通过具体的空间形态与建筑材质，将 OPPO 的品牌特质实体化。</p>
+        </div>
+
+        <details class="inspiration-panel reveal" id="insp">
+          <summary data-i18n="insp.label">灵感来源</summary>
+          <div class="inspiration-body">
+            <p class="insp-lead" data-i18n="inspiration.title">OPPO 的核心价值观，可以精准映射到中国传统的「儒道互补」思想体系中。</p>
+            <p data-i18n="inspiration.intro">「本分」里不仅有儒家的仁，还有道家的超越；「至美」则是道家自由精神的终极体现。因此可以说，OPPO 是儒道互补的。</p>
+            <div class="insp-pair">
+              <div>
+                <h4 data-i18n="philosophy.benfenTitle">本分</h4>
+                <p data-i18n="philosophy.benfenBody">对应儒家的秩序与自然法则：追求「里仁为美」，顺应事物发展的客观规律，强调内敛与克制。</p>
+              </div>
+              <div>
+                <h4 data-i18n="philosophy.zhimeiTitle">至美</h4>
+                <p data-i18n="philosophy.zhimeiBody">对应道家的超越与天人合一：如庄子所言「天地有大美而不言」，追求打破世俗束缚的自由境界。</p>
+              </div>
+            </div>
+            <p class="insp-resonance"><span data-i18n="philosophy.resonanceTitle">东西方共鸣</span><span data-i18n="philosophy.resonanceBody">这种东方意境与海德格尔「诗意地栖居」的西方哲学不谋而合，共同指向一种超越现代焦虑、回归宁静的终极状态。</span></p>
+          </div>
+        </details>
+
+        <div class="project-meta reveal">
+          <div><span class="spec-k" data-i18n="meta.workK">作品名称</span><span class="spec-v" data-i18n="meta.workV">OPPO 旗舰店空间概念设计 & 深圳总部大楼建筑概念设计</span></div>
+          <div><span class="spec-k" data-i18n="meta.yearK">时间</span><span class="spec-v">2019</span></div>
+          <div><span class="spec-k" data-i18n="meta.catK">类别</span><span class="spec-v" data-i18n="meta.catV">品牌设计</span></div>
+          <div><span class="spec-k" data-i18n="meta.scopeK">范围</span><span class="spec-v" data-i18n="meta.scopeV">空间与建筑概念</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section research" id="research" aria-labelledby="research-kicker">
+      <div class="section-inner">
         <header class="section-head reveal">
           <p class="section-marker">01</p>
           <div class="section-title-wrap">
-            <p class="section-kicker" data-i18n="overview.kicker">Concept</p>
-            <h2 class="section-title" id="concept-title" data-i18n="overview.title">两个最初命题：把门店变成城市公园，把总部变成一块被切开的璞玉。</h2>
-            <p class="section-intro" data-i18n="overview.intro">项目从两个空间概念起步。它们先回答“人在这里如何感受品牌”，之后才进入美学研究、形式生成与材料选择。</p>
-          </div>
-        </header>
-
-        <div class="concept-duo reveal">
-          <article class="concept-card">
-            <figure class="concept-media">
-              <button class="media-zoom" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom">
-                <img src="concept-flagship-1.jpg" alt="旗舰店城市公园概念，绿色半透明曲面散布在开放空间中" data-i18n-alt="alt.conceptStore" loading="lazy" decoding="async">
-              </button>
-            </figure>
-            <div class="concept-copy">
-              <p class="concept-label" data-i18n="concept.storeLabel">Flagship store / Concept 01</p>
-              <h3 class="concept-title" data-i18n="concept.storeTitle">城市公园与灵动之玉</h3>
-              <p class="concept-body" data-i18n="concept.storeBody">旗舰店不再是一条被货架规定的购买路径，而是一处可以自由停留、倚靠、交流和聆听 Live 音乐的小型城市广场。OPPO 的「O」变成起伏曲线，绿色半透明材质让它像玉，也像水。</p>
-              <div class="concept-points">
-                <p class="concept-point"><small data-i18n="concept.storePointOneLabel">人的行为</small><strong data-i18n="concept.storePointOne">停留 / 倚靠 / 交流 / 参与</strong></p>
-                <p class="concept-point"><small data-i18n="concept.storePointTwoLabel">空间意象</small><strong data-i18n="concept.storePointTwo">城市公园 / O / 透光之玉</strong></p>
-              </div>
-            </div>
-          </article>
-
-          <article class="concept-card is-hq">
-            <figure class="concept-media">
-              <button class="media-zoom" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom">
-                <img src="TIM图片20190520170541.jpg" alt="两座黑色塔楼如未雕琢的原石，顶部透出绿色" data-i18n-alt="alt.conceptHq" loading="lazy" decoding="async">
-              </button>
-            </figure>
-            <div class="concept-copy">
-              <p class="concept-label" data-i18n="concept.hqLabel">Shenzhen HQ / Concept 02</p>
-              <h3 class="concept-title" data-i18n="concept.hqTitle">璞玉之境</h3>
-              <p class="concept-body" data-i18n="concept.hqBody">总部先被想象成两块扎根城市的未雕琢原石：黑色双塔保持克制、沉静，只有顶部露出绿色，如切开石皮后显现翠玉。品牌识别被收束成一个有力量的城市焦点。</p>
-              <div class="concept-points">
-                <p class="concept-point"><small data-i18n="concept.hqPointOneLabel">建筑主体</small><strong data-i18n="concept.hqPointOne">原石 / 双塔 / 宁静</strong></p>
-                <p class="concept-point"><small data-i18n="concept.hqPointTwoLabel">视觉焦点</small><strong data-i18n="concept.hqPointTwo">切开璞玉 / 顶部翠绿</strong></p>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section inspiration" id="inspiration" aria-labelledby="inspiration-title">
-      <div class="section-inner">
-        <header class="section-head reveal">
-          <p class="section-marker">02</p>
-          <div class="section-title-wrap">
-            <p class="section-kicker" data-i18n="inspiration.kicker">Inspiration sources</p>
-            <h2 class="section-title" id="inspiration-title" data-i18n="inspiration.title">概念来自三组线索：人的行为、品牌符号，以及东方精神。</h2>
-            <p class="section-intro" data-i18n="inspiration.intro">先把灵感拆开，才能看清之后每一个空间动作来自哪里。它不是造型拼贴，而是从场景、形态和精神三个层面逐步聚合。</p>
-          </div>
-        </header>
-
-        <div class="inspiration-grid reveal">
-          <article class="inspiration-source">
-            <span class="inspiration-index">01</span>
-            <div class="inspiration-visual is-scene" aria-hidden="true"><span>Stay</span><span>Lean</span><span>Live</span><span>Meet</span></div>
-            <p class="inspiration-label" data-i18n="inspiration.sceneLabel">Scene / Urban park</p>
-            <h3 class="inspiration-title" data-i18n="inspiration.sceneTitle">从购买行为，转向自由发生的生活。</h3>
-            <p class="inspiration-body" data-i18n="inspiration.sceneBody">城市公园没有唯一目标和固定路线。人在其中停留、相遇、观看或参与，这成为旗舰店空间关系的原型。</p>
-          </article>
-          <article class="inspiration-source">
-            <span class="inspiration-index">02</span>
-            <div class="inspiration-visual is-form" aria-hidden="true"><span>O</span><span></span></div>
-            <p class="inspiration-label" data-i18n="inspiration.formLabel">Form / O × Jade</p>
-            <h3 class="inspiration-title" data-i18n="inspiration.formTitle">从品牌字形，进入曲线、玉质与原石。</h3>
-            <p class="inspiration-body" data-i18n="inspiration.formBody">「O」提供连续曲线；玉提供透光、温润与生命力；未经雕琢的璞石提供总部的体量原型。</p>
-          </article>
-          <article class="inspiration-source">
-            <span class="inspiration-index">03</span>
-            <div class="inspiration-visual is-spirit" aria-hidden="true"><span>本分</span><span>↔</span><span>至美</span></div>
-            <p class="inspiration-label" data-i18n="inspiration.spiritLabel">Spirit / Benfen × Zhimei</p>
-            <h3 class="inspiration-title" data-i18n="inspiration.spiritTitle">从克制的本分，走向自由的至美。</h3>
-            <p class="inspiration-body" data-i18n="inspiration.spiritBody">本分强调尊重本质与秩序；至美追求天人合一与精神超越。两者共同构成 OPPO 美学的张力。</p>
-          </article>
-        </div>
-
-        <div class="philosophy">
-          <h3 class="subsection-heading reveal" data-i18n="philosophy.heading">精神灵感继续向下追溯，成为判断设计的文化坐标。</h3>
-          <div class="philosophy-grid reveal">
-            <article class="philosophy-card">
-              <p class="philosophy-label" data-i18n="philosophy.benfenLabel">Confucian order / Natural law</p>
-              <h4 class="philosophy-title" data-i18n="philosophy.benfenTitle">本分</h4>
-              <p class="philosophy-body" data-i18n="philosophy.benfenBody">从「里仁为美」出发，尊重事物本质与自然规律。它对应秩序、克制与内敛，为设计提供安静而稳定的底色。</p>
-            </article>
-            <article class="philosophy-card">
-              <p class="philosophy-label" data-i18n="philosophy.zhimeiLabel">Taoist transcendence / Unity with nature</p>
-              <h4 class="philosophy-title" data-i18n="philosophy.zhimeiTitle">至美</h4>
-              <p class="philosophy-body" data-i18n="philosophy.zhimeiBody">从「天地有大美而不言」出发，追求超越世俗束缚、天人合一的自由境界。美不依赖装饰，而在不可言说的意境之中。</p>
-            </article>
-          </div>
-          <aside class="resonance reveal">
-            <p class="resonance-title" data-i18n="philosophy.resonanceTitle">东西方共鸣</p>
-            <p class="resonance-body" data-i18n="philosophy.resonanceBody">东方的「天人合一」与海德格尔「诗意地栖居」共同指向一种状态：超越现代焦虑，重新回到宁静。</p>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <section class="section research" id="research" aria-labelledby="research-title">
-      <div class="section-inner">
-        <header class="section-head reveal">
-          <p class="section-marker">03</p>
-          <div class="section-title-wrap">
-            <p class="section-kicker" data-i18n="research.kicker">Research &amp; aesthetic deduction</p>
-            <h2 class="section-title" id="research-title" data-i18n="research.title">从灵感到设计判断：寻找 OPPO 可持续使用的美学语言。</h2>
-            <p class="section-intro" data-i18n="research.intro">调研不是对概念的补充说明，而是检验概念能否回到品牌内核，并形成可执行、可跨尺度转译的方法。</p>
+            <p class="section-kicker" id="research-kicker" data-i18n="research.kicker">Research &amp; aesthetic deduction</p>
           </div>
         </header>
 
         <div class="research-chain reveal">
           <article class="chain-step">
-            <p class="chain-label" data-i18n="chain.oneLabel">共同语言</p>
+            <p class="chain-label" data-i18n="chain.oneLabel">源头一 · 共性</p>
             <h3 class="chain-title" data-i18n="chain.oneTitle">现代主义</h3>
-            <p class="chain-body" data-i18n="chain.oneBody">作为全球化品牌，OPPO 需要以现代主义建立与世界接轨的设计语言：清晰、理性、可跨文化理解。</p>
+            <p class="chain-body" data-i18n="chain.oneBody">简洁和真实是其精神内核。在全球化的二十一世纪，OPPO 要全球化，现代主义美学必定是其与世界接轨的语言和方式。</p>
           </article>
           <article class="chain-step">
-            <p class="chain-label" data-i18n="chain.twoLabel">现实张力</p>
-            <h3 class="chain-title" data-i18n="chain.twoTitle">喧嚣与焦虑</h3>
-            <p class="chain-body" data-i18n="chain.twoBody">现代工业文明带来效率，也带来分裂、焦虑与孤独。仅有现代主义不足以形成 OPPO 独有的精神识别。</p>
+            <p class="chain-label" data-i18n="chain.twoLabel">源头二 · 个性</p>
+            <h3 class="chain-title" data-i18n="chain.twoTitle">东方哲学</h3>
+            <p class="chain-body" data-i18n="chain.twoBody">「本分」的核心是隔绝外在的压力和诱惑、回归事物本源。如何才能做到？答案在道家的「虚静」——老子说「致虚极，守静笃」。唯有虚静，才能进入物我两忘的「天人合一」，那是无拘无俗、自由自在的境界，这里面就有「至美」。</p>
           </article>
           <article class="chain-step">
-            <p class="chain-label" data-i18n="chain.threeLabel">品牌解药</p>
-            <h3 class="chain-title" data-i18n="chain.threeTitle">东方意境</h3>
-            <p class="chain-body" data-i18n="chain.threeBody">含蓄、留白与虚实相生，为现代空间提供宁静与自由，也成为 OPPO 区别于同类品牌的审美根基。</p>
+            <p class="chain-label" data-i18n="chain.threeLabel">源头三 · 独特性</p>
+            <h3 class="chain-title" data-i18n="chain.threeTitle">至美科技</h3>
+            <p class="chain-body" data-i18n="chain.threeBody">打造令用户「怦然心动」的产品——「赏心悦目」「惊艳」「美感」「耐看」，这些说辞在创始人的访谈中频频出现。对美的追求是 OPPO 发展历程中的主线条，这种创始情怀已深藏于品牌 DNA 之中。</p>
           </article>
         </div>
 
         <div class="equation reveal" aria-label="OPPO 品牌美学公式" data-i18n-aria="overview.equationAria">
           <div class="equation-term">
             <strong class="equation-name" data-i18n="equation.modern">现代主义</strong>
-            <span class="equation-sub" data-i18n="equation.modernSub">与世界接轨的基础语言</span>
+            <span class="equation-sub" data-i18n="equation.modernSub">与世界接轨的基础设计语言</span>
           </div>
-          <div class="equation-sign" aria-hidden="true">×</div>
+          <div class="equation-sign equation-multiply" aria-hidden="true">×</div>
           <div class="equation-term">
             <strong class="equation-name" data-i18n="equation.east">东方美学</strong>
-            <span class="equation-sub" data-i18n="equation.eastSub">面对现代焦虑的设计解药</span>
+            <span class="equation-sub" data-i18n="equation.eastSub">面对喧嚣与焦虑的解药</span>
           </div>
-          <div class="equation-sign" aria-hidden="true">=</div>
+          <div class="equation-sign equation-equals" aria-hidden="true">=</div>
           <div class="equation-term is-result">
             <strong class="equation-name" data-i18n="equation.poetic">诗意美学</strong>
             <span class="equation-sub" data-i18n="equation.poeticSub">OPPO 独有的品牌视觉壁垒</span>
@@ -1873,105 +2181,134 @@
     <section class="section system" id="system" aria-labelledby="system-title">
       <div class="section-inner">
         <header class="section-head reveal">
-          <p class="section-marker">04</p>
+          <p class="section-marker">02</p>
           <div class="section-title-wrap">
             <p class="section-kicker" data-i18n="system.kicker">Aesthetic system</p>
-            <h2 class="section-title" id="system-title" data-i18n="system.title">将品牌美学定义为：诗意美学。</h2>
-            <p class="section-intro" data-i18n="system.intro">它不是一种表面风格，而是一套用于判断空间、形态、材质与体验的核心准则。</p>
+            <h2 class="section-title" id="system-title" data-i18n="system.title">至美在哪里？答案在诗意里。</h2>
+            <p class="section-intro" data-i18n="system.intro">工业文明带来现代生活的同时，也带来了世界的喧嚣、分裂、焦虑、孤独，而诗意离人类渐行渐远，成为奢侈品。东方美学的独特意境——即诗意——正是这个世界需要的一剂良方。</p>
           </div>
         </header>
 
+
+        <!-- 从至美到诗意：PPT 第四章的推导 -->
+        <div class="fork reveal">
+          <p class="fork-label" data-i18n="fork.label">从至美到诗意</p>
+          <p class="fork-q" data-i18n="fork.q">至美，如何抵达？</p>
+
+          <div class="fork-tracks">
+            <article class="track track-live">
+              <h4 class="track-title" data-i18n="fork.liveTitle">回到主体</h4>
+              <p class="track-end" data-i18n="fork.liveEnd">即一种「天人合一」的极致状态。</p>
+            </article>
+          </div>
+
+          <p class="fork-out" data-i18n="deduce.out">追求至美，事实上是要创造一种诗意，在这种诗意里感受到至美。</p>
+        </div>
+
+        <div class="lineage reveal">
+          <p class="lineage-label" data-i18n="lineage.label">这三种手法从何而来</p>
+          <div class="lineage-src">
+            <div class="src">
+              <span class="src-k" data-i18n="lineage.kA">文学</span>
+              <p class="src-cite" data-i18n="lineage.citeA">陶渊明「采菊东篱下，悠然见南山」
+王维「空山新雨后，天气晚来秋」</p>
+              <p class="src-do" data-i18n="lineage.doA">不直接说美，而是通过对物的描绘，营造超然物外的意境。</p>
+            </div>
+            <div class="src">
+              <span class="src-k" data-i18n="lineage.kB">绘画</span>
+              <p class="src-cite" data-i18n="lineage.citeB">南宋 · 马远、夏圭
+山水画中的意境达到高峰</p>
+              <p class="src-do" data-i18n="lineage.doB">留白 · 不完整构图 · 微妙的细节 —— 物我两忘的宁静诗意跃然纸上。</p>
+            </div>
+          </div>
+          <div class="lineage-funnel" aria-hidden="true"><i></i><i></i></div>
+        </div>
+
         <div class="system-statement reveal">
-          <p class="system-statement-label" data-i18n="system.methodsLabel">根本手法</p>
-          <p class="system-statement-text" data-i18n="system.methods">含蓄 · 留白 · 虚实相生</p>
+          <p class="system-statement-label" data-i18n="system.methodsLabel">根本的通达手法</p>
+          <p class="system-statement-text" data-i18n="system.methods">含蓄 · 留白 · 虚实</p>
+        </div>
+
+        <div class="origin reveal">
+          <p class="origin-label" data-i18n="origin.label">三大特征的由来</p>
+          <ol class="origin-path">
+            <li data-i18n="origin.p1">本分</li>
+            <li data-i18n="origin.p2">回归事物本源</li>
+            <li data-i18n="origin.p3">道家「虚静」</li>
+            <li data-i18n="origin.p4">天人合一</li>
+          </ol>
         </div>
 
         <div class="traits reveal">
           <article class="trait">
+            <p class="trait-from">
+              <b data-i18n="origin.aFrom">虚</b>
+              <q data-i18n="origin.aCite">致虚极</q>
+            </p>
             <span class="trait-index">01</span>
             <h3 class="trait-name" data-i18n="trait.lightName">轻盈</h3>
             <p class="trait-en">Lightness</p>
-            <p class="trait-body" data-i18n="trait.lightBody">拒绝沉重，以流线、透光与悬浮感消解商业空间的体量压迫。</p>
-            <p class="trait-map" data-i18n="trait.lightMap">转译至旗舰店：绿色半透明材质 + 曲面台体</p>
+            <p class="trait-why" data-i18n="origin.aWhy">极致的放空，一种轻盈之姿</p>
+            <p class="trait-body" data-i18n="trait.lightBody">一种东方特质，而又充满现代感。像羽毛；像水墨，微妙、透明富有变化；像极简主义建筑，以钢和玻璃构建出的轻盈。</p>
           </article>
           <article class="trait">
+            <p class="trait-from">
+              <b data-i18n="origin.bFrom">静</b>
+              <q data-i18n="origin.bCite">守静笃</q>
+            </p>
             <span class="trait-index">02</span>
             <h3 class="trait-name" data-i18n="trait.quietName">宁静</h3>
             <p class="trait-en">Tranquility</p>
-            <p class="trait-body" data-i18n="trait.quietBody">消解喧嚣，以克制的体量与深色整体形成内敛、稳定的秩序。</p>
-            <p class="trait-map" data-i18n="trait.quietMap">转译至总部：黑色通体建筑 + 极简有机曲面</p>
+            <p class="trait-why" data-i18n="origin.bWhy">一种超然的状态，因虚而静</p>
+            <p class="trait-body" data-i18n="trait.quietBody">一种自然的特质，一种对比的美学。像大地、山峦、黑夜、水、夏日午后、林间阴翳、黎明前、暴风过后。</p>
           </article>
           <article class="trait">
+            <p class="trait-from">
+              <b data-i18n="origin.cFrom">天人合一</b>
+              <q data-i18n="origin.cCite">物我两忘</q>
+            </p>
             <span class="trait-index">03</span>
             <h3 class="trait-name" data-i18n="trait.freeName">自由</h3>
             <p class="trait-en">Freedom</p>
-            <p class="trait-body" data-i18n="trait.freeBody">打破边界，以无固定路线的场域，让人自由停留、倚靠、交流与参与。</p>
-            <p class="trait-map" data-i18n="trait.freeMap">转译至旗舰店：城市公园 + 无边界互动动线</p>
+            <p class="trait-why" data-i18n="origin.cWhy">因静而天人合一，天人合一，就是自由</p>
+            <p class="trait-body" data-i18n="trait.freeBody">就是「诗意地栖居」，一种人文和艺术精神。当品牌里充满了轻盈和宁静，自由的感觉就会自然散发出来。</p>
           </article>
         </div>
 
-        <div class="logic-map-wrap reveal">
-          <p class="logic-map-title" data-i18n="map.title">从价值观到设计成果的推导关系</p>
-          <div class="logic-map">
-            <div class="map-inputs">
-              <div class="map-node">
-                <strong data-i18n="map.modern">现代主义</strong>
-                <small data-i18n="map.modernSub">全球化的设计语言</small>
-              </div>
-              <div class="map-node">
-                <strong data-i18n="map.east">东方美学</strong>
-                <small data-i18n="map.eastSub">本分 / 至美 / 儒道互补</small>
-              </div>
-            </div>
-            <div class="map-connector" aria-hidden="true"></div>
-            <div class="map-center">
-              <strong data-i18n="map.system">诗意美学</strong>
-              <small data-i18n="map.systemSub">含蓄 · 留白 · 虚实相生</small>
-            </div>
-            <div class="map-connector" aria-hidden="true"></div>
-            <div class="map-traits">
-              <span data-i18n="trait.lightName">轻盈</span>
-              <span data-i18n="trait.quietName">宁静</span>
-              <span data-i18n="trait.freeName">自由</span>
-            </div>
-            <div class="map-connector" aria-hidden="true"></div>
-            <div class="map-outcomes">
-              <div class="map-node">
-                <strong data-i18n="map.store">旗舰店</strong>
-                <small data-i18n="map.storeSub">自由（功能动线）× 轻盈（视觉体量）</small>
-              </div>
-              <div class="map-node">
-                <strong data-i18n="map.hq">深圳超级总部</strong>
-                <small data-i18n="map.hqSub">宁静（建筑主体）× 至美（视觉焦点）</small>
-              </div>
-            </div>
-          </div>
-        </div>
+
+        <p class="traits-note reveal" data-i18n="trait.levels">轻盈偏视觉层面，宁静偏感受层面，自由是精神层面；轻盈和宁静的极致，就是自由。</p>
       </div>
     </section>
 
     <section class="section project store" id="store" aria-labelledby="store-title">
       <div class="section-inner">
+
+
+        <figure class="chapter-media">
+              <button class="media-zoom strip" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom">
+                <img src="store-overview.jpg" alt="旗舰店城市公园概念，绿色半透明曲面散布在开放空间中" data-i18n-alt="alt.conceptStore" loading="lazy" decoding="async">
+              </button>
+            </figure>
+
         <div class="project-opening">
           <div class="project-copy reveal">
-            <p class="project-number" data-i18n="store.number">Chapter 05 / Project 01 / Flagship store</p>
-            <h2 class="project-title" id="store-title" data-i18n="store.title">城市公园与灵动之玉</h2>
-            <p class="project-intro" data-i18n="store.intro">以「城市公园」打破传统零售空间的强目的性与线性货架。空间成为可以自由停留、倚靠、交互，并承载 Live 音乐与社群活动的开放场域。</p>
+            <p class="project-number" data-i18n="store.number">Chapter 03 / Project 01 / Flagship store</p>
+            <h2 class="project-title" id="store-title" data-i18n="store.title">城市公园</h2>
             <div class="project-tags">
-              <span class="project-tag" data-i18n="store.tagOne">自由 / 动线</span>
-              <span class="project-tag" data-i18n="store.tagTwo">轻盈 / 体量</span>
-              <span class="project-tag" data-i18n="store.tagThree">O / 曲面变体</span>
+              <span class="project-tag" data-i18n="store.tagOne">自由</span>
+              <span class="project-tag" data-i18n="store.tagTwo">轻盈</span>
+              <span class="project-tag" data-i18n="store.tagThree">城市公园</span>
             </div>
           </div>
 
           <aside class="project-route reveal" aria-label="旗舰店设计推导路径" data-i18n-aria="store.routeAria">
             <p class="route-label" data-i18n="store.routeLabel">Derivation route / 设计推导路径</p>
             <div class="route-steps">
-              <p class="route-step"><span class="route-index">01</span><span class="route-key" data-i18n="store.routeOneKey">品牌特征</span><strong class="route-value" data-i18n="store.routeOneValue">自由 / 轻盈</strong></p>
-              <p class="route-step"><span class="route-index">02</span><span class="route-key" data-i18n="store.routeTwoKey">空间原型</span><strong class="route-value" data-i18n="store.routeTwoValue">城市公园</strong></p>
-              <p class="route-step"><span class="route-index">03</span><span class="route-key" data-i18n="store.routeThreeKey">形态动作</span><strong class="route-value" data-i18n="store.routeThreeValue">O → 起伏曲面</strong></p>
-              <p class="route-step"><span class="route-index">04</span><span class="route-key" data-i18n="store.routeFourKey">材质动作</span><strong class="route-value" data-i18n="store.routeFourValue">绿色半透明 → 消解重量</strong></p>
-              <p class="route-step"><span class="route-index">05</span><span class="route-key" data-i18n="store.routeFiveKey">空间结果</span><strong class="route-value" data-i18n="store.routeFiveValue">停留 / 倚靠 / Live / 交流</strong></p>
+              <p class="route-step"><span class="route-index">01</span><span class="route-key" data-i18n="store.routeOneKey">核心推导</span><strong class="route-value" data-i18n="store.routeOneValue">自由（功能动线）× 轻盈（视觉体量）</strong></p>
+              <p class="route-step"><span class="route-index">02</span><span class="route-key" data-i18n="store.routeTwoKey">哲学对应</span><strong class="route-value" data-i18n="store.routeTwoValue">道家：自由 / 天人合一</strong></p>
+              <p class="route-step"><span class="route-index">03</span><span class="route-key" data-i18n="store.routeThreeKey">空间原型</span><strong class="route-value" data-i18n="store.routeThreeValue">城市公园</strong></p>
+              <p class="route-step"><span class="route-index">04</span><span class="route-key" data-i18n="store.routeFourKey">形态与材质</span><strong class="route-value" data-i18n="store.routeFourValue">「O」曲面变体 · 绿色半透明介质</strong></p>
+              <p class="route-step"><span class="route-index">05</span><span class="route-key" data-i18n="store.routeFiveKey">空间自由度</span><strong class="route-value" data-i18n="store.routeFiveValue">停留 · 倚靠 · 参与微型广场 Live</strong></p>
             </div>
           </aside>
         </div>
@@ -1985,18 +2322,25 @@
           <div class="design-steps reveal">
             <article class="design-step">
               <span class="design-step-index">01</span>
-              <h3 class="design-step-title" data-i18n="store.stepOneTitle">释放动线</h3>
-              <p class="design-step-body" data-i18n="store.stepOneBody">四周墙面退让为画廊式展陈界面，中央核心区完全开敞。以离散布局取代固定路线，让使用者自行决定停留与参与方式。</p>
+              <div class="design-step-head">
+                <h3 class="design-step-title" data-i18n="store.tOneTitle">动线与空间属性</h3>
+                <p class="design-step-note" data-i18n="store.tOneNote">对应道家「自由 / 天人合一」</p>
+              </div>
+              <div class="design-step-cols">
+                <p class="design-step-body"><small data-i18n="ui.logic">转化逻辑</small><span data-i18n="store.tOneLogic">打破传统零售空间强目的性与线性货架带来的物理约束，构建无边界的交互场域。</span></p>
+                <p class="design-step-body"><small data-i18n="ui.exec">视觉执行</small><span data-i18n="store.tOneExec">全面植入「城市公园」概念。室内四周墙面退让为画廊式的展陈界面，中央核心区完全开敞。摒弃固定动线，代之以离散型的布局，赋予使用者随性停留、倚靠或参与微型广场 Live 的极高空间自由度。</span></p>
+              </div>
             </article>
             <article class="design-step">
               <span class="design-step-index">02</span>
-              <h3 class="design-step-title" data-i18n="store.stepTwoTitle">变体品牌符号</h3>
-              <p class="design-step-body" data-i18n="store.stepTwoBody">提取 OPPO 标志中的字母「O」，将其拉伸、切分并转化为空间内起伏的陈列与交互台面。</p>
-            </article>
-            <article class="design-step">
-              <span class="design-step-index">03</span>
-              <h3 class="design-step-title" data-i18n="store.stepThreeTitle">消解实体重量</h3>
-              <p class="design-step-body" data-i18n="store.stepThreeBody">绿色半透明材质利用透光性消解厚重感。俯视时，台体如水波或散落的玉石，在白色空间中呈现悬浮状态。</p>
+              <div class="design-step-head">
+                <h3 class="design-step-title" data-i18n="store.tTwoTitle">形态与材质</h3>
+                <p class="design-step-note" data-i18n="store.tTwoNote">对应东方意境之「轻盈」</p>
+              </div>
+              <div class="design-step-cols">
+                <p class="design-step-body"><small data-i18n="ui.logic">转化逻辑</small><span data-i18n="store.tTwoLogic">以物理层面的「透」与「轻」，对抗现代商业空间的体量压迫感。</span></p>
+                <p class="design-step-body"><small data-i18n="ui.exec">视觉执行</small><span data-i18n="store.tTwoExec">提取品牌核心符号「O」进行曲面变体，演化为空间内的陈列与交互台面。材质上选用绿色半透明介质，利用透光性消解实体厚重感。俯视图显示，这些台面如水波纹或散落的玉石般有机分布，在纯白／浅灰的空间基底中呈现出悬浮、轻盈的视觉状态。</span></p>
+              </div>
             </article>
           </div>
         </div>
@@ -2004,48 +2348,51 @@
         <div class="process-evidence reveal">
           <figure>
             <button class="media-zoom" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom">
-              <img src="deriv-flagship-plan.jpg" alt="旗舰店俯视推导图，绿色和白色曲面台体离散分布" data-i18n-alt="alt.storePlan" loading="lazy" decoding="async">
+              <img src="store-plan-cropped-v2.jpg" alt="旗舰店俯视推导图，绿色和白色曲面台体离散分布" data-i18n-alt="alt.storePlan" loading="lazy" decoding="async">
             </button>
-            <figcaption><span data-i18n="store.planCaption">过程图 / 离散布局与自由动线</span><span>Process 01</span></figcaption>
           </figure>
           <div class="process-note">
             <p class="process-note-label" data-i18n="store.evidenceLabel">Process evidence</p>
-            <h3 class="process-note-title" data-i18n="store.evidenceTitle">先检查动线与分布，再进入空间表现。</h3>
-            <p class="process-note-body" data-i18n="store.evidenceBody">俯视推导验证三件事：中央不被货架占满；曲面台体保持离散；人在不同节点之间可以自由选择路线。城市公园的概念先在平面关系中成立。</p>
+            <h3 class="process-note-title" data-i18n="store.evidenceTitle">俯视推导：离散布局与自由动线</h3>
+            <p class="process-note-body" data-i18n="store.evidenceBody">平面推导图。四周墙面退让为画廊式展陈界面，中央核心区开敞；曲面台体以离散方式分布，如水波纹或散落的玉石。</p>
           </div>
         </div>
 
-        <div class="outcome-heading reveal">
-          <p class="outcome-label" data-i18n="store.outcomeLabel">Result / Process verified</p>
-          <h3 class="outcome-title" data-i18n="store.outcomeTitle">当动线、形态和材质都回应概念，结果才出现。</h3>
+        <figure class="store-detail-wide reveal">
+          <button class="media-zoom strip" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom" data-scroll-sync="store-views">
+            <img src="store-wide-22.jpg" alt="旗舰店正面空间视图，开放中央区与两侧画廊式展陈界面" data-i18n-alt="alt.storeWideDetail" loading="lazy" decoding="async">
+          </button>
+        </figure>
+
+        <div class="store-scroll-link" aria-hidden="true" data-scroll-dots>
+          <div class="store-scroll-trail">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+          </div>
         </div>
 
         <div class="store-gallery">
           <figure class="result-wide reveal">
-            <button class="media-zoom" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom">
-              <img src="22.png" alt="旗舰店宽幅空间结果，中央曲面与两侧画廊式界面共同形成开放场域" data-i18n-alt="alt.storeResultWide" loading="lazy" decoding="async">
+            <button class="media-zoom strip" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom" data-scroll-sync="store-views">
+              <img src="store-result-1.jpg" alt="旗舰店宽幅空间结果，中央曲面与两侧画廊式界面共同形成开放场域" data-i18n-alt="alt.storeResultWide" loading="lazy" decoding="async">
             </button>
-            <figcaption><span data-i18n="store.heroCaption">空间结果 / 城市公园式开放场域</span><span>Result 01</span></figcaption>
           </figure>
           <figure class="render reveal">
             <button class="media-zoom" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom">
-              <img src="render-flagship-interior-2.jpg" alt="明亮的旗舰店全景，绿色半透明台体位于中心" data-i18n-alt="alt.storeRenderTwo" loading="lazy" decoding="async">
+              <img src="store-result-2.jpg" alt="明亮的旗舰店全景，绿色半透明台体位于中心" data-i18n-alt="alt.storeRenderTwo" loading="lazy" decoding="async">
             </button>
-            <figcaption><span data-i18n="store.renderCaption">内观 / 轻盈的视觉体量</span><span>Result 02</span></figcaption>
           </figure>
           <figure class="panorama reveal">
             <button class="media-zoom" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom">
-              <img src="render-flagship-interior-1.jpg" alt="旗舰店宽幅室内效果图，画廊式墙面围绕开放中央区" data-i18n-alt="alt.storeRenderOne" loading="lazy" decoding="async">
+              <img src="store-result-3.jpg" alt="旗舰店室内视图，白色动线与绿色半透明曲面台体构成开放空间" data-i18n-alt="alt.storeInteriorView" loading="lazy" decoding="async">
             </button>
-            <figcaption><span data-i18n="store.wideCaption">内观全景 / 展陈界面退至空间边缘</span><span>Result 03</span></figcaption>
           </figure>
         </div>
 
         <figure class="full-media reveal">
           <button class="media-zoom" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom">
-            <img src="Portfolio_页面_22_图像_0005.jpg" alt="OPPO 旗舰店从临街立面观看的横向全景" data-i18n-alt="alt.storePanorama" loading="lazy" decoding="async">
+            <img src="store-brandwall.jpg" alt="OPPO 旗舰店从临街立面观看的横向全景" data-i18n-alt="alt.storePanorama" loading="lazy" decoding="async">
           </button>
-          <figcaption><span data-i18n="store.panoramaCaption">从城市界面看向内部：展陈退至四周，中央成为开放广场</span><span>Result 04</span></figcaption>
         </figure>
 
         <p class="project-conclusion reveal" data-i18n="store.conclusion">零售空间不再只服务于购买：它像一座微型城市公园，让品牌以停留、交流与参与的方式被感知。</p>
@@ -2054,26 +2401,33 @@
 
     <section class="section project hq" id="hq" aria-labelledby="hq-title">
       <div class="section-inner">
+
+
+        <figure class="chapter-media">
+              <button class="media-zoom" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom">
+                <img src="TIM图片20190520170541.jpg" alt="两座黑色塔楼如未雕琢的原石，顶部透出绿色" data-i18n-alt="alt.conceptHq" loading="lazy" decoding="async">
+              </button>
+            </figure>
+
         <div class="project-opening">
           <div class="project-copy reveal">
-            <p class="project-number" data-i18n="hq.number">Chapter 06 / Project 02 / Shenzhen super headquarters</p>
+            <p class="project-number" data-i18n="hq.number">Chapter 04 / Project 02 / Shenzhen super headquarters</p>
             <h2 class="project-title" id="hq-title" data-i18n="hq.title">璞玉之境</h2>
-            <p class="project-intro" data-i18n="hq.intro">以未雕琢的「璞玉」为核心意象。两座深色有机塔楼如原石扎根大地，唯一的绿色高光被严格控制在顶部，形成「切开原石见翠玉」的东方意境。</p>
             <div class="project-tags">
-              <span class="project-tag" data-i18n="hq.tagOne">宁静 / 主体</span>
-              <span class="project-tag" data-i18n="hq.tagTwo">至美 / 焦点</span>
-              <span class="project-tag" data-i18n="hq.tagThree">璞玉 / 意象</span>
+              <span class="project-tag" data-i18n="hq.tagOne">宁静</span>
+              <span class="project-tag" data-i18n="hq.tagTwo">至美</span>
+              <span class="project-tag" data-i18n="hq.tagThree">璞玉</span>
             </div>
           </div>
 
           <aside class="project-route reveal" aria-label="深圳总部设计推导路径" data-i18n-aria="hq.routeAria">
             <p class="route-label" data-i18n="hq.routeLabel">Derivation route / 设计推导路径</p>
             <div class="route-steps">
-              <p class="route-step"><span class="route-index">01</span><span class="route-key" data-i18n="hq.routeOneKey">品牌特征</span><strong class="route-value" data-i18n="hq.routeOneValue">宁静 / 至美</strong></p>
-              <p class="route-step"><span class="route-index">02</span><span class="route-key" data-i18n="hq.routeTwoKey">建筑原型</span><strong class="route-value" data-i18n="hq.routeTwoValue">未雕琢的璞玉</strong></p>
-              <p class="route-step"><span class="route-index">03</span><span class="route-key" data-i18n="hq.routeThreeKey">体量动作</span><strong class="route-value" data-i18n="hq.routeThreeValue">两块原石 → 双子塔</strong></p>
-              <p class="route-step"><span class="route-index">04</span><span class="route-key" data-i18n="hq.routeFourKey">对比动作</span><strong class="route-value" data-i18n="hq.routeFourValue">黑色主体 + 绿色顶部</strong></p>
-              <p class="route-step"><span class="route-index">05</span><span class="route-key" data-i18n="hq.routeFiveKey">城市结果</span><strong class="route-value" data-i18n="hq.routeFiveValue">东方美学的天际线坐标</strong></p>
+              <p class="route-step"><span class="route-index">01</span><span class="route-key" data-i18n="hq.routeOneKey">核心推导</span><strong class="route-value" data-i18n="hq.routeOneValue">宁静（建筑主体）× 至美（视觉焦点）</strong></p>
+              <p class="route-step"><span class="route-index">02</span><span class="route-key" data-i18n="hq.routeTwoKey">哲学对应</span><strong class="route-value" data-i18n="hq.routeTwoValue">儒家：本分 / 宁静</strong></p>
+              <p class="route-step"><span class="route-index">03</span><span class="route-key" data-i18n="hq.routeThreeKey">建筑意象</span><strong class="route-value" data-i18n="hq.routeThreeValue">未雕琢的璞玉（原石）</strong></p>
+              <p class="route-step"><span class="route-index">04</span><span class="route-key" data-i18n="hq.routeFourKey">主体材质</span><strong class="route-value" data-i18n="hq.routeFourValue">深色通体 · 绝对平滑的有机曲面</strong></p>
+              <p class="route-step"><span class="route-index">05</span><span class="route-key" data-i18n="hq.routeFiveKey">视觉高光</span><strong class="route-value" data-i18n="hq.routeFiveValue">塔楼顶部的绿色渐变发光体</strong></p>
             </div>
           </aside>
         </div>
@@ -2087,18 +2441,25 @@
           <div class="design-steps reveal">
             <article class="design-step">
               <span class="design-step-index">01</span>
-              <h3 class="design-step-title" data-i18n="hq.stepOneTitle">回归本质体量</h3>
-              <p class="design-step-body" data-i18n="hq.stepOneBody">摒弃多余表皮装饰与结构堆砌，以两块未雕琢原石般的体量建立建筑的核心意象。</p>
+              <div class="design-step-head">
+                <h3 class="design-step-title" data-i18n="hq.tOneTitle">主体形态</h3>
+                <p class="design-step-note" data-i18n="hq.tOneNote">对应儒家「本分 / 宁静」</p>
+              </div>
+              <div class="design-step-cols">
+                <p class="design-step-body"><small data-i18n="ui.logic">转化逻辑</small><span data-i18n="hq.tOneLogic">回归建筑的本质力量，摒弃多余的表皮装饰与结构堆砌，追求克制与内敛。</span></p>
+                <p class="design-step-body"><small data-i18n="ui.exec">视觉执行</small><span data-i18n="hq.tOneExec">确立「未雕琢的璞玉（原石）」为核心意象。双子塔楼采用深色通体材质，呈现绝对平滑的有机曲面。建筑以极简、厚重的几何体块扎根于城市网格中，在视觉上输出极强的静谧感与秩序底色。</span></p>
+              </div>
             </article>
             <article class="design-step">
               <span class="design-step-index">02</span>
-              <h3 class="design-step-title" data-i18n="hq.stepTwoTitle">建立宁静底色</h3>
-              <p class="design-step-body" data-i18n="hq.stepTwoBody">双子塔楼采用深色通体材质与绝对平滑的有机曲面，以极简而厚重的几何体块扎根城市网格。</p>
-            </article>
-            <article class="design-step">
-              <span class="design-step-index">03</span>
-              <h3 class="design-step-title" data-i18n="hq.stepThreeTitle">控制唯一高光</h3>
-              <p class="design-step-body" data-i18n="hq.stepThreeBody">将绿色渐变发光体限定于塔楼顶部。在极致宁静中制造一次虚实冲突，把超越世俗的生命力具象化。</p>
+              <div class="design-step-head">
+                <h3 class="design-step-title" data-i18n="hq.tTwoTitle">视觉焦点</h3>
+                <p class="design-step-note" data-i18n="hq.tTwoNote">对应道家「至美 / 超越」</p>
+              </div>
+              <div class="design-step-cols">
+                <p class="design-step-body"><small data-i18n="ui.logic">转化逻辑</small><span data-i18n="hq.tTwoLogic">在极致宁静的底色中制造虚实冲突，具象化表达超越世俗的生命力。</span></p>
+                <p class="design-step-body"><small data-i18n="ui.exec">视觉执行</small><span data-i18n="hq.tTwoExec">将建筑唯一的视觉高光严格控制在塔楼顶部，设定为绿色渐变发光体。在暗色调的城市夜景中，构筑出「切开原石见翠玉」的高对比度戏剧性。两栋非对称的有机塔楼配合顶部的幽绿光芒，以极高的辨识度确立了 OPPO 品牌的东方美学天际线坐标。</span></p>
+              </div>
             </article>
           </div>
         </div>
@@ -2108,18 +2469,12 @@
             <button class="media-zoom" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom">
               <img src="deriv-hq-elevation.jpeg" alt="总部早期城市体量推导，深色双塔嵌入周边建筑群" data-i18n-alt="alt.hqElevation" loading="lazy" decoding="async">
             </button>
-            <figcaption><span data-i18n="hq.elevationCaption">过程图 / 城市尺度中的双塔体量</span><span>Process 01</span></figcaption>
           </figure>
           <div class="process-note">
             <p class="process-note-label" data-i18n="hq.evidenceLabel">Process evidence</p>
-            <h3 class="process-note-title" data-i18n="hq.evidenceTitle">先判断体量与城市关系，再强化唯一高光。</h3>
-            <p class="process-note-body" data-i18n="hq.evidenceBody">早期城市测试保留了两块原石般的完整体量，同时检查双塔比例、间距与周边天际线。绿色只停留在顶部，避免品牌色变成表皮装饰。</p>
+            <h3 class="process-note-title" data-i18n="hq.evidenceTitle">城市尺度推导：双塔与周边天际线</h3>
+            <p class="process-note-body" data-i18n="hq.evidenceBody">早期城市体量推导图。两块原石般的完整体量扎根于城市网格之中，绿色只出现在顶部。</p>
           </div>
-        </div>
-
-        <div class="outcome-heading reveal">
-          <p class="outcome-label" data-i18n="hq.outcomeLabel">Result / Process verified</p>
-          <h3 class="outcome-title" data-i18n="hq.outcomeTitle">形体保持沉静，生命力只在顶部被看见。</h3>
         </div>
 
         <div class="hq-gallery">
@@ -2127,19 +2482,16 @@
             <button class="media-zoom" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom">
               <img src="concept-hq-1.jpg" alt="低视角仰望两座黑色有机曲面塔楼，顶部带绿色光芒" data-i18n-alt="alt.hqHero" loading="lazy" decoding="async">
             </button>
-            <figcaption><span data-i18n="hq.heroCaption">建筑结果 / 璞玉之境</span><span>Result 01</span></figcaption>
           </figure>
           <figure class="hq-detail reveal">
             <button class="media-zoom" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom">
               <img src="render-hq-detail-1.jpg" alt="塔楼底部巨大的平滑曲面与镜面球体细节" data-i18n-alt="alt.hqDetail" loading="lazy" decoding="async">
             </button>
-            <figcaption><span data-i18n="hq.detailCaption">近景 / 有机曲面与建筑尺度</span><span>Result 02</span></figcaption>
           </figure>
           <figure class="hq-aerial reveal">
             <button class="media-zoom" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom">
               <img src="render-hq-detail-2.jpg" alt="从上方观看城市中的双塔与绿色顶部装置" data-i18n-alt="alt.hqAerial" loading="lazy" decoding="async">
             </button>
-            <figcaption><span data-i18n="hq.aerialCaption">俯瞰 / 城市网格中的品牌坐标</span><span>Result 03</span></figcaption>
           </figure>
         </div>
 
@@ -2147,7 +2499,6 @@
           <button class="media-zoom" type="button" aria-label="放大图片" data-i18n-aria="ui.zoom">
             <img src="render-hq-night.jpg" alt="夜色中的黑色双塔，顶部呈现绿色渐变光" data-i18n-alt="alt.hqNight" loading="lazy" decoding="async">
           </button>
-          <figcaption><span data-i18n="hq.nightCaption">夜景 / 切开原石见翠玉</span><span>Result 04</span></figcaption>
         </figure>
 
         <p class="project-conclusion reveal" data-i18n="hq.conclusion">总部建筑以黑色建立克制与秩序，再用顶部的翠玉光芒完成超越：品牌识别不是附加的标志，而成为城市天际线本身。</p>
@@ -2157,7 +2508,7 @@
     <section class="section synthesis" id="synthesis" aria-labelledby="synthesis-title">
       <div class="section-inner">
         <header class="section-head reveal">
-          <p class="section-marker">07</p>
+          <p class="section-marker">05</p>
           <div class="section-title-wrap">
             <p class="section-kicker" data-i18n="synthesis.kicker">One system, two expressions</p>
             <h2 class="section-title" id="synthesis-title" data-i18n="synthesis.title">同一套诗意美学，在两个尺度上获得不同答案。</h2>
@@ -2192,11 +2543,6 @@
                 <td data-i18n="table.hqForm">双子有机塔楼；极简体量；高光集中于顶部</td>
               </tr>
               <tr>
-                <th scope="row" data-i18n="table.material">材质策略</th>
-                <td data-i18n="table.storeMaterial">绿色半透明介质，在白色基底中消解重量</td>
-                <td data-i18n="table.hqMaterial">黑色通体立面，以绿色渐变发光体制造对比</td>
-              </tr>
-              <tr>
                 <th scope="row" data-i18n="table.experience">最终体验</th>
                 <td data-i18n="table.storeExperience">停留、倚靠、交流、参与</td>
                 <td data-i18n="table.hqExperience">宁静、内敛、生命力、城市识别</td>
@@ -2207,7 +2553,7 @@
 
         <div class="final-statement reveal">
           <p class="final-mark" data-i18n="synthesis.finalMark">Conclusion</p>
-          <p class="final-copy" data-i18n="synthesis.finalCopy">品牌美学不是统一所有结果的外观，而是让不同结果都能追溯到同一个清晰的内核。</p>
+          <p class="final-copy" data-i18n="synthesis.finalCopy">至美在哪里？答案在诗意里。</p>
         </div>
       </div>
     </section>
@@ -2224,7 +2570,6 @@
     <button class="lightbox-close" id="lightbox-close" type="button" aria-label="关闭图片预览" data-i18n-aria="ui.close">×</button>
     <div class="lightbox-inner">
       <img id="lightbox-image" src="" alt="">
-      <p class="lightbox-caption" id="lightbox-caption"></p>
     </div>
   </dialog>
 
@@ -2233,11 +2578,99 @@
       en: {
         "ui.skip": "Skip to project content",
         "ui.zoom": "Enlarge image",
+        "origin.p4": "unity with nature",
+        "origin.p3": "Taoist emptiness and stillness",
+        "origin.p2": "return to the root of things",
+        "origin.p1": "Benfen",
+        "lineage.doB": "Emptiness · incomplete composition · subtle detail — a still, self-forgetting poetic leaps off the paper.",
+        "lineage.citeB": "Southern Song · Ma Yuan and Xia Gui\nthe height of conception in landscape painting",
+        "lineage.doA": "Never naming beauty; building a conception beyond the world by describing things.",
+        "lineage.citeA": "Tao Yuanming: picking chrysanthemums by the east fence\nWang Wei: after fresh rain on the empty mountain",
+        "lineage.kB": "Painting",
+        "lineage.kA": "Literature",
+        "fork.liveEnd": "The extreme state of unity with nature.",
+        "fork.l6": "Conception · lingering flavour · stillness",
+        "fork.l5": "Zhuangzi: heaven and earth have great beauty yet do not speak",
+        "fork.l4": "Further still: beautiful beyond speech",
+        "fork.l3": "Not beauty itself, but the sensation it produces",
+        "fork.l2": "Zhimei happens inside subjective feeling",
+        "fork.l1": "\u201cBeautiful enough to break the heart\u201d",
+        "fork.liveTitle": "Return to the subject",
+        "fork.liveTag": "The way through",
+        "fork.deadEnd": "Straining too hard, it leaves beauty itself — and the truth — behind.",
+        "fork.d4": "It becomes a game of language",
+        "fork.d3": "The content hollows out",
+        "fork.d2": "Formalism follows",
+        "fork.d1": "Exhaust every figure of speech",
+        "fork.deadTitle": "Describe the object",
+        "fork.deadTag": "Dead end",
+        "fork.q": "Zhimei — how is it reached?",
+        "fork.label": "From Zhimei to the poetic",
+        "origin.cCite": "self and object forgotten",
+        "origin.bCite": "hold fast to stillness",
+        "origin.aCite": "reach the utmost emptiness",
+        "lineage.out": "Traced to the root: reserve, emptiness, and the interplay of presence and void are the most fundamental means of reaching that poetic.",
+        "lineage.two": "That state reached its height in Southern Song landscape painting. Ma Yuan and Xia Gui built their conception precisely through emptiness, incomplete composition and subtle detail: a still, self-forgetting poetic that leaps off the paper, and that went on to shape later art — and Japanese art and modern design with it.",
+        "lineage.one": "Taoist emptiness-and-stillness, and unity with nature, occur not only in how a life is lived but deep inside artistic making and seeing. Tao Yuanming: picking chrysanthemums by the east fence, I catch sight of the southern hills. Wang Wei: after fresh rain on the empty mountain, evening brings autumn. Neither states beauty; both build an atmosphere beyond the world by describing things.",
+        "lineage.label": "Where the three means come from",
+        "synthesis.heading": "05 — Synthesis",
+        "hq.heading": "04 — Shenzhen HQ deduction",
+        "store.heading": "03 — Flagship store deduction",
+        "system.heading": "02 — The aesthetic system",
+        "research.heading": "01 — Research and deduction",
+        "meta.scopeV": "Spatial and architectural concept",
+        "meta.scopeK": "Scope",
+        "meta.catV": "Brand design",
+        "meta.catK": "Category",
+        "meta.yearK": "Year",
+        "meta.workV": "OPPO flagship store spatial concept & Shenzhen HQ architectural concept",
+        "meta.workK": "Project",
+        "insp.label": "Inspiration sources",
+        "overview.heading": "Concept",
+        "trait.levels": "Lightness leans to the visual, tranquility to the felt, freedom to the spiritual. Lightness and tranquility carried to their extreme are freedom.",
+        "origin.cWhy": "Still, and so at one with nature; that unity is freedom",
+        "origin.cTo": "Freedom",
+        "origin.cFrom": "Unity with nature",
+        "origin.bWhy": "A state of detachment — still, because empty",
+        "origin.bTo": "Tranquility",
+        "origin.bFrom": "Stillness",
+        "origin.aWhy": "The utmost emptying — a posture of lightness",
+        "origin.aTo": "Lightness",
+        "origin.aFrom": "Emptiness",
+        "origin.lead": "Back to the source: Benfen returns to the root of things, and the answer lies in the Taoist xujing — Laozi: reach the utmost emptiness, hold fast to stillness. Past emptiness and stillness, self and object are forgotten and one enters Zhuangzi's unity with nature. The three traits grow along exactly this line.",
+        "origin.label": "Where the three traits come from",
+        "deduce.out": "To pursue Zhimei is in fact to create a poetic, and to feel Zhimei inside it.",
+        "deduce.threeBody": "Push further: beautiful beyond speech. Zhuangzi — heaven and earth have great beauty yet do not speak. Before them one person is moved deeply and another barely at all; beauty differs with the beholder, and cannot be spoken. That unspeakability turns into the poetic, which in Eastern aesthetics is a conception, a lingering flavour, a stillness — the extreme state of unity with nature.",
+        "deduce.threeTitle": "Beyond speech",
+        "deduce.twoBody": "But \u201cbeautiful enough to break the heart\u201d returns to the one who beholds. Zhimei happens inside subjective feeling: it no longer describes beauty itself, but the singular sensation beauty produces — a poetic sensation.",
+        "deduce.twoTitle": "Returning to the subject",
+        "deduce.oneBody": "To express the beauty of the object we exhaust every figure of speech, and formalism follows; formalism hollows out the content until it becomes a game of language. Straining to express Zhimei, we leave beauty itself — and the truth — behind.",
+        "deduce.oneTitle": "If we describe the object",
+        "deduce.label": "From Zhimei to the poetic",
+        "ui.exec": "Visual execution",
+        "ui.logic": "Translation logic",
+        "hq.tTwoExec": "The building's only visual highlight is held strictly at the crown, set as a green gradient light. Against the dark city night it stages the high-contrast drama of cutting the stone to reveal jade. Two asymmetric organic towers, crowned with that deep green glow, establish OPPO's Eastern-aesthetic coordinate on the skyline.",
+        "hq.tTwoLogic": "Within an utterly quiet ground, stage a collision of presence and void, making transcendent vitality concrete.",
+        "hq.tTwoNote": "Answering the Taoist Zhimei / transcendence",
+        "hq.tTwoTitle": "The visual focus",
+        "hq.tOneExec": "Uncarved jade — raw stone — is fixed as the core image. The twin towers take a wholly dark material and an absolutely smooth organic surface. Minimal, weighty geometric volumes root themselves in the city grid, giving out a powerful stillness and an underlying order.",
+        "hq.tOneLogic": "Return to the essential power of architecture; discard surplus skin and structural display; pursue restraint and reserve.",
+        "hq.tOneNote": "Answering the Confucian Benfen / tranquility",
+        "hq.tOneTitle": "The architectural body",
+        "store.tTwoExec": "The brand's core symbol, the O, is drawn into curved variation and becomes the display and interaction surfaces of the space. A translucent green medium uses light transmission to dissolve physical weight. In plan the surfaces scatter organically like ripples or fallen jade, appearing to float within a white and pale-grey ground.",
+        "store.tTwoLogic": "Use physical transparency and lightness to counter the oppressive mass of modern commercial space.",
+        "store.tTwoNote": "Answering lightness in the Eastern conception",
+        "store.tTwoTitle": "Form and material",
+        "store.tOneExec": "The urban park concept is implanted throughout. The perimeter walls recede into a gallery-like display surface and the central core opens completely. Fixed circulation is abandoned for a discrete layout, granting visitors the freedom to linger, lean, or join the live events in the small plaza.",
+        "store.tOneLogic": "Break the strong purposiveness and linear shelving of conventional retail, and build a boundary-free field of interaction.",
+        "store.tOneNote": "Answering the Taoist freedom / unity with nature",
+        "store.tOneTitle": "Circulation and spatial character",
+        "ui.drag": "\u27f7 Drag to pan",
         "ui.preview": "Image preview",
         "ui.close": "Close image preview",
         "nav.backAria": "Back to He Liangyu portfolio",
-        "nav.back": "HE LIANGYU / OPPO",
-        "nav.aria": "Project sections",
+        "nav.back": "BACK",
+        "nav.aria": "Project navigation",
         "nav.overview": "Concept",
         "nav.inspiration": "Inspiration",
         "nav.research": "Research",
@@ -2255,27 +2688,28 @@
         "hero.scope": "Space / architecture concept",
         "hero.storeLink": "Begin with two concepts",
         "hero.hqLink": "Trace the inspiration",
-        "hero.scroll": "Scroll through the design logic",
-        "overview.kicker": "Concept",
-        "overview.title": "Two opening propositions: turn the store into an urban park, and the headquarters into raw jade split open.",
-        "overview.intro": "The work begins with two spatial concepts. They first ask how people should experience the brand; aesthetic research, form-making and material decisions follow.",
+        "hero.scroll": "Scroll",
+        "overview.kicker": "CONCEPT",
+        "overview.conceptLead": "Poetic aesthetics: from brand DNA to space and architecture. The same brand DNA becomes a light, open urban park in retail and a tranquil, restrained piece of raw jade at headquarters scale. Both projects begin from the brand's genes, giving OPPO's character physical form through spatial shape and architectural material.",
+        "overview.title": "Both projects begin from the brand's genes, giving OPPO's character physical form through spatial shape and architectural material.",
+        "overview.intro": "OPPO flagship store spatial concept and OPPO Shenzhen headquarters architectural concept. 2019. Brand design / spatial and architectural concept.",
         "concept.storeLabel": "Flagship store / Concept 01",
-        "concept.storeTitle": "Urban Park & the Spirit of Jade",
-        "concept.storeBody": "The flagship is no longer a purchase route prescribed by shelving, but a small urban plaza for lingering, leaning, meeting and live music. OPPO’s O becomes an undulating curve; green translucency makes it feel like jade and water.",
-        "concept.storePointOneLabel": "Human behaviour",
-        "concept.storePointOne": "Linger / lean / meet / participate",
-        "concept.storePointTwoLabel": "Spatial image",
-        "concept.storePointTwo": "Urban park / O / translucent jade",
+        "concept.storeTitle": "Urban Park",
+        "concept.storeBody": "An urban park as the core image, breaking the limits of conventional retail. A small plaza set inside carries live music and community events, giving the space a high degree of freedom: customers may lean, linger and interact at will.",
+        "concept.storePointOneLabel": "Spatial function",
+        "concept.storePointOne": "Urban park / small plaza / live music and community events",
+        "concept.storePointTwoLabel": "Form and material",
+        "concept.storePointTwo": "Geometric variation of the O / translucent green / warm jade",
         "concept.hqLabel": "Shenzhen HQ / Concept 02",
         "concept.hqTitle": "The Realm of Raw Jade",
-        "concept.hqBody": "The headquarters is imagined as two uncarved stones rooted in the city. Dark twin towers remain restrained and still; emerald appears only at the crown, like jade revealed beneath a cut stone skin.",
+        "concept.hqBody": "Inspired by uncarved jade. The twin towers take a wholly black façade, like raw stone rooted in the earth, giving a steady and restrained sense of mass.",
         "concept.hqPointOneLabel": "Architectural body",
-        "concept.hqPointOne": "Raw stone / twin towers / stillness",
+        "concept.hqPointOne": "Uncarved jade / black twin towers / raw stone rooted in the earth",
         "concept.hqPointTwoLabel": "Visual focus",
-        "concept.hqPointTwo": "Stone split open / emerald crown",
-        "inspiration.kicker": "Inspiration sources",
-        "inspiration.title": "The concepts grow from three clues: human behaviour, brand symbols and Eastern thought.",
-        "inspiration.intro": "Separating the sources reveals where every later spatial move comes from. This is not a collage of forms, but a gradual convergence of scene, form and spirit.",
+        "concept.hqPointTwo": "A green luminous crown / cutting the stone to reveal jade",
+        "inspiration.kicker": "Philosophical origin",
+        "inspiration.title": "OPPO's core values map precisely onto the Chinese tradition of Confucian–Taoist complementarity.",
+        "inspiration.intro": "Benfen holds not only the Confucian ren but also Taoist transcendence; Zhimei is the ultimate expression of the Taoist spirit of freedom. OPPO is therefore Confucian and Taoist at once.",
         "inspiration.sceneLabel": "Scene / Urban park",
         "inspiration.sceneTitle": "From purchasing to freely unfolding life.",
         "inspiration.sceneBody": "An urban park has no single objective or fixed route. People linger, encounter, watch or participate—becoming the prototype for the flagship’s spatial relationships.",
@@ -2289,46 +2723,44 @@
         "overview.thesisBody": "The flagship store must support lingering, conversation, live music and community events. Shenzhen HQ must establish unmistakable presence on the skyline. Their functions differ radically, yet both derive form, material and experience from the same Poetic Aesthetics.",
         "overview.equationAria": "OPPO brand aesthetics equation",
         "equation.modern": "Modernism",
-        "equation.modernSub": "A common language for the world",
+        "equation.modernSub": "The base design language for meeting the world",
         "equation.east": "Eastern aesthetics",
-        "equation.eastSub": "An antidote to modern anxiety",
+        "equation.eastSub": "The antidote to noise and anxiety",
         "equation.poetic": "Poetic aesthetics",
         "equation.poeticSub": "OPPO’s distinctive visual territory",
         "research.kicker": "Research & aesthetic deduction",
-        "research.title": "From inspiration to design judgement: finding an aesthetic language OPPO can use over time.",
-        "research.intro": "Research does not merely explain the concept. It tests whether the concept returns to the brand core and can become an executable method across scales.",
-        "chain.oneLabel": "Shared language",
+        "chain.oneLabel": "Source 01 · What we share",
         "chain.oneTitle": "Modernism",
-        "chain.oneBody": "As a global brand, OPPO needs a design language that travels across cultures: clear, rational and widely legible.",
-        "chain.twoLabel": "The tension",
-        "chain.twoTitle": "Noise & anxiety",
-        "chain.twoBody": "Industrial modernity brings efficiency, but also fragmentation, anxiety and isolation. Modernism alone cannot form OPPO’s unique spirit.",
-        "chain.threeLabel": "The antidote",
-        "chain.threeTitle": "Eastern spirit",
-        "chain.threeBody": "Subtlety, negative space and the coexistence of presence and void bring stillness and freedom to modern space—and form OPPO’s aesthetic foundation.",
+        "chain.oneBody": "Simplicity and truth are its core. In a globalised twenty-first century, modernism must be the language through which OPPO meets the world.",
+        "chain.twoLabel": "Source 02 · What sets us apart",
+        "chain.twoTitle": "Eastern philosophy",
+        "chain.twoBody": "Benfen means shutting out external pressure and temptation and returning to the root of things. How? The answer lies in the Taoist xujing — Laozi: reach the utmost emptiness, hold fast to stillness. Only through emptiness and stillness does one enter the unity of self and world, a state free of worldly bond — and Zhimei is already inside it.",
+        "chain.threeLabel": "Source 03 · What is ours alone",
+        "chain.threeTitle": "Technology of Zhimei",
+        "chain.threeBody": "Making products that make the heart leap — pleasing, striking, beautiful, worth looking at again. These words recur through the founder's interviews. The pursuit of beauty is the main thread of OPPO's history, and that founding devotion is already buried in the brand's DNA.",
         "philosophy.heading": "The spiritual references are traced further, becoming cultural coordinates for design decisions.",
         "philosophy.benfenLabel": "Confucian order / Natural law",
         "philosophy.benfenTitle": "Benfen",
-        "philosophy.benfenBody": "Rooted in beauty through benevolence, it respects the essence of things and natural order. It gives design a quiet foundation of restraint and inwardness.",
+        "philosophy.benfenBody": "Corresponds to Confucian order and natural law: to dwell in ren is beautiful — following the objective laws by which things develop, stressing reserve and restraint.",
         "philosophy.zhimeiLabel": "Taoist transcendence / Unity with nature",
         "philosophy.zhimeiTitle": "Zhimei",
-        "philosophy.zhimeiBody": "Rooted in the idea that great beauty lies beyond words, it seeks freedom beyond worldly constraints and unity with nature. Beauty lives in atmosphere, not ornament.",
+        "philosophy.zhimeiBody": "Corresponds to Taoist transcendence and unity with nature: as Zhuangzi says, heaven and earth have great beauty yet do not speak — a freedom beyond worldly constraint.",
         "philosophy.resonanceTitle": "East–West resonance",
-        "philosophy.resonanceBody": "The Eastern ideal of unity with nature and Heidegger’s “dwelling poetically” point toward the same state: moving beyond modern anxiety and returning to stillness.",
+        "philosophy.resonanceBody": "This Eastern conception coincides with Heidegger's poetically man dwells: both point to an ultimate state beyond modern anxiety, a return to stillness.",
         "system.kicker": "Aesthetic system",
-        "system.title": "Defining the brand aesthetic as Poetic Aesthetics.",
-        "system.intro": "Not a surface style, but a criterion for decisions about space, form, material and experience.",
-        "system.methodsLabel": "Fundamental methods",
-        "system.methods": "Subtlety · Negative space · Presence and void",
+        "system.title": "Where is Zhimei? The answer lies in the poetic.",
+        "system.intro": "Industrial civilisation brought modern life, and with it the world's noise, fragmentation, anxiety and solitude; the poetic drifted away from us and became a luxury. The particular conception of Eastern aesthetics — the poetic — is exactly the remedy this world needs.",
+        "system.methodsLabel": "The fundamental means",
+        "system.methods": "Reserve · Emptiness · Presence and void",
         "trait.lightName": "Lightness",
-        "trait.lightBody": "Reject heaviness. Use flowing form, translucency and suspension to dissolve the pressure of commercial volume.",
-        "trait.lightMap": "Flagship translation: green translucent material + curved surfaces",
+        "trait.lightBody": "An Eastern quality, yet wholly modern. Like a feather; like ink — subtle, transparent, full of change; like minimalist architecture built light out of steel and glass. It is the poetic expression of youth, movement and a freedom that breaks constraint.",
+        "trait.lightMap": "Applied to: the flagship's translucent material and curved forms",
         "trait.quietName": "Tranquility",
-        "trait.quietBody": "Dissolve noise through restrained mass and an all-dark body, establishing an inward and stable order.",
-        "trait.quietMap": "HQ translation: monolithic black body + minimal organic curves",
+        "trait.quietBody": "A quality of nature, an aesthetic of contrast. Like earth, mountains, night, water, a summer afternoon, shade among trees, the hour before dawn, the calm after storm. Stillness lives in both the eternal and the instant; only a skilled use of contrast can express it.",
+        "trait.quietMap": "Applied to: the headquarters' wholly black architectural body",
         "trait.freeName": "Freedom",
-        "trait.freeBody": "Break boundaries with a non-prescriptive field where people may pause, lean, meet and participate.",
-        "trait.freeMap": "Flagship translation: urban park + boundaryless circulation",
+        "trait.freeBody": "It is unity with nature; it is dwelling poetically — a humanistic and artistic spirit, the ultimate human pursuit. When lightness and tranquility fill the brand, the feeling of freedom emerges on its own.",
+        "trait.freeMap": "Applied to: the flagship's park-like, boundary-free circulation",
         "map.title": "The chain from values to design outcomes",
         "map.modern": "Modernism",
         "map.modernSub": "A global design language",
@@ -2337,28 +2769,25 @@
         "map.system": "Poetic aesthetics",
         "map.systemSub": "Subtlety · Negative space · Presence and void",
         "map.store": "Flagship store",
-        "map.storeSub": "Freedom (circulation) × Lightness (visual mass)",
         "map.hq": "Shenzhen Super HQ",
-        "map.hqSub": "Tranquility (main body) × Zhimei (visual focus)",
-        "store.number": "Chapter 05 / Project 01 / Flagship store",
-        "store.title": "Urban Park & the Spirit of Jade",
-        "store.intro": "The urban-park concept breaks the fixed purpose and linear shelving of conventional retail. The store becomes an open field for lingering, leaning, interaction, live music and community events.",
-        "store.tagOne": "Freedom / circulation",
-        "store.tagTwo": "Lightness / volume",
-        "store.tagThree": "O / curved variation",
+        "store.number": "Chapter 03 / Project 01 / Flagship store",
+        "store.title": "Urban Park",
+        "store.intro": "How Poetic Aesthetics and the brand's philosophy are translated into actual spatial form. Core deduction: freedom (circulation) × lightness (visual mass).",
+        "store.tagOne": "Freedom",
+        "store.tagTwo": "Lightness",
+        "store.tagThree": "Urban park",
         "store.routeAria": "Flagship store design derivation route",
         "store.routeLabel": "Derivation route / Design process",
-        "store.routeOneKey": "Brand traits",
-        "store.routeOneValue": "Freedom / lightness",
-        "store.routeTwoKey": "Spatial prototype",
-        "store.routeTwoValue": "Urban park",
-        "store.routeThreeKey": "Form operation",
-        "store.routeThreeValue": "O → undulating curves",
-        "store.routeFourKey": "Material operation",
-        "store.routeFourValue": "Green translucency → dissolve weight",
-        "store.routeFiveKey": "Spatial outcome",
-        "store.routeFiveValue": "Linger / lean / live / meet",
-        "store.heroCaption": "Spatial outcome / An urban-park field",
+        "store.routeOneKey": "Core deduction",
+        "store.routeOneValue": "Freedom (circulation) × lightness (visual mass)",
+        "store.routeTwoKey": "Philosophical basis",
+        "store.routeTwoValue": "Taoist: freedom / unity with nature",
+        "store.routeThreeKey": "Spatial prototype",
+        "store.routeThreeValue": "The urban park",
+        "store.routeFourKey": "Form and material",
+        "store.routeFourValue": "Curved variation of the O · translucent green medium",
+        "store.routeFiveKey": "Spatial freedom",
+        "store.routeFiveValue": "Linger · lean · join the plaza's live events",
         "store.coreLabel": "Core derivation",
         "store.core": "Freedom (circulation) × Lightness (visual mass)",
         "store.stepOneTitle": "Liberate circulation",
@@ -2367,37 +2796,32 @@
         "store.stepTwoBody": "The letter O from OPPO’s identity is stretched, divided and transformed into undulating display and interaction surfaces.",
         "store.stepThreeTitle": "Dissolve physical weight",
         "store.stepThreeBody": "Green translucent material uses light to dissolve heaviness. From above, the surfaces float like ripples or scattered jade across a white field.",
-        "store.panoramaCaption": "From the city into the store: displays move to the edge and the centre becomes a plaza",
         "store.galleryLabel": "Spatial translation",
         "store.galleryTitle": "The O shifts from a graphic mark into a spatial curve the body can use.",
-        "store.planCaption": "Process drawing / Dispersed layout and free circulation",
         "store.evidenceLabel": "Process evidence",
-        "store.evidenceTitle": "Test circulation and distribution before visualising the space.",
-        "store.evidenceBody": "The top view verifies three things: shelving does not fill the centre; curved surfaces remain dispersed; people can choose their own route between nodes. The urban-park concept first succeeds in plan.",
+        "store.evidenceTitle": "Plan study: discrete layout, free circulation",
+        "store.evidenceBody": "The plan study. Perimeter walls recede into a gallery-like display surface and the central core opens; the curved surfaces scatter discretely, like ripples or fallen jade.",
         "store.outcomeLabel": "Result / Process verified",
         "store.outcomeTitle": "The result appears only when circulation, form and material all answer the concept.",
-        "store.renderCaption": "Interior / A light visual mass",
-        "store.wideCaption": "Interior panorama / Display surfaces at the perimeter",
         "store.conclusion": "Retail no longer serves purchase alone. It becomes a small urban park where the brand is felt through lingering, encounter and participation.",
-        "hq.number": "Chapter 06 / Project 02 / Shenzhen super headquarters",
+        "hq.number": "Chapter 04 / Project 02 / Shenzhen super headquarters",
         "hq.title": "The Realm of Raw Jade",
-        "hq.intro": "Uncarved raw jade forms the central image. Two dark organic towers rise like stone rooted in the earth, while the only emerald highlight is confined to their crown—raw stone split open to reveal jade.",
-        "hq.tagOne": "Tranquility / body",
-        "hq.tagTwo": "Zhimei / focus",
-        "hq.tagThree": "Raw jade / image",
+        "hq.intro": "How Poetic Aesthetics and the brand's philosophy are translated into actual architectural language. Core deduction: tranquility (architectural body) × Zhimei (visual focus).",
+        "hq.tagOne": "Tranquility",
+        "hq.tagTwo": "Zhimei",
+        "hq.tagThree": "Uncarved jade",
         "hq.routeAria": "Shenzhen headquarters design derivation route",
         "hq.routeLabel": "Derivation route / Design process",
-        "hq.routeOneKey": "Brand traits",
-        "hq.routeOneValue": "Tranquility / Zhimei",
-        "hq.routeTwoKey": "Architectural prototype",
-        "hq.routeTwoValue": "Uncarved raw jade",
-        "hq.routeThreeKey": "Massing operation",
-        "hq.routeThreeValue": "Two raw stones → twin towers",
-        "hq.routeFourKey": "Contrast operation",
-        "hq.routeFourValue": "Dark body + emerald crown",
-        "hq.routeFiveKey": "Urban outcome",
-        "hq.routeFiveValue": "An Eastern-aesthetic skyline coordinate",
-        "hq.heroCaption": "Architectural outcome / The realm of raw jade",
+        "hq.routeOneKey": "Core deduction",
+        "hq.routeOneValue": "Tranquility (body) × Zhimei (visual focus)",
+        "hq.routeTwoKey": "Philosophical basis",
+        "hq.routeTwoValue": "Confucian: Benfen / tranquility",
+        "hq.routeThreeKey": "Architectural image",
+        "hq.routeThreeValue": "Uncarved jade — raw stone",
+        "hq.routeFourKey": "Material of the body",
+        "hq.routeFourValue": "Wholly dark · absolutely smooth organic surface",
+        "hq.routeFiveKey": "The single highlight",
+        "hq.routeFiveValue": "A green gradient light at the tower crown",
         "hq.coreLabel": "Core derivation",
         "hq.core": "Tranquility (main body) × Zhimei (visual focus)",
         "hq.stepOneTitle": "Return to essential mass",
@@ -2406,17 +2830,13 @@
         "hq.stepTwoBody": "Twin towers use all-dark material and absolutely smooth organic curves, rooting minimal, weighty volumes in the urban grid.",
         "hq.stepThreeTitle": "Control the only highlight",
         "hq.stepThreeBody": "An emerald gradient is restricted to the crown. One presence–void conflict within deep stillness materialises vitality beyond the mundane.",
-        "hq.elevationCaption": "Process drawing / Twin-tower massing at urban scale",
         "hq.evidenceLabel": "Process evidence",
-        "hq.evidenceTitle": "Test massing against the city before intensifying the single highlight.",
-        "hq.evidenceBody": "Early city tests preserve two complete, raw-stone masses while checking tower proportion, spacing and the surrounding skyline. Green stays at the crown so brand colour never becomes surface decoration.",
+        "hq.evidenceTitle": "Urban-scale study: the towers against the skyline",
+        "hq.evidenceBody": "An early study of urban massing. Two complete volumes, like raw stone, root themselves in the city grid; the green appears only at the crown.",
         "hq.outcomeLabel": "Result / Process verified",
         "hq.outcomeTitle": "The body remains still; vitality is visible only at the crown.",
         "hq.galleryLabel": "Architectural translation",
         "hq.galleryTitle": "Within near-absolute stillness, retain only one living light.",
-        "hq.nightCaption": "Night view / Raw stone split to reveal jade",
-        "hq.detailCaption": "Close view / Organic curves and architectural scale",
-        "hq.aerialCaption": "Aerial / A brand coordinate in the urban grid",
         "hq.conclusion": "The headquarters uses black to establish restraint and order, then completes transcendence with its emerald crown. Brand identity is no attached sign—it becomes the skyline itself.",
         "synthesis.kicker": "One system, two expressions",
         "synthesis.title": "One Poetic Aesthetics, two answers at two scales.",
@@ -2441,7 +2861,7 @@
         "table.storeExperience": "Linger, lean, encounter, participate",
         "table.hqExperience": "Stillness, restraint, vitality, urban identity",
         "synthesis.finalMark": "Conclusion",
-        "synthesis.finalCopy": "A brand aesthetic should not make every result look the same. It should make every result traceable to the same clear core.",
+        "synthesis.finalCopy": "Where is Zhimei? The answer lies in the poetic.",
         "footer.home": "Back to He Liangyu portfolio",
         "footer.project": "OPPO brand space & architecture concepts",
         "alt.storeHero": "Panoramic OPPO flagship concept with green translucent surfaces at its centre",
@@ -2451,7 +2871,8 @@
         "alt.storePlan": "Top view of green and white curved surfaces dispersed through an open store",
         "alt.storeResultWide": "Wide flagship result with curved central surfaces and gallery-like perimeter displays",
         "alt.storeRenderTwo": "Bright flagship panorama with a green translucent central surface",
-        "alt.storeRenderOne": "Wide flagship render with gallery walls around an open central area",
+        "alt.storeInteriorView": "Flagship interior view with white circulation paths and translucent green curves forming an open field",
+        "alt.storeWideDetail": "Front-facing flagship view with an open central field and gallery-like perimeter displays",
         "alt.hqHero": "Low-angle view of two black organic towers with emerald light at the crown",
         "alt.hqElevation": "Twin dark organic towers in a city at dusk",
         "alt.hqNight": "Black twin towers at night with emerald gradient crowns",
@@ -2461,11 +2882,99 @@
       ja: {
         "ui.skip": "プロジェクト本文へ",
         "ui.zoom": "画像を拡大",
+        "origin.p4": "天人合一",
+        "origin.p3": "道家の「虚静」",
+        "origin.p2": "事物の本源へ還る",
+        "origin.p1": "本分",
+        "lineage.doB": "余白 · 不完全な構図 · 微妙なディテール——物我両忘の静かな詩意が紙上に立ちのぼる。",
+        "lineage.citeB": "南宋 · 馬遠、夏珪\n山水画における意境の頂点",
+        "lineage.doA": "美を直接語らず、物を描くことで世俗を超えた意境をつくる。",
+        "lineage.citeA": "陶淵明「菊を東籬の下に採る」\n王維「空山新雨の後」",
+        "lineage.kB": "絵画",
+        "lineage.kA": "文学",
+        "fork.liveEnd": "すなわち「天人合一」の極致の状態。",
+        "fork.l6": "意境 · 韻味 · 静けさ",
+        "fork.l5": "荘子「天地に大美ありて言わず」",
+        "fork.l4": "さらに極めれば「言い得ぬほど美しい」",
+        "fork.l3": "美そのものではなく、美がもたらす感受",
+        "fork.l2": "至美は主観的感受のなかで起こる",
+        "fork.l1": "「胸が張り裂けるほど美しい」",
+        "fork.liveTitle": "主体へ立ち返る",
+        "fork.liveTag": "通じる道",
+        "fork.deadEnd": "力みすぎて、美そのものからも真実からも離れてしまう。",
+        "fork.d4": "言語の遊戯に変わる",
+        "fork.d3": "内容は空虚になる",
+        "fork.d2": "必然的に形式主義へ",
+        "fork.d1": "修辞を尽くす",
+        "fork.deadTitle": "客体を描く",
+        "fork.deadTag": "行き止まり",
+        "fork.q": "至美へ、どう至るのか。",
+        "fork.label": "至美から詩意へ",
+        "origin.cCite": "物我両忘",
+        "origin.bCite": "静を守ること篤し",
+        "origin.aCite": "虚を致すこと極まり",
+        "lineage.out": "根源へ遡れば——含蓄・余白・虚実こそが、この詩意へ至る最も根本的な手法である。",
+        "lineage.two": "この状態は南宋の山水画において頂点に達する。馬遠と夏珪の絵は、まさに余白・不完全な構図・微妙なディテールによって意境をつくった。物我両忘の、静かな詩意が紙上に立ちのぼり、後世の、そして日本の芸術と現代デザインにまで深く影響を与えた。",
+        "lineage.one": "道家の「虚静」と「天人合一」は、人生の境地においてだけでなく、芸術の制作と鑑賞の深部にも起こる。陶淵明の「菊を東籬の下に採り、悠然として南山を見る」、王維の「空山新雨の後、天気晩来の秋」——いずれも美を直接語らず、物を描くことで世俗を超えた雰囲気と意境をつくり出している。",
+        "lineage.label": "この三つの手法はどこから来たか",
+        "synthesis.heading": "05 — 総合対照",
+        "hq.heading": "04 — 深圳本社の設計推導",
+        "store.heading": "03 — 旗艦店の設計推導",
+        "system.heading": "02 — ブランド美学の体系",
+        "research.heading": "01 — 調査と美学推導",
+        "meta.scopeV": "空間・建築コンセプト",
+        "meta.scopeK": "範囲",
+        "meta.catV": "ブランドデザイン",
+        "meta.catK": "カテゴリー",
+        "meta.yearK": "制作年",
+        "meta.workV": "OPPO フラグシップストア空間コンセプト & 深圳本社ビル建築コンセプト",
+        "meta.workK": "作品名",
+        "insp.label": "着想の源",
+        "overview.heading": "コンセプト",
+        "trait.levels": "軽盈は視覚の層に、寧静は感受の層に、自由は精神の層に傾く。軽盈と寧静を極めたところに、自由がある。",
+        "origin.cWhy": "静なるがゆえに天人合一に至り、天人合一こそが自由である",
+        "origin.cTo": "自由",
+        "origin.cFrom": "天人合一",
+        "origin.bWhy": "超然たる状態、虚なるがゆえに静",
+        "origin.bTo": "寧静",
+        "origin.bFrom": "静",
+        "origin.aWhy": "極致の放空、軽やかな姿",
+        "origin.aTo": "軽盈",
+        "origin.aFrom": "虚",
+        "origin.lead": "源へ戻る。「本分」は事物の本源へ立ち返ることであり、その答えは道家の「虚静」にある。老子は「虚を致すこと極まり、静を守ること篤し」と言う。虚静の先で物我は両忘され、荘子の「天人合一」に入る。三つの特徴は、まさにこの線の上に育っている。",
+        "origin.label": "三大特徴の由来",
+        "deduce.out": "至美を追い求めることは、実は一つの詩意を創り出し、その詩意のなかで至美を感じ取ることである。",
+        "deduce.threeBody": "さらに極めれば「言い得ぬほど美しい」。荘子は「天地に大美ありて言わず」と言う。天地を前に、強く感じる者もあれば淡々とする者もある。美は人によって異なり、言葉にできない。その言い得なさが詩意へと転じる。東洋美学において、それは意境であり、韻味であり、静けさであり、すなわち「天人合一」の極致の状態である。",
+        "deduce.threeTitle": "言い得ぬもの",
+        "deduce.twoBody": "しかし「胸が張り裂けるほど美しい」という言い方は、鑑賞する主体へと立ち返る。至美は主観的な感受のなかで起こる。そこではもはや美そのものを描写せず、美がもたらす独特の感受——詩的な感受——を表している。",
+        "deduce.twoTitle": "主体へ立ち返る",
+        "deduce.oneBody": "客体の美を表現しようとすれば修辞を尽くすことになり、必然的に形式主義を招く。形式主義は内容を空虚にし、やがて言語の遊戯へと変わる。至美を表そうと力みすぎた結果、美そのものからも真実からも離れてしまう。",
+        "deduce.oneTitle": "客体を描写するなら",
+        "deduce.label": "至美から詩意へ",
+        "ui.exec": "視覚的実行",
+        "ui.logic": "転化ロジック",
+        "hq.tTwoExec": "建築における唯一の視覚的高光を塔頂部に厳密に限定し、緑のグラデーション発光体として設定する。暗色調の都市夜景の中に「原石を切れば翠玉が現れる」という高コントラストの劇性を構築する。二棟の非対称な有機的塔と頂部の深緑の光が、OPPO の東洋美学によるスカイラインの座標を高い識別性で確立する。",
+        "hq.tTwoLogic": "極致の静けさという基調の中に虚実の衝突をつくり、世俗を超える生命力を具象化する。",
+        "hq.tTwoNote": "道家「至美 / 超越」に対応",
+        "hq.tTwoTitle": "視覚的焦点",
+        "hq.tOneExec": "「未彫琢の璞玉（原石）」を核心イメージとして定める。双子の塔は深色一体の素材を用い、絶対に滑らかな有機曲面を示す。極簡かつ重厚な幾何学的体塊が都市のグリッドに根を張り、強い静謐さと秩序の基調を視覚的に発する。",
+        "hq.tOneLogic": "建築の本質的な力へ立ち返り、余分な表皮装飾と構造の堆積を捨て、抑制と内省を求める。",
+        "hq.tOneNote": "儒家「本分 / 寧静」に対応",
+        "hq.tOneTitle": "主体の形態",
+        "store.tTwoExec": "ブランドの核心記号「O」を曲面へ変体させ、空間内の展示・交流の台面へと展開する。素材には緑の半透明媒体を選び、透光性によって実体の重厚さを解く。俯瞰図では、これらの台面が水紋や散らばる玉のように有機的に分布し、純白／淡灰の基底の中で浮遊し軽やかな視覚状態を示す。",
+        "store.tTwoLogic": "物理的な「透」と「軽」によって、現代商業空間の量塊的圧迫感に対抗する。",
+        "store.tTwoNote": "東洋的意境の「軽盈」に対応",
+        "store.tTwoTitle": "形態と素材",
+        "store.tOneExec": "「都市公園」の概念を全面的に導入する。室内四周の壁面はギャラリー的な展示面へと退き、中央の核心部は完全に開放される。固定動線を捨て離散的な配置に置き換え、利用者に滞在・寄りかかり・小広場の Live への参加という極めて高い自由度を与える。",
+        "store.tOneLogic": "従来の小売空間の強い目的性と線形の棚がもたらす物理的制約を破り、境界のない交流の場を構築する。",
+        "store.tOneNote": "道家「自由 / 天人合一」に対応",
+        "store.tOneTitle": "動線と空間の属性",
+        "ui.drag": "\u27f7 左右にドラッグ",
         "ui.preview": "画像プレビュー",
         "ui.close": "画像プレビューを閉じる",
         "nav.backAria": "何梁宇のポートフォリオへ戻る",
-        "nav.back": "何梁宇 / OPPO",
-        "nav.aria": "プロジェクト構成",
+        "nav.back": "戻る",
+        "nav.aria": "プロジェクトナビゲーション",
         "nav.overview": "コンセプト",
         "nav.inspiration": "着想",
         "nav.research": "リサーチ",
@@ -2483,27 +2992,28 @@
         "hero.scope": "空間 / 建築コンセプト",
         "hero.storeLink": "二つのコンセプトから始める",
         "hero.hqLink": "着想の源をたどる",
-        "hero.scroll": "設計の推導を読む",
-        "overview.kicker": "Concept",
-        "overview.title": "最初の二つの命題：店舗を都市公園へ、本社を切り開かれた璞玉へ。",
-        "overview.intro": "プロジェクトは二つの空間コンセプトから始まります。まず、人がブランドをどう感じるかを問い、その後に美学研究、形態生成、素材選択へ進みます。",
+        "hero.scroll": "Scroll",
+        "overview.kicker": "CONCEPT",
+        "overview.conceptLead": "詩意美学：ブランドDNAから空間と建築へ。ひとつのブランドDNAが、リテールでは軽やかで開かれた都市公園に、本社建築では静謐で抑制された璞玉になる。二つの設計はいずれもブランドの遺伝子から出発し、具体的な空間形態と建築素材によって OPPO の特質を実体化する。",
+        "overview.title": "二つの設計はいずれもブランドの遺伝子から出発し、具体的な空間形態と建築素材によって OPPO の特質を実体化する。",
+        "overview.intro": "OPPO フラグシップストア空間コンセプト、および OPPO 深圳本社ビル建築コンセプト。2019年、ブランドデザイン / 空間・建築コンセプト。",
         "concept.storeLabel": "Flagship store / Concept 01",
-        "concept.storeTitle": "都市公園と霊動の玉",
-        "concept.storeBody": "旗艦店は棚が規定する購買動線ではなく、滞在し、寄りかかり、交流し、ライブ音楽を聴ける小さな都市広場です。OPPOの「O」は起伏する曲線となり、緑の半透明素材は玉と水を想起させます。",
-        "concept.storePointOneLabel": "人の行為",
-        "concept.storePointOne": "滞在 / 寄りかかる / 交流 / 参加",
-        "concept.storePointTwoLabel": "空間イメージ",
-        "concept.storePointTwo": "都市公園 / O / 透光する玉",
+        "concept.storeTitle": "都市公園",
+        "concept.storeBody": "「都市公園」を核心イメージとし、従来の小売空間の制約を破る。内部に小広場を置いて Live 音楽やコミュニティ活動を担わせ、空間に極めて高い自由度を与える。客は思うままに寄りかかり、留まり、関わることができる。",
+        "concept.storePointOneLabel": "空間機能",
+        "concept.storePointOne": "都市公園 / 小広場 / Live とコミュニティ活動",
+        "concept.storePointTwoLabel": "形態と素材",
+        "concept.storePointTwo": "「O」の幾何学的変体 / 緑の半透明 / 温潤な玉",
         "concept.hqLabel": "Shenzhen HQ / Concept 02",
         "concept.hqTitle": "璞玉の境地",
-        "concept.hqBody": "本社は都市に根を張る二つの未彫刻の原石として構想されます。黒い双塔は抑制と静けさを保ち、頂部だけに翠色が現れ、石皮を切って玉が露わになる姿をつくります。",
+        "concept.hqBody": "「璞玉」を着想とする。双子の塔は黒い一体の立面をまとい、大地に根を張る原石のように、重厚で内省的な量塊感を示す。",
         "concept.hqPointOneLabel": "建築主体",
-        "concept.hqPointOne": "原石 / 双塔 / 静けさ",
+        "concept.hqPointOne": "璞玉 / 黒い一体の双塔 / 大地に根を張る原石",
         "concept.hqPointTwoLabel": "視覚的焦点",
-        "concept.hqPointTwo": "璞玉を切る / 翠色の頂部",
-        "inspiration.kicker": "Inspiration sources",
-        "inspiration.title": "コンセプトは、人の行為、ブランド記号、東洋精神という三つの手がかりから生まれる。",
-        "inspiration.intro": "着想の源を分けることで、その後の空間操作がどこから来たかが見えます。形態の寄せ集めではなく、場面・形・精神が段階的に収束するプロセスです。",
+        "concept.hqPointTwo": "頂部の緑の発光体 / 原石を切れば翠玉が現れる",
+        "inspiration.kicker": "Philosophical origin",
+        "inspiration.title": "OPPO の中核的価値観は、中国伝統の「儒道互補」の思想体系に正確に対応する。",
+        "inspiration.intro": "「本分」には儒家の仁だけでなく道家の超越もあり、「至美」は道家の自由精神の究極の表れである。ゆえに OPPO は儒道互補であると言える。",
         "inspiration.sceneLabel": "Scene / Urban park",
         "inspiration.sceneTitle": "購買行為から、自由に起こる生活へ。",
         "inspiration.sceneBody": "都市公園には唯一の目的も固定動線もありません。滞在、出会い、鑑賞、参加という行為が、旗艦店の空間関係の原型になります。",
@@ -2517,46 +3027,44 @@
         "overview.thesisBody": "旗艦店には滞在、会話、ライブ音楽、コミュニティ活動が求められます。深圳本社には都市のスカイラインに明確な存在感を築く役割があります。機能は大きく異なりますが、形態・素材・体験はいずれも同じ「詩意美学」から導かれます。",
         "overview.equationAria": "OPPOブランド美学の公式",
         "equation.modern": "モダニズム",
-        "equation.modernSub": "世界と接続する共通言語",
+        "equation.modernSub": "世界と接続する基礎的な設計言語",
         "equation.east": "東洋美学",
-        "equation.eastSub": "現代の不安に対する解毒剤",
+        "equation.eastSub": "喧噪と不安への解毒剤",
         "equation.poetic": "詩意美学",
         "equation.poeticSub": "OPPO固有の視覚的領域",
         "research.kicker": "Research & aesthetic deduction",
-        "research.title": "着想からデザイン判断へ：OPPOが継続的に使える美学言語を探す。",
-        "research.intro": "リサーチはコンセプトの補足説明ではありません。ブランドの核心へ戻り、スケールを越えて実行できる方法になるかを検証します。",
-        "chain.oneLabel": "共通言語",
+        "chain.oneLabel": "源流一 · 共通項",
         "chain.oneTitle": "モダニズム",
-        "chain.oneBody": "グローバルブランドには、文化を越えて理解できる明快で合理的なデザイン言語が必要です。",
-        "chain.twoLabel": "現実の緊張",
-        "chain.twoTitle": "喧騒と不安",
-        "chain.twoBody": "工業的な近代は効率と同時に、分断、不安、孤独も生みます。モダニズムだけではOPPO独自の精神性になりません。",
-        "chain.threeLabel": "ブランドの解毒剤",
-        "chain.threeTitle": "東洋の意境",
-        "chain.threeBody": "含蓄、余白、虚実相生が現代空間に静けさと自由を与え、OPPOの美学的な基盤になります。",
+        "chain.oneBody": "簡潔と真実がその精神的中核である。グローバル化した二十一世紀において、モダニズムこそ OPPO が世界と接続する言語と方法である。",
+        "chain.twoLabel": "源流二 · 個性",
+        "chain.twoTitle": "東洋哲学",
+        "chain.twoBody": "「本分」の核心は、外的な圧力と誘惑を遮り、事物の本源へ立ち返ることにある。ではどうすればよいのか。答えは道家の「虚静」にある。老子は「虚を致すこと極まり、静を守ること篤し」と言う。虚静に至ってはじめて物我両忘の「天人合一」に入る。それは束縛のない自在の境地であり、そこに「至美」がある。",
+        "chain.threeLabel": "源流三 · 独自性",
+        "chain.threeTitle": "至美テクノロジー",
+        "chain.threeBody": "ユーザーの心を「ときめかせる」製品をつくること。「目を楽しませる」「驚嘆」「美感」「見飽きない」——創業者のインタビューにこれらの言葉が繰り返し現れる。美の追求は OPPO の歩みの主線であり、その創業の情熱はブランドの DNA に深く根を下ろしている。",
         "philosophy.heading": "精神的な着想をさらに遡り、デザイン判断の文化的座標にする。",
         "philosophy.benfenLabel": "儒家的秩序 / 自然の法則",
         "philosophy.benfenTitle": "本分",
-        "philosophy.benfenBody": "「里仁為美」から出発し、事物の本質と自然の秩序を尊重します。抑制と内省による静かな基盤をデザインに与えます。",
+        "philosophy.benfenBody": "儒家の秩序と自然法則に対応する。「里仁為美」を求め、事物の発展の客観的法則に従い、内省と抑制を重んじる。",
         "philosophy.zhimeiLabel": "道家的超越 / 天人合一",
         "philosophy.zhimeiTitle": "至美",
-        "philosophy.zhimeiBody": "「天地に大美あれど言わず」から出発し、世俗を超える自由と天人合一を求めます。美は装飾ではなく、言葉にできない意境に宿ります。",
+        "philosophy.zhimeiBody": "道家の超越と天人合一に対応する。荘子の言う「天地に大美ありて言わず」のごとく、世俗の束縛を破る自由の境地を求める。",
         "philosophy.resonanceTitle": "東西の共鳴",
-        "philosophy.resonanceBody": "東洋の「天人合一」とハイデガーの「詩的に住まう」は、現代の不安を超え、静けさへ帰るという同じ状態を指し示します。",
+        "philosophy.resonanceBody": "この東洋的な意境は、ハイデガーの「詩的に人は住まう」という西洋哲学と期せずして一致し、ともに現代の不安を超え静けさへ還る究極の状態を指し示す。",
         "system.kicker": "Aesthetic system",
-        "system.title": "ブランド美学を「詩意美学」と定義する。",
-        "system.intro": "表層的なスタイルではなく、空間、形態、素材、体験を判断するための核心的な基準です。",
-        "system.methodsLabel": "根本的な手法",
-        "system.methods": "含蓄 · 余白 · 虚実相生",
+        "system.title": "至美はどこにあるのか。答えは詩意の中にある。",
+        "system.intro": "産業文明は現代の生活をもたらすと同時に、世界に喧噪・分裂・不安・孤独をもたらした。詩意は人から遠ざかり、贅沢品となった。東洋美学の独特の意境——すなわち詩意——こそ、この世界に必要な処方である。",
+        "system.methodsLabel": "根本的な通達手法",
+        "system.methods": "含蓄 · 余白 · 虚実",
         "trait.lightName": "軽やかさ",
-        "trait.lightBody": "重さを拒み、流線、透光、浮遊感によって商業空間の圧迫を解消します。",
-        "trait.lightMap": "旗艦店への転訳：緑の半透明素材 + 曲面台",
+        "trait.lightBody": "東洋的な特質でありながら、現代性に満ちている。羽のように。水墨のように、微妙で透明で変化に富む。鋼とガラスで軽さを構築するミニマリズム建築のように。それは若さと躍動、束縛を破る自由感の詩的表現である。",
+        "trait.lightMap": "転化応用：旗艦店の半透明素材と曲面形態",
         "trait.quietName": "静けさ",
-        "trait.quietBody": "抑制された量塊と深色の一体感によって喧騒を消し、内省的で安定した秩序をつくります。",
-        "trait.quietMap": "本社への転訳：黒い一体建築 + ミニマルな有機曲面",
+        "trait.quietBody": "自然の特質であり、対比の美学である。大地、山並み、夜、水、夏の午後、木々の陰翳、夜明け前、嵐の後のように。静けさは永遠と瞬間の双方に宿り、対比を巧みに用いてはじめて表現しうる。",
+        "trait.quietMap": "転化応用：本社ビルの黒い一体の建築主体",
         "trait.freeName": "自由",
-        "trait.freeBody": "境界を破り、滞在、寄りかかり、出会い、参加を自由に選べる場をつくります。",
-        "trait.freeMap": "旗艦店への転訳：都市公園 + 境界のない動線",
+        "trait.freeBody": "それは「天人合一」であり、「詩的に住まうこと」である。人文と芸術の精神であり、人類の究極の追求である。ブランドが軽盈と寧静に満たされたとき、自由の感覚はおのずと立ちのぼる。",
+        "trait.freeMap": "転化応用：旗艦店の公園的で境界のない回遊動線",
         "map.title": "価値観からデザイン成果までの推導",
         "map.modern": "モダニズム",
         "map.modernSub": "グローバルなデザイン言語",
@@ -2565,28 +3073,25 @@
         "map.system": "詩意美学",
         "map.systemSub": "含蓄 · 余白 · 虚実相生",
         "map.store": "旗艦店",
-        "map.storeSub": "自由（動線）× 軽やかさ（視覚的量塊）",
         "map.hq": "深圳スーパー本社",
-        "map.hqSub": "静けさ（建築主体）× 至美（視覚的焦点）",
-        "store.number": "Chapter 05 / Project 01 / Flagship store",
-        "store.title": "都市公園と霊動の玉",
-        "store.intro": "「都市公園」という考えで従来型リテールの強い目的性と線形棚を解体。滞在、寄りかかり、交流、ライブ音楽、コミュニティ活動を受け止める開かれた場にします。",
-        "store.tagOne": "自由 / 動線",
-        "store.tagTwo": "軽やかさ / 量塊",
-        "store.tagThree": "O / 曲面変体",
+        "store.number": "Chapter 03 / Project 01 / 旗艦店",
+        "store.title": "都市公園",
+        "store.intro": "調査から得た「詩意美学」とブランド哲学を、いかに実際の空間形態へ翻訳するか。中核推導：自由（機能動線）× 軽盈（視覚的量塊）。",
+        "store.tagOne": "自由",
+        "store.tagTwo": "軽盈",
+        "store.tagThree": "都市公園",
         "store.routeAria": "旗艦店の設計推導経路",
         "store.routeLabel": "Derivation route / 設計推導経路",
-        "store.routeOneKey": "ブランド特性",
-        "store.routeOneValue": "自由 / 軽やかさ",
-        "store.routeTwoKey": "空間原型",
-        "store.routeTwoValue": "都市公園",
-        "store.routeThreeKey": "形態操作",
-        "store.routeThreeValue": "O → 起伏する曲面",
-        "store.routeFourKey": "素材操作",
-        "store.routeFourValue": "緑の半透明 → 重さを溶かす",
-        "store.routeFiveKey": "空間結果",
-        "store.routeFiveValue": "滞在 / 寄りかかる / Live / 交流",
-        "store.heroCaption": "空間結果 / 都市公園のような開放場",
+        "store.routeOneKey": "中核推導",
+        "store.routeOneValue": "自由（機能動線）× 軽盈（視覚的量塊）",
+        "store.routeTwoKey": "哲学的対応",
+        "store.routeTwoValue": "道家：自由 / 天人合一",
+        "store.routeThreeKey": "空間の原型",
+        "store.routeThreeValue": "都市公園",
+        "store.routeFourKey": "形態と素材",
+        "store.routeFourValue": "「O」の曲面変体 · 緑の半透明媒体",
+        "store.routeFiveKey": "空間の自由度",
+        "store.routeFiveValue": "滞在 · 寄りかかり · 小広場の Live に参加",
         "store.coreLabel": "核心推導",
         "store.core": "自由（機能動線）× 軽やかさ（視覚的量塊）",
         "store.stepOneTitle": "動線を解放する",
@@ -2595,37 +3100,32 @@
         "store.stepTwoBody": "OPPOの「O」を伸ばし、分割し、起伏する展示・インタラクション台へ転換します。",
         "store.stepThreeTitle": "実体の重さを溶かす",
         "store.stepThreeBody": "緑の半透明素材が光によって厚重感を消します。俯瞰すると、水紋や散らばる玉のように白い空間へ浮かびます。",
-        "store.panoramaCaption": "都市側から内部へ：展示を周縁へ退け、中央を広場にする",
         "store.galleryLabel": "Spatial translation",
         "store.galleryTitle": "「O」は平面記号から、身体が使える空間曲線へ。",
-        "store.planCaption": "プロセス図 / 分散配置と自由動線",
         "store.evidenceLabel": "Process evidence",
-        "store.evidenceTitle": "空間表現の前に、動線と配置を検証する。",
-        "store.evidenceBody": "俯瞰図で三点を確認します。中央を棚で埋めないこと、曲面台を分散させること、人が各ノード間の経路を自由に選べること。都市公園のコンセプトはまず平面関係で成立します。",
+        "store.evidenceTitle": "俯瞰による推導：離散配置と自由な動線",
+        "store.evidenceBody": "平面推導図。四周の壁面はギャラリー的な展示面へ退き、中央の核心部が開放される。曲面の台は離散的に分布し、水紋あるいは散らばる玉のようである。",
         "store.outcomeLabel": "Result / Process verified",
         "store.outcomeTitle": "動線、形態、素材がすべてコンセプトに応えた時、結果が現れる。",
-        "store.renderCaption": "内観 / 軽やかな視覚的量塊",
-        "store.wideCaption": "内観全景 / 展示面を空間の周縁へ",
         "store.conclusion": "リテールは購買だけの場ではなく、小さな都市公園になります。ブランドは滞在、出会い、参加を通して感じられます。",
-        "hq.number": "Chapter 06 / Project 02 / Shenzhen super headquarters",
+        "hq.number": "Chapter 04 / Project 02 / 深圳スーパー本社",
         "hq.title": "璞玉の境地",
-        "hq.intro": "未彫刻の「璞玉」を核心イメージとします。二つの深色の有機塔が大地に根ざす原石のように立ち、唯一の緑の高光を頂部に限定して「原石を切り、翠玉が現れる」意境をつくります。",
-        "hq.tagOne": "静けさ / 主体",
-        "hq.tagTwo": "至美 / 焦点",
-        "hq.tagThree": "璞玉 / 意象",
+        "hq.intro": "「詩意美学」とブランド哲学を、いかに実際の建築言語へ翻訳するか。中核推導：寧静（建築主体）× 至美（視覚的焦点）。",
+        "hq.tagOne": "寧静",
+        "hq.tagTwo": "至美",
+        "hq.tagThree": "璞玉",
         "hq.routeAria": "深圳本社の設計推導経路",
         "hq.routeLabel": "Derivation route / 設計推導経路",
-        "hq.routeOneKey": "ブランド特性",
-        "hq.routeOneValue": "静けさ / 至美",
-        "hq.routeTwoKey": "建築原型",
-        "hq.routeTwoValue": "未彫刻の璞玉",
-        "hq.routeThreeKey": "量塊操作",
-        "hq.routeThreeValue": "二つの原石 → 双塔",
-        "hq.routeFourKey": "対比操作",
-        "hq.routeFourValue": "黒い主体 + 緑の頂部",
-        "hq.routeFiveKey": "都市結果",
-        "hq.routeFiveValue": "東洋美学のスカイライン座標",
-        "hq.heroCaption": "建築結果 / 璞玉の境地",
+        "hq.routeOneKey": "中核推導",
+        "hq.routeOneValue": "寧静（建築主体）× 至美（視覚的焦点）",
+        "hq.routeTwoKey": "哲学的対応",
+        "hq.routeTwoValue": "儒家：本分 / 寧静",
+        "hq.routeThreeKey": "建築イメージ",
+        "hq.routeThreeValue": "未彫琢の璞玉（原石）",
+        "hq.routeFourKey": "主体の素材",
+        "hq.routeFourValue": "深色一体 · 絶対に滑らかな有機曲面",
+        "hq.routeFiveKey": "視覚的高光",
+        "hq.routeFiveValue": "塔頂部の緑のグラデーション発光体",
         "hq.coreLabel": "核心推導",
         "hq.core": "静けさ（建築主体）× 至美（視覚的焦点）",
         "hq.stepOneTitle": "本質的な量塊へ戻る",
@@ -2634,17 +3134,13 @@
         "hq.stepTwoBody": "双塔に深色の一体素材と滑らかな有機曲面を用い、ミニマルで重い量塊を都市グリッドへ根づかせます。",
         "hq.stepThreeTitle": "唯一の高光を制御する",
         "hq.stepThreeBody": "緑のグラデーション発光体を塔頂だけに限定。深い静けさの中の一度の虚実衝突が、世俗を超える生命力を形にします。",
-        "hq.elevationCaption": "プロセス図 / 都市スケールでの双塔量塊",
         "hq.evidenceLabel": "Process evidence",
-        "hq.evidenceTitle": "唯一の高光を強める前に、量塊と都市の関係を検証する。",
-        "hq.evidenceBody": "初期の都市テストでは、二つの原石のような完全な量塊を保ちながら、双塔の比率、間隔、周辺スカイラインを確認します。ブランドカラーが表皮装飾にならないよう、緑は頂部だけに留めます。",
+        "hq.evidenceTitle": "都市スケールの推導：双塔と周辺のスカイライン",
+        "hq.evidenceBody": "初期の都市ボリューム推導図。原石のような二つの完全な量塊が都市のグリッドに根を張り、緑は頂部にのみ現れる。",
         "hq.outcomeLabel": "Result / Process verified",
         "hq.outcomeTitle": "形体は静けさを保ち、生命力は頂部だけに現れる。",
         "hq.galleryLabel": "Architectural translation",
         "hq.galleryTitle": "ほぼ絶対的な静けさの中に、一つだけ生命の光を残す。",
-        "hq.nightCaption": "夜景 / 原石を切り翠玉が現れる",
-        "hq.detailCaption": "近景 / 有機曲面と建築スケール",
-        "hq.aerialCaption": "俯瞰 / 都市グリッドのブランド座標",
         "hq.conclusion": "本社建築は黒で抑制と秩序を築き、頂部の翠玉の光で超越を完成させます。ブランド識別は付加的なサインではなく、都市のスカイラインそのものになります。",
         "synthesis.kicker": "One system, two expressions",
         "synthesis.title": "一つの詩意美学が、二つのスケールで異なる答えを得る。",
@@ -2669,7 +3165,7 @@
         "table.storeExperience": "滞在、寄りかかり、交流、参加",
         "table.hqExperience": "静けさ、内省、生命力、都市識別",
         "synthesis.finalMark": "Conclusion",
-        "synthesis.finalCopy": "ブランド美学はすべてを同じ外観にするものではない。異なるすべての結果を、同じ明確な核心へ遡れるようにするものです。",
+        "synthesis.finalCopy": "至美はどこにあるのか。答えは詩意の中にある。",
         "footer.home": "何梁宇のポートフォリオへ戻る",
         "footer.project": "OPPO ブランド空間・建築コンセプト",
         "alt.storeHero": "中央に緑の半透明曲面を持つOPPO旗艦店のパノラマ",
@@ -2679,7 +3175,8 @@
         "alt.storePlan": "開放空間に緑と白の曲面台を分散した俯瞰図",
         "alt.storeResultWide": "中央の曲面と周縁のギャラリー展示面を持つ旗艦店の幅広い完成像",
         "alt.storeRenderTwo": "緑の半透明台を中央に置く明るい旗艦店全景",
-        "alt.storeRenderOne": "開放中央部をギャラリー壁面が囲む旗艦店の幅広い内観",
+        "alt.storeInteriorView": "白い動線と緑の半透明曲面が開放的な場をつくる旗艦店の内観",
+        "alt.storeWideDetail": "開かれた中央部とギャラリー状の周縁展示面を正面から見る旗艦店",
         "alt.hqHero": "緑の光を頂部に持つ二つの黒い有機塔を見上げる低視点",
         "alt.hqElevation": "黄昏の都市に立つ二つの深色有機塔",
         "alt.hqNight": "緑のグラデーション頂部を持つ夜の黒い双塔",
@@ -2725,7 +3222,7 @@
       if (LANGS.indexOf(saved) !== -1) lang = saved;
     } catch (error) {}
 
-    const langToggle = document.getElementById("lang-toggle");
+    const langToggle = document.getElementById("lang-cycle-btn");
     const langCode = document.getElementById("lang-code");
 
     function applyLanguage(nextLang) {
@@ -2770,8 +3267,7 @@
 
     applyLanguage(lang);
 
-    const header = document.getElementById("site-header");
-    const progressBar = document.getElementById("progress-bar");
+    const nav = document.getElementById("site-nav");
     const hero = document.querySelector(".hero");
     let ticking = false;
 
@@ -2780,23 +3276,20 @@
       return { el: el, dark: /\b(hero|system|hq|site-footer)\b/.test(el.className) };
     });
 
-    function updateHeaderGround(scrollTop) {
-      const probe = scrollTop + parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-h") || 66) / 2;
+    function updateNavGround(scrollTop) {
+      const probe = scrollTop + parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--nav-h") || 66) / 2;
       let dark = true;
       for (let i = 0; i < grounds.length; i += 1) {
         const top = grounds[i].el.offsetTop;
         if (probe >= top && probe < top + grounds[i].el.offsetHeight) dark = grounds[i].dark;
       }
-      header.dataset.ground = dark ? "dark" : "light";
+      nav.dataset.ground = dark ? "dark" : "light";
     }
 
     function updateScrollUI() {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = scrollable > 0 ? Math.min(1, scrollTop / scrollable) : 0;
-      progressBar.style.transform = "scaleX(" + progress + ")";
-      header.classList.toggle("is-solid", scrollTop > Math.max(80, hero.offsetHeight - 110));
-      updateHeaderGround(scrollTop);
+      nav.classList.toggle("solid", scrollTop > Math.max(80, hero.offsetHeight - 110));
+      updateNavGround(scrollTop);
       ticking = false;
     }
 
@@ -2808,6 +3301,20 @@
     }, { passive: true });
     window.addEventListener("resize", updateScrollUI);
     updateScrollUI();
+
+    /* 灵感来源：滚动到时自动展开 */
+    const insp = document.getElementById("insp");
+    if (insp && "IntersectionObserver" in window) {
+      const inspObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && !insp.open) {
+            insp.open = true;
+            inspObserver.unobserve(insp);
+          }
+        });
+      }, { threshold: 0.35, rootMargin: "0px 0px -15% 0px" });
+      inspObserver.observe(insp);
+    }
 
     const revealNodes = document.querySelectorAll(".reveal");
     if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -2824,37 +3331,241 @@
       revealNodes.forEach(function (node) { node.classList.add("is-visible"); });
     }
 
-    const navLinks = Array.from(document.querySelectorAll(".primary-nav a[data-section]"));
-    const observedSections = navLinks.map(function (link) {
-      return document.getElementById(link.dataset.section);
-    }).filter(Boolean);
+    /* ---- 横向长带：按住拖动浏览；拖过就不当作点击，避免误开灯箱 ---- */
+    document.querySelectorAll(".strip").forEach(function (el) {
+      let down = false, startX = 0, startLeft = 0;
+      el.dragged = false;
+      const autoPan = el.hasAttribute("data-auto-pan");
 
-    if ("IntersectionObserver" in window) {
-      const sectionObserver = new IntersectionObserver(function (entries) {
-        const visible = entries
-          .filter(function (entry) { return entry.isIntersecting; })
-          .sort(function (a, b) { return b.intersectionRatio - a.intersectionRatio; })[0];
-        if (!visible) return;
-        navLinks.forEach(function (link) {
-          link.classList.toggle("is-active", link.dataset.section === visible.target.id);
+      el.addEventListener("pointerdown", function (e) {
+        if (e.button !== 0) return;
+        down = true; el.dragged = false;
+        startX = e.clientX; startLeft = el.scrollLeft;
+        el.classList.add("dragging");
+        try { el.setPointerCapture(e.pointerId); } catch (err) {}
+      });
+
+      el.addEventListener("pointermove", function (e) {
+        if (!down) return;
+        const dx = e.clientX - startX;
+        if (Math.abs(dx) > 5) el.dragged = true;
+        el.scrollLeft = startLeft - dx;
+      });
+
+      function release(e) {
+        if (!down) return;
+        down = false;
+        el.classList.remove("dragging");
+        try { el.releasePointerCapture(e.pointerId); } catch (err) {}
+      }
+      el.addEventListener("pointerup", release);
+      el.addEventListener("pointercancel", release);
+      ["pointerdown", "wheel", "touchstart"].forEach(function (t) {
+        el.addEventListener(t, function () { el.classList.add("touched"); }, { passive: true });
+      });
+
+      /* 普通长带开局停在中央；首屏自动扫动从左侧开始 */
+      function centre() {
+        el.scrollLeft = autoPan ? 0 : (el.scrollWidth - el.clientWidth) / 2;
+      }
+      requestAnimationFrame(centre);
+      const im = el.querySelector("img");
+      if (im && !im.complete) im.addEventListener("load", centre, { once: true });
+      window.addEventListener("resize", centre);
+    });
+
+    /* 首屏全景以呼吸节奏往返：缓慢起步、滑行、减速并在两端停顿 */
+    document.querySelectorAll("[data-auto-pan]").forEach(function (el) {
+      let running = true;
+      let startedAt = 0;
+      const travelDuration = 16000;
+      const pauseDuration = 1400;
+
+      function breatheEase(value) {
+        return .5 - .5 * Math.cos(Math.PI * value);
+      }
+
+      function stopAutoPan() {
+        running = false;
+        el.classList.add("touched");
+      }
+
+      ["pointerdown", "wheel", "touchstart"].forEach(function (type) {
+        el.addEventListener(type, stopAutoPan, { passive: true });
+      });
+
+      function sweep(time) {
+        if (!running) return;
+        if (!startedAt) startedAt = time;
+        const max = Math.max(0, el.scrollWidth - el.clientWidth);
+        if (max > 0) {
+          const cycleDuration = travelDuration * 2 + pauseDuration * 2;
+          const phase = (time - startedAt) % cycleDuration;
+          let progress;
+
+          if (phase < travelDuration) {
+            progress = breatheEase(phase / travelDuration);
+          } else if (phase < travelDuration + pauseDuration) {
+            progress = 1;
+          } else if (phase < travelDuration * 2 + pauseDuration) {
+            progress = 1 - breatheEase((phase - travelDuration - pauseDuration) / travelDuration);
+          } else {
+            progress = 0;
+          }
+
+          el.scrollLeft = max * progress;
+        }
+        requestAnimationFrame(sweep);
+      }
+
+      requestAnimationFrame(sweep);
+    });
+
+    /* 固定灯珠的三点呼吸光迹：灯位不动，只让亮度连续扫过并在两端换向 */
+    document.querySelectorAll("[data-scroll-dots]").forEach(function (track) {
+      const dots = Array.from(track.querySelectorAll(".store-scroll-trail span"));
+      if (dots.length < 3) return;
+
+      const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const maxStart = dots.length - 3;
+      const travelDuration = 1700;
+      const pauseDuration = 400;
+      const cycleDuration = travelDuration * 2 + pauseDuration * 2;
+      const rightLevels = [.14, .46, 1];
+      const leftLevels = [1, .46, .14];
+      let startedAt = 0;
+
+      function paintDot(dot, level) {
+        if (level < .008) {
+          dot.style.opacity = "0";
+          dot.style.boxShadow = "0 0 0 rgba(0, 168, 99, 0)";
+          return;
+        }
+
+        const glow = 2 + level * 8;
+        const alpha = .08 + level * .4;
+        dot.style.opacity = level.toFixed(3);
+        dot.style.boxShadow = "0 0 " + glow.toFixed(2) + "px rgba(0, 168, 99, " + alpha.toFixed(3) + ")";
+      }
+
+      function renderTrail(position, movingRight) {
+        const base = Math.floor(position);
+        const fraction = position - base;
+        const blend = .5 - .5 * Math.cos(Math.PI * fraction);
+        const levels = rightLevels.map(function (rightLevel, index) {
+          return leftLevels[index] * (1 - movingRight) + rightLevel * movingRight;
         });
-      }, { rootMargin: "-28% 0px -56% 0px", threshold: [0, .1, .35] });
-      observedSections.forEach(function (section) { sectionObserver.observe(section); });
-    }
+        const values = dots.map(function () { return 0; });
+
+        levels.forEach(function (level, index) {
+          const current = base + index;
+          values[current] += level * (1 - blend);
+          if (base < maxStart) values[current + 1] += level * blend;
+        });
+
+        dots.forEach(function (dot, index) {
+          paintDot(dot, Math.min(1, values[index]));
+        });
+      }
+
+      function smoothStep(value) {
+        const clamped = Math.max(0, Math.min(1, value));
+        return clamped * clamped * (3 - 2 * clamped);
+      }
+
+      if (reducedMotion) {
+        renderTrail(Math.floor(maxStart / 2), 1);
+        return;
+      }
+
+      function animateTrail(time) {
+        if (!startedAt) startedAt = time;
+        const phase = (time - startedAt) % cycleDuration;
+        let position;
+        let movingRight;
+
+        if (phase < travelDuration) {
+          const progress = phase / travelDuration;
+          position = (.5 - .5 * Math.cos(Math.PI * progress)) * maxStart;
+          movingRight = smoothStep(progress / .15);
+        } else if (phase < travelDuration + pauseDuration) {
+          position = maxStart;
+          movingRight = 1;
+        } else if (phase < travelDuration * 2 + pauseDuration) {
+          const progress = (phase - travelDuration - pauseDuration) / travelDuration;
+          position = (.5 + .5 * Math.cos(Math.PI * progress)) * maxStart;
+          movingRight = 1 - smoothStep(progress / .15);
+        } else {
+          position = 0;
+          movingRight = 0;
+        }
+
+        renderTrail(position, movingRight);
+        requestAnimationFrame(animateTrail);
+      }
+
+      requestAnimationFrame(animateTrail);
+    });
+
+    /* 店铺两张横向成果图共享滚动进度：拖动任一张，另一张同步移动 */
+    const scrollSyncGroups = new Map();
+    document.querySelectorAll("[data-scroll-sync]").forEach(function (el) {
+      const key = el.getAttribute("data-scroll-sync");
+      if (!scrollSyncGroups.has(key)) scrollSyncGroups.set(key, []);
+      scrollSyncGroups.get(key).push(el);
+    });
+    scrollSyncGroups.forEach(function (els) {
+      if (els.length < 2) return;
+      let frame = 0;
+      let source = null;
+      let syncing = false;
+
+      function syncFrom(el) {
+        const max = Math.max(0, el.scrollWidth - el.clientWidth);
+        const progress = max ? el.scrollLeft / max : 0;
+        syncing = true;
+        els.forEach(function (other) {
+          if (other === el) return;
+          const otherMax = Math.max(0, other.scrollWidth - other.clientWidth);
+          const next = progress * otherMax;
+          if (Math.abs(other.scrollLeft - next) > 0.5) other.scrollLeft = next;
+        });
+        syncing = false;
+      }
+
+      els.forEach(function (el) {
+        el.addEventListener("scroll", function () {
+          if (syncing) return;
+          source = el;
+          if (frame) return;
+          frame = requestAnimationFrame(function () {
+            frame = 0;
+            if (source) syncFrom(source);
+            source = null;
+          });
+        }, { passive: true });
+      });
+    });
+
+    /* 捕获阶段拦截：拖动结束的那一下不触发灯箱 */
+    document.addEventListener("click", function (e) {
+      const strip = e.target.closest && e.target.closest(".strip");
+      if (strip && strip.dragged) {
+        e.preventDefault();
+        e.stopPropagation();
+        strip.dragged = false;
+      }
+    }, true);
 
     const lightbox = document.getElementById("lightbox");
     const lightboxImage = document.getElementById("lightbox-image");
-    const lightboxCaption = document.getElementById("lightbox-caption");
     const lightboxClose = document.getElementById("lightbox-close");
 
     document.querySelectorAll(".media-zoom").forEach(function (button) {
       button.addEventListener("click", function () {
         const image = button.querySelector("img");
-        const figure = button.closest("figure");
-        const caption = figure ? figure.querySelector("figcaption span") : null;
         lightboxImage.src = image.currentSrc || image.src;
         lightboxImage.alt = image.alt;
-        lightboxCaption.textContent = caption ? caption.textContent : image.alt;
         if (typeof lightbox.showModal === "function") {
           lightbox.showModal();
         } else {

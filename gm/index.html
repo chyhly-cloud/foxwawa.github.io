@@ -124,8 +124,8 @@ button,input{font:inherit;color:inherit;background:none;border:0}
 /* 中文用 em 而不是 ch 限宽：ch 是“0”的宽度，对汉字会算成两倍字数 */
 .premise-lead{font-family:var(--serif);font-weight:400;font-size:clamp(1.5rem,4.2vw,3.2rem);
   line-height:1.42;letter-spacing:-.015em;color:var(--ink);max-width:15em}
-.concept-copy{margin-top:clamp(2rem,4vw,3.2rem);max-width:44em}
-.inspiration-panel{max-width:46em;margin-top:clamp(2.4rem,5vw,3.4rem);border-top:1px solid var(--line)}
+.concept-copy{width:100%;margin-top:clamp(2rem,4vw,3.2rem);max-width:none}
+.inspiration-panel{width:100%;max-width:none;margin-top:clamp(2.4rem,5vw,3.4rem);border-top:1px solid var(--line)}
 .inspiration-panel summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.7rem;padding:1.2rem 0;
   font-family:var(--mono);font-size:var(--type-meta);letter-spacing:2.5px;text-transform:uppercase;
   color:var(--ink2);font-weight:700;transition:color .3s}
@@ -196,7 +196,7 @@ button,input{font:inherit;color:inherit;background:none;border:0}
 .void .section-heading{border-bottom-color:var(--dline)}
 .void .beat-title{color:#fff}
 .statement{font-family:var(--disp);font-weight:400;font-size:clamp(1.9rem,4.6vw,3.9rem);line-height:1.2;
-  letter-spacing:-.03em;width:100%;max-width:none;margin-top:1.5rem}
+  letter-spacing:-.03em;width:100%;max-width:none;margin-top:1.5rem;text-wrap:balance}
 .statement-note{margin-top:1.6rem;max-width:58ch;font-family:var(--disp);font-size:var(--type-caption);
   line-height:1.85;color:rgba(255,255,255,.52)}
 
@@ -452,6 +452,10 @@ figcaption .fc-k{color:var(--blue);font-weight:700;letter-spacing:.14em;text-tra
 .js .rv-wipe{clip-path:inset(0 100% 0 0);transition:clip-path 1s cubic-bezier(.19,1,.22,1)}
 .js .rv-wipe.in{clip-path:inset(0 0 0 0)}
 
+/* 正文统一两端对齐；标题、编号与导航保留自然边缘，避免字距被拉开。 */
+main p:not(.hero-kicker):not(.hero-sub):not(.premise-lead):not(.statement):not(.mono-label):not(.mono-note):not(.closing-q),
+main .quote{text-align:justify;text-justify:inter-ideograph}
+
 /* ── 响应式 ─────────────────────────────────────────── */
 @media(max-width:900px){
   .ph-head,.sub-head,.world-head,.derive,.theory,.shift,.oc-head{grid-template-columns:1fr}
@@ -650,13 +654,11 @@ figcaption .fc-k{color:var(--blue);font-weight:700;letter-spacing:.14em;text-tra
     <div class="sub">
       <div class="sub-head rv">
         <h3 data-i18n="p2SubB">品牌 DNA 与感受</h3>
-        <p data-i18n="p2SubBDesc">品牌 DNA 是讨论、评判和决策的源头；四个品牌感受则把抽象原则转化为可辨认的判断维度。</p>
       </div>
 
       <div class="source rv">
         <p class="mono-label" style="margin-bottom:1rem">Decision source</p>
-        <strong data-i18n="p2Source">任何工作都应追溯到：是否具有独特性，是否具有引领性。</strong>
-        <p data-i18n="p2SourceP">当讨论任何一项日常品牌工作时，都可以回到这个源头，并以此作为讨论、评判与决策的依据。</p>
+        <strong data-i18n="p2Source">工作评判标准</strong>
       </div>
 
       <div class="stack">
@@ -677,7 +679,7 @@ figcaption .fc-k{color:var(--blue);font-weight:700;letter-spacing:.14em;text-tra
     </div>
     <div class="world-head">
       <div class="rv"><h4 data-i18n="p2WorldH">当代主义</h4></div>
-      <p class="body-t rv" data-i18n="p2WorldP">小理性主义取代大理性主义，科学理性、尤其是技术理性越来越占据支配地位。当代性可以消解科学与艺术、理性与非理性之争。GMANSIRE 以当代主义作为自己的美学理念，并以“观念”作为最重要的区分标志。</p>
+      <p class="body-t rv" data-i18n="p2WorldP">当代性可以消解科学与艺术、理性与非理性之争。GMANSIRE 以当代主义作为自己的美学理念，并以“观念”作为最重要的区分标志。</p>
     </div>
 
     <div class="dchain">
@@ -1047,12 +1049,10 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       p2SubA:"Brand principles",
       p2SubADesc:"Three principles form the highest-level criteria: how to think, what kind of beauty to pursue, and how far the brand’s capabilities should extend.",
       p2SubB:"Brand DNA & perception",
-      p2SubBDesc:"Brand DNA is the source of discussion, evaluation and decision-making; four perceptions turn abstract principles into recognisable dimensions.",
-      p2Source:"Every task should trace back to two questions: is it distinctive, and does it lead?",
-      p2SourceP:"Any daily brand task can return to this source and use it as the basis for discussion, evaluation and decision-making.",
+      p2Source:"Work evaluation criteria",
       p2WorldTitle:"Aesthetic philosophy — Contemporaryism",
       p2WorldH:"Contemporaryism",
-      p2WorldP:"Minor rationalism replaces grand rationalism, while scientific—and especially technological—reason increasingly dominates. Contemporaneity can dissolve the opposition between science and art, reason and unreason. GMANSIRE adopts Contemporaryism as its aesthetic philosophy and treats ‘concept’ as its most important point of distinction.",
+      p2WorldP:"Contemporaneity can dissolve the opposition between science and art, reason and unreason. GMANSIRE adopts Contemporaryism as its aesthetic philosophy and treats ‘concept’ as its most important point of distinction.",
       p2WorldNote:"This shift also marks a change in the value of craft inherited from industrial prosperity and the arrival of an age in which information becomes a means of production. Concept therefore becomes the basis of communication in the information age.",
       p3Title:"03 — Strategic method",
       p3Lead:"How the brand happens through<br>people, content and collaboration.",
@@ -1129,12 +1129,10 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       p2SubA:"ブランド原則",
       p2SubADesc:"3つの原則が最上位の判断をつくる。どのように考えるか、どのような美を追求するか、ブランドの能力をどこまで広げるか。",
       p2SubB:"ブランドDNAと印象",
-      p2SubBDesc:"ブランドDNAは議論・評価・意思決定の源であり、4つの印象は抽象的な原則を認識可能な判断軸へ変換する。",
-      p2Source:"すべての仕事は、独自性があるか、先導性があるかへ立ち戻る。",
-      p2SourceP:"日々のブランド業務はすべてこの源へ戻り、議論・評価・意思決定の基準として用いることができる。",
+      p2Source:"仕事の評価基準",
       p2WorldTitle:"美学理念 — コンテンポラリズム",
       p2WorldH:"コンテンポラリズム",
-      p2WorldP:"大きな合理主義に代わって小さな合理主義が現れ、科学的合理性、とりわけ技術的合理性が支配的になっていく。同時代性は、科学と芸術、合理と非合理の対立を解消し得る。GMANSIREはコンテンポラリズムを美学理念とし、「コンセプト」を最も重要な差異化の印とする。",
+      p2WorldP:"同時代性は、科学と芸術、合理と非合理の対立を解消し得る。GMANSIREはコンテンポラリズムを美学理念とし、「コンセプト」を最も重要な差異化の印とする。",
       p2WorldNote:"この変化は、工業化の繁栄期における手工芸の価値の変容と、情報が生産手段となる時代の到来も示している。コンセプトは、情報時代のコミュニケーションの基盤となる。",
       p3Title:"03 — 戦略的方法",
       p3Lead:"人、コンテンツ、コラボレーションを通じて<br>ブランドを実現する。",

@@ -9,5 +9,5 @@
       <path d="M91 434C102 433 113 428 122 420C125 447 131 478 143 492C149 500 143 508 134 505C121 501 112 485 107 470C102 454 96 441 91 434Z"/>
     </clipPath>
   </defs>
-  <image href="/jibunkatte/assets/experiment/clean/print-result-04.png" xlink:href="/jibunkatte/assets/experiment/clean/print-result-04.png" width="193" height="673" clip-path="url(#body)"/>
+  <image href="print-result-04.png" xlink:href="print-result-04.png" width="193" height="673" clip-path="url(#body)"/>
 </svg>

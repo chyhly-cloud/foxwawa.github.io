@@ -47,6 +47,18 @@
 .lang-ja .body-t{font-family:"Noto Sans JP","Noto Sans SC",sans-serif;line-height:1.9}
 .lang-zh .body-t{font-family:"Noto Sans SC",sans-serif;line-height:1.9}
 .body-t+.body-t{margin-top:1.05rem}
+/* flush both margins, the way a printed column sets. CJK justifies cleanly on
+   its own; latin needs hyphenation or the word gaps blow out. */
+.body-t,.side-note p,.premise-lead,.lede,.network-insight p,.layer p,
+.experiment-intro-copy p,.body-conclusion,.stamp p,.deriv p,.diagram-copy p,
+.inspiration-copy p,.finds p,.plana-copy p,.spec-copy p{
+  text-align:justify;text-justify:inter-character;
+  hanging-punctuation:allow-end;overflow-wrap:break-word}
+.lang-en .body-t,.lang-en .side-note p,.lang-en .premise-lead,.lang-en .lede,
+.lang-en .network-insight p,.lang-en .layer p,.lang-en .experiment-intro-copy p,
+.lang-en .body-conclusion,.lang-en .stamp p,.lang-en .deriv p,.lang-en .diagram-copy p,
+.lang-en .inspiration-copy p,.lang-en .finds p,.lang-en .plana-copy p,.lang-en .spec-copy p{
+  -webkit-hyphens:auto;hyphens:auto;text-justify:auto}
 .h-sec,.h-sub,.scale-title,.layer h4{font-family:"Newsreader",serif;font-weight:400}
 .lang-ja .h-sec,.lang-ja .h-sub,.lang-ja .scale-title,.lang-ja .layer h4{font-family:"Noto Serif JP",serif;font-weight:300}
 .lang-zh .h-sec,.lang-zh .h-sub,.lang-zh .scale-title,.lang-zh .layer h4{font-family:"Noto Serif SC",serif;font-weight:500}
@@ -128,11 +140,17 @@ p{margin:0}
 @media(max-width:999px){
   .beat{margin-top:clamp(4rem,10vh,7rem)}
   .beat-tall,.beat-xtall,.background-study{min-height:0}
-  .beat-scene{position:static;display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.8rem}
+  /* Beats sit outside the text wrapper so their evidence can float around the
+     reading column on desktop. On a phone that full-bleed layer would put
+     captions and images directly against the viewport edge; keep the same
+     composition while giving every mobile scene a quiet reading gutter. */
+  .beat-scene{position:static;display:flex;flex-wrap:wrap;gap:.6rem;
+    margin-bottom:1.8rem;padding-inline:var(--gutter);box-sizing:border-box}
   .beat-scene img{position:static;width:calc(50% - .3rem)}
   .beat-scene figcaption{position:static;width:100%}
   .beat-scene .wide-sm{width:100%}
   .beat-scene .hide-sm{display:none}
+  .beat>.carriage{width:100%;padding-inline:var(--gutter);box-sizing:border-box}
   .carriage{width:100%}
   .body-collage{position:relative;left:auto;top:auto;flex:0 0 100%;width:100%;margin-bottom:1rem}
   .beat-scene .body-collage>img{position:absolute}
@@ -220,7 +238,10 @@ p{margin:0}
   .interaction-diagram .interaction-society{font-size:34px}
   .interaction-diagram .interaction-gene{font-size:19px}
 }
-.mindmap,.wide-band .mindmap{width:min(100%,1500px);max-width:1500px;height:auto;margin:0 auto;display:block}
+/* The relationship map is intentionally wider than the reading column.  Its
+   labels live inside the SVG viewBox, so giving it a responsive canvas keeps
+   the type legible while the band provides a calm, optional horizontal read. */
+.mindmap,.wide-band .mindmap{width:clamp(2100px,120vw,2800px);max-width:none;height:auto;margin:0 auto;display:block}
 .mindmap .mm-line{stroke:#2f5f9e;stroke-width:1.6}
 .mindmap .mm-dash{stroke:var(--ink-2);stroke-width:1.6;stroke-dasharray:7 6}
 .mindmap .mm-arrow{stroke:var(--ink-2);stroke-width:2.4;stroke-linejoin:round}
@@ -235,7 +256,7 @@ p{margin:0}
 .wide-band{margin:clamp(2.5rem,6vh,5rem) auto 0;max-width:var(--max);padding:0 var(--gutter);
   overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:thin}
 .wide-band img{width:100%;height:auto}
-.wide-band:has(.mindmap){position:relative;scrollbar-width:none}
+.wide-band:has(.mindmap){position:relative;max-width:min(100%,2400px);scrollbar-width:none}
 .wide-band:has(.mindmap)::-webkit-scrollbar{height:0}
 .mindmap-cue{display:flex;align-items:center;justify-content:center;gap:.35rem;width:max-content;max-width:calc(100% - var(--gutter)*2);
   margin:clamp(.75rem,1.8vh,1.4rem) auto .3rem;padding:0 .1rem .1rem;border:0;
@@ -245,9 +266,12 @@ p{margin:0}
 .mindmap-cue::before{content:"←";animation-delay:-.9s}.mindmap-cue::after{content:"→"}
 @keyframes swipeCue{0%,100%{opacity:.28;transform:translateX(0)}50%{opacity:1;transform:translateX(4px)}}
 @media(prefers-reduced-motion:reduce){.mindmap-cue::before,.mindmap-cue::after{animation:none}}
+@media(min-width:700px) and (max-width:1199px){
+  .mindmap,.wide-band .mindmap{width:1900px;max-width:none}
+}
 @media(max-width:699px){
   .wide-band:has(.mindmap){padding-inline:1rem}
-  .mindmap,.wide-band .mindmap{width:1300px;max-width:none}
+  .mindmap,.wide-band .mindmap{width:1500px;max-width:none}
 }
 
 /* ---------- 洞察 → 霊感 → 造形：APOSSIBLE式の動く関係線 ---------- */
@@ -383,6 +407,8 @@ p{margin:0}
 
 /* ---------- 01 concept (shared shell) ---------- */
 .concept-sheet{padding:clamp(7rem,16vh,13rem) 0}
+#question{padding-bottom:clamp(3rem,5vh,5rem)}
+#research{padding-top:clamp(3rem,5vh,5rem)}
 .concept-main{min-width:0;max-width:44em}
 .premise-lead{font-size:clamp(1.5rem,3.4vw,2.8rem);line-height:1.32;letter-spacing:-.01em;color:var(--ink);max-width:18em}
 .concept-copy{max-width:40em;margin-top:1.8rem}
@@ -602,8 +628,9 @@ p{margin:0}
 
 /* life — explicit and implicit rules are independent constellations on opposite
    sides of the protected text corridor. */
-.life-explicit{left:.5%;top:3%;width:33.5%;transform:none}
-.life-implicit{right:.5%;top:12%;width:33.5%;transform:none}
+/* these two used to sit flush against the carriage, which pinned it still */
+.life-explicit{left:.5%;top:3%;width:29.5%;transform:none}
+.life-implicit{right:.5%;top:12%;width:29.5%;transform:none}
 .life-sign-cluster{position:relative;overflow:visible;background:transparent}
 .life-explicit .life-sign-cluster{aspect-ratio:395/330}
 .life-implicit .life-sign-cluster{aspect-ratio:360/330}
@@ -631,7 +658,7 @@ p{margin:0}
 .life-markup .trace-wash{fill:rgba(255,242,0,.58);stroke:#ed1c24;stroke-width:5;
   stroke-linecap:butt;stroke-linejoin:miter}
 
-.life-route{left:2%;top:64%;width:33%;transform:none}
+.life-route{left:2%;top:64%;width:30%;transform:none}
 .route-stage{position:relative;aspect-ratio:10/8;overflow:visible;background:transparent}
 .route-stage img{position:absolute!important;object-fit:contain}
 .route-stage .route-shot{left:var(--x)!important;top:var(--y)!important;width:57%!important;height:80%!important;
@@ -647,32 +674,28 @@ p{margin:0}
   filter:saturate(1.2) contrast(1.05);mix-blend-mode:normal}
 .route-stage .route-outline.a{left:26%!important;top:18%!important;width:34%!important;height:69%!important}
 .route-stage .route-outline.b{left:62%!important;top:20%!important;width:34%!important;height:66%!important}
-.life-rule-note{right:2%;top:58%;width:31%;padding-top:0;border-top:0;
-  font-family:var(--sans);font-size:clamp(14px,1.22vw,19px);font-weight:500;line-height:1.85;
-  letter-spacing:.02em;color:var(--ink)}
 
 /* individual — each step follows the portfolio's actual sequence. The centre
    remains clear for the moving explanation while evidence is distributed on
    both sides as separate sketchbook fragments. */
-.individual-experiment{min-height:clamp(3000px,365vh,3400px)}
-.body-module-study{left:1%;top:1%;width:19%}
-.module-analogy{position:relative;width:100%;margin-left:0;aspect-ratio:1806/1266;
-  overflow:hidden;background:transparent}
-.module-analogy img{width:100%!important;height:112%!important;object-fit:contain;object-position:center top;
-  mix-blend-mode:multiply;clip-path:inset(2% 1.5% 14% 1.5%)}
+.individual-experiment{min-height:clamp(2600px,330vh,3050px)}
+/* these three carry the artist's own alpha now, so no inset crop, no multiply */
+.body-module-study{left:1%;top:.5%;width:28%}
+.module-analogy{position:relative;width:100%;margin-left:0;aspect-ratio:1500/1028;background:transparent}
+.module-analogy img{width:100%!important;height:100%!important;object-fit:contain}
 .body-module-study::after{content:none}
 
 /* The portfolio reads the body experiment as three consecutive plates:
    intact body → separated modules → a dense re-combination. Keep the
    sequence readable, but let each plate occupy a different side of the
    protected centre so the evidence feels dispersed around the text. */
-.body-group-study{right:1%;top:5.5%;width:18%}
-.body-parts-study{left:1%;top:15%;width:18%}
+.body-group-study{right:1%;top:3%;width:27%}
+.body-parts-study{left:1%;top:13%;width:27%}
 .body-pile-study{display:none}
-.body-sequence-plate{position:relative;height:auto;aspect-ratio:1504/1114;overflow:hidden;background:transparent}
-.body-sequence-plate img{position:absolute!important;inset:0!important;width:100%!important;height:112%!important;
-  object-fit:contain;object-position:center top;filter:none;mix-blend-mode:multiply;
-  clip-path:inset(2% 1.5% 14% 1.5%)}
+.body-sequence-plate{position:relative;height:auto;aspect-ratio:1400/946;background:transparent}
+.body-parts-study .body-sequence-plate{aspect-ratio:1400/926}
+.body-sequence-plate img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+  object-fit:contain;filter:none}
 .body-sequence-step figcaption{margin-top:.1rem}
 .body-pile-stage{position:relative;height:clamp(250px,22vw,340px);overflow:visible}
 .body-pile-stage img{position:absolute!important;width:var(--w)!important;height:auto!important;
@@ -688,85 +711,33 @@ p{margin:0}
 .fragment-stage img{position:absolute!important;height:auto!important;object-fit:contain;
   mix-blend-mode:normal;transform:none;transform-origin:center;
   filter:drop-shadow(0 2px 1px rgba(13,15,17,.12))}
-.body-combination-field{position:absolute;left:0;right:0;top:27%;height:21%;z-index:1;pointer-events:none}
+.body-combination-field{position:absolute;left:0;right:0;top:24.5%;height:29%;z-index:1;pointer-events:none}
 .body-combination-field img{position:absolute;width:var(--w);height:auto;object-fit:contain;
-  left:var(--x);right:auto;top:var(--y);transform:none;
-  filter:none;mix-blend-mode:multiply}
-.body-combination-field .frag-01{--x:2%;--y:2%;--w:12%}
-.body-combination-field .frag-02{--x:14%;--y:57%;--w:13%}
-.body-combination-field .frag-03{--x:1%;--y:77%;--w:14%}
-.body-combination-field .frag-04{--x:87%;--y:1%;--w:12%}
-.body-combination-field .frag-05{--x:73%;--y:57%;--w:13%}
-.body-combination-field .frag-06{--x:87%;--y:77%;--w:13%}
+  left:var(--x);right:auto;top:var(--y);transform:none;filter:none}
+.body-combination-field .frag-01{--x:1%;--y:0%;--w:15%}
+.body-combination-field .frag-02{--x:14%;--y:45%;--w:15%}
+.body-combination-field .frag-03{--x:0%;--y:85%;--w:16%}
+.body-combination-field .frag-04{--x:79%;--y:2%;--w:15%}
+.body-combination-field .frag-05{--x:84%;--y:46%;--w:15%}
+.body-combination-field .frag-06{--x:78%;--y:78%;--w:15%}
 
-/* Plaster is one material experiment: monochrome making photographs on the
-   left, followed by a cut-out, warm-colour result on the right. */
-.body-plaster-process{left:.5%;top:46%;width:22%}
-.casting-process{position:relative;width:100%;height:clamp(280px,22vw,350px);margin-left:0}
-.casting-process::before,.scan-grid::before,.print-result::before{content:none}
-.casting-process img{position:absolute!important;width:var(--pw,34%)!important;height:var(--ph,64%)!important;
-  left:var(--px,0)!important;top:var(--py,0)!important;object-fit:cover;
-  filter:grayscale(1) contrast(1.05);box-shadow:0 5px 14px rgba(13,15,17,.14);
-  transform:none;transform-origin:center;clip-path:none}
-.casting-process img:nth-child(1){--px:0%;--py:2%;--pw:48%;--ph:45%}
-.casting-process img:nth-child(2){--px:52%;--py:2%;--pw:48%;--ph:45%}
-.casting-process img:nth-child(3){--px:0%;--py:51%;--pw:48%;--ph:45%}
-.casting-process img:nth-child(4){--px:52%;--py:51%;--pw:48%;--ph:45%}
-.body-plaster-result{right:.5%;top:46.5%;width:22%}
-.plaster-result{position:relative;height:clamp(280px,22vw,350px);overflow:visible}
-.plaster-result img{position:absolute!important;left:0!important;top:-2%!important;width:100%!important;height:104%!important;
-  object-fit:contain;object-position:50% 47%;filter:none;
-  transform:none;clip-path:none;mix-blend-mode:normal}
-.plaster-result-asset{position:absolute;left:0;top:-2%;width:100%;height:104%;display:block;border:0}
-
-/* Material comparison: newspaper remains on the left, clay on the right.
-   Every photograph uses the irregular hand-cut crop visible in the portfolio. */
-.body-material-paper{left:1%;top:61.5%;width:21%}
-.body-material-clay{right:1%;top:62.5%;width:21%}
-.material-cutouts{position:relative;height:clamp(260px,21vw,330px);overflow:visible}
-.material-cutouts img{position:absolute!important;width:var(--mw)!important;height:var(--mh)!important;
-  left:var(--mx)!important;top:var(--my)!important;object-fit:contain;
-  transform:none;filter:drop-shadow(0 4px 6px rgba(13,15,17,.13))}
-.paper-cutouts img:nth-child(1){clip-path:polygon(8% 5%,32% 1%,55% 4%,60% 43%,75% 55%,96% 68%,98% 90%,89% 98%,58% 95%,39% 81%,18% 77%,6% 60%,3% 28%)}
-.paper-cutouts img:nth-child(2){clip-path:polygon(20% 4%,52% 0,80% 5%,92% 30%,95% 68%,84% 94%,65% 99%,37% 96%,19% 80%,6% 54%,5% 22%)}
-.paper-cutouts img:nth-child(3){clip-path:polygon(6% 4%,32% 0,53% 10%,59% 54%,78% 62%,97% 69%,96% 94%,79% 99%,53% 95%,33% 87%,18% 75%,5% 56%)}
-.clay-cutouts img:nth-child(1){clip-path:polygon(6% 10%,22% 2%,43% 2%,58% 14%,77% 27%,95% 42%,95% 78%,83% 94%,54% 98%,30% 92%,10% 75%,2% 44%)}
-.clay-cutouts img:nth-child(2){clip-path:polygon(28% 2%,58% 0,84% 7%,99% 24%,95% 50%,90% 72%,84% 94%,59% 98%,40% 93%,20% 81%,5% 59%,4% 30%,15% 10%)}
-.clay-cutouts img:nth-child(3){clip-path:polygon(4% 15%,23% 2%,48% 4%,68% 11%,95% 17%,99% 51%,96% 83%,76% 97%,47% 96%,22% 89%,5% 70%)}
-.paper-cutouts img:nth-child(1){--mx:-2%;--my:22%;--mw:46%;--mh:70%}
-.paper-cutouts img:nth-child(2){--mx:29%;--my:0%;--mw:38%;--mh:76%}
-.paper-cutouts img:nth-child(3){--mx:58%;--my:23%;--mw:43%;--mh:68%}
-.clay-cutouts img:nth-child(1){--mx:-2%;--my:42%;--mw:47%;--mh:42%}
-.clay-cutouts img:nth-child(2){--mx:31%;--my:0%;--mw:38%;--mh:79%}
-.clay-cutouts img:nth-child(3){--mx:58%;--my:43%;--mw:44%;--mh:41%}
-
-/* 3D printing is the final, selected method. The scan stays monochrome; only
-   the printed outcomes return to colour and are cropped as individual pieces. */
-.body-scan-study{left:.5%;top:76%;width:22%}
-.scan-grid{position:relative;width:100%;height:clamp(310px,26vw,390px);margin-left:0}
-.scan-grid img{position:absolute!important;filter:grayscale(1) contrast(1.03)}
-.scan-grid img:first-child{left:24%!important;top:14%!important;width:73%!important;height:75%!important;
-  object-fit:cover;opacity:.52;clip-path:none;
-  transform:none;box-shadow:0 7px 20px rgba(13,15,17,.13)}
-.scan-grid img:nth-child(2){left:0!important;top:5%!important;width:35%!important;height:44%!important;object-fit:cover;
-  clip-path:none;transform:none;opacity:.9}
-.scan-grid img:nth-child(3){left:34%!important;top:0%!important;width:34%!important;height:43%!important;object-fit:cover;
-  clip-path:none;transform:none;opacity:.9}
-.scan-grid img:nth-child(4){right:0!important;top:10%!important;width:35%!important;height:44%!important;object-fit:cover;
-  clip-path:none;transform:none;opacity:.9}
-.scan-grid img:nth-child(5){left:10%!important;top:52%!important;width:35%!important;height:44%!important;object-fit:cover;
-  clip-path:none;transform:none;opacity:.9}
-.body-print-study{right:.5%;top:76.5%;width:23%}
-.print-result{position:relative;height:clamp(360px,31vw,470px);overflow:visible}
-.print-result::before{content:none!important;background:none!important;box-shadow:none!important}
-.print-result-asset{position:absolute!important;width:var(--tw)!important;height:var(--th)!important;left:var(--tx)!important;top:var(--ty)!important;display:block;border:0;
-  filter:saturate(.82) contrast(1.03);z-index:1}
-.print-result-asset:nth-child(1){--tx:2%;--ty:19%;--tw:29%;--th:55%}
-.print-result-asset:nth-child(2){--tx:28%;--ty:2%;--tw:27%;--th:70%}
-.print-result-asset:nth-child(3){--tx:52%;--ty:22%;--tw:27%;--th:63%}
-.print-result-asset:nth-child(4){--tx:73%;--ty:0%;--tw:26%;--th:68%}
-.print-result-asset:nth-child(5){--tx:72%;--ty:54%;--tw:24%;--th:51%}
-.body-print-study .body-conclusion{margin:1rem 0 0;font-size:clamp(14px,.88vw,16px);line-height:1.75;color:var(--ink-2)}
+/* The four material experiments now use the artist's own cut-outs straight
+   from the portfolio: the plaster and 3D-print plates are his composites
+   (mono making-photographs with the colour results cut in over them), and
+   newspaper / clay keep the torn card backing he collaged them onto. */
+.body-plaster-block{left:.5%;top:56%;width:31%}
+.body-print-block{right:.5%;top:69%;width:31%}
+.body-plaster-block>img,.body-print-block>img{width:100%;height:auto;display:block;
+  box-shadow:0 7px 20px rgba(13,15,17,.14)}
+/* the four monochrome making frames used to ride along the right edge of the
+   plate, which kept the plate small — they run underneath it now */
+.proc-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(.3rem,.7vw,.55rem);margin-top:clamp(.35rem,.8vw,.6rem)}
+.proc-strip img{width:100%;height:auto;display:block;box-shadow:0 3px 9px rgba(13,15,17,.12)}
+.body-material-paper{left:2%;top:79%;width:24%}
+.body-material-clay{right:2%;top:57%;width:24%}
+.body-material-paper img,.body-material-clay img{width:100%;height:auto;display:block;
+  filter:drop-shadow(0 5px 9px rgba(13,15,17,.16))}
+.body-print-block .body-conclusion{margin:1rem 0 0;font-size:clamp(14px,.88vw,16px);line-height:1.75;color:var(--ink-2)}
 
 @media(max-width:999px){
   .source-board{position:relative;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
@@ -779,18 +750,12 @@ p{margin:0}
   #experiment .experiment-beat.s2 .beat-scene{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
     gap:1.4rem 1rem;align-items:start}
   #experiment .experiment-beat.s2 .life-route{grid-column:1/-1}
-  #experiment .experiment-beat.s2 .life-rule-note{grid-column:1/-1;width:min(100%,38rem)!important;
-    justify-self:end;margin-top:.2rem}
   .individual-experiment{min-height:0}
   .module-analogy{width:100%;margin-left:0;aspect-ratio:1806/1266}
   .body-sequence-plate{height:auto;aspect-ratio:1504/1114}
   .body-pile-stage{height:clamp(270px,58vw,410px)}
   .body-combination-field{position:relative;top:auto;height:clamp(720px,160vw,1050px)}
-  .casting-process{height:clamp(310px,76vw,480px)}
-  .plaster-result{height:clamp(330px,78vw,470px)}
-  .material-cutouts{height:clamp(330px,82vw,490px)}
-  .scan-grid{height:clamp(310px,88vw,460px);margin-top:-1rem}
-  .print-result{height:clamp(390px,96vw,560px)}
+  .body-plaster-block img,.body-print-block img{box-shadow:0 5px 14px rgba(13,15,17,.13)}
 }
 @media(max-width:600px){
   .source-board{padding:0}
@@ -801,11 +766,6 @@ p{margin:0}
   .body-sequence-plate{height:auto;aspect-ratio:1504/1114}
   .body-pile-stage{height:300px}
   .body-combination-field{height:690px}
-  .casting-process{height:330px}
-  .plaster-result{height:350px}
-  .material-cutouts{height:350px}
-  .scan-grid{height:380px}
-  .print-result{height:410px}
 }
 
 /* The individual experiment keeps a quiet reading column on small screens,
@@ -829,17 +789,8 @@ p{margin:0}
     grid-column:1/-1;position:relative;left:auto;right:auto;top:auto;width:100%;
     height:clamp(290px,74vw,390px);margin:.1rem 0;z-index:0
   }
-  #experiment .individual-experiment .body-plaster-process{grid-column:1}
-  #experiment .individual-experiment .body-plaster-result{grid-column:2}
   #experiment .individual-experiment .body-material-paper{grid-column:1}
   #experiment .individual-experiment .body-material-clay{grid-column:2}
-  #experiment .individual-experiment .body-scan-study{grid-column:1/-1;max-width:38rem;justify-self:center}
-  #experiment .individual-experiment .body-print-study{grid-column:1/-1;max-width:38rem;justify-self:center}
-  #experiment .individual-experiment .casting-process{height:clamp(260px,62vw,360px)}
-  #experiment .individual-experiment .plaster-result{height:clamp(260px,62vw,360px)}
-  #experiment .individual-experiment .material-cutouts{height:clamp(250px,59vw,340px)}
-  #experiment .individual-experiment .scan-grid{height:clamp(280px,70vw,390px);margin-top:0}
-  #experiment .individual-experiment .print-result{height:clamp(330px,80vw,450px)}
   #experiment .individual-experiment .body-combination-field .frag-01{--x:2%;--y:2%;--w:29%}
   #experiment .individual-experiment .body-combination-field .frag-02{--x:35%;--y:4%;--w:29%}
   #experiment .individual-experiment .body-combination-field .frag-03{--x:68%;--y:2%;--w:29%}
@@ -852,12 +803,8 @@ p{margin:0}
   #experiment .individual-experiment .body-module-study,
   #experiment .individual-experiment .body-group-study,
   #experiment .individual-experiment .body-parts-study,
-  #experiment .individual-experiment .body-plaster-process,
-  #experiment .individual-experiment .body-plaster-result,
   #experiment .individual-experiment .body-material-paper,
   #experiment .individual-experiment .body-material-clay,
-  #experiment .individual-experiment .body-scan-study,
-  #experiment .individual-experiment .body-print-study{grid-column:1;max-width:100%;justify-self:stretch}
   #experiment .individual-experiment .body-combination-field{grid-column:1;height:clamp(280px,92vw,370px)}
 }
 
@@ -884,34 +831,20 @@ p{margin:0}
     width:calc(100% - 2rem)!important;max-width:24rem!important;
     margin-inline:1rem!important;box-sizing:border-box
   }
-  #experiment .individual-experiment .body-module-study,
-  #experiment .individual-experiment .body-scan-study,
-  #experiment .individual-experiment .body-print-study{
+  #experiment .individual-experiment .body-module-study{
     max-width:22rem;justify-self:center
   }
   #experiment .individual-experiment .body-group-study,
   #experiment .individual-experiment .body-parts-study{
     max-width:19rem;justify-self:center
   }
-  #experiment .individual-experiment .body-plaster-process,
-  #experiment .individual-experiment .body-plaster-result,
   #experiment .individual-experiment .body-material-paper,
   #experiment .individual-experiment .body-material-clay{
     max-width:20.5rem;justify-self:center
   }
-  #experiment .individual-experiment .body-module-study,
-  #experiment .individual-experiment .body-scan-study,
-  #experiment .individual-experiment .body-print-study{max-width:22rem;justify-self:center}
+  #experiment .individual-experiment .body-module-study{max-width:22rem;justify-self:center}
   #experiment .individual-experiment .module-analogy,
-  #experiment .individual-experiment .body-sequence-plate,
-  #experiment .individual-experiment .casting-process,
-  #experiment .individual-experiment .plaster-result,
-  #experiment .individual-experiment .material-cutouts,
-  #experiment .individual-experiment .scan-grid,
-  #experiment .individual-experiment .print-result{width:100%;box-sizing:border-box}
-  #experiment .individual-experiment .plaster-result-asset{
-    left:12%!important;top:4%!important;width:76%!important;height:88%!important
-  }
+  #experiment .individual-experiment .body-sequence-plate{width:100%;box-sizing:border-box}
   #experiment .individual-experiment .body-combination-field{overflow:hidden}
   #experiment .individual-experiment .body-combination-field .frag-01{--x:4%;--y:2%;--w:26%}
   #experiment .individual-experiment .body-combination-field .frag-02{--x:37%;--y:4%;--w:26%}
@@ -919,21 +852,8 @@ p{margin:0}
   #experiment .individual-experiment .body-combination-field .frag-04{--x:8%;--y:54%;--w:26%}
   #experiment .individual-experiment .body-combination-field .frag-05{--x:40%;--y:57%;--w:27%}
   #experiment .individual-experiment .body-combination-field .frag-06{--x:72%;--y:54%;--w:26%}
-  #experiment .individual-experiment .paper-cutouts img:nth-child(1){--mx:0%;--my:24%;--mw:43%;--mh:66%}
-  #experiment .individual-experiment .paper-cutouts img:nth-child(2){--mx:30%;--my:2%;--mw:34%;--mh:70%}
-  #experiment .individual-experiment .paper-cutouts img:nth-child(3){--mx:57%;--my:25%;--mw:38%;--mh:64%}
-  #experiment .individual-experiment .clay-cutouts img:nth-child(1){--mx:0%;--my:43%;--mw:40%;--mh:40%}
-  #experiment .individual-experiment .clay-cutouts img:nth-child(2){--mx:30%;--my:2%;--mw:34%;--mh:72%}
-  #experiment .individual-experiment .clay-cutouts img:nth-child(3){--mx:58%;--my:43%;--mw:38%;--mh:39%}
-  #experiment .individual-experiment .print-result-asset:nth-child(1){--tx:4%;--ty:7%;--tw:25%;--th:42%}
-  #experiment .individual-experiment .print-result-asset:nth-child(2){--tx:28%;--ty:0%;--tw:25%;--th:52%}
-  #experiment .individual-experiment .print-result-asset:nth-child(3){--tx:55%;--ty:6%;--tw:24%;--th:45%}
-  #experiment .individual-experiment .print-result-asset:nth-child(4){--tx:12%;--ty:52%;--tw:25%;--th:45%}
-  #experiment .individual-experiment .print-result-asset:nth-child(5){--tx:62%;--ty:49%;--tw:25%;--th:46%}
   #experiment .individual-experiment .body-sequence-plate img,
-  #experiment .individual-experiment .body-combination-field img,
-  #experiment .individual-experiment .material-cutouts img,
-  #experiment .individual-experiment .print-result-asset{filter:none!important}
+  #experiment .individual-experiment .body-combination-field img{filter:none!important}
 }
 
 /* ---------- 06 plan B ---------- */
@@ -965,11 +885,6 @@ p{margin:0}
 /* ---------- 07 fabrication ---------- */
 .fab{background:var(--paper-2)}
 .fab-lead{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(1.8rem,4vw,4rem);align-items:start}
-.specs{margin-top:clamp(2.6rem,6vh,4rem);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(1.4rem,3vw,3rem);border:0}
-.specs div{padding:0;border:0}
-
-.specs dt{font-family:var(--mono);font-size:14px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);margin-bottom:.55rem}
-.specs dd{margin:0;font-family:var(--mono);font-size:var(--type-meta);font-weight:700;line-height:1.35;color:var(--ink)}
 .fab-board{margin-top:clamp(2.2rem,4vw,3rem);display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(1.2rem,2.4vw,2.4rem);align-items:start}
 .fab-cell{background:none;border:0;display:flex;flex-direction:column}
 .fab-cell img{width:100%;height:auto;object-fit:contain;padding:0}
@@ -982,12 +897,82 @@ p{margin:0}
 .sheet figure:first-child{grid-column:span 2;aspect-ratio:2/1}
 .sheet img{width:100%;height:100%;object-fit:cover}
 
-.sim-board{margin-top:clamp(2.4rem,5vh,4rem);display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(.8rem,1.6vw,1.4rem);align-items:start}
-.sim-hero{margin:0}
-.sim-hero img{width:100%;height:auto}
-.sim-side{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.8rem,1.6vw,1.4rem)}
-.sim-side img{width:100%;height:auto}
-@media(max-width:760px){.sim-board{grid-template-columns:1fr}}
+/* ── SIMULATION — Cover Flow, the same component as 海 ── */
+.coverflow{position:relative;width:100vw;margin:clamp(1.6rem,3vh,2.4rem) 0 0 calc(50% - 50vw);
+  height:clamp(400px,calc(40vw + 3rem),620px);touch-action:pan-y;overscroll-behavior-x:contain;
+  user-select:none;-webkit-user-select:none;cursor:grab;isolation:isolate;outline:none;overflow:hidden}
+.coverflow::before{content:"";position:absolute;z-index:0;left:12%;right:12%;top:53%;height:26%;border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(13,15,17,.15),rgba(13,15,17,.05) 42%,transparent 72%);filter:blur(22px);pointer-events:none}
+.coverflow.is-dragging{cursor:grabbing}
+.cf-stage{position:relative;z-index:1;width:100%;height:100%}
+.cf-item{position:absolute;top:44%;left:50%;width:clamp(300px,42vw,720px);transform:translate(-50%,-50%);
+  transition:transform .56s cubic-bezier(.22,.74,.25,1),filter .48s ease,opacity .36s ease;
+  cursor:pointer;will-change:transform,opacity,filter;backface-visibility:hidden}
+.coverflow.is-dragging .cf-item,.coverflow.is-animating .cf-item{transition:filter .32s ease}
+.coverflow.is-initializing .cf-item{transition:none}
+.cf-card{position:relative;width:100%;line-height:0;background:var(--white);
+  box-shadow:0 20px 40px -20px rgba(13,15,17,.5);transition:box-shadow .45s ease}
+.cf-card::after{content:"";position:absolute;inset:0;border:1px solid rgba(13,15,17,.1);pointer-events:none}
+.cf-card>img{width:100%;height:auto;display:block}
+.cf-item:not(.active){filter:brightness(.72) saturate(.78)}
+.cf-item.active .cf-card{box-shadow:0 32px 54px -22px rgba(13,15,17,.55)}
+.cf-status{position:absolute;z-index:5;left:50%;bottom:3%;display:flex;align-items:center;gap:.55rem;transform:translateX(-50%);
+  font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--muted);pointer-events:none}
+.cf-status .current{color:var(--ink);font-weight:700}
+.car-dots{display:flex;gap:9px;justify-content:center;margin-top:.9rem;flex-wrap:wrap}
+.car-dot{width:7px;height:7px;border-radius:50%;background:var(--rule);border:0;cursor:pointer;padding:0;transition:background .2s,transform .2s}
+.car-dot.on{background:var(--ink);transform:scale(1.35)}
+
+/* ── EXHIBITION — scroll-driven stacked frames, as in 我思故我在 ── */
+.chapter-story{position:relative;height:var(--chapter-height,220vh);margin-top:clamp(2rem,4vw,3rem)}
+.chapter-sticky{position:sticky;top:var(--nav-h,56px);height:calc(100svh - var(--nav-h,56px));overflow:hidden}
+.chapter-stage{position:absolute;inset:0}
+.chapter-frame{position:absolute;left:50%;top:48%;display:block;padding:0;border:0;background:none;cursor:zoom-in;
+  /* --frame-ratio is written from the image's natural size, so the height is
+     what gets bounded and a portrait simply becomes a narrower frame */
+  width:min(80vw,calc((100svh - var(--nav-h,56px) - 5rem)*var(--frame-ratio,1.55)),1180px);
+  visibility:hidden;opacity:0;transform:translate(-50%,-50%);transform-origin:center;pointer-events:none;
+  backface-visibility:hidden;will-change:transform,opacity}
+.chapter-frame img{display:block;width:100%;height:auto;box-shadow:0 24px 60px -26px rgba(13,15,17,.55)}
+.chapter-frame.is-active{visibility:visible;opacity:1;z-index:500;pointer-events:auto}
+.frame-counter{position:absolute;z-index:600;left:50%;bottom:2.5%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--muted)}
+.frame-counter b{color:var(--ink);font-weight:700}
+
+/* ── FABRICATION — a field you drag through, endless in both axes ── */
+/* horizontal only — a vertical swipe still scrolls the page */
+.flowfield{--ffk:1;position:relative;width:100vw;margin:clamp(1.4rem,3vh,2.2rem) 0 0 calc(50% - 50vw);
+  height:clamp(560px,80vh,820px);overflow:hidden;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.flowfield.is-dragging{cursor:grabbing}
+.ff-plane{position:absolute;left:0;top:0;will-change:transform}
+.ff-tile{position:absolute;left:0;top:0;width:6750px;height:760px;transform-origin:0 0}
+.ff-item{position:absolute;left:var(--x);top:var(--y);width:var(--w);padding:0;border:0;background:none;
+  cursor:inherit;line-height:0;transition:opacity .4s ease}
+.ff-item img{width:100%;height:auto;display:block;filter:grayscale(1) contrast(1.03);
+  box-shadow:0 10px 26px -14px rgba(13,15,17,.5);pointer-events:none}
+/* the construction drawing is line art on paper — no photo treatment */
+.ff-item.is-plan img{filter:none;background:#fff;box-shadow:0 12px 30px -14px rgba(13,15,17,.42)}
+.ff-hint{position:absolute;z-index:5;left:50%;bottom:1.2rem;transform:translateX(-50%);
+  font-size:13px;letter-spacing:2px;color:var(--muted);pointer-events:none;background:var(--paper);padding:.35rem .7rem}
+@media(max-width:760px){
+  .coverflow{height:320px}.cf-item{top:44%;width:clamp(230px,74vw,320px)}
+  .chapter-story{height:auto!important;margin-top:clamp(1.5rem,6vw,2.2rem)}
+  .chapter-sticky{position:relative;top:auto;height:auto;overflow:visible}
+  .chapter-stage{position:relative;inset:auto;display:flex;gap:.75rem;width:100%;overflow-x:auto;
+    padding:0 0 2.7rem;scroll-snap-type:x mandatory;scroll-padding-inline:0;overscroll-behavior-x:contain;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .chapter-stage::-webkit-scrollbar{display:none}
+  .chapter-frame,.chapter-frame.is-active{position:relative;left:auto;top:auto;flex:0 0 calc(100% - 1.25rem);
+    width:auto;visibility:visible!important;opacity:1!important;transform:none!important;pointer-events:auto!important;
+    scroll-snap-align:start;scroll-snap-stop:always}
+  .chapter-frame img{width:100%;height:clamp(250px,72vw,390px);object-fit:contain;background:rgba(255,255,255,.22);
+    box-shadow:0 14px 34px -22px rgba(13,15,17,.55)}
+  .frame-counter{display:block;left:auto;right:.55rem;bottom:.55rem;transform:none;padding:.28rem .5rem;
+    background:rgba(233,236,238,.9);backdrop-filter:blur(6px);font-size:12px}
+  /* the run is authored at desktop scale — shrink it so a phone sees a
+     handful of pictures at once instead of one cropped one */
+  .flowfield{height:440px;--ffk:.52}
+}
 
 /* ---------- 08 exhibition ---------- */
 .exh{background:var(--paper)}
@@ -1027,8 +1012,6 @@ p{margin:0}
 @media(max-width:980px){
   .scale-body,.plana-grid,.exp-grid,.fab-lead{grid-template-columns:1fr;gap:2rem}
   .layers{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .specs{grid-template-columns:repeat(2,minmax(0,1fr));border-bottom:0}
-  .specs div{border-bottom:1px solid var(--rule);padding-right:1rem}
   .fab-board{grid-template-columns:1fr}
   .sheet{grid-template-columns:repeat(4,minmax(0,1fr))}
   .gal{columns:3 170px}
@@ -1040,10 +1023,335 @@ p{margin:0}
   .hero-title{font-size:clamp(3.2rem,19vw,6rem);line-height:.86}
   .finds,.layers{grid-template-columns:1fr}
   .verdict{grid-template-columns:1fr;gap:1.4rem}
-  .specs{grid-template-columns:1fr}
   .sheet{grid-template-columns:repeat(3,minmax(0,1fr))}
   .derive div{flex-direction:column;align-items:flex-start;gap:.7rem}
   .gal{columns:2 130px}
+}
+
+/* ===========================================================================
+   MOBILE EDITION
+   The desktop composition is deliberately left untouched.  Below 760px the
+   project becomes a separate reading edition: copy establishes the sequence,
+   evidence follows in semantic groups, and only the two relationship maps
+   retain horizontal movement.
+   ========================================================================== */
+@media(max-width:760px){
+  :root{
+    --nav-h:52px;
+    --gutter:20px;
+    --type-meta:12px;
+    --type-caption:13px;
+    --type-body:15px;
+    --type-subhead:19px;
+  }
+
+  html,body{width:100%;max-width:100%;overflow-x:clip}
+  .site-nav{
+    padding-left:max(18px,env(safe-area-inset-left));
+    padding-right:max(18px,env(safe-area-inset-right))
+  }
+  .nav-ttl{display:none}
+  .wrap{width:100%;max-width:none;padding-inline:var(--gutter)}
+  .sec{padding:4.5rem 0}
+  .sec-tight{padding:3.5rem 0}
+  .section-heading{align-items:flex-start;margin-bottom:2rem;padding-bottom:.8rem}
+  .mono,.beat-title,.scale-no{font-size:12px;letter-spacing:1.55px}
+  .h-sec{font-size:clamp(2rem,9vw,2.7rem);line-height:1.12}
+  .h-sub{font-size:clamp(1.42rem,6.8vw,1.92rem);line-height:1.26}
+  .body-t,.copy{font-size:15px;line-height:1.78}
+  .lead{font-size:17px;line-height:1.65}
+  .body-t,.side-note p,.premise-lead,.lede,.network-insight p,.layer p,
+  .experiment-intro-copy p,.body-conclusion,.stamp p,.deriv p,.diagram-copy p,
+  .inspiration-copy p,.finds p,.plana-copy p,.spec-copy p{text-align:left}
+  .cap,.image-cap,.source-board>figcaption,.discipline-figure figcaption{
+    font-size:13px!important;line-height:1.55!important;letter-spacing:.15px!important
+  }
+
+  /* Opening: one calm screen, not a scaled desktop billboard. */
+  .hero{min-height:calc(86svh - var(--nav-h))}
+  .hero-inner{padding-inline:var(--gutter);padding-bottom:3.6rem}
+  .hero-ttl,.hero-title{
+    white-space:normal!important;font-size:clamp(3rem,17vw,4.8rem)!important;
+    line-height:.95!important;overflow-wrap:anywhere
+  }
+  .hero-kicker,.hero-sub{font-size:11px;letter-spacing:2px}
+  .hero-scroll{display:none}
+
+  /* Concept and metadata form one continuous chapter on a phone. */
+  .concept-sheet{padding:4.5rem 0 2.5rem}
+  #question{padding-bottom:2.5rem}
+  #research{padding-top:2.5rem;padding-bottom:3.5rem}
+  .concept-main{display:block}
+  .premise-lead{max-width:none;font-size:clamp(1.6rem,8vw,2.15rem);line-height:1.35}
+  .concept-copy{margin-top:1.2rem}
+  .inspiration-panel{margin-top:1.6rem}
+  .inspiration-panel summary{min-height:48px}
+  .inspiration-body-inner{padding-inline:0}
+  .project-meta{grid-template-columns:1fr;gap:0;margin-top:2rem}
+  .project-meta>div{
+    display:grid;grid-template-columns:minmax(6.3rem,.42fr) 1fr;gap:.7rem;
+    padding:.8rem 0;border-bottom:1px solid var(--rule)
+  }
+  .project-meta>div:last-child{border-bottom:0}
+
+  /* Every research beat starts with its explanation; evidence is then read in
+     compact contact sheets with captions kept close to the relevant image. */
+  .beat,.beat-tall,.beat-xtall,.background-study,.s3.beat-xtall,
+  .experiment-beat.s1,.experiment-beat.s2,.individual-experiment{
+    min-height:0;margin-top:4.25rem
+  }
+  #research .beat,#experiment .experiment-beat{display:flex;flex-direction:column}
+  #research .beat .carriage,#experiment .experiment-beat .carriage{
+    order:0;width:100%;margin:0 0 1.75rem;padding-inline:var(--gutter)
+  }
+  #research .beat .beat-scene,#experiment .experiment-beat .beat-scene{order:1}
+  .beat-scene{
+    position:static;display:grid;margin:0;padding-inline:var(--gutter);
+    gap:1.6rem .9rem;pointer-events:auto
+  }
+  .beat-scene>img,
+  .research-cluster>img,
+  .discipline-figure>img,
+  .body-module-study .module-analogy>img,
+  .body-material-paper>img,
+  .body-material-clay>img,
+  .body-plaster-block>img,
+  .body-print-block>img{position:static;width:100%;max-width:100%}
+  .beat-scene figcaption,.beat-scene .cap,.beat-scene .image-cap{
+    position:static;width:100%;margin:.35rem 0 0
+  }
+  .background-study .beat-scene{
+    grid-template-columns:1fr;justify-content:stretch;gap:1.15rem
+  }
+  .background-study .beat-scene>img{width:100%;max-width:none}
+  .background-study .beat-scene .cap{width:100%;margin:-.75rem 0 .35rem}
+  .research-cluster,.research-cluster.trio{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;
+    width:100%;margin:0 0 1.3rem
+  }
+  .research-cluster.trio{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .research-cluster img,.research-cluster .image-cap{width:100%}
+  .research-cluster .cluster-wide,.research-cluster .cluster-note,
+  .research-cluster .side-note,.research-cluster .scene-copy{
+    grid-column:1/-1;width:100%;margin:.15rem 0 .55rem
+  }
+  .research-cluster .image-cap{margin:-.35rem 0 .35rem}
+  .side-note{position:static;width:100%;margin:.3rem 0 1rem}
+
+  /* Individual research is its own evidence page on mobile: the main body
+     collage establishes the idea, then the three discipline examples form a
+     compact contact sheet instead of inheriting the long desktop column. */
+  #individual-research .beat-scene{
+    grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;
+    gap:1.75rem .9rem
+  }
+  #individual-research .body-collage,
+  #individual-research .side-note{grid-column:1/-1}
+  #individual-research .body-collage{width:100%;margin:0}
+  #individual-research .discipline-figure{
+    width:100%!important;margin:0;align-self:start
+  }
+  #individual-research .discipline-figure:nth-of-type(3){grid-column:1/-1}
+  #individual-research .discipline-figure:nth-of-type(3)>img{
+    width:min(100%,520px);margin-inline:auto
+  }
+  #individual-research .discipline-figure>img{max-height:none}
+  #individual-research .body-finding{padding-top:0;border-top:0}
+
+  /* The semantic mobile diagram keeps the same loop as desktop; it simply
+     turns the horizontal sentence into a vertical one. */
+  .diagram-band{margin-top:2.4rem;padding-inline:var(--gutter);gap:1.25rem}
+  .diagram-band>.interaction-diagram{width:min(100%,430px);justify-self:center}
+  .interaction-diagram-mobile{display:block}
+  .interaction-diagram-desktop{display:none}
+  .diagram-band p{font-size:14px;line-height:1.75}
+
+  /* These are relationship canvases, so horizontal movement remains useful.
+     They start at the first node, use readable source scale, and never push
+     ordinary paragraphs outside the viewport. */
+  .mindmap-cue{margin:.7rem auto .15rem;font-size:11px}
+  .wide-band:has(.mindmap){
+    width:100%;max-width:none;margin-top:1rem;padding:0 var(--gutter) .5rem;
+    scroll-padding-left:var(--gutter)
+  }
+  .mindmap,.wide-band .mindmap{width:1500px;max-width:none;margin:0}
+  .deriv{margin-top:3.8rem;padding-inline:var(--gutter)}
+  .deriv .section-heading{margin-bottom:1.35rem}
+  .deriv-flow{scroll-padding-left:0}
+  .deriv-network{min-width:900px}
+
+  /* Plan A and the transition into experiments read as stacked editorial
+     blocks rather than compressed desktop columns. */
+  .plana-grid{grid-template-columns:1fr;gap:1.75rem}
+  .plana-grid .plate img{max-height:none}
+  .experiment-intro-layout{grid-template-columns:1fr;gap:2rem}
+  .iteration-feedbacks ol{grid-template-columns:1fr;gap:.7rem}
+  .iteration-feedbacks ol::after,.iteration-feedbacks li::after,
+  .iteration-junction,.iteration-methods::before,.iteration-method::before{display:none}
+  .iteration-methods{grid-template-columns:1fr;gap:1rem;padding-top:0}
+  .iteration-layer-grid-graphic{grid-template-columns:1fr;gap:1rem}
+
+  /* Society: six independent observations in a compact two-column field.
+     Nothing is positioned against a moving text corridor on mobile. */
+  #experiment .experiment-beat.s1 .beat-scene{
+    grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;
+    gap:2.25rem .9rem
+  }
+  #experiment .experiment-beat .source-board{
+    position:relative!important;inset:auto!important;width:100%!important;
+    max-width:none!important;margin:0!important;transform:none!important
+  }
+  #experiment .experiment-beat.s1 .society-symbols{grid-column:1/-1}
+  #experiment .experiment-beat.s1 .society-proof{width:100%!important}
+  .society-symbols .symbol-stage{max-width:26rem;margin-inline:auto}
+  .society-proof .evidence-label{font-size:12px;line-height:1.25}
+  .proof-time .evidence-label{bottom:-1.15rem}
+
+  /* Life: explicit rules, implicit rules, then the route distilled from both.
+     A slight left/right rhythm remains, but alignment is never forced. */
+  #experiment .experiment-beat.s2 .beat-scene{
+    grid-template-columns:1fr;gap:2.2rem
+  }
+  #experiment .experiment-beat.s2 .life-explicit,
+  #experiment .experiment-beat.s2 .life-implicit,
+  #experiment .experiment-beat.s2 .life-route{
+    width:min(100%,520px)!important;max-width:520px!important
+  }
+  #experiment .experiment-beat.s2 .life-explicit{justify-self:start}
+  #experiment .experiment-beat.s2 .life-implicit{justify-self:end}
+  #experiment .experiment-beat.s2 .life-route{grid-column:1;justify-self:start}
+  .sign-group-label{font-size:12px}
+
+  /* Individual: the phone edition explicitly reads intact body → separated
+     modules → recombination, followed by four material decisions. */
+  #experiment .individual-experiment .beat-scene{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:2.35rem 1rem;align-items:start;margin:0;padding-inline:var(--gutter);
+    overflow:visible
+  }
+  #experiment .individual-experiment .source-board{
+    width:100%!important;max-width:none!important;margin:0!important;
+    justify-self:stretch!important
+  }
+  #experiment .individual-experiment .body-module-study{
+    grid-column:1/-1;max-width:none;justify-self:stretch
+  }
+  #experiment .individual-experiment .body-group-study{grid-column:1}
+  #experiment .individual-experiment .body-parts-study{grid-column:2}
+  #experiment .individual-experiment .body-pile-study{
+    display:block;grid-column:1/-1;width:100%!important
+  }
+  #experiment .individual-experiment .body-combination-field{display:none!important}
+  #experiment .individual-experiment .body-plaster-block{grid-column:1/-1}
+  #experiment .individual-experiment .body-material-paper{grid-column:1}
+  #experiment .individual-experiment .body-material-clay{grid-column:2}
+  #experiment .individual-experiment .body-print-block{grid-column:1/-1}
+  #experiment .individual-experiment .body-module-study{order:1}
+  #experiment .individual-experiment .body-group-study{order:2}
+  #experiment .individual-experiment .body-parts-study{order:3}
+  #experiment .individual-experiment .body-pile-study{order:4}
+  #experiment .individual-experiment .body-material-paper{order:5}
+  #experiment .individual-experiment .body-material-clay{order:6}
+  #experiment .individual-experiment .body-plaster-block{order:7}
+  #experiment .individual-experiment .body-print-block{order:8}
+  #experiment .individual-experiment .module-analogy,
+  #experiment .individual-experiment .body-sequence-plate{
+    width:100%;height:auto;box-sizing:border-box
+  }
+  #experiment .individual-experiment .body-sequence-plate{aspect-ratio:1400/946}
+  #experiment .individual-experiment .body-pile-stage{
+    height:clamp(290px,76vw,410px);overflow:visible
+  }
+  #experiment .individual-experiment .body-plaster-block>img,
+  #experiment .individual-experiment .body-print-block>img,
+  #experiment .individual-experiment .proc-strip img{
+    box-shadow:none;filter:none
+  }
+  #experiment .individual-experiment .proc-strip{
+    grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem;margin-top:.7rem
+  }
+  #experiment .individual-experiment .body-material-paper img,
+  #experiment .individual-experiment .body-material-clay img{filter:none}
+  #experiment .individual-experiment .body-plaster-block,
+  #experiment .individual-experiment .body-print-block{display:grid;gap:10px}
+  #experiment .individual-experiment .body-plaster-block .proc-strip,
+  #experiment .individual-experiment .body-print-block .proc-strip{order:1}
+  #experiment .individual-experiment .body-plaster-block>img,
+  #experiment .individual-experiment .body-print-block>img{order:2}
+  #experiment .individual-experiment .body-plaster-block>figcaption,
+  #experiment .individual-experiment .body-print-block>figcaption{order:3}
+  #experiment .individual-experiment .body-print-block .body-conclusion{order:4}
+  #experiment .individual-experiment .body-conclusion{
+    font-size:14px!important;line-height:1.75;margin-top:.85rem
+  }
+  #experiment .result{margin-top:1rem;padding-top:0;border-top:0}
+
+  .layers{grid-template-columns:1fr;gap:2.5rem}
+  .layer{max-width:32rem}
+
+  /* Fabrication keeps a tactile swipe, but its canvases fit the phone before
+     the visitor starts dragging. */
+  .fab-lead{grid-template-columns:1fr;gap:1rem}
+  .coverflow{width:100%;margin-left:0;height:300px}
+  .cf-item{top:44%;width:min(76vw,300px)}
+  .flowfield{width:100%;margin-left:0;height:420px;--ffk:.48}
+  .ff-hint{font-size:12px;letter-spacing:1px;white-space:nowrap}
+
+  /* Exhibition is a clean swipeable strip.  The counter sits below it instead
+     of becoming an oversized overlay when the sticky desktop stage collapses. */
+  .chapter-story{height:auto!important;margin-top:1.75rem}
+  .chapter-sticky{position:relative;top:auto;height:auto;overflow:visible}
+  .chapter-stage{
+    position:relative;inset:auto;display:flex;gap:.75rem;width:100%;overflow-x:auto;
+    padding:0 0 2.7rem;scroll-snap-type:x mandatory;scroll-padding-inline:0;
+    overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none
+  }
+  .chapter-stage::-webkit-scrollbar{display:none}
+  .chapter-frame,.chapter-frame.is-active{
+    position:relative;left:auto;top:auto;flex:0 0 calc(100% - .75rem);width:auto;
+    visibility:visible!important;opacity:1!important;transform:none!important;
+    pointer-events:auto!important;scroll-snap-align:start;scroll-snap-stop:always
+  }
+  .chapter-frame img{
+    width:100%;height:min(68vw,330px);object-fit:contain;
+    background:rgba(255,255,255,.18);box-shadow:0 12px 28px -22px rgba(13,15,17,.48)
+  }
+  .frame-counter{
+    position:relative!important;left:auto!important;right:auto!important;
+    bottom:auto!important;transform:none!important;display:block!important;
+    width:max-content;margin:-2.05rem .45rem 0 auto;padding:.22rem .42rem;
+    background:rgba(233,236,238,.92);font-size:12px;letter-spacing:1.2px
+  }
+
+  .gal{columns:2 130px;column-gap:.75rem}
+  .film-bar{padding-inline:var(--gutter);align-items:flex-start;flex-wrap:wrap}
+  .film-bar span{font-size:12px}
+  .foot .wrap{align-items:flex-start}
+  .foot-meta{font-size:11px;line-height:1.6}
+}
+
+@media(max-width:440px){
+  :root{--gutter:18px}
+  .research-cluster{grid-template-columns:1fr}
+  .research-cluster.trio{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #experiment .experiment-beat.s1 .beat-scene{grid-template-columns:1fr}
+  #experiment .experiment-beat.s1 .society-symbols{grid-column:1}
+  #experiment .individual-experiment .beat-scene{grid-template-columns:1fr}
+  #experiment .individual-experiment .body-module-study,
+  #experiment .individual-experiment .body-group-study,
+  #experiment .individual-experiment .body-parts-study,
+  #experiment .individual-experiment .body-pile-study,
+  #experiment .individual-experiment .body-plaster-block,
+  #experiment .individual-experiment .body-material-paper,
+  #experiment .individual-experiment .body-material-clay,
+  #experiment .individual-experiment .body-print-block{grid-column:1}
+  #experiment .individual-experiment .body-pile-stage{height:clamp(285px,94vw,380px)}
+  #individual-research .beat-scene{grid-template-columns:1fr}
+  #individual-research .body-collage,
+  #individual-research .side-note,
+  #individual-research .discipline-figure,
+  #individual-research .discipline-figure:nth-of-type(3){grid-column:1}
+  .project-meta>div{grid-template-columns:5.7rem 1fr}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -1144,7 +1452,7 @@ p{margin:0}
           <img class="print" src="net-twitter.jpg" alt="" width="564" height="402" style="--l:1%;--t:2%;--w:19%;--z:1" loading="lazy">
           <img src="dia-links.webp" alt="" width="560" height="433" style="--l:21%;--t:6%;--w:10%;--z:2" loading="lazy">
           <span class="cap image-cap" style="--l:1%;--w:19%" data-under="net-twitter.jpg" data-i18n="socImg1"></span>
-          <span class="cap image-cap" style="--l:21%;--w:12%" data-under="dia-links.webp" data-i18n="socImg2"></span>
+          <span class="cap image-cap" style="--l:21%;--w:10%" data-under="dia-links.webp" data-i18n="socImg2"></span>
           <div class="side-note" style="--l:1%;--t:28%;--w:16%"><h4 data-i18n="socialTag1"></h4><p data-i18n="find1Copy"></p></div>
         </div>
         <div class="research-cluster">
@@ -1158,7 +1466,7 @@ p{margin:0}
           <img class="print" src="net-cloud.jpg" alt="" width="588" height="663" style="--l:2%;--t:58%;--w:18%;--z:1" loading="lazy">
           <img src="dia-power.webp" alt="" width="416" height="536" style="--l:21%;--t:63%;--w:9%;--z:2" loading="lazy">
           <span class="cap image-cap" style="--l:2%;--w:18%" data-under="net-cloud.jpg" data-i18n="socImg5"></span>
-          <span class="cap image-cap" style="--l:21%;--w:13%" data-under="dia-power.webp" data-i18n="socImg6"></span>
+          <span class="cap image-cap" style="--l:21%;--w:10%" data-under="dia-power.webp" data-i18n="socImg6"></span>
           <p class="cap scene-copy cluster-note" style="--l:2%;--w:27%" data-under="net-cloud.jpg" data-gap="58" data-i18n="socialPowerCopy"></p>
         </div>
       </div>
@@ -1273,6 +1581,11 @@ p{margin:0}
       <path d="M1 1L8 4.5L1 8" fill="none" stroke="#202020" stroke-width="1.8"/>
     </marker>
   </defs>
+
+  <!-- Mobile keeps the same logic as the desktop diagram: society shapes a
+       person, the person is understood through the body/gene field, and a
+       second person feeds back into society.  The generous vertical spacing
+       is intentional so the routes never run through labels. -->
   <g fill="#202020" aria-hidden="true">
     <circle cx="94" cy="105" r="12"/><circle cx="126" cy="91" r="14"/><circle cx="160" cy="87" r="10"/>
     <circle cx="194" cy="91" r="13"/><circle cx="226" cy="104" r="11"/><circle cx="254" cy="122" r="13"/>
@@ -1284,17 +1597,24 @@ p{margin:0}
     <circle cx="187" cy="198" r="14"/><circle cx="216" cy="216" r="11"/>
     <circle cx="110" cy="232" r="13"/><circle cx="144" cy="223" r="10"/><circle cx="177" cy="228" r="13"/>
   </g>
-  <text class="interaction-society" x="66" y="288" data-i18n="diagSociety">社会</text>
-  <path class="interaction-route" d="M250 177C310 177 343 202 355 252" marker-end="url(#interaction-arrow-mobile)"/>
-  <circle cx="365" cy="284" r="10" fill="#202020"/>
-  <text class="interaction-label" x="365" y="323" text-anchor="middle" data-i18n="diagIndividual">個人</text>
-  <path class="interaction-route" d="M365 315C363 370 339 407 304 432" marker-end="url(#interaction-arrow-mobile)"/>
-  <path d="M178 430C229 399 302 414 331 463C357 507 333 558 284 577C232 597 174 566 161 516C152 478 158 447 178 430Z" fill="url(#micro-dots-mobile)"/>
-  <path d="M273 396l22 28M306 385l21 27" stroke="#202020" stroke-width="8" stroke-linecap="round"/>
-  <text class="interaction-gene" x="252" y="620" text-anchor="middle" data-i18n="diagGenes">遺伝子配列と体内の細菌</text>
-  <path class="interaction-route" d="M162 535C105 565 79 617 93 666" marker-end="url(#interaction-arrow-mobile)"/>
-  <circle cx="101" cy="696" r="10" fill="#202020"/>
-  <text class="interaction-label" x="132" y="704" data-i18n="diagIndividual2">個人</text>
+  <text class="interaction-society" x="165" y="288" text-anchor="middle" data-i18n="diagSociety">社会</text>
+
+  <!-- society → individual -->
+  <path class="interaction-route" d="M248 204C300 226 315 274 275 324" marker-end="url(#interaction-arrow-mobile)"/>
+  <circle cx="260" cy="350" r="10" fill="#202020"/>
+  <text class="interaction-label" x="260" y="389" text-anchor="middle" data-i18n="diagIndividual">個人</text>
+
+  <!-- individual → genetic/cellular field -->
+  <path class="interaction-route" d="M260 382C260 402 260 418 260 438" marker-end="url(#interaction-arrow-mobile)"/>
+  <path d="M170 454C208 425 292 427 337 457C373 482 371 535 337 568C300 605 215 595 178 558C151 531 147 478 170 454Z" fill="url(#micro-dots-mobile)"/>
+  <path d="M289 416l22 28M322 404l21 27" stroke="#202020" stroke-width="8" stroke-linecap="round"/>
+  <text class="interaction-gene" x="260" y="632" text-anchor="middle" data-i18n="diagGenes">遺伝子配列と体内の細菌</text>
+
+  <!-- gene/body field → second individual → society feedback -->
+  <path class="interaction-route" d="M178 558C153 587 126 625 104 660" marker-end="url(#interaction-arrow-mobile)"/>
+  <path class="interaction-route" d="M96 676C25 614 22 355 78 235" marker-end="url(#interaction-arrow-mobile)"/>
+  <circle cx="96" cy="676" r="10" fill="#202020"/>
+  <text class="interaction-label" x="130" y="685" data-i18n="diagIndividual2">個人</text>
 </svg>
 <p class="diagram-copy" data-i18n="socialInterp"></p></div>
 
@@ -1741,7 +2061,6 @@ p{margin:0}
           </div>
           <figcaption data-i18n="capRoute">平日の私の生活軌跡の簡略化</figcaption>
         </figure>
-        <p class="source-board life-rule-note" data-i18n="shapeLifeNote">日常生活の明示的なルールと暗黙のルールが、私の日常の動きのルートを共に設計しています。</p>
       </div>
       <div class="carriage">
         <span class="scale-no">GRAPHIC RESEARCH 02 / LIFE</span>
@@ -1759,89 +2078,66 @@ p{margin:0}
       <div class="beat-scene">
         <figure class="source-board body-module-study">
           <div class="module-analogy">
-            <img src="assets/experiment/ai-body-module.webp" alt="" loading="lazy">
+            <img src="assets/experiment/src/body-module.webp" alt="" loading="lazy">
           </div>
           <figcaption data-i18n="capModule">近代化におけるモジュール化</figcaption>
         </figure>
         <figure class="source-board body-sequence-step body-group-study">
           <div class="body-sequence-plate" aria-hidden="true">
-            <img src="assets/experiment/ai-body-group.webp" alt="">
+            <img src="assets/experiment/src/body-group.webp" alt="">
           </div>
           <figcaption data-i18n="bodyGroupCap">身体をひとつの全体として捉える</figcaption>
         </figure>
         <figure class="source-board body-sequence-step body-parts-study">
           <div class="body-sequence-plate" aria-hidden="true">
-            <img src="assets/experiment/ai-body-parts.webp" alt="">
+            <img src="assets/experiment/src/body-parts.webp" alt="">
           </div>
           <figcaption data-i18n="bodyPartsCap">身体を分解し、モジュール化する</figcaption>
         </figure>
         <figure class="source-board body-sequence-step body-pile-study">
           <div class="body-pile-stage" aria-hidden="true">
-            <img class="frag-01" src="assets/experiment/ai-body-frag-01.webp" alt="">
-            <img class="frag-02" src="assets/experiment/ai-body-frag-02.webp" alt="">
-            <img class="frag-03" src="assets/experiment/ai-body-frag-03.webp" alt="">
-            <img class="frag-04" src="assets/experiment/ai-body-frag-04.webp" alt="">
-            <img class="frag-05" src="assets/experiment/ai-body-frag-05.webp" alt="">
-            <img class="frag-06" src="assets/experiment/ai-body-frag-06.webp" alt="">
+            <img class="frag-01" src="assets/experiment/src/body-frag-01.webp" alt="">
+            <img class="frag-02" src="assets/experiment/src/body-frag-02.webp" alt="">
+            <img class="frag-03" src="assets/experiment/src/body-frag-03.webp" alt="">
+            <img class="frag-04" src="assets/experiment/src/body-frag-04.webp" alt="">
+            <img class="frag-05" src="assets/experiment/src/body-frag-05.webp" alt="">
+            <img class="frag-06" src="assets/experiment/src/body-frag-06.webp" alt="">
           </div>
           <figcaption data-i18n="bodyReassembleCap">分解された身体を別の秩序で再構成する</figcaption>
         </figure>
         <div class="body-combination-field" aria-hidden="true">
-          <img class="frag-01" src="assets/experiment/ai-body-frag-01.webp" alt="">
-          <img class="frag-02" src="assets/experiment/ai-body-frag-02.webp" alt="">
-          <img class="frag-03" src="assets/experiment/ai-body-frag-03.webp" alt="">
-          <img class="frag-04" src="assets/experiment/ai-body-frag-04.webp" alt="">
-          <img class="frag-05" src="assets/experiment/ai-body-frag-05.webp" alt="">
-          <img class="frag-06" src="assets/experiment/ai-body-frag-06.webp" alt="">
+          <img class="frag-01" src="assets/experiment/src/body-frag-01.webp" alt="">
+          <img class="frag-02" src="assets/experiment/src/body-frag-02.webp" alt="">
+          <img class="frag-03" src="assets/experiment/src/body-frag-03.webp" alt="">
+          <img class="frag-04" src="assets/experiment/src/body-frag-04.webp" alt="">
+          <img class="frag-05" src="assets/experiment/src/body-frag-05.webp" alt="">
+          <img class="frag-06" src="assets/experiment/src/body-frag-06.webp" alt="">
         </div>
-        <figure class="source-board body-plaster-process">
-          <div class="casting-process">
-            <img src="assets/experiment/ai-body-001.webp" alt="" loading="lazy">
-            <img src="assets/experiment/ai-body-002.webp" alt="" loading="lazy">
-            <img src="assets/experiment/ai-body-003.webp" alt="" loading="lazy">
-            <img src="assets/experiment/ai-body-095.webp" alt="" loading="lazy">
+        <figure class="source-board body-plaster-block">
+          <img src="assets/experiment/src/plaster-main.webp" alt="" loading="lazy" width="1065" height="711">
+          <div class="proc-strip">
+            <img src="assets/experiment/src/plaster-proc-1.webp" alt="" loading="lazy" width="266" height="355">
+            <img src="assets/experiment/src/plaster-proc-2.webp" alt="" loading="lazy" width="267" height="355">
+            <img src="assets/experiment/src/plaster-proc-3.webp" alt="" loading="lazy" width="266" height="354">
+            <img src="assets/experiment/src/plaster-proc-4.webp" alt="" loading="lazy" width="267" height="354">
           </div>
           <figcaption data-i18n="bodyPlasterProcessCap">石膏制作 — 型取りと成形の過程</figcaption>
         </figure>
-        <figure class="source-board body-plaster-result">
-          <div class="plaster-result">
-            <object class="plaster-result-asset" data="assets/experiment/clean/plaster-result.svg" type="image/svg+xml" aria-label="石膏成形结果"></object>
-          </div>
-          <figcaption data-i18n="bodyPlasterResultCap">石膏制作 — 成形結果</figcaption>
-        </figure>
         <figure class="source-board body-material-paper">
-          <div class="material-cutouts paper-cutouts">
-            <img src="assets/experiment/material-paper-01.png" alt="" loading="lazy">
-            <img src="assets/experiment/material-paper-02.png" alt="" loading="lazy">
-            <img src="assets/experiment/material-paper-03.png" alt="" loading="lazy">
-          </div>
+          <img src="assets/experiment/src/material-paper.webp" alt="" loading="lazy" width="633" height="407">
           <figcaption data-i18n="bodyPaperCap">新聞 — 素材実験</figcaption>
         </figure>
         <figure class="source-board body-material-clay">
-          <div class="material-cutouts clay-cutouts">
-            <img src="assets/experiment/material-clay-01.png" alt="" loading="lazy">
-            <img src="assets/experiment/material-clay-02.png" alt="" loading="lazy">
-            <img src="assets/experiment/material-clay-03.png" alt="" loading="lazy">
-          </div>
+          <img src="assets/experiment/src/material-clay.webp" alt="" loading="lazy" width="721" height="402">
           <figcaption data-i18n="bodyClayCap">クレイ — 素材実験</figcaption>
         </figure>
-        <figure class="source-board body-scan-study">
-          <div class="scan-grid">
-            <img src="assets/experiment/ai-body-000.webp" alt="" loading="lazy">
-            <img src="assets/experiment/ai-body-097.webp" alt="" loading="lazy">
-            <img src="assets/experiment/ai-body-098.webp" alt="" loading="lazy">
-            <img src="assets/experiment/ai-body-099.webp" alt="" loading="lazy">
-            <img src="assets/experiment/ai-body-100.webp" alt="" loading="lazy">
-          </div>
-          <figcaption data-i18n="bodyScanCap">3Dプリント — 身体スキャンの過程</figcaption>
-        </figure>
-        <figure class="source-board body-print-study">
-          <div class="print-result">
-            <object class="print-result-asset" data="assets/experiment/clean/print-result-01.svg" type="image/svg+xml" aria-label="3D打印人体记录一"></object>
-            <object class="print-result-asset" data="assets/experiment/clean/print-result-02.svg" type="image/svg+xml" aria-label="3D打印人体记录二"></object>
-            <object class="print-result-asset" data="assets/experiment/clean/print-result-03.svg" type="image/svg+xml" aria-label="3D打印人体记录三"></object>
-            <object class="print-result-asset" data="assets/experiment/clean/print-result-04.svg" type="image/svg+xml" aria-label="3D打印人体记录四"></object>
-            <object class="print-result-asset" data="assets/experiment/clean/print-result-05.svg" type="image/svg+xml" aria-label="3D打印人体记录五"></object>
+        <figure class="source-board body-print-block">
+          <img src="assets/experiment/src/print-main.webp" alt="" loading="lazy" width="1065" height="712">
+          <div class="proc-strip">
+            <img src="assets/experiment/src/print-proc-1.webp" alt="" loading="lazy" width="266" height="355">
+            <img src="assets/experiment/src/print-proc-2.webp" alt="" loading="lazy" width="267" height="355">
+            <img src="assets/experiment/src/print-proc-3.webp" alt="" loading="lazy" width="266" height="355">
+            <img src="assets/experiment/src/print-proc-4.webp" alt="" loading="lazy" width="267" height="355">
           </div>
           <figcaption data-i18n="bodyPrintCap">3Dプリント — 最終採用</figcaption>
           <p class="body-conclusion" data-i18n="bodyNote"></p>
@@ -1921,41 +2217,42 @@ p{margin:0}
         <p class="copy" data-i18n="evidenceIntroP2">SUS304の曲げ加工と精密溶接でレールフレームを制作し、研磨して鏡面に仕上げた。</p>
       </div>
 
-      <dl class="specs">
-        <div><dt data-i18n="specA">円形軌道</dt><dd>⌀ 2,000 mm</dd></div>
-        <div><dt data-i18n="specB">変形軌道</dt><dd>1,996.25 × 1,205.35 mm</dd></div>
-        <div><dt data-i18n="specC">材料</dt><dd>SUS304</dd></div>
-        <div><dt data-i18n="specD">仕上げ</dt><dd data-i18n="mirrorFinish">鏡面研磨</dd></div>
-        <div><dt data-i18n="specE">駆動</dt><dd data-i18n="specEValue">モーター駆動台車</dd></div>
-      </dl>
-
       <p class="mono" style="margin-top:clamp(2.4rem,5vh,4rem);color:var(--muted)" data-i18n="capSim">シミュレーション</p>
-      <div class="sim-board" style="margin-top:.8rem">
-        <figure class="sim-hero"><img src="sim-a.jpg" alt="三層構造のシミュレーション" loading="lazy"></figure>
-        <div class="sim-side">
-          <img src="sim-b.jpg" alt="シミュレーション" loading="lazy">
-          <img src="sim-c.jpg" alt="俯瞰シミュレーション" loading="lazy">
-          <img src="sim-d.jpg" alt="シミュレーション" loading="lazy">
-          <img src="sim-e.jpg" alt="シミュレーション" loading="lazy">
+      <div class="coverflow" id="cf" role="region" aria-roledescription="carousel" aria-label="Simulation">
+        <div class="cf-stage" id="cf-stage">
+          <div class="cf-item"><div class="cf-card"><img src="sim-b.jpg" alt="" loading="lazy"></div></div>
+          <div class="cf-item"><div class="cf-card"><img src="sim-c.jpg" alt="" loading="lazy"></div></div>
+          <div class="cf-item"><div class="cf-card"><img src="sim-a.jpg" alt="" loading="lazy"></div></div>
+          <div class="cf-item"><div class="cf-card"><img src="sim-d.jpg" alt="" loading="lazy"></div></div>
+          <div class="cf-item"><div class="cf-card"><img src="sim-e.jpg" alt="" loading="lazy"></div></div>
+        </div>
+        <div class="cf-status" aria-live="polite" aria-atomic="true">
+          <span class="current" id="cf-current">01</span><span class="slash">/</span><span id="cf-total">05</span>
         </div>
       </div>
+      <div class="car-dots" id="sim-dots"></div>
 
       <p class="mono" style="margin-top:clamp(2.4rem,5vh,4rem);color:var(--muted)" data-i18n="capFab">制作</p>
-      <div class="sheet" aria-label="制作" style="margin-top:.8rem">
-        <figure><img src="process-1.jpg" alt="" loading="lazy"></figure>
-        <figure><img src="process-2.jpg" alt="" loading="lazy"></figure>
-        <figure><img src="process-3.jpg" alt="" loading="lazy"></figure>
-        <figure><img src="process-4.jpg" alt="" loading="lazy"></figure>
-        <figure><img src="process-5.jpg" alt="" loading="lazy"></figure>
-        <figure><img src="process-6.jpg" alt="" loading="lazy"></figure>
-        <figure><img src="process-7.jpg" alt="" loading="lazy"></figure>
-        <figure><img src="process-8.jpg" alt="" loading="lazy"></figure>
-        <figure><img src="process-9.jpg" alt="" loading="lazy"></figure>
-        <figure><img src="process-10.jpg" alt="" loading="lazy"></figure>
-        <figure><img src="process-11.jpg" alt="" loading="lazy"></figure>
-        <figure><img src="process-13.jpg" alt="" loading="lazy"></figure>
+      <div class="flowfield" id="ff" aria-label="制作">
+        <div class="ff-plane" id="ff-plane">
+          <div class="ff-tile">
+          <button class="ff-item" type="button" style="--x:0px;--y:60px;--w:640px"><img src="process-10.jpg" alt="" loading="lazy"></button>
+          <button class="ff-item" type="button" style="--x:770px;--y:190px;--w:235px"><img src="process-1.jpg" alt="" loading="lazy"></button>
+          <button class="ff-item is-plan" type="button" style="--x:1135px;--y:80px;--w:600px"><img src="process-12.jpg" alt="" loading="lazy"></button>
+          <button class="ff-item" type="button" style="--x:1865px;--y:30px;--w:375px"><img src="process-4.jpg" alt="" loading="lazy"></button>
+          <button class="ff-item" type="button" style="--x:2370px;--y:250px;--w:560px"><img src="process-13.jpg" alt="" loading="lazy"></button>
+          <button class="ff-item" type="button" style="--x:3060px;--y:90px;--w:285px"><img src="process-8.jpg" alt="" loading="lazy"></button>
+          <button class="ff-item" type="button" style="--x:3475px;--y:200px;--w:390px"><img src="process-6.jpg" alt="" loading="lazy"></button>
+          <button class="ff-item" type="button" style="--x:3995px;--y:20px;--w:315px"><img src="process-2.jpg" alt="" loading="lazy"></button>
+          <button class="ff-item" type="button" style="--x:4440px;--y:230px;--w:325px"><img src="process-9.jpg" alt="" loading="lazy"></button>
+          <button class="ff-item" type="button" style="--x:4895px;--y:70px;--w:285px"><img src="process-11.jpg" alt="" loading="lazy"></button>
+          <button class="ff-item" type="button" style="--x:5310px;--y:250px;--w:360px"><img src="process-5.jpg" alt="" loading="lazy"></button>
+          <button class="ff-item" type="button" style="--x:5800px;--y:110px;--w:340px"><img src="process-3.jpg" alt="" loading="lazy"></button>
+          <button class="ff-item" type="button" style="--x:6270px;--y:220px;--w:350px"><img src="process-7.jpg" alt="" loading="lazy"></button>
+          </div>
+        </div>
+        <p class="ff-hint mono" data-i18n="ffHint">左右にドラッグして見る</p>
       </div>
-
     </div>
   </section>
 
@@ -1965,23 +2262,27 @@ p{margin:0}
       <p class="mono eyebrow"><span>08 / </span><span data-i18n="exhibitionLabel">EXHIBITION</span></p>
       <h2 class="h-sec" id="eh-title" data-i18n="exhibitionTitle">決められた軌道上で、身体は動き続ける</h2>
       <div class="q-concept"><p class="lead" data-i18n="exhibitionIntro">三つの軌道は一つの空間に重なり、分解された身体部位はそれぞれの経路を循環する。</p></div>
-      <figure class="exh-hero"><img src="exhibition-1.jpg" alt="展示風景" loading="lazy"></figure>
-      <div class="gal">
-        <button class="zoom" type="button"><img src="exhibition-6.jpg" alt="展示風景" loading="lazy"></button>
-        <button class="zoom" type="button"><img src="exhibition-3.jpg" alt="展示風景" loading="lazy"></button>
-        <button class="zoom" type="button"><img src="exhibition-5.jpg" alt="展示風景" loading="lazy"></button>
-        <button class="zoom" type="button"><img src="exhibition-8.jpg" alt="展示風景" loading="lazy"></button>
-        <button class="zoom" type="button"><img src="exhibition-2.jpg" alt="展示風景" loading="lazy"></button>
-        <button class="zoom" type="button"><img src="exhibition-9.jpg" alt="展示風景" loading="lazy"></button>
-        <button class="zoom" type="button"><img src="exhibition-10.jpg" alt="展示風景" loading="lazy"></button>
-        <button class="zoom" type="button"><img src="exhibition-4.jpg" alt="展示風景" loading="lazy"></button>
-        <button class="zoom" type="button"><img src="exhibition-11.jpg" alt="展示風景" loading="lazy"></button>
-        <button class="zoom" type="button"><img src="exhibition-14.jpg" alt="展示風景" loading="lazy"></button>
-        <button class="zoom" type="button"><img src="exhibition-7.jpg" alt="展示風景" loading="lazy"></button>
-        <button class="zoom" type="button"><img src="exhibition-15.jpg" alt="展示風景" loading="lazy"></button>
-        <button class="zoom" type="button"><img src="exhibition-12.jpg" alt="展示風景" loading="lazy"></button>
-        <button class="zoom" type="button"><img src="exhibition-16.jpg" alt="展示風景" loading="lazy"></button>
-        <button class="zoom" type="button"><img src="exhibition-13.jpg" alt="展示風景" loading="lazy"></button>
+      <div class="chapter-story" style="--frame-count:16" data-chapter>
+        <div class="chapter-sticky"><div class="chapter-stage">
+          <button class="chapter-frame is-active" data-frame type="button"><img src="exhibition-1.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame is-next-1" data-frame type="button"><img src="exhibition-6.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame is-next-2" data-frame type="button"><img src="exhibition-3.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame" data-frame type="button"><img src="exhibition-5.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame" data-frame type="button"><img src="exhibition-8.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame" data-frame type="button"><img src="exhibition-2.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame" data-frame type="button"><img src="exhibition-9.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame" data-frame type="button"><img src="exhibition-10.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame" data-frame type="button"><img src="exhibition-4.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame" data-frame type="button"><img src="exhibition-11.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame" data-frame type="button"><img src="exhibition-14.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame" data-frame type="button"><img src="exhibition-7.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame" data-frame type="button"><img src="exhibition-15.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame" data-frame type="button"><img src="exhibition-12.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame" data-frame type="button"><img src="exhibition-16.jpg" alt="" loading="lazy"></button>
+          <button class="chapter-frame" data-frame type="button"><img src="exhibition-13.jpg" alt="" loading="lazy"></button>
+        </div>
+          <span class="frame-counter" translate="no"><b data-frame-current>01</b> / 16</span>
+        </div>
       </div>
     </div>
   </section>
@@ -2010,8 +2311,8 @@ const COPY={
     mmTitle:"自由主義の本質をめぐる思考の連鎖",mmStart:"個人の自由を強調",mmRoot:"自由主義の本質",mmA:"個人の責任と自己管理を提唱することによって",mmB:"規律を通じて",mmC1:"規律技術の役割",mmC2:"市場競争における規律",mmD1:"自律、自省、自己最適化を通じて",mmD2:"個人をより効率的な行動に導く",mmD3:"社会秩序と経済効率を維持する",mmE1:"個人は適応と最適化を通じて成功を収める",mmI1:"コントロールに反対するように見えるが、規律によって核心的価値を実現する",mmI2:"個人の行動を制御し、規範化する",mmI3:"現代の個人のアイデンティティと行動パターンを形作る",mmF1:"競争メカニズムとしての規律手段",mmF2:"身体のコントロール",mmG1:"秩序化された社会体系",mmG2:"逸脱しないことを確保する",mmH1:"軌道化",mmH2:"身体の再構築",
     derivLabel:"洞察 → 霊感 → 造形",insightCol:"洞察",inspireCol:"霊感",formCol:"造形へ",kw1:"人体の分解",kw2:"軌道運行",kw3:"路線の制約",kw4:"立体構造",kw5:"循環",kw6:"多層構造",
     diagTitle:"社会と個人の相互作用",diagSociety:"社会",diagIndividual:"個人",diagIndividual2:"個人",diagGenes:"遺伝子配列と体内の細菌",lifeToolsNote:"地図ナビやGPSなどのツールは、自由な活動を制約し、生活や視点を固定します。個人の行動は徐々に固定化され、逃れるのが難しくなっています。",
-    capSim:"シミュレーション",capFab:"制作",
-    capOvert:"顕在的な記号",capHidden:"隠れた記号",capRoute:"平日の私の生活軌跡の簡略化",shapeSocietyNote:"円（サークル）は、私たちの生活の中で遍在する権力の象徴を構築し、権力と規律に満ちたシンボル社会を形成しています。",shapeLifeNote:"日常生活の明示的なルールと暗黙のルールが、私の日常の動きのルートを共に設計しています。",shapeMerge:"高度に凝縮された結果、両者は二つの軌道を形成します。",capModule:"近代化におけるモジュール化",bodyNote:"人間の身体は分節され、分節される過程で自己を超越する。人間という視点から、対象を通して人間を見るならば、人間の身体もまた一種の組織である。人は生まれながらにして歩き方を知らず、訓練や学習を受けてから徐々に自分の身体をコントロールできるようになり、多くの技術は後天的に習得されるもので、その身体は訓練の形の提示である。",capPlaster:"石膏",capClay:"クレイ彫刻",
+    capSim:"シミュレーション",capFab:"制作",ffHint:"左右にドラッグして見る",
+    capOvert:"顕在的な記号",capHidden:"隠れた記号",capRoute:"平日の私の生活軌跡の簡略化",shapeSocietyNote:"円（サークル）は、私たちの生活の中で遍在する権力の象徴を構築し、権力と規律に満ちたシンボル社会を形成しています。",shapeMerge:"高度に凝縮された結果、両者は二つの軌道を形成します。",capModule:"近代化におけるモジュール化",bodyNote:"人間の身体は分節され、分節される過程で自己を超越する。人間という視点から、対象を通して人間を見るならば、人間の身体もまた一種の組織である。人は生まれながらにして歩き方を知らず、訓練や学習を受けてから徐々に自分の身体をコントロールできるようになり、多くの技術は後天的に習得されるもので、その身体は訓練の形の提示である。",capPlaster:"石膏",capClay:"クレイ彫刻",
     socialPowerCopy:"人と人との関係は、社会システムや環境の変化に伴い絶えず進化します。権力は、複雑な相互作用の中で生成され、社会ネットワーク内の位置や資源の分配に依存し、社会規範や制度の影響を受けます。環境の変化に応じて、権力の分布や運用も適応し、その表現形態は多様化します。",
     socialInterp:"社会における規律は至る所に存在し、個人は規律の影響を受けつつ、社会全体にも影響を与えます。この点で、生物と人間の社会性の隠喩に魅了され、微生物や細胞と人体の関係を用いた表現手法を使いました。",
     bgTitle:"プロジェクト背景",bgCopy:"規律・身体・自由主義をめぐる文献を読み、そこから作品の出発点となる問いを取り出した。",bgTag1:"規律における個性",bgTag2:"規律と身体のコントロール",bgTag3:"自由主義と現代工業",iterLabel:"反復",iter1:"よりシンボル化され、より凝縮され簡潔に",iter2:"実現可能性、生産性",iter3:"伝達と解釈に優れる",iterOutcomeGraphic:"図形研究 — 社会形態＋生活",iterOutcomeBody:"実験 — 個体",modCopy:"工業化社会における人間の身体は、機械と同じように使用され、分節化されてきた。規範が人間の身体に潜在的に影響を及ぼします。身体部位の改造から脳の思考経路の改造まで、それは一人一人に刻み込まれ、「社会化」の一部となってきた。人間の身体は分節化され、分節化される過程で自らを超越してきた。",
@@ -2044,7 +2345,7 @@ const COPY={
     experimentLabel:"EXPERIMENT",experimentTitle:"図形研究と身体実験から、三つの層を導く",experimentIntro:"PLAN Aへの三つのフィードバックを起点に、図形研究では社会形態と生活を分け、実験では分節された個体を検証した。",
     societySymbolCap:"権力の記号を円へ抽出",societyEvidenceCap:"法律・監視・議会・時間・貨幣・宗教",shapeSocietyTitle:"社会形態を円へ凝縮する",shapeSocietyCopy:"法律、監視、議会、時間、貨幣、宗教に現れる形態を観察し、権力と規律を示す共通の輪郭として円を抽出した。",shapeSocietyResult:"図形研究 — 円は社会形態を表す軌道になる",
     socLaw:"法律（牢獄）",socSurveillance:"生活（監視）",socParliament:"権力（議会）",socTime:"時間",socCurrency:"経済（鋳貨権）",socReligion:"宗教（祭壇）",
-    lifeSignsCap:"顕在的・潜在的な規則の観察",lifeExplicit:"顕在的な記号",lifeImplicit:"隠れた記号",shapeLifeTitle:"生活に変形された経路を取り出す",shapeLifeCopy:"日常空間にある顕在的な記号と潜在的な規則を観察し、自分の移動記録と重ねながら、生活によって変形した閉じた経路へ単純化した。",shapeLifeResult:"図形研究 — 変形した線は個人の生活を表す軌道になる",
+    lifeSignsCap:"顕在的・潜在的な規則の観察",lifeExplicit:"顕在的な記号",lifeImplicit:"隠れた記号",shapeLifeTitle:"生活に変形された経路を取り出す",shapeLifeCopy:"日常空間にある顕在的な記号と潜在的な規則を観察し、自分の移動記録と重ねながら、生活によって変形した閉じた経路へ単純化した。日常生活の明示的なルールと暗黙のルールが、私の日常の動きのルートを共に設計しています。",shapeLifeResult:"図形研究 — 変形した線は個人の生活を表す軌道になる",
     derive1:"法律、監視、議会、時間、通貨、宗教 — 権力の記号には、いずれも円が含まれていた。",derive2:"自分の移動記録を重ねて単純化し、一本の閉じた変形経路として取り出した。",
     bodyTitle:"訓練された身体を分解し、再び組み立てる",bodyCopy:"歩行や姿勢を含む身体の使い方は、学習と訓練を通して後天的に獲得される。社会化された身体を石膏と3Dプリントによって部分へ分け、それぞれを独立して移動できる要素として再構成した。",bodyGroupCap:"身体をひとつの全体として捉える",bodyPartsCap:"身体を分解し、モジュール化する",bodySequenceCap:"身体の分解・モジュール化・再構成",bodyReassembleCap:"分解された身体を別の秩序で再構成する",bodyPlasterProcessCap:"石膏制作 — 型取りと成形の過程",bodyPlasterResultCap:"石膏制作 — 成形結果",bodyPaperCap:"新聞 — 素材実験",bodyClayCap:"クレイ — 素材実験",bodyScanCap:"3Dプリント — 身体スキャンの過程",bodyPrintCap:"3Dプリント — 最終採用",bodyResult:"EXPERIMENT INSIGHT — 身体は一つの全体ではなく、移動する複数の部位として表現できる",
     materialPaper:"新聞",materialClay:"クレイ",matLabel:"素材実験",mat1:"新聞",mat2:"クレイ",mat3:"石膏",mat4:"3Dプリント — 採用",
@@ -2065,8 +2366,8 @@ const COPY={
     mmTitle:"围绕自由主义本质的思考链条",mmStart:"强调个人的自由",mmRoot:"自由主义的本质",mmA:"通过提倡个人责任与自我管理",mmB:"通过规训",mmC1:"规训技术的作用",mmC2:"市场竞争中的规训",mmD1:"通过自律、自省与自我优化",mmD2:"引导个人采取更高效的行动",mmD3:"维持社会秩序与经济效率",mmE1:"个体通过适应与优化取得成功",mmI1:"看似反对控制，却通过规训实现核心价值",mmI2:"控制并规范个体的行动",mmI3:"塑造现代个体的身份与行为模式",mmF1:"作为竞争机制的规训手段",mmF2:"身体的控制",mmG1:"被秩序化的社会体系",mmG2:"确保不会脱轨",mmH1:"轨道化",mmH2:"身体的再建构",
     derivLabel:"洞察 → 灵感 → 造型",insightCol:"洞察",inspireCol:"灵感",formCol:"通向造型",kw1:"人体的分解",kw2:"轨道运行",kw3:"路线的制约",kw4:"立体结构",kw5:"循环",kw6:"多层结构",
     diagTitle:"社会与个体的相互作用",diagSociety:"社会",diagIndividual:"个人",diagIndividual2:"个人",diagGenes:"基因序列与体内的细菌",lifeToolsNote:"地图导航与GPS这类工具制约着自由的活动，把生活与视点固定下来。个体的行动逐渐被固化，越来越难以脱离。",
-    capSim:"模拟",capFab:"制作",
-    capOvert:"显性的记号",capHidden:"隐性的记号",capRoute:"平日生活轨迹的简化",shapeSocietyNote:"圆，构建起我们生活中无处不在的权力象征，形成一个充满权力与规训的符号社会。",shapeLifeNote:"日常生活中的明示规则与隐性规则，共同设计了我每天的移动路线。",shapeMerge:"高度凝练之后，两者形成了两条轨道。",capModule:"近代化中的模块化",bodyNote:"人的身体被分节，并在被分节的过程中超越自身。如果从人的视角，通过对象来看人，人的身体也是一种组织。人并非生来就知道如何行走，而是在接受训练与学习后逐渐能够控制自己的身体；许多技术都是后天习得的，而这具身体正是训练形态的呈现。",capPlaster:"石膏",capClay:"黏土雕塑",
+    capSim:"模拟",capFab:"制作",ffHint:"左右拖动查看",
+    capOvert:"显性的记号",capHidden:"隐性的记号",capRoute:"平日生活轨迹的简化",shapeSocietyNote:"圆，构建起我们生活中无处不在的权力象征，形成一个充满权力与规训的符号社会。",shapeMerge:"高度凝练之后，两者形成了两条轨道。",capModule:"近代化中的模块化",bodyNote:"人的身体被分节，并在被分节的过程中超越自身。如果从人的视角，通过对象来看人，人的身体也是一种组织。人并非生来就知道如何行走，而是在接受训练与学习后逐渐能够控制自己的身体；许多技术都是后天习得的，而这具身体正是训练形态的呈现。",capPlaster:"石膏",capClay:"黏土雕塑",
     socialPowerCopy:"人与人之间的关系会随着社会系统与环境的变化不断演进。权力生成于复杂的互动之中，取决于社会网络中的位置与资源分配，并受到社会规范和制度影响。随着环境变化，权力的分布与运作也会相应调整，其表现形式由此趋于多样。",
     socialInterp:"社会中的规训无处不在，个体既受规训影响，也反过来影响整个社会。正是在这一点上，我着迷于生物与人类社会性之间的隐喻，于是采用了微生物、细胞与人体之间的关系作为表现手法。",
     bgTitle:"项目背景",bgCopy:"围绕规训、身体与自由主义阅读文献，并从中提取出作品的出发点。",bgTag1:"规训中的个性",bgTag2:"规训与身体的控制",bgTag3:"自由主义与现代工业",iterLabel:"反复推敲",iter1:"更符号化、更凝练简洁",iter2:"可实现性与可生产性",iter3:"更利于传达与解读",iterOutcomeGraphic:"图形研究 — 社会形态＋生活",iterOutcomeBody:"实验 — 个体",modCopy:"工业化社会中的人的身体如同机器一样被使用并被分节。规范潜在地影响着人体；从身体部位的改造到大脑思考路径的改造，这些影响被刻入每个人，成为“社会化”的一部分。人的身体被分节，并在被分节的过程中超越自身。",
@@ -2099,7 +2400,7 @@ const COPY={
     experimentLabel:"实验",experimentTitle:"从图形研究与身体实验中推导三层结构",experimentIntro:"以PLAN A收到的三条反馈为起点：图形研究分别处理社会形态与生活，身体实验则验证被分节的个体。",
     societySymbolCap:"从权力符号中提取圆",societyEvidenceCap:"法律、监视、议会、时间、货币、宗教",shapeSocietyTitle:"将社会形态凝练为圆",shapeSocietyCopy:"观察法律、监视、议会、时间、货币与宗教中的形态，从中提取出圆，作为权力与规训共同的轮廓。",shapeSocietyResult:"图形研究 — 圆成为代表社会形态的轨道",
     socLaw:"法律（监狱）",socSurveillance:"生活（监视）",socParliament:"权力（议会）",socTime:"时间",socCurrency:"经济（铸币权）",socReligion:"宗教（祭坛）",
-    lifeSignsCap:"观察显性与隐性的规则",lifeExplicit:"显性的记号",lifeImplicit:"隐性的记号",shapeLifeTitle:"提取被生活改变的路径",shapeLifeCopy:"观察日常空间中的显性记号与隐性规则，并与自己的移动记录叠加，最终简化为一条被生活改变的闭合路径。",shapeLifeResult:"图形研究 — 变形的线成为代表个体生活的轨道",
+    lifeSignsCap:"观察显性与隐性的规则",lifeExplicit:"显性的记号",lifeImplicit:"隐性的记号",shapeLifeTitle:"提取被生活改变的路径",shapeLifeCopy:"观察日常空间中的显性记号与隐性规则，并与自己的移动记录叠加，最终简化为一条被生活改变的闭合路径。日常生活中的明示规则与隐性规则，共同设计了我每天的移动路线。",shapeLifeResult:"图形研究 — 变形的线成为代表个体生活的轨道",
     derive1:"法律、监视、议会、时间、货币、宗教——所有权力的符号之中，都包含着圆。",derive2:"把自己的移动记录叠加并简化，提取为一条闭合的变形路径。",
     bodyTitle:"拆解被训练的身体，再重新组合",bodyCopy:"包括行走和姿势在内的身体使用方式，都是通过学习与训练在后天获得的。作品以石膏和3D打印把社会化的身体拆分为不同部位，再将其重构为能够分别移动的元素。",bodyGroupCap:"把身体作为一个完整整体观察",bodyPartsCap:"将身体分解并模块化",bodySequenceCap:"人体的分解、模块化与重组",bodyReassembleCap:"将拆解后的身体按另一种秩序重新组合",bodyPlasterProcessCap:"石膏制作——取模与成形过程",bodyPlasterResultCap:"石膏制作——成形结果",bodyPaperCap:"报纸——材料实验",bodyClayCap:"黏土——材料实验",bodyScanCap:"3D打印——身体扫描过程",bodyPrintCap:"3D打印——最终采用",bodyResult:"实验洞察 — 身体可以不再作为单一整体，而被表现为多个移动部位",
     materialPaper:"报纸",materialClay:"黏土",matLabel:"材料实验",mat1:"报纸",mat2:"黏土",mat3:"石膏",mat4:"3D打印 — 采用",
@@ -2120,8 +2421,8 @@ const COPY={
     mmTitle:"The chain of thought around liberalism",mmStart:"Emphasis on individual freedom",mmRoot:"The nature of liberalism",mmA:"By advocating personal responsibility and self-management",mmB:"Through discipline",mmC1:"The role of disciplinary technique",mmC2:"Discipline in market competition",mmD1:"Through self-rule, self-examination, self-optimisation",mmD2:"Guiding people toward more efficient action",mmD3:"Maintaining social order and economic efficiency",mmE1:"The individual succeeds through adaptation and optimisation",mmI1:"Appears to oppose control, yet realises core values through discipline",mmI2:"Controls and normalises individual action",mmI3:"Shapes modern identity and patterns of behaviour",mmF1:"Discipline as a mechanism of competition",mmF2:"Control of the body",mmG1:"An ordered social system",mmG2:"Ensuring no one deviates",mmH1:"Put on rails",mmH2:"Reconstruction of the body",
     derivLabel:"INSIGHT → INSPIRATION → FORM",insightCol:"Insight",inspireCol:"Inspiration",formCol:"Toward form",kw1:"Decomposition of the body",kw2:"Orbital motion",kw3:"Route constraint",kw4:"Spatial structure",kw5:"Circulation",kw6:"Multilayer structure",
     diagTitle:"Society and the individual",diagSociety:"Society",diagIndividual:"Individual",diagIndividual2:"Individual",diagGenes:"Gene sequences and gut bacteria",lifeToolsNote:"Map navigation and GPS constrain free movement and fix both our lives and our viewpoints. Individual action gradually hardens into place, and becomes difficult to escape.",
-    capSim:"Simulation",capFab:"Fabrication",
-    capOvert:"Overt signs",capHidden:"Hidden signs",capRoute:"A weekday route, simplified",shapeSocietyNote:"The circle builds the symbols of power that are everywhere in our lives, forming a symbolic society saturated with power and discipline.",shapeLifeNote:"The explicit and implicit rules of daily life together design the routes I move along each day.",shapeMerge:"Condensed far enough, the two resolve into two trajectories.",capModule:"Modularisation under modernisation",bodyNote:"The human body is segmented and, through that process, transcends itself. From a human perspective, looking at people through objects reveals that the body is also a form of organisation. People are not born knowing how to walk; through training and learning we gradually gain control of our bodies. Many techniques are acquired, and the body is the presentation of that training.",capPlaster:"Plaster",capClay:"Clay",
+    capSim:"Simulation",capFab:"Fabrication",ffHint:"Drag sideways to browse",
+    capOvert:"Overt signs",capHidden:"Hidden signs",capRoute:"A weekday route, simplified",shapeSocietyNote:"The circle builds the symbols of power that are everywhere in our lives, forming a symbolic society saturated with power and discipline.",shapeMerge:"Condensed far enough, the two resolve into two trajectories.",capModule:"Modularisation under modernisation",bodyNote:"The human body is segmented and, through that process, transcends itself. From a human perspective, looking at people through objects reveals that the body is also a form of organisation. People are not born knowing how to walk; through training and learning we gradually gain control of our bodies. Many techniques are acquired, and the body is the presentation of that training.",capPlaster:"Plaster",capClay:"Clay",
     socialPowerCopy:"Relationships between people continually evolve as social systems and environments change. Power is generated through complex interactions; it depends on position within social networks and the distribution of resources, and is shaped by social norms and institutions. As conditions change, the distribution and operation of power adapt, and their forms of expression diversify.",
     socialInterp:"Discipline in society is everywhere: the individual is shaped by it and in turn shapes society as a whole. It was here that the metaphor between biological and human sociality caught me, and I began working through the relationship between microbes, cells and the body.",
     bgTitle:"Project background",bgCopy:"Reading around discipline, the body and liberalism, I drew out the question the work departs from.",bgTag1:"Individuality under discipline",bgTag2:"Discipline and control of the body",bgTag3:"Liberalism and modern industry",iterLabel:"Iteration",iter1:"More symbolic, more condensed, more concise",iter2:"Feasibility and producibility",iter3:"Better suited to communication and interpretation",iterOutcomeGraphic:"Graphic research — social form + everyday life",iterOutcomeBody:"Experiment — individual",modCopy:"In industrial society, the human body has been used and segmented like a machine. Norms influence it beneath the surface: from the modification of body parts to the reshaping of pathways of thought, they are inscribed in each person and become part of socialisation. The body is segmented and, through that process, exceeds itself.",
@@ -2154,7 +2455,7 @@ const COPY={
     experimentLabel:"EXPERIMENT",experimentTitle:"Deriving three layers through graphic and bodily studies",experimentIntro:"The three responses to PLAN A led to two branches: graphic research separated social form from everyday life, while bodily experiments tested the segmented individual.",
     societySymbolCap:"Extracting circles from symbols of power",societyEvidenceCap:"Law, surveillance, parliament, time, currency, religion",shapeSocietyTitle:"Condensing social form into a circle",shapeSocietyCopy:"Forms found in law, surveillance, parliament, time, currency, and religion were compared, revealing the circle as a shared contour of power and discipline.",shapeSocietyResult:"GRAPHIC RESEARCH — the circle becomes the trajectory of social form",
     socLaw:"Law (prison)",socSurveillance:"Life (surveillance)",socParliament:"Power (parliament)",socTime:"Time",socCurrency:"Economy (coinage)",socReligion:"Religion (altar)",
-    lifeSignsCap:"Observing overt and implicit rules",lifeExplicit:"Overt signs",lifeImplicit:"Implicit signs",shapeLifeTitle:"Extracting a route altered by everyday life",shapeLifeCopy:"Overt signs and implicit rules in everyday space were observed and layered with my movement records, then simplified into a closed route reshaped by daily life.",shapeLifeResult:"GRAPHIC RESEARCH — the deformed line becomes the trajectory of individual life",
+    lifeSignsCap:"Observing overt and implicit rules",lifeExplicit:"Overt signs",lifeImplicit:"Implicit signs",shapeLifeTitle:"Extracting a route altered by everyday life",shapeLifeCopy:"Overt signs and implicit rules in everyday space were observed and layered with my movement records, then simplified into a closed route reshaped by daily life. The explicit and implicit rules of daily life together design the routes I move along each day.",shapeLifeResult:"GRAPHIC RESEARCH — the deformed line becomes the trajectory of individual life",
     derive1:"Law, surveillance, parliament, time, currency, religion — every symbol of power contained a circle.",derive2:"My own movement records were layered and simplified, then extracted as a single closed, deformed route.",
     bodyTitle:"Taking apart the trained body and assembling it again",bodyCopy:"Ways of using the body, including walking and posture, are acquired through learning and training. Plaster casting and 3D printing divided the socialised body into separate parts, which were then reconstructed as elements capable of moving independently.",bodyGroupCap:"Reading the body as one complete whole",bodyPartsCap:"Disassembling and modularising the body",bodySequenceCap:"The body: disassembly, modularisation and reassembly",bodyReassembleCap:"Reassembling the divided body in another order",bodyPlasterProcessCap:"Plaster — moulding and casting process",bodyPlasterResultCap:"Plaster — cast result",bodyPaperCap:"Newspaper — material trial",bodyClayCap:"Clay — material trial",bodyScanCap:"3D printing — body scanning process",bodyPrintCap:"3D printing — selected outcome",bodyResult:"EXPERIMENT INSIGHT — the body can be expressed as multiple moving parts rather than a single whole",
     materialPaper:"Newspaper",materialClay:"Clay",matLabel:"Material trials",mat1:"Newspaper",mat2:"Clay",mat3:"Plaster",mat4:"3D print — selected",
@@ -2203,6 +2504,268 @@ document.getElementById("lang-btn").addEventListener("click",()=>{
 applyLanguage(lang);
 
 const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)");
+
+/* ═══ SIMULATION — Cover Flow (ported from 海) ═══ */
+(function(){
+  const cf=document.getElementById("cf"), stage=document.getElementById("cf-stage"),
+        dotsWrap=document.getElementById("sim-dots"), currentEl=document.getElementById("cf-current"),
+        totalEl=document.getElementById("cf-total");
+  if(!cf||!stage||!dotsWrap)return;
+  const items=[...stage.children], n=items.length; if(!n)return;
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), pad=v=>String(v).padStart(2,"0");
+  let position=Math.floor((n-1)/2), active=Math.round(position), dragged=false, pid=null,
+      startX=0, startPos=position, lastX=0, lastT=0, vel=0, rf=0, sf=0, wt=0;
+  const reduce=window.matchMedia("(prefers-reduced-motion: reduce)");
+  if(totalEl)totalEl.textContent=pad(n);
+  items.forEach((it,i)=>{
+    const img=it.querySelector("img");
+    it.setAttribute("role","button"); it.setAttribute("aria-label","Simulation "+(i+1)+" / "+n);
+    if(img){img.draggable=false;img.alt="Simulation "+(i+1)+" of "+n}
+    const b=document.createElement("button"); b.className="car-dot"; b.type="button";
+    b.setAttribute("aria-label","Go to image "+(i+1));
+    b.addEventListener("click",()=>setActive(i)); dotsWrap.appendChild(b);
+    it.addEventListener("click",()=>{
+      if(dragged)return;
+      if(i!==active){setActive(i);return}
+      if(img)openZoom(img.currentSrc||img.src);
+    });
+  });
+  const dots=[...dotsWrap.children];
+  function layout(){
+    rf=0;
+    const w=items[0].offsetWidth||420, narrow=cf.clientWidth<640;
+    const firstStep=narrow?.76:.68, nextStep=narrow?.11:.13,
+          maxAngle=narrow?52:57, persp=narrow?760:1100;
+    active=clamp(Math.round(position),0,n-1);
+    items.forEach((it,i)=>{
+      const off=i-position, abs=Math.abs(off), sign=Math.sign(off);
+      const side=Math.min(abs,1), beyond=Math.max(0,abs-1), spread=Math.sin(side*Math.PI/2);
+      const tx=sign*w*(firstStep*spread+nextStep*beyond);
+      const ry=-sign*maxAngle*side;
+      const scale=1-Math.min(narrow?.14:.18, side*.045+beyond*(narrow?.035:.042));
+      const fade=clamp(1-Math.max(0,abs-1)*(narrow?.32:.13), narrow?.2:.28, 1);
+      const sel=i===active;
+      it.style.opacity=fade; it.style.zIndex=String(sel?1000:900-Math.round(abs*100));
+      it.style.transform=`translate(-50%,-50%) translateX(${tx}px) perspective(${persp}px) rotateY(${ry}deg) scale(${scale})`;
+      it.classList.toggle("active",sel); it.tabIndex=sel?0:-1;
+    });
+    dots.forEach((d,i)=>d.classList.toggle("on",i===active));
+    if(currentEl)currentEl.textContent=pad(active+1);
+  }
+  const req=()=>{if(!rf)rf=requestAnimationFrame(layout)};
+  const stopSnap=()=>{if(sf)cancelAnimationFrame(sf);sf=0;cf.classList.remove("is-animating")};
+  function setActive(index,focusIt){
+    const target=clamp(Math.round(index),0,n-1), from=position, dist=target-from;
+    clearTimeout(wt); cf.classList.remove("is-dragging"); stopSnap();
+    if(Math.abs(dist)<.001||reduce.matches){position=target;layout();if(focusIt)items[target].focus({preventScroll:true});return}
+    const t0=performance.now(), dur=clamp(360+Math.abs(dist)*80,360,620);
+    cf.classList.add("is-animating");
+    const tick=now=>{
+      const pr=clamp((now-t0)/dur,0,1), eased=1-Math.pow(1-pr,3);
+      position=from+dist*eased; layout();
+      if(pr<1){sf=requestAnimationFrame(tick);return}
+      sf=0; position=target; layout(); cf.classList.remove("is-animating");
+      if(focusIt)items[target].focus({preventScroll:true});
+    };
+    sf=requestAnimationFrame(tick);
+  }
+  cf.addEventListener("pointerdown",e=>{
+    if(e.pointerType==="mouse"&&e.button!==0)return;
+    stopSnap(); pid=e.pointerId; startX=lastX=e.clientX; startPos=position;
+    lastT=e.timeStamp; vel=0; dragged=false; cf.classList.add("is-dragging");
+    if(cf.setPointerCapture)cf.setPointerCapture(pid);
+  });
+  cf.addEventListener("pointermove",e=>{
+    if(pid!==e.pointerId)return;
+    const dx=e.clientX-startX, dt=Math.max(8,e.timeStamp-lastT);
+    if(Math.abs(dx)>4)dragged=true;
+    vel=(e.clientX-lastX)/dt; lastX=e.clientX; lastT=e.timeStamp;
+    position=clamp(startPos-dx/(cf.clientWidth<640?130:150),0,n-1);
+    req(); if(dragged)e.preventDefault();
+  });
+  function finish(e,cancelled){
+    if(pid===null||(e&&e.pointerId!==pid))return;
+    if(cf.releasePointerCapture&&cf.hasPointerCapture&&cf.hasPointerCapture(pid))cf.releasePointerCapture(pid);
+    const step=cf.clientWidth<640?130:150;
+    const mom=cancelled?0:clamp(-vel*100/step,-.28,.28);
+    const proj=position+mom; pid=null; setActive(Math.round(proj));
+    setTimeout(()=>{dragged=false},90);
+  }
+  cf.addEventListener("pointerup",e=>finish(e));
+  cf.addEventListener("pointercancel",e=>finish(e,true));
+  cf.addEventListener("wheel",e=>{
+    const shifted=e.shiftKey&&Math.abs(e.deltaY)>Math.abs(e.deltaX);
+    const delta=shifted?e.deltaY:e.deltaX;
+    if(!shifted&&Math.abs(e.deltaX)<=Math.abs(e.deltaY))return;
+    if(Math.abs(delta)<1)return;
+    e.preventDefault(); stopSnap();
+    position=clamp(position+delta/(cf.clientWidth<640?120:135),0,n-1);
+    cf.classList.add("is-dragging"); req();
+    clearTimeout(wt); wt=setTimeout(()=>setActive(Math.round(position)),180);
+  },{passive:false});
+  cf.addEventListener("keydown",e=>{
+    let t=null;
+    if(e.key==="ArrowLeft")t=active-1; if(e.key==="ArrowRight")t=active+1;
+    if(e.key==="Home")t=0; if(e.key==="End")t=n-1;
+    if(t===null)return; e.preventDefault(); setActive(t,true);
+  });
+  window.addEventListener("resize",req,{passive:true});
+  cf.classList.add("is-initializing"); layout();
+  requestAnimationFrame(()=>cf.classList.remove("is-initializing"));
+  window.addEventListener("load",layout,{once:true});
+})();
+
+/* ═══ EXHIBITION — scroll-driven stacked frames (ported from 我思故我在) ═══ */
+(function(){
+  const stories=[...document.querySelectorAll("[data-chapter]")].map(story=>({
+    story, frames:[...story.querySelectorAll("[data-frame]")],
+    stage:story.querySelector(".chapter-stage"),
+    counter:story.querySelector("[data-frame-current]")
+  }));
+  if(!stories.length)return;
+  const mobileChapter=window.matchMedia("(max-width:760px)");
+  let rq=0;
+  const req=()=>{if(!rq)rq=requestAnimationFrame(render)};
+  stories.forEach(({story,frames,stage})=>{
+    story.style.setProperty("--chapter-height",Math.max(200,130+frames.length*13)+"vh");
+    frames.forEach(f=>{
+      const im=f.querySelector("img");
+      const syncRatio=()=>{
+        if(im&&im.naturalWidth&&im.naturalHeight)
+          f.style.setProperty("--frame-ratio",(im.naturalWidth/im.naturalHeight).toFixed(4));
+      };
+      if(im){ if(im.complete)syncRatio(); else im.addEventListener("load",syncRatio,{once:true}); }
+      f.addEventListener("click",()=>{ if(im)openZoom(im.currentSrc||im.src) });
+    });
+    stage?.addEventListener("scroll",req,{passive:true});
+  });
+  function renderMobile(frames,stage,counter){
+    const centre=(stage?.scrollLeft||0)+(stage?.clientWidth||1)/2;
+    let index=0,best=Infinity;
+    frames.forEach((frame,i)=>{
+      frame.style.removeProperty("visibility");
+      frame.style.removeProperty("opacity");
+      frame.style.removeProperty("transform");
+      frame.style.removeProperty("z-index");
+      frame.style.removeProperty("pointer-events");
+      frame.tabIndex=0;
+      const d=Math.abs(frame.offsetLeft+frame.offsetWidth/2-centre);
+      if(d<best){best=d;index=i}
+    });
+    frames.forEach((frame,i)=>frame.classList.toggle("is-active",i===index));
+    if(counter)counter.textContent=String(index+1).padStart(2,"0");
+  }
+  function render(){
+    rq=0;
+    const navH=document.getElementById("site-nav")?.offsetHeight||56;
+    const viewport=Math.max(1,window.innerHeight-navH);
+    stories.forEach(({story,frames,stage,counter})=>{
+      if(!frames.length)return;
+      if(mobileChapter.matches){renderMobile(frames,stage,counter);return}
+      if(reducedMotion.matches){frames.forEach(f=>{f.style.cssText="";f.classList.add("is-active")});return}
+      const rect=story.getBoundingClientRect();
+      if(rect.bottom<-viewport*.5||rect.top>window.innerHeight+viewport*.5)return;
+      const travel=Math.max(1,rect.height-viewport);
+      const raw=Math.min(1,Math.max(0,(navH-rect.top)/travel));
+      const pos=raw*(frames.length-1);
+      const index=Math.min(frames.length-1,Math.round(pos));
+      const sw=stage?.clientWidth||1280, sh=stage?.clientHeight||660;
+      const stepX=Math.max(72,Math.min(142,sw*.105)), stepY=Math.max(42,Math.min(88,sh*.11));
+      frames.forEach((frame,i)=>{
+        const rel=i-pos, dist=Math.abs(rel), ring=Math.abs(i-index), focused=i===index;
+        const visible=i>=index-4&&i<=index+5;
+        frame.classList.toggle("is-active",focused);
+        frame.style.pointerEvents=focused?"auto":"none";
+        frame.tabIndex=focused?0:-1;
+        if(!visible){frame.style.visibility="hidden";frame.style.opacity="0";return}
+        const sep=Math.sign(rel)*Math.min(1,dist/.8)*Math.max(28,sw*.045);
+        const x=rel*stepX+sep, y=rel*-stepY;
+        const scale=focused?1:Math.max(.78,1-dist*.045);
+        const op=focused?1:Math.max(.05,.22-dist*.03);
+        frame.style.visibility="visible";
+        frame.style.transform=`translate(-50%,-50%) translate(${x}px,${y}px) scale(${scale})`;
+        frame.style.opacity=String(op);
+        frame.style.zIndex=focused?"500":String(190-ring);
+      });
+      if(counter)counter.textContent=String(index+1).padStart(2,"0");
+    });
+  }
+  window.addEventListener("scroll",req,{passive:true});
+  window.addEventListener("resize",req,{passive:true});
+  window.addEventListener("load",req,{once:true});
+  render();
+})();
+
+/* ═══ FABRICATION — one endless horizontal run you drag along ═══ */
+(function(){
+  const ff=document.getElementById("ff"), plane=document.getElementById("ff-plane");
+  if(!ff||!plane)return;
+  const BASE=6750;
+  const tile=plane.querySelector(".ff-tile");
+  let TW=BASE;
+  function fit(){
+    const k=parseFloat(getComputedStyle(ff).getPropertyValue("--ffk"))||1;
+    TW=BASE*k;
+    plane.querySelectorAll(".ff-tile").forEach((t,i)=>{
+      t.style.transform="scale("+k+")";
+      t.style.left=(i*TW)+"px";
+    });
+  }
+  /* two copies side by side, so dragging never reaches an edge */
+  const c=tile.cloneNode(true);
+  c.style.left=BASE+"px";
+  c.querySelectorAll("img").forEach(i=>i.setAttribute("aria-hidden","true"));
+  plane.appendChild(c);
+
+  let ox=-TW*0.06, vx=0, pid=null, lx=0, lt=0, moved=false, raf=0;
+  const wrap=(v,m)=>((v%m)+m)%m;
+  function paint(){ raf=0; plane.style.transform=`translate3d(${-wrap(-ox,TW)}px,0,0)` }
+  const req=()=>{ if(!raf)raf=requestAnimationFrame(paint) };
+  function glide(){
+    if(pid!==null)return;
+    vx*=.93;
+    if(Math.abs(vx)<.05){vx=0;return}
+    ox+=vx; paint(); requestAnimationFrame(glide);
+  }
+  ff.addEventListener("pointerdown",e=>{
+    if(e.pointerType==="mouse"&&e.button!==0)return;
+    pid=e.pointerId; lx=e.clientX; lt=e.timeStamp; moved=false; vx=0;
+    ff.classList.add("is-dragging");
+    if(ff.setPointerCapture)ff.setPointerCapture(pid);
+  });
+  ff.addEventListener("pointermove",e=>{
+    if(pid!==e.pointerId)return;
+    const dx=e.clientX-lx, dt=Math.max(8,e.timeStamp-lt);
+    if(Math.abs(dx)>3)moved=true;
+    ox+=dx; vx=dx/dt*12; lx=e.clientX; lt=e.timeStamp;
+    req(); if(moved)e.preventDefault();
+  });
+  function end(e){
+    if(pid===null||(e&&e.pointerId!==pid))return;
+    if(ff.releasePointerCapture&&ff.hasPointerCapture&&ff.hasPointerCapture(pid))ff.releasePointerCapture(pid);
+    pid=null; ff.classList.remove("is-dragging"); requestAnimationFrame(glide);
+    setTimeout(()=>{moved=false},80);
+  }
+  ff.addEventListener("pointerup",end);
+  ff.addEventListener("pointercancel",end);
+  /* only sideways wheel input is ours — a vertical wheel keeps scrolling the page */
+  ff.addEventListener("wheel",e=>{
+    const shifted=e.shiftKey&&Math.abs(e.deltaY)>Math.abs(e.deltaX);
+    const delta=shifted?e.deltaY:e.deltaX;
+    if(!shifted&&Math.abs(e.deltaX)<=Math.abs(e.deltaY))return;
+    if(Math.abs(delta)<1)return;
+    e.preventDefault(); vx=0; ox-=delta; req();
+  },{passive:false});
+  ff.querySelectorAll(".ff-item").forEach(btn=>{
+    btn.addEventListener("click",e=>{
+      if(moved){e.preventDefault();return}
+      const im=btn.querySelector("img"); if(im)openZoom(im.currentSrc||im.src);
+    });
+  });
+  window.addEventListener("resize",()=>{fit();paint()},{passive:true});
+  fit(); paint();
+})();
+
 /* ---- the track ---- */
 const siteNav=document.getElementById("site-nav");
 const reduce=reducedMotion.matches;
@@ -2212,37 +2775,194 @@ const cars=[];
 document.querySelectorAll(".beat").forEach((beat,i)=>{
   const text=beat.querySelector(".carriage");
   if(!text)return;
-  cars.push({el:text,beat:beat,i:i});
+  cars.push({
+    el:text, beat:beat, i:i, tx:0,
+    /* everything the carriage must not run into on its way past */
+    scenery:[...beat.querySelectorAll(".beat-scene img,.beat-scene figcaption,.beat-scene .cap,"+
+      ".beat-scene object,.beat-scene > p,.beat-scene > span,.beat-scene > div:not(.body-combination-field)")]
+  });
 });
 
-function driveTrack(){
-  frame=0;
-  const vh=window.innerHeight;
-  const amp=window.innerWidth<1000?0:Math.min(window.innerWidth*0.022,34);
+/* ONE rail for the whole page. The phase is a pure function of scroll
+   position, so a beat never restarts the curve — the next carriage picks the
+   wave up exactly where the last one left it.
+   Width of the swing is measured live against the nearest scenery, kept
+   separately for each side (so a picture on the left still lets the text run
+   out to the right), and eased rather than snapped — a jump in the measured
+   room is what used to read as a stutter. */
+/* The rail is SURVEYED ONCE, not improvised per frame.
+   Measuring the free room live and multiplying a sine by it produced a curve
+   riding a staircase — every time a picture drew level the amplitude stepped
+   and the line kinked. A real track is laid out smooth first and only then
+   checked for clearance, so that is what happens here:
+
+     1. walk each beat in document space and record how much room the text has
+        on either side at every station;
+     2. ERODE that profile — take the tightest value within a window as wide as
+        the text column, so a picture starts mattering before it arrives;
+     3. BLUR the eroded profile with the same radius. Because erosion came
+        first, the smooth curve can never exceed the true clearance — the rail
+        is guaranteed both curved and safe.
+
+   The survey only changes when the layout does, so scrolling just reads it. */
+const WAVE=2400;      /* px of scroll per full S */
+const STEP=25;        /* survey station spacing */
+const CLEARANCE=18;   /* px never given away */
+const SWING=0.55;     /* share of the free room the rhythm is allowed to use */
+const REACH=100;      /* how far the rail may ever wander from centre */
+/* A hard cap would put a corner in the curve where it bites. This eases into
+   the limit instead, so a wide-open stretch stops opening without a kink. */
+const cap=v=>REACH*Math.tanh(v/REACH);
+
+/* ONE rail for the whole run, not one per beat. Surveying each beat on its own
+   left a sideways step at every junction — the train jumped tracks. The
+   stations are laid end to end across the entire scrolled distance and the
+   smoothing runs straight through the joints, so a beat now hands the curve
+   to the next one already lined up. */
+let RAIL=null;
+function survey(){
+  RAIL=null;
+  const vw=window.innerWidth;
+  if(vw<1000||!cars.length)return;
+  const sy=window.scrollY||document.documentElement.scrollTop||0;
+
+  const zones=[];
+  let top=Infinity, bottom=-Infinity, ch=0;
   for(const c of cars){
-    const b=c.beat.getBoundingClientRect();
-    if(b.bottom<0||b.top>vh){continue}
-    /* how far this beat has travelled through the frame, 0 -> 1 */
-    const p=Math.max(0,Math.min(1,(vh*0.5-b.top)/Math.max(1,b.height)));
-    /* linear across the beat; the next beat picks up where this one ended */
-    const dir=c.i%2?-1:1;
-    const tx=dir*(2*p-1)*amp;
-    c.el.style.setProperty("--tx",tx.toFixed(2)+"px");
-    /* dock so the carriage sits on the centre line of the frame */
-    const dock=Math.max(8,50-(c.el.offsetHeight/vh)*50);
-    c.el.style.setProperty("--dock",dock.toFixed(1)+"vh");
+    const br=c.beat.getBoundingClientRect();
+    const cr=c.el.getBoundingClientRect();
+    const z={t:br.top+sy, b:br.bottom+sy,
+             cl:cr.left-c.tx, cr:cr.right-c.tx, props:[]};
+    for(const s of c.scenery){
+      const r=s.getBoundingClientRect();
+      if(!r.width||!r.height)continue;
+      const p={t:r.top+sy,b:r.bottom+sy,l:r.left,r:r.right};
+      z.props.push(p);
+      /* pictures are absolutely placed and routinely hang outside the beat
+         box; the zone has to cover them or those stretches read as open road */
+      z.t=Math.min(z.t,p.t); z.b=Math.max(z.b,p.b);
+    }
+    zones.push(z);
+    top=Math.min(top,z.t); bottom=Math.max(bottom,z.b);
+    ch=Math.max(ch,cr.height);
   }
+  const n=Math.max(2,Math.ceil((bottom-top)/STEP)+1);
+  const L=new Float32Array(n), R=new Float32Array(n);
+  for(let i=0;i<n;i++){
+    const p=top+i*STEP;
+    /* zones stretch to cover their pictures, so they overlap each other —
+       every zone covering this station gets a say, not just the first */
+    let l=REACH+CLEARANCE, r=REACH+CLEARANCE, inside=false;
+    for(const z of zones){
+      if(p<z.t||p>z.b)continue;
+      inside=true;
+      let zl=z.cl, zr=vw-z.cr;
+      for(const s of z.props){
+        if(p<s.t||p>s.b)continue;
+        if(s.r<=z.cl+1)      zl=Math.min(zl,z.cl-s.r);
+        else if(s.l>=z.cr-1) zr=Math.min(zr,s.l-z.cr);
+        else {zl=0;zr=0;break}
+      }
+      l=Math.min(l,zl); r=Math.min(r,zr);
+    }
+    if(!inside){L[i]=REACH;R[i]=REACH;continue}  /* between beats: open road */
+    L[i]=Math.min(REACH,Math.max(0,l-CLEARANCE));
+    R[i]=Math.min(REACH,Math.max(0,r-CLEARANCE));
+  }
+  /* The column is CH tall, so the room it really has at a station is the
+     tightest value within ±CH/2. Blurring by B pulls the curve back up
+     toward its neighbours, so the erosion must cover CH/2 *plus* B for the
+     smoothed result to stay inside the true clearance everywhere. */
+  const B=11, E=Math.ceil(ch*0.5/STEP)+B;
+  RAIL={top,n,L:blur(erode(L,E),B),R:blur(erode(R,E),B)};
+}
+function erode(a,rad){
+  const n=a.length,o=new Float32Array(n);
+  for(let i=0;i<n;i++){
+    let m=Infinity;
+    for(let j=Math.max(0,i-rad);j<=Math.min(n-1,i+rad);j++) if(a[j]<m)m=a[j];
+    o[i]=m;
+  }
+  return o;
+}
+function blur(a,rad){
+  const n=a.length,o=new Float32Array(n);
+  for(let i=0;i<n;i++){
+    let s=0,k=0;
+    for(let j=Math.max(0,i-rad);j<=Math.min(n-1,i+rad);j++){s+=a[j];k++}
+    o[i]=s/k;
+  }
+  return o;
+}
+function readRail(rail,p){
+  const t=(p-rail.top)/STEP;
+  const i=Math.max(0,Math.min(rail.n-1,Math.floor(t)));
+  const j=Math.min(rail.n-1,i+1), f=Math.max(0,Math.min(1,t-i));
+  return{l:rail.L[i]+(rail.L[j]-rail.L[i])*f, r:rail.R[i]+(rail.R[j]-rail.R[i])*f};
 }
 
-let frame=0;
-function onScroll(){
+function driveTrack(){
+  const vh=window.innerHeight;
+  const y=window.scrollY||document.documentElement.scrollTop||0;
+  let settling=false;
+  for(const c of cars){
+    const b=c.beat.getBoundingClientRect();
+    if(b.bottom<-160||b.top>vh+160)continue;
+    const dock=Math.max(8,50-(c.el.offsetHeight/vh)*50);
+    c.el.style.setProperty("--dock",dock.toFixed(1)+"vh");
+    if(!RAIL){c.tx=0;c.el.style.setProperty("--tx","0px");continue}
+    /* read the rail where this column actually sits, not where a docked one
+       would be — during a handover the two are in different places */
+    const own=c.el.getBoundingClientRect();
+    const p=own.top+own.height*0.5+y;
+    const room=readRail(RAIL,p);
+    const rl=cap(room.l), rr=cap(room.r);
+    /* the rail leans away from whichever side is crowded, and breathes on top */
+    const lean=(rr-rl)*0.5;
+    const want=lean+Math.cos(2*Math.PI*p/WAVE)*Math.min(rl,rr)*SWING;
+    /* Final damper. The rail is already smooth, but a re-survey or a sticky
+       hand-off can still step the target; following it over a few frames
+       turns any such step into a glide. Clamped to the real clearance
+       afterwards so the damping can never push the text into a picture. */
+    if(c.shown===undefined||Math.abs(want-c.shown)>240)c.shown=want;
+    c.shown+=(want-c.shown)*0.22;
+    const tx=Math.max(-room.l,Math.min(room.r,c.shown));
+    c.tx=tx;
+    c.el.style.setProperty("--tx",tx.toFixed(2)+"px");
+    if(Math.abs(want-c.shown)>0.3)settling=true;
+  }
+  return settling;
+}
+
+let frame=0,lastY=-1;
+function tick(){
+  frame=0;
   const y=window.scrollY||document.documentElement.scrollTop||0;
   siteNav.classList.toggle("solid",y>window.innerHeight*0.7);
-  if(!reduce)driveTrack();
+  const easing=reduce?false:driveTrack();
+  const moved=y!==lastY; lastY=y;
+  /* keep ticking while the page moves and for the few frames the eased
+     amplitude needs to settle afterwards */
+  if(easing||moved)frame=requestAnimationFrame(tick);
 }
-window.addEventListener("scroll",()=>{if(!frame)frame=requestAnimationFrame(onScroll)},{passive:true});
-window.addEventListener("resize",()=>{if(!frame)frame=requestAnimationFrame(onScroll)},{passive:true});
-onScroll();
+function kick(){if(!frame)frame=requestAnimationFrame(tick)}
+window.addEventListener("scroll",kick,{passive:true});
+function resurvey(){if(!reduce)survey();kick()}
+let surveyTimer=0;
+function resurveySoon(){clearTimeout(surveyTimer);surveyTimer=setTimeout(resurvey,120)}
+window.addEventListener("resize",resurveySoon,{passive:true});
+window.addEventListener("load",resurvey);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(resurvey);
+/* lazily-loaded pictures change the layout under the survey — re-run it
+   whenever a beat actually changes size */
+if(window.ResizeObserver){
+  const ro=new ResizeObserver(resurveySoon);
+  cars.forEach(c=>ro.observe(c.beat));
+}
+cars.forEach(c=>c.beat.querySelectorAll("img").forEach(im=>{
+  if(!im.complete)im.addEventListener("load",resurveySoon,{once:true});
+}));
+resurvey();
 
 /* ---- mindmap labels wrap on word boundaries and never spill their pill ---- */
 function wrapMindmap(){
@@ -2312,20 +3032,41 @@ function wrapMindmap(){
                    Math.min(a.y+a.height,b.y+b.height)-Math.max(a.y,b.y)>2;
   const fixedLane=new Set(['mmE1','mmI1','mmI2','mmI3']);
   const labels=[...mm.querySelectorAll('text[data-i18n]')].filter(t=>!fixedLane.has(t.dataset.i18n));
+  const shiftLabel=(label,dx)=>{
+    [...label.childNodes].forEach(n=>{
+      if(!n.setAttribute)return;
+      const x=parseFloat(n.getAttribute('x'));
+      if(Number.isFinite(x))n.setAttribute('x',(x+dx).toFixed(1));
+    });
+    if(!label.childNodes.length||label.childNodes[0].nodeType===3){
+      const x=parseFloat(label.getAttribute('x'));
+      if(Number.isFinite(x))label.setAttribute('x',(x+dx).toFixed(1));
+    }
+    // Move the pill with its label while resolving collisions. Deferring this
+    // until the resize pass makes the same collision fire repeatedly.
+    const pill=label.previousElementSibling&&label.previousElementSibling.tagName==='rect'
+      ? label.previousElementSibling : null;
+    if(pill){
+      const x=parseFloat(pill.getAttribute('x'));
+      if(Number.isFinite(x))pill.setAttribute('x',(x+dx).toFixed(1));
+    }
+  };
   for(let pass=0;pass<12;pass++){
     let moved=false;
     for(let i=0;i<labels.length;i++)for(let j=i+1;j<labels.length;j++){
       const A=labels[i],B=labels[j];
       const pillA=A.previousElementSibling&&A.previousElementSibling.tagName==='rect';
-      const a=A.getBBox(),b=B.getBBox();
+      // Include the pill's rectangle in collision checks.  Measuring only the
+      // text lets a long pill cover its neighbour even when the glyphs do not.
+      const a=(A.previousElementSibling&&A.previousElementSibling.tagName==='rect'
+        ? A.previousElementSibling : A).getBBox();
+      const b=(B.previousElementSibling&&B.previousElementSibling.tagName==='rect'
+        ? B.previousElementSibling : B).getBBox();
       if(!hit(a,b))continue;
       // move the one without a pill; if both plain, move the right-hand one
       const mv = pillA ? B : (b.x>=a.x ? B : A);
       const dx = (b.x>=a.x? 1 : -1) * (Math.min(a.x+a.width,b.x+b.width)-Math.max(a.x,b.x) + 14);
-      [...mv.childNodes].forEach(n=>{ if(n.setAttribute){
-        n.setAttribute('x',(parseFloat(n.getAttribute('x'))+dx).toFixed(1)); }});
-      if(!mv.childNodes.length||mv.childNodes[0].nodeType===3)
-        mv.setAttribute('x',(parseFloat(mv.getAttribute('x'))+dx).toFixed(1));
+      shiftLabel(mv,dx);
       moved=true;
     }
     if(!moved)break;
@@ -2571,7 +3312,9 @@ placeCaptions();
     const summary=details.querySelector("summary");
     const body=details.querySelector(".inspiration-body");
     if(!summary||!body)return;
-    let closeTimer=0,motionToken=0;
+    let closeTimer=0,motionToken=0,autoOpened=false;
+    let lastScrollY=window.scrollY;
+    let scrolledDown=window.scrollY>24;
     const setExpanded=v=>summary.setAttribute("aria-expanded",String(v));
     const finishClose=token=>{
       if(token!==motionToken||details.classList.contains("is-open"))return;
@@ -2598,6 +3341,28 @@ placeCaptions();
     body.addEventListener("transitionend",event=>{
       if(event.propertyName==="grid-template-rows"&&details.classList.contains("is-closing"))finishClose(motionToken);
     });
+
+    // Inspiration stays quiet on first paint.  Once the visitor actually
+    // scrolls down into this block, reveal it with the same motion as a
+    // manual click; this keeps the landing view calm while making the
+    // supporting text discoverable during the scroll.
+    if("IntersectionObserver"in window){
+      const markScroll=()=>{
+        const y=window.scrollY;
+        if(y>lastScrollY)scrolledDown=true;
+        lastScrollY=y;
+      };
+      window.addEventListener("scroll",markScroll,{passive:true});
+      const autoObserver=new IntersectionObserver(entries=>{
+        if(autoOpened||!scrolledDown)return;
+        if(!entries.some(entry=>entry.isIntersecting))return;
+        autoOpened=true;
+        autoObserver.disconnect();
+        window.removeEventListener("scroll",markScroll);
+        if(!details.classList.contains("is-open"))summary.click();
+      },{rootMargin:"0px 0px -18% 0px",threshold:.16});
+      autoObserver.observe(details);
+    }
   });
 })();
 
@@ -2621,6 +3386,14 @@ function closeLightbox(){
   lightboxImage.src="";
   document.body.style.overflow="";
   if(lastFocus)lastFocus.focus({preventScroll:true});
+}
+function openZoom(src,alt){
+  if(!src)return;
+  lastFocus=document.activeElement;
+  lightboxImage.src=src; lightboxImage.alt=alt||"";
+  lightbox.classList.add("open");
+  document.body.style.overflow="hidden";
+  lightboxClose.focus();
 }
 document.querySelectorAll(".zoom").forEach(b=>b.addEventListener("click",()=>openLightbox(b)));
 lightboxClose.addEventListener("click",closeLightbox);

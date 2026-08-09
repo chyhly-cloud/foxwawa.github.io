@@ -7,5 +7,5 @@
       <path d="M20 613C39 577 77 550 121 531C173 507 252 497 330 500C409 503 487 515 548 541C605 565 640 604 654 647C669 696 654 760 621 813C588 866 535 908 470 940C408 970 334 982 258 976C182 970 117 947 66 914C24 887 7 847 8 798C9 750 0 658 20 613Z"/>
     </clipPath>
   </defs>
-  <image href="/jibunkatte/assets/experiment/clean/plaster-result.png" xlink:href="/jibunkatte/assets/experiment/clean/plaster-result.png" width="663" height="993" preserveAspectRatio="none" clip-path="url(#plaster)"/>
+  <image href="plaster-result.png" xlink:href="plaster-result.png" width="663" height="993" preserveAspectRatio="none" clip-path="url(#plaster)"/>
 </svg>
